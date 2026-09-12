@@ -4,7 +4,7 @@ description: Use this skill whenever asked to prepare, review, or classify trans
 version: 0.1
 jurisdiction: SD
 tax_year: 2025
-last_updated: 2026-09-10
+last_updated: 2026-09-11
 review_status: pending_review
 depends_on:
   - vat-workflow-base
@@ -319,6 +319,8 @@ The most up-to-date, verified version of this skill is maintained at [openaccoun
 **Sources:** VAT Act 2001 (Sudan); VAT Regulations 2017; tax.gov.sd; Britacom; PwC; Trading Economics; Sudan Tribune.
 
 > Contributed by Ahmed Hassan.
+
+> Contributed by Michael Cutajar.
 
 <!-- openaccountants-cta-block -->
 
