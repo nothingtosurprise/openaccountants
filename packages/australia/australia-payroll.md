@@ -14,14 +14,14 @@ description: >
 version: 2.4
 jurisdiction: AU
 tax_year: 2025
-last_updated: 2026-09-11
+last_updated: 2026-09-12
 review_status: pending_review
 category: payroll
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# Australia -- Payroll Skill v2.4
+# Australia — Payroll Skill
 
 ## Section 1 -- Quick Reference
 
@@ -137,8 +137,6 @@ An under-18 employee must work more than 30 actual hours in the week to qualify 
 
 - **Payroll tax nature** — Payroll tax is a state/territory tax on total Australian wages above the threshold. Interstate employers must register in each jurisdiction where they have employees.
 
-## Section 5 -- Minimum Wage and Overtime
-
 ### National Minimum Wage (from the first full pay period on or after 1 July 2026)
 
 **National Minimum Wage (from the first full pay period on or after 1 July 2026)**
@@ -167,8 +165,6 @@ An under-18 employee must work more than 30 actual hours in the week to qualify 
 ### Maximum Ordinary Hours
 
 - **Maximum ordinary hours** — 38 hours/week under the NES. Can be averaged over up to 26 weeks if permitted by the award or agreement.  _(NES)_
-
-## Section 6 -- Mandatory Benefits
 
 ### Annual Leave
 
@@ -238,8 +234,6 @@ An under-18 employee must work more than 30 actual hours in the week to qualify 
 ### Leave Balances
 
 Not strictly required on payslips but must be provided to employees on request. Best practice is to include annual leave and personal leave balances.
-
-## Section 8 -- Filing Obligations
 
 ### Single Touch Payroll (STP) Phase 2
 
@@ -355,6 +349,8 @@ Employee with annual repayment income of $65,000 in 2025–26 and a HELP debt: c
 This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional (such as a CPA, EA, tax attorney, or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
 
 The most up-to-date, verified version of this skill is maintained at [openaccountants.com](https://openaccountants.com). Log in to access the latest version, request a professional review from a licensed accountant, and track updates as tax law changes.
+
+> Contributed by Ryan Duguid.
 
 > Contributed by Ryan Duguid.
 
