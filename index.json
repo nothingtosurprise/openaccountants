@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-09-14T10:07:02+00:00",
+ "generated_at": "2026-09-15T09:42:00+00:00",
  "counts": {
-  "guides": 2011,
+  "guides": 2013,
   "jurisdictions": 245,
   "accountant_reviewed": 171
  },
@@ -955,6 +955,18 @@
    "last_updated": "2026-07-13"
   },
   {
+   "slug": "us-1120-corporation-return-schedule-ordinary-business",
+   "path": "skills/federal/us-1120-corporation-return-schedule-ordinary-business.md",
+   "name": "us-1120-corporation-return-schedule-ordinary-business",
+   "jurisdiction": "US",
+   "category": null,
+   "tier": 2,
+   "verified_by": null,
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-14"
+  },
+  {
    "slug": "us-amended-return-form-1040-including-capital",
    "path": "skills/federal/us-amended-return-form-1040-including-capital.md",
    "name": "us-amended-return-form-1040-including-capital",
@@ -1133,6 +1145,18 @@
    "reviewed_by": "James Wallach",
    "tax_year": "2025",
    "last_updated": "2026-07-13"
+  },
+  {
+   "slug": "us-form-1040-individual-income-tax-return",
+   "path": "skills/federal/us-form-1040-individual-income-tax-return.md",
+   "name": "us-form-1040-individual-income-tax-return",
+   "jurisdiction": "US",
+   "category": null,
+   "tier": 2,
+   "verified_by": null,
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-14"
   },
   {
    "slug": "us-form-1040-individual-return",

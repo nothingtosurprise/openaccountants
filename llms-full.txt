@@ -132,7 +132,7 @@ https://www.openaccountants.com
 
 ========================================================================
 
-## Guide inventory (2011 guides, 245 jurisdictions, 171 accountant-reviewed)
+## Guide inventory (2013 guides, 245 jurisdictions, 171 accountant-reviewed)
 
 - us-1099-k-and-payment-processors | US | tier 2 | reviewed_by -
 - us-education-credits-8863 | US | tier 2 | reviewed_by -
@@ -213,6 +213,7 @@ https://www.openaccountants.com
 - no-sales-tax-states | US | tier 1 | reviewed_by A licensed accountant (name withheld at their request)
 - us-1099-k-and-payment-processors | US | tier 2 | reviewed_by James Wallach
 - us-1099-nec-issuance | US | tier 1 | reviewed_by A licensed accountant (name withheld at their request)
+- us-1120-corporation-return-schedule-ordinary-business | US | tier 2 | reviewed_by -
 - us-amended-return-form-1040-including-capital | US | tier 2 | reviewed_by -
 - us-citizen-moving-abroad-tax | US | tier 2 | reviewed_by -
 - us-corporate-extension-form-7004-and-the | US | tier 2 | reviewed_by -
@@ -228,6 +229,7 @@ https://www.openaccountants.com
 - us-federal-section-1031-like-kind-exchange | US | tier 2 | reviewed_by James Wallach
 - us-foreign-earned-income-2555 | US | tier 2 | reviewed_by James Wallach
 - us-foreign-tax-credit-1116 | US | tier 2 | reviewed_by James Wallach
+- us-form-1040-individual-income-tax-return | US | tier 2 | reviewed_by -
 - us-form-1040-individual-return | US | tier 1 | reviewed_by Christopher Aryee
 - us-form-1041-trust-and-estate-income | US | tier 1 | reviewed_by Christopher Aryee
 - us-form-1065-partnership | US | tier 1 | reviewed_by Christopher Aryee
