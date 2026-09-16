@@ -12,8 +12,9 @@
 5. `ae-payroll-social.md`
 6. `ae-tax-overview.md`
 7. `ae-tax-residency.md`
-8. `uae-vat.md`
-9. `payroll-workflow-base.md`
+8. `general-uae-corporate-tax-guide.md`
+9. `uae-vat.md`
+10. `payroll-workflow-base.md`
 
 ## Also known as
 

@@ -132,7 +132,7 @@ https://www.openaccountants.com
 
 ========================================================================
 
-## Guide inventory (2013 guides, 245 jurisdictions, 171 accountant-reviewed)
+## Guide inventory (2014 guides, 245 jurisdictions, 171 accountant-reviewed)
 
 - us-1099-k-and-payment-processors | US | tier 2 | reviewed_by -
 - us-education-credits-8863 | US | tier 2 | reviewed_by -
@@ -1765,6 +1765,7 @@ https://www.openaccountants.com
 - ae-payroll-social | AE | tier 2 | reviewed_by -
 - ae-tax-overview | AE | tier 2 | reviewed_by -
 - ae-tax-residency | AE | tier 1 | reviewed_by Mehran Habib
+- general-uae-corporate-tax-guide | AE | tier 2 | reviewed_by -
 - uae-vat | AE | tier 1 | reviewed_by Mehran Habib
 - ug-company-formation | UG | tier 2 | reviewed_by -
 - ug-corporate-income-tax | UG | tier 2 | reviewed_by -

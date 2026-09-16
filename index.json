@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-09-15T09:42:00+00:00",
+ "generated_at": "2026-09-16T09:40:53+00:00",
  "counts": {
-  "guides": 2013,
+  "guides": 2014,
   "jurisdictions": 245,
   "accountant_reviewed": 171
  },
@@ -19577,6 +19577,18 @@
    "reviewed_by": "Mehran Habib",
    "tax_year": "2025",
    "last_updated": "2026-07-13"
+  },
+  {
+   "slug": "general-uae-corporate-tax-guide",
+   "path": "skills/international/uae/general-uae-corporate-tax-guide.md",
+   "name": "general-uae-corporate-tax-guide",
+   "jurisdiction": "AE",
+   "category": null,
+   "tier": 2,
+   "verified_by": null,
+   "reviewed_by": null,
+   "tax_year": null,
+   "last_updated": "2026-09-16"
   },
   {
    "slug": "uae-vat",
