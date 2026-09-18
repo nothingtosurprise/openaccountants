@@ -4,7 +4,7 @@ description: Intelligence skill that generates a personalised filing calendar ba
 version: 0.2
 jurisdiction: GLOBAL
 tax_year: 2025
-last_updated: 2026-09-16
+last_updated: 2026-09-17
 review_status: pending_review
 depends_on:
   - workflow-base
@@ -14,6 +14,8 @@ license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
 # Deadline Engine
+
+## Deadline Engine
 
 ## What this file is
 
@@ -46,19 +48,19 @@ This skill does NOT cover:
 
 ### Step 0 -- Read the user's obligation profile
 
-0. **Read obligation profile** — Read the user's jurisdiction and obligation types from one of these sources, in priority order: 1. **Intake manifest** -- the structured output from an intake skill (e.g., `us-ca-freelance-intake`) 2. **Explicit user statement** -- "I'm a freelancer in Malta" or "I file in the UK and Germany" 3. **Prior conversation context** -- jurisdiction identified in an earlier turn If no jurisdiction can be determined, ask: > "Which country (or countries) do you file taxes in? And what types of obligations do you have -- income tax, VAT/GST, estimated tax payments, social security?" Do not proceed until at least one jurisdiction is confirmed.
+0. **Read obligation profile** — 0. **Read obligation profile** — Read the user's jurisdiction and obligation types from one of these sources, in priority order: 1. **Intake manifest** -- the structured output from an intake skill (e.g., `us-ca-freelance-intake`) 2. **Explicit user statement** -- "I'm a freelancer in Malta" or "I file in the UK and Germany" 3. **Prior conversation context** -- jurisdiction identified in an earlier turn If no jurisdiction can be determined, ask: > "Which country (or countries) do you file taxes in? And what types of obligations do you have -- income tax, VAT/GST, estimated tax payments, social security?" Do not proceed until at least one jurisdiction is confirmed.
 
 ### Step 1 -- Look up filing deadlines
 
-0. **Look up deadlines** — Match the user's jurisdiction + obligation types against the Master Deadline Table in Section 3. Pull every matching row.
+0. **Look up deadlines** — 0. **Look up deadlines** — Match the user's jurisdiction + obligation types against the Master Deadline Table in Section 3. Pull every matching row.
 
 ### Step 2 -- Generate the calendar
 
-0. **Generate calendar** — 1. Anchor to today's date. 2. For each matched obligation, compute the next 12 months of concrete deadline dates. 3. Adjust for weekends: if a deadline falls on a Saturday, move to the preceding Friday; if on a Sunday, move to the following Monday -- unless the jurisdiction has a different convention (noted in the table). 4. Sort all deadlines chronologically. 5. Present as a table: ``` | # | Date | Jurisdiction | Obligation | Form | Action required | Urgency | |---|------|--------------|------------|------|-----------------|---------| ```
+0. **Generate calendar** — 0. **Generate calendar** — 1. Anchor to today's date. 2. For each matched obligation, compute the next 12 months of concrete deadline dates. 3. Adjust for weekends: if a deadline falls on a Saturday, move to the preceding Friday; if on a Sunday, move to the following Monday -- unless the jurisdiction has a different convention (noted in the table). 4. Sort all deadlines chronologically. 5. Present as a table: ``` | # | Date | Jurisdiction | Obligation | Form | Action required | Urgency | |---|------|--------------|------------|------|-----------------|---------| ```
 
 ### Step 3 -- Flag approaching deadlines
 
-0. **Flag deadlines** — Apply urgency flags based on days until deadline from today's date. If any deadline is OVERDUE, add a penalty estimate (Step 4) automatically.
+0. **Flag deadlines** — 0. **Flag deadlines** — Apply urgency flags based on days until deadline from today's date. If any deadline is OVERDUE, add a penalty estimate (Step 4) automatically.
 
 **Urgency flag table**  _(Section 3 -- Master Deadline Table (urgency flag table))_
 
@@ -71,7 +73,7 @@ This skill does NOT cover:
 
 ### Step 4 -- Calculate penalties for late filing
 
-0. **Calculate penalties** — When a deadline is past due or when the user asks "what if I file late?", compute the estimated penalty using the jurisdiction's penalty rules. Reference the relevant content skill for precise penalty logic. If no content skill is loaded for that jurisdiction, use the penalty summary in Section 4 of this file and flag the estimate as T2 (reviewer judgment required). Always state: "Penalty estimates are approximations. Actual penalties depend on the amount of tax owed, the length of delay, and jurisdiction-specific rules. A credentialed professional should confirm."
+0. **Calculate penalties** — 0. **Calculate penalties** — When a deadline is past due or when the user asks "what if I file late?", compute the estimated penalty using the jurisdiction's penalty rules. Reference the relevant content skill for precise penalty logic. If no content skill is loaded for that jurisdiction, use the penalty summary in Section 4 of this file and flag the estimate as T2 (reviewer judgment required). Always state: "Penalty estimates are approximations. Actual penalties depend on the amount of tax owed, the length of delay, and jurisdiction-specific rules. A credentialed professional should confirm."
 
 ## Section 3 -- Master Deadline Table
 
@@ -222,7 +224,7 @@ These are simplified penalty rules for estimation purposes. Always flag as T2 an
 
 - **Failure to file (FTF)** — 5% of unpaid tax per month, max 25%. Minimum penalty for returns >60 days late: lesser of $510 or 100% of unpaid tax.  _(US -- Federal)_
 - **Failure to pay (FTP)** — 0.5% of unpaid tax per month, max 25%.  _(US -- Federal)_
-- **Estimated tax underpayment** — IRC section 6654 penalty calculated at federal short-term rate + 3 percentage points, compounded daily.  _(US -- Federal, IRC section 6654)_
+- **Estimated tax underpayment** — IRC section 6654 penalty calculated at federal short-term rate + 3 percentage points, compounded daily.  _(US -- Federal, IRC section 6654; section 6654))_
 
 ### US -- California
 
@@ -258,9 +260,9 @@ These are simplified penalty rules for estimation purposes. Always flag as T2 an
 
 ### India
 
-- **Late filing (section 234F)** — INR 5,000 if filed by Dec 31; INR 10,000 after. INR 1,000 if total income < INR 5 lakh.  _(India, section 234F)_
+- **Late filing (section 234F)** — INR 5,000 if filed by Dec 31; INR 10,000 after. INR 1,000 if total income < INR 5 lakh.  _(India, section 234F; section 234F))_
 - **Late payment interest (section 234B)** — 1% per month on shortfall.  _(India, section 234B)_
-- **Advance tax interest (section 234C)** — 1% per month on quarterly shortfall.  _(India, section 234C)_
+- **Advance tax interest (section 234C)** — 1% per month on quarterly shortfall.  _(India, section 234C; section 234C))_
 
 ### Spain
 
@@ -320,6 +322,8 @@ Before delivering output, verify:
 This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional (such as a CPA, EA, tax attorney, or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
 
 The most up-to-date, verified version of this skill is maintained at [openaccountants.com](https://openaccountants.com). Log in to access the latest version, request a professional review from a licensed accountant, and track updates as tax law changes.
+
+> Contributed by Ryan Duguid.
 
 <!-- openaccountants-cta-block -->
 

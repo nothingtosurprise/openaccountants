@@ -4,7 +4,7 @@ description: Use this skill whenever asked about Australian bookkeeping for sole
 version: 1.2
 jurisdiction: AU
 tax_year: 2025
-last_updated: 2026-09-16
+last_updated: 2026-09-17
 review_status: pending_review
 depends_on:
   - bookkeeping-workflow-base
@@ -14,6 +14,8 @@ license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
 # Australia Bookkeeping
+
+## Australia Bookkeeping
 
 ## Section 1 -- Quick Reference
 
@@ -201,7 +203,7 @@ Australian software (Xero, MYOB, QuickBooks) typically uses 3–4 digit codes. T
 
 ### Cash vs Accrual Rules
 
-**Cash vs Accrual Rules**
+**Cash vs Accrual Rules**  _(TR 98/1; s 328-285; ITAA 1936 ss 82KZL and 82KZM)_
 
 | Criterion | Cash Basis (Sole Traders / Small Business) | Accruals Basis |
 | --- | --- | --- |
@@ -267,7 +269,7 @@ Small businesses using simplified reporting typically recognise on delivery/comp
 
 ### Instant Asset Write-Off (IAWO)
 
-**Instant Asset Write-Off (IAWO)**
+**Instant Asset Write-Off (IAWO)**  _(Tax Reform No. 2 Act 2026, schedules 1–2 (https://www.legislation.gov.au/C2026A00071/asmade/text))_
 
 | Period | Threshold | Eligibility |
 | --- | --- | --- |
@@ -295,7 +297,7 @@ Small businesses using simplified reporting typically recognise on delivery/comp
 
 ### Common effective lives (2025 determination, asset-specific)
 
-**Common effective lives (2025 determination, asset-specific)**  ([Income Tax Assessment (Effective Life of Depreciating Assets) Determination 2025, Table B](https://www.legislation.gov.au/F2025L01097/asmade/text)). Choose the determination applicable under s 40-95; the 2025 instrument commenced on 16 September 2025.
+**Common effective lives (2025 determination, asset-specific)**  _(Income Tax Assessment (Effective Life of Depreciating Assets) Determination 2025, Table B (https://www.legislation.gov.au/F2025L01097/asmade/text). Choose the determination applicable under s 40-95; the 2025 instrument commenced on 16 September 2025.)_
 
 | Asset | Effective Life | DV Rate | PC Rate |
 | --- | --- | --- | --- |
@@ -310,7 +312,7 @@ Small businesses using simplified reporting typically recognise on delivery/comp
 
 ### Car Limit
 
-- **Car cost limit for depreciation** — For 2025-26, the limit is AUD 69,674. For 2026-27, it is AUD 69,883. Only the business-use portion of the applicable limit can be depreciated. AUD  _(Car cost limit for depreciation)_
+- **Car cost limit for depreciation** — For 2025-26, the limit is AUD 69,674. For 2026-27, it is AUD 69,883. Only the business-use portion of the applicable limit can be depreciated. AUD  _(Car cost limit for depreciation)_ AUD
 
 ## Section 6 -- P&L Format
 
@@ -553,6 +555,8 @@ the BAS and the accounts are both unreliable. See `au-bas-preparation.md` Sectio
 
 ### 11.2 Evidence to hold
 
+**11.2 Evidence to hold**
+
 | Transaction | Evidence required |
 | --- | --- |
 | Sale | Invoice or point-of-sale record. A tax invoice where GST is charged |
@@ -565,9 +569,6 @@ the BAS and the accounts are both unreliable. See `au-bas-preparation.md` Sectio
 | Payroll | Payroll register, timesheets, the employment record and STP submissions |
 | Adjustment to a sale or purchase | Adjustment note or credit note |
 | Bad debt written off | The board minute or file note recording the write-off and its date |
-
-Records are generally kept for five years from lodgment, and longer where a CGT asset or a
-carried-forward loss depends on them.
 
 ### 11.3 Reconciliation as a control, not a chore
 
@@ -587,6 +588,8 @@ The ledger produces the financial statements. The tax return starts from those s
 adjusts. Recording the tax answer in the ledger destroys the financial statements; recording only
 the accounting answer and forgetting the adjustment understates or overstates tax. Keep both, and
 keep the reconciliation between them.
+
+**11.4 Accounting treatment is not tax treatment**
 
 | Item | Accounting treatment | Tax treatment |
 | --- | --- | --- |
@@ -608,7 +611,7 @@ needs deferred tax balances where it reports under the full recognition requirem
 
 ### 11.5 Correcting an error
 
-Where the error is found matters more than how large it is.
+**11.5 Correcting an error**
 
 | Where the error is | What to do |
 | --- | --- |
@@ -618,10 +621,6 @@ Where the error is found matters more than how large it is.
 | In a lodged BAS, PAYG withholding affected | Correct through the PAYG withholding correction process, and check whether STP needs updating |
 | In a lodged income tax return | Request an amendment. See `au-lodgment-deadlines-penalties.md` Section 10 |
 | Circumstances changed after correct reporting | This is an adjustment, not an error. Record it in the current period |
-
-**Never fix a lodged period by silently re-opening it.** The accounts must continue to agree with
-what was lodged, or to a documented correction of it. An unexplained change to a locked period is
-the difference between a correction and a misstatement.
 
 ### 11.6 Common bookkeeping errors
 
@@ -641,6 +640,8 @@ the difference between a correction and a misstatement.
 ## Disclaimer
 
 This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional (such as a CPA, CA, registered tax agent, or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
+
+> Contributed by Ryan Duguid.
 
 > Contributed by Ryan Duguid.
 

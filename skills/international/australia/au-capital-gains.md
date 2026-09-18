@@ -4,8 +4,7 @@ description: "Use this skill for any Australian capital gains tax question, for 
 version: 1.2
 jurisdiction: AU
 tax_year: 2026
-tax_year_notes: "2026-27 (1 July 2026 to 30 June 2027), with the enacted 1 July 2027 changes flagged"
-last_updated: 2026-09-16
+last_updated: 2026-09-17
 review_status: pending_review
 depends_on:
   - au-individual-return
@@ -15,6 +14,8 @@ license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
 # AU Capital Gains
+
+## AU Capital Gains
 
 ## Australia Capital Gains Tax v1.2
 
@@ -148,13 +149,13 @@ cost base error on a rental property disposal. See `au-rental-property.md`.
 
 ## Section 6 - The discount, and who gets it
 
-**Entity treatment for assets held more than 12 months**
+**Entity treatment for assets held more than 12 months**  _([ATO, CGT discount](https://www.ato.gov.au/individuals-and-families/investments-and-assets/capital-gains-tax/cgt-discount))_
 
 | Entity | Discount | Note |
 | --- | --- | --- |
 | Australian resident individual | 50% | Applies until 30 June 2027. See Section 9 |
 | Australian trust | 50% | The discount flows through to beneficiaries, who must be able to use it in their own right |
-| Complying superannuation fund | 33.33% | |
+| Complying superannuation fund | 33.33% |  |
 | Company | None | The full gain is taxed at the company rate |
 | Foreign or temporary resident | Apportioned | No discount for the part of the gain accruing after 8 May 2012 while a foreign or temporary resident. A period of Australian residency during ownership can support an apportioned discount |
 
@@ -272,8 +273,7 @@ Acts before use.
 
 ## Section 10 - Worked example
 
-**Facts.** Priya is an Australian resident individual for the whole of the 2026-27 income year.
-All figures are synthetic.
+**Facts**
 
 | Item | Detail |
 | --- | --- |
@@ -282,6 +282,9 @@ All figures are synthetic.
 | Sold | Contract dated 14 March 2027, proceeds $46,000, brokerage on sale $110 |
 | Other current year disposal | A second parcel sold at a capital loss of $1,500 |
 | Carried forward | Net capital loss of $3,200 from 2024-25 |
+
+**Facts.** Priya is an Australian resident individual for the whole of the 2026-27 income year.
+All figures are synthetic.
 
 **Step 1, CGT event and date.** CGT event A1 happens at the contract date, 14 March 2027, so the
 gain falls in the 2026-27 income year.
@@ -387,6 +390,8 @@ Sources were checked on 16 September 2026.
 > **Working paper only, not a lodged return.** Have a qualified Australian CPA or CA review this
 > before lodging. Small business CGT eligibility requires detailed analysis of the active asset
 > test, the aggregation rules and the maximum net asset value test.
+
+> Contributed by Ryan Duguid.
 
 <!-- openaccountants-cta-block -->
 
