@@ -4,7 +4,7 @@ description: Use this skill whenever asked about Australian bookkeeping for sole
 version: 1.3
 jurisdiction: AU
 tax_year: 2025
-last_updated: 2026-09-18
+last_updated: 2026-09-20
 review_status: pending_review
 depends_on:
   - bookkeeping-workflow-base
@@ -14,6 +14,8 @@ license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
 # Australia Bookkeeping
+
+## Australia Bookkeeping
 
 ## Section 1 -- Quick Reference
 
@@ -267,7 +269,7 @@ Small businesses using simplified reporting typically recognise on delivery/comp
 
 ### Instant Asset Write-Off (IAWO)
 
-**Instant Asset Write-Off (IAWO)**
+**Instant Asset Write-Off (IAWO)**  _([Tax Reform No. 2 Act 2026, schedules 1–2](https://www.legislation.gov.au/C2026A00071/asmade/text))_
 
 | Period | Threshold | Eligibility |
 | --- | --- | --- |
@@ -295,7 +297,7 @@ Small businesses using simplified reporting typically recognise on delivery/comp
 
 ### Common effective lives (2025 determination, asset-specific)
 
-**Common effective lives (2025 determination, asset-specific)**  ([Income Tax Assessment (Effective Life of Depreciating Assets) Determination 2025, Table B](https://www.legislation.gov.au/F2025L01097/asmade/text)). Choose the determination applicable under s 40-95; the 2025 instrument commenced on 16 September 2025.
+**Common effective lives (2025 determination, asset-specific)**  _([Income Tax Assessment (Effective Life of Depreciating Assets) Determination 2025, Table B](https://www.legislation.gov.au/F2025L01097/asmade/text))_
 
 | Asset | Effective Life | DV Rate | PC Rate |
 | --- | --- | --- | --- |
@@ -310,7 +312,7 @@ Small businesses using simplified reporting typically recognise on delivery/comp
 
 ### Car Limit
 
-- **Car cost limit for depreciation** — For 2025-26, the limit is AUD 69,674. For 2026-27, it is AUD 69,883. Only the business-use portion of the applicable limit can be depreciated. AUD  _(Car cost limit for depreciation)_
+- **Car cost limit for depreciation** — For 2025-26, the limit is AUD 69,674. For 2026-27, it is AUD 69,883. Only the business-use portion of the applicable limit can be depreciated. AUD
 
 ## Section 6 -- P&L Format
 
@@ -484,7 +486,7 @@ TOTAL EQUITY                                          xxx
 
 ### Large Proprietary Thresholds (must be reporting entity)
 
-- **Large Proprietary Thresholds** — Meet 2 of 3: Revenue ≥ $50m, assets ≥ $25m, employees ≥ 100.  _(Large Proprietary Thresholds)_
+- **Large Proprietary Thresholds** — Meet 2 of 3: Revenue ≥ $50m, assets ≥ $25m, employees ≥ 100.
 
 ## Section 10 -- Interaction with Tax Skills
 
@@ -528,30 +530,20 @@ TOTAL EQUITY                                          xxx
 
 ### 11.1 The classification decision
 
-Every transaction needs four decisions, not one. Answer them in this order, because a later
-answer can change an earlier one.
+Every transaction needs four decisions, not one. Answer them in this order, because a later answer can change an earlier one.
 
-1. **Is it a business transaction at all?** Owner drawings, private spending on a business card
-   and internal transfers between the entity's own accounts are not income or expenses. Code them
-   to equity or to the relevant balance sheet account.
-2. **Revenue or capital?** A cost that acquires, upgrades or extends the life of an asset is
-   capital. A cost that restores it to its prior condition is a repair. See Section 5 for the
-   thresholds and `au-rental-property.md` for the repairs and improvements tests.
-3. **Which account?** Use the chart of accounts in Section 2. Consistency between periods matters
-   more than finding a perfect label; a category that changes each year destroys comparatives.
-4. **Which GST code?** Only after the first three. See the table in Section 4. A transaction coded
-   to the wrong account often carries the wrong GST code with it.
+1. **Is it a business transaction at all?** Owner drawings, private spending on a business card and internal transfers between the entity's own accounts are not income or expenses. Code them to equity or to the relevant balance sheet account.
+2. **Revenue or capital?** A cost that acquires, upgrades or extends the life of an asset is capital. A cost that restores it to its prior condition is a repair. See Section 5 for the thresholds and `au-rental-property.md` for the repairs and improvements tests.
+3. **Which account?** Use the chart of accounts in Section 2. Consistency between periods matters more than finding a perfect label; a category that changes each year destroys comparatives.
+4. **Which GST code?** Only after the first three. See the table in Section 4. A transaction coded to the wrong account often carries the wrong GST code with it.
 
-**Private use.** Where an expense serves both business and private purposes, record the full
-amount and apportion, rather than guessing a net figure. The apportionment basis must be
-documented and consistent: a logbook for a vehicle, a floor area or hours record for a home
-office, an itemised bill for a phone. A percentage with no supporting method fails on review.
+**Private use.** Where an expense serves both business and private purposes, record the full amount and apportion, rather than guessing a net figure. The apportionment basis must be documented and consistent: a logbook for a vehicle, a floor area or hours record for a home office, an itemised bill for a phone. A percentage with no supporting method fails on review.
 
-**Unknown transactions.** Post to a clearing or suspense account and list them for the client.
-Never guess a classification to close a period. An unresolved suspense balance at period end means
-the BAS and the accounts are both unreliable. See `au-bas-preparation.md` Section 4.
+**Unknown transactions.** Post to a clearing or suspense account and list them for the client. Never guess a classification to close a period. An unresolved suspense balance at period end means the BAS and the accounts are both unreliable. See `au-bas-preparation.md` Section 4.
 
 ### 11.2 Evidence to hold
+
+**Evidence to hold**
 
 | Transaction | Evidence required |
 | --- | --- |
@@ -566,8 +558,7 @@ the BAS and the accounts are both unreliable. See `au-bas-preparation.md` Sectio
 | Adjustment to a sale or purchase | Adjustment note or credit note |
 | Bad debt written off | The board minute or file note recording the write-off and its date |
 
-Records are generally kept for five years from lodgment, and longer where a CGT asset or a
-carried-forward loss depends on them.
+Records are generally kept for five years from lodgment, and longer where a CGT asset or a carried-forward loss depends on them.
 
 ### 11.3 Reconciliation as a control, not a chore
 
@@ -583,10 +574,9 @@ A reconciliation is what makes the ledger evidence rather than assertion. At min
 
 ### 11.4 Accounting treatment is not tax treatment
 
-The ledger produces the financial statements. The tax return starts from those statements and then
-adjusts. Recording the tax answer in the ledger destroys the financial statements; recording only
-the accounting answer and forgetting the adjustment understates or overstates tax. Keep both, and
-keep the reconciliation between them.
+The ledger produces the financial statements. The tax return starts from those statements and then adjusts. Recording the tax answer in the ledger destroys the financial statements; recording only the accounting answer and forgetting the adjustment understates or overstates tax. Keep both, and keep the reconciliation between them.
+
+**Accounting treatment vs tax treatment**
 
 | Item | Accounting treatment | Tax treatment |
 | --- | --- | --- |
@@ -603,16 +593,16 @@ keep the reconciliation between them.
 | Unrealised foreign exchange movements | Revalued at reporting date | Taxed on a realisation event under Division 775 |
 | Leases | Right-of-use asset and lease liability under AASB 16 | Depends on whether the arrangement is a lease or a hire purchase for tax |
 
-Choosing the cost model does not remove depreciation: allocate the depreciable amount over
-the asset's useful life. Account for land separately from buildings.
+Choosing the cost model does not remove depreciation: allocate the depreciable amount over the asset's useful life. Account for land separately from buildings.
 [AASB 116 paras 29–31, 50, 58](https://standards.aasb.gov.au/aasb-116-dec-2022#measurement_after_recognition)
 
-Record permanent and temporary differences in a tax reconciliation working paper. A company also
-needs deferred tax balances where it reports under the full recognition requirements.
+Record permanent and temporary differences in a tax reconciliation working paper. A company also needs deferred tax balances where it reports under the full recognition requirements.
 
 ### 11.5 Correcting an error
 
 Where the error is found matters more than how large it is.
+
+**Correcting an error**
 
 | Where the error is | What to do |
 | --- | --- |
@@ -623,19 +613,15 @@ Where the error is found matters more than how large it is.
 | In a lodged income tax return | Request an amendment. See `au-lodgment-deadlines-penalties.md` Section 10 |
 | Circumstances changed after correct reporting | This is an adjustment, not an error. Record it in the current period |
 
-**Never fix a lodged period by silently re-opening it.** The accounts must continue to agree with
-what was lodged, or to a documented correction of it. An unexplained change to a locked period is
-the difference between a correction and a misstatement.
+**Never fix a lodged period by silently re-opening it.** The accounts must continue to agree with what was lodged, or to a documented correction of it. An unexplained change to a locked period is the difference between a correction and a misstatement.
 
 ### 11.6 Common bookkeeping errors
 
-- Coding a transaction by the payee name rather than by what was supplied. The same supplier can
-  produce taxable, GST-free and input taxed transactions.
+- Coding a transaction by the payee name rather than by what was supplied. The same supplier can produce taxable, GST-free and input taxed transactions.
 - Claiming a GST credit on wages, superannuation, bank fees, most government charges or stamp duty.
 - Coding a director loan drawing to wages, or a wage to a drawing.
 - Capitalising a repair, or expensing an improvement.
-- Recording a net amount for a transaction that had both a gross figure and a deduction, which
-  hides the deduction from both the accounts and the BAS.
+- Recording a net amount for a transaction that had both a gross figure and a deduction, which hides the deduction from both the accounts and the BAS.
 - Leaving a suspense balance and lodging anyway.
 - Changing the chart of accounts mid-year without restating comparatives.
 - Recording the tax depreciation figure in the ledger and calling it the accounting figure.
@@ -645,6 +631,8 @@ the difference between a correction and a misstatement.
 ## Disclaimer
 
 This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional (such as a CPA, CA, registered tax agent, or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
+
+> Contributed by Ryan Duguid.
 
 > Contributed by Ryan Duguid.
 

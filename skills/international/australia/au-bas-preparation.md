@@ -14,8 +14,7 @@ description: >
 version: 0.2
 jurisdiction: AU
 tax_year: 2026
-tax_year_notes: "2026-27 (1 July 2026 to 30 June 2027)"
-last_updated: 2026-09-18
+last_updated: 2026-09-20
 review_status: pending_review
 depends_on:
   - australia-gst
@@ -25,7 +24,9 @@ tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# Australia BAS Preparation v0.2
+# Australia BAS Preparation
+
+## Australia BAS Preparation v0.2
 
 > **General reference only.** This skill is general tax and accounting reference material for
 > AI-assisted workflows. It has not been reviewed for any specific person's facts, documents,
@@ -48,8 +49,6 @@ each rule. It does not restate the classification rules:
 - Property transactions, including the margin scheme and GST at settlement, live in
   `au-gst-property.md`.
 - Lodgment dates, penalties, interest and remission live in `au-lodgment-deadlines-penalties.md`.
-
----
 
 ## Section 1 - Scope statement
 
@@ -79,12 +78,9 @@ This skill does NOT cover:
 - Income tax return preparation. PAYG instalments are prepayments only, and the return is where
   they are reconciled.
 
----
-
 ## Section 2 - Establish the facts before you calculate
 
-Nothing on a BAS can be filled in reliably until these are known. Ask for them, or read them from
-the client's ATO portal, before touching a number.
+**Facts to establish before calculating**
 
 | Fact to establish | Why it changes the answer |
 | --- | --- |
@@ -99,24 +95,10 @@ the client's ATO portal, before touching a number.
 | FBT instalment role | Determines whether F1 applies |
 | Any prior period error not yet corrected | Determines whether a correction or a revision is needed |
 
-**GST reporting cycle.** Quarterly applies where GST turnover is less than $20 million and the
-ATO has not directed monthly reporting. Monthly is compulsory at $20 million or more, and is
-available by choice below that. Annual reporting is available only to an entity that is
-voluntarily registered, that is, turnover under $75,000, or under $150,000 for a not-for-profit
-body. [ATO, Due dates for lodging and paying your BAS](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/due-dates-for-lodging-and-paying-your-bas)
+- **GST reporting cycle** — Quarterly applies where GST turnover is less than $20 million and the ATO has not directed monthly reporting. Monthly is compulsory at $20 million or more, and is available by choice below that. Annual reporting is available only to an entity that is voluntarily registered, that is, turnover under $75,000, or under $150,000 for a not-for-profit body.  _([ATO, Due dates for lodging and paying your BAS](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/due-dates-for-lodging-and-paying-your-bas))_
+- **Accounting basis** — On a cash basis, an amount is attributed to the period in which payment was received or made, and may be part of the sale price. On a non-cash (accruals) basis, an amount is attributed to the earlier of the period in which any payment is received or made and the period in which an invoice is issued or received.  _([ATO, Identify your accounting basis; GST Act ss 29-5, 29-10](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/completing-your-bas-for-gst/identify-your-accounting-basis))_
 
-**Accounting basis.** On a cash basis, an amount is attributed to the period in which payment
-was received or made, and may be part of the sale price. On a non-cash (accruals) basis, an
-amount is attributed to the earlier of the period in which any payment is received or made and
-the period in which an invoice is issued or received.
-[ATO, Identify your accounting basis](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/completing-your-bas-for-gst/identify-your-accounting-basis);
-[GST Act ss 29-5, 29-10](https://www.ato.gov.au/law/view/document?docid=PAC/19990055/29-5)
-
-**Do not assume the basis from the accounting file.** A file set to accrual reporting for
-management accounts can still be registered to report GST on a cash basis, and the reverse is
-common after a change of adviser. Confirm the registered basis, not the software setting.
-
----
+**Do not assume the basis from the accounting file.** A file set to accrual reporting for management accounts can still be registered to report GST on a cash basis, and the reverse is common after a change of adviser. Confirm the registered basis, not the software setting.
 
 ## Section 3 - Step 1: Gather the records
 
@@ -133,40 +115,19 @@ Collect, for the exact period being reported:
 7. Any adjustment notes issued or received, and any credit notes.
 8. Records of assets bought or sold, including trade-ins.
 
-**Evidence rule for credits.** A GST credit generally requires a valid tax invoice held at the
-time the claim is made. The exception applies to acquisitions of $82.50 including GST or less.
-The four-year credit time limit is not permission to claim before the required evidence exists.
-[GST Act ss 11-5, 29-10, 29-70, 93-5](https://www.ato.gov.au/law/view/document?docid=PAC/19990055/29-10)
-
----
+- **Evidence rule for credits** — A GST credit generally requires a valid tax invoice held at the time the claim is made. The exception applies to acquisitions of $82.50 including GST or less. The four-year credit time limit is not permission to claim before the required evidence exists.  _([GST Act ss 11-5, 29-10, 29-70, 93-5](https://www.ato.gov.au/law/view/document?docid=PAC/19990055/29-10))_
 
 ## Section 4 - Step 2: Reconcile before you report
 
-Reconciliation is what turns the ledger into evidence. The ATO reports that incorrect timing,
-miscalculation and transcription errors, unsubstantiated credit claims, credits on private-use
-purchases and missed registration thresholds together make up more than half of all GST
-corrections, and a reconciliation catches most of them. Complete all five before filling in a
-label.
+Reconciliation is what turns the ledger into evidence. The ATO reports that incorrect timing, miscalculation and transcription errors, unsubstantiated credit claims, credits on private-use purchases and missed registration thresholds together make up more than half of all GST corrections, and a reconciliation catches most of them. Complete all five before filling in a label.
 
-1. **Bank reconciliation.** Every business account reconciled to the statement closing balance at
-   the period end, with the unpresented items listed.
-2. **GST control accounts.** The GST collected and GST paid control account balances at the period
-   end must agree with the GST calculated from the transaction listing for the period. An
-   unexplained difference is an error, not a rounding item.
-3. **PAYG withholding liability account.** The balance must agree with amounts withheld per the
-   payroll register for the period, less amounts already remitted.
-4. **Sales reconciliation.** Total sales per the profit and loss for the period must agree with
-   G1, after allowing for the reporting basis and for items excluded from G1.
-5. **Balance sheet sanity check.** Clearing and suspense accounts must be zero or fully explained.
-   A transaction sitting in suspense has no GST classification, so it cannot have been reported
-   correctly.
+1. **Bank reconciliation.** Every business account reconciled to the statement closing balance at the period end, with the unpresented items listed.
+2. **GST control accounts.** The GST collected and GST paid control account balances at the period end must agree with the GST calculated from the transaction listing for the period. An unexplained difference is an error, not a rounding item.
+3. **PAYG withholding liability account.** The balance must agree with amounts withheld per the payroll register for the period, less amounts already remitted.
+4. **Sales reconciliation.** Total sales per the profit and loss for the period must agree with G1, after allowing for the reporting basis and for items excluded from G1.
+5. **Balance sheet sanity check.** Clearing and suspense accounts must be zero or fully explained. A transaction sitting in suspense has no GST classification, so it cannot have been reported correctly.
 
-**Common source of a false reconciliation.** Transactions processed outside accounts payable or
-accounts receivable, such as a direct bank entry or a journal, are often classified incorrectly
-and never reach the GST control accounts. Review journals posted to revenue, expense and asset
-accounts for the period before signing off the reconciliation.
-
----
+**Common source of a false reconciliation.** Transactions processed outside accounts payable or accounts receivable, such as a direct bank entry or a journal, are often classified incorrectly and never reach the GST control accounts. Review journals posted to revenue, expense and asset accounts for the period before signing off the reconciliation.
 
 ## Section 5 - Step 3: Map GST amounts to labels
 
@@ -174,7 +135,7 @@ Classify every transaction first, using `australia-gst.md`. Then map.
 
 ### 5.1 Simpler BAS
 
-If GST turnover is less than $10 million, the entity reports only three GST labels:
+**Simpler BAS GST labels**  _([ATO, Simpler BAS GST bookkeeping guide](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst/simpler-bas-gst-bookkeeping-guide))_
 
 | Label | What goes in it |
 | --- | --- |
@@ -182,31 +143,17 @@ If GST turnover is less than $10 million, the entity reports only three GST labe
 | 1A | Total GST payable on sales for the period, including GST adjustments |
 | 1B | Total GST credits on purchases for the period, including credit adjustments |
 
-[ATO, Simpler BAS GST bookkeeping guide](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst/simpler-bas-gst-bookkeeping-guide)
-
 ### 5.2 Full reporting
 
-Full reporting adds the G labels. Two methods are available and both are acceptable:
-
-- **Accounts method.** Take 1A and 1B directly from the GST control accounts, which requires GST
-  to be separately recorded for supplies and acquisitions.
-- **Calculation worksheet method.** Complete the ATO GST calculation worksheet and transfer G9 to
-  1A and G20 to 1B. The worksheet is not lodged.
-
-[ATO, Complete your BAS: Step 5 summary](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/completing-your-bas-for-gst/complete-your-bas/step-5-summary)
+- **Full reporting methods** — Full reporting adds the G labels. Two methods are available and both are acceptable: - **Accounts method.** Take 1A and 1B directly from the GST control accounts, which requires GST to be separately recorded for supplies and acquisitions. - **Calculation worksheet method.** Complete the ATO GST calculation worksheet and transfer G9 to 1A and G20 to 1B. The worksheet is not lodged.  _([ATO, Complete your BAS: Step 5 summary](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/completing-your-bas-for-gst/complete-your-bas/step-5-summary))_
 
 ### 5.3 What is excluded from the GST labels entirely
 
-Wages and salaries, superannuation contributions, drawings and owner contributions, loan principal,
-dividends, internal transfers between the entity's own accounts, and stamp duty. These have no
-GST classification. Reporting them as purchases at G11 is a recurring error.
-
----
+- **Items excluded from GST labels** — Wages and salaries, superannuation contributions, drawings and owner contributions, loan principal, dividends, internal transfers between the entity's own accounts, and stamp duty. These have no GST classification. Reporting them as purchases at G11 is a recurring error.
 
 ## Section 6 - Step 4: PAYG withholding is not PAYG instalments
 
-These are two separate obligations that happen to share one form. Treating them as one is a
-recurring conceptual error, and it changes both the amount payable and who bears the liability.
+**PAYG withholding vs PAYG instalments**
 
 | Feature | PAYG withholding | PAYG instalments |
 | --- | --- | --- |
@@ -219,6 +166,8 @@ recurring conceptual error, and it changes both the amount payable and who bears
 
 ### 6.1 PAYG withholding labels
 
+**PAYG withholding labels**
+
 | Label | Content |
 | --- | --- |
 | W1 | Gross salary, wages and other payments subject to withholding, including payments with no amount withheld; exclusions below |
@@ -228,40 +177,22 @@ recurring conceptual error, and it changes both the amount payable and who bears
 | W5 | Total amounts withheld, being W2 plus W3 plus W4 |
 | 4 | The W5 total, transferred to the summary |
 
-W1 is a gross payments figure. Exclude salary sacrifice amounts, superannuation contributions
-and payments whose withholding belongs at W3 or W4. Include wages below the withholding
-threshold even when no tax was withheld.
-
-W3 includes withholding from investment distributions where no TFN was quoted, interest,
-dividends and royalties paid to foreign residents, departing Australia superannuation payments,
-and payments to foreign residents for entertainment, sports, construction and casino gaming
-junket activities.
-
-**Large withholders:** complete only W1, and omit W1 as well if reporting through Single Touch
-Payroll (STP). Leave W2, W3, W4, W5 and label 4 blank; remit withheld amounts electronically.
-For other withholders, reconcile W1 and W2 to the payroll register and relevant STP figures
-for the period, and investigate any difference before lodging.
-[ATO, PAYG withholding: activity statement labels and large withholders](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/pay-as-you-go-payg-withholding)
+- **W1 gross payments detail** — W1 is a gross payments figure. Exclude salary sacrifice amounts, superannuation contributions and payments whose withholding belongs at W3 or W4. Include wages below the withholding threshold even when no tax was withheld.
+- **W3 inclusions** — W3 includes withholding from investment distributions where no TFN was quoted, interest, dividends and royalties paid to foreign residents, departing Australia superannuation payments, and payments to foreign residents for entertainment, sports, construction and casino gaming junket activities.
+- **Large withholders** — **Large withholders:** complete only W1, and omit W1 as well if reporting through Single Touch Payroll (STP). Leave W2, W3, W4, W5 and label 4 blank; remit withheld amounts electronically. For other withholders, reconcile W1 and W2 to the payroll register and relevant STP figures for the period, and investigate any difference before lodging.  _([ATO, PAYG withholding: activity statement labels and large withholders](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/pay-as-you-go-payg-withholding))_
 
 ### 6.2 PAYG instalment labels
+
+**PAYG instalment options**  _([ATO, PAYG instalments: how to complete your activity statement](https://www.ato.gov.au/forms-and-instructions/payg-instalments-how-to-complete-your-activity-statement))_
 
 | Option | Labels used | How it works |
 | --- | --- | --- |
 | Option 1, instalment amount | T7, and T8, T9, T4 if varying | Pay the amount the ATO calculated at T7. Enter it at 5A |
 | Option 2, instalment rate | T1, T2, and T3, T4 if varying | Multiply instalment income at T1 by the rate at T2. Enter the result at 5A |
 
-If a varied amount at T9 is negative, a credit may be claimed at 5B.
-[ATO, PAYG instalments: how to complete your activity statement](https://www.ato.gov.au/forms-and-instructions/payg-instalments-how-to-complete-your-activity-statement)
-
-**Varying carries a risk.** If varied instalments come to less than 85% of the total tax payable
-on instalment income for the year, general interest charge can apply to the difference, and
-penalties are possible.
-[ATO, How to vary your PAYG instalments](https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/how-to-vary-your-payg-instalments)
-
-**Instalment notices.** Where the entity receives an instalment notice rather than an activity
-statement, and does not wish to vary, the amount can simply be paid. No lodgment is required.
-
----
+- **Negative varied amount at T9** — If a varied amount at T9 is negative, a credit may be claimed at 5B.  _([ATO, PAYG instalments: how to complete your activity statement](https://www.ato.gov.au/forms-and-instructions/payg-instalments-how-to-complete-your-activity-statement))_
+- **Varying carries a risk** — **Varying carries a risk.** If varied instalments come to less than 85% of the total tax payable on instalment income for the year, general interest charge can apply to the difference, and penalties are possible.  _([ATO, How to vary your PAYG instalments](https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/how-to-vary-your-payg-instalments))_
+- **Instalment notices** — **Instalment notices.** Where the entity receives an instalment notice rather than an activity statement, and does not wish to vary, the amount can simply be paid. No lodgment is required.
 
 ## Section 7 - Step 5: Adjustments and corrections
 
@@ -269,18 +200,11 @@ These are three different things. Treat them separately.
 
 ### 7.1 Adjustments
 
-An adjustment arises because circumstances changed after the original reporting, not because the
-original reporting was wrong. Examples: a price change, a cancelled supply, a bad debt written off,
-a change in the extent of creditable purpose, goods applied to private use. Adjustments belong in
-the period in which the adjustment event is accounted for, and they flow into 1A or 1B.
-[GST Act Div 19, Div 21, Div 129](https://www.ato.gov.au/law/view/document?docid=PAC/19990055/19-10)
-
-An adjustment note is generally required before a decreasing adjustment on a supply is claimed.
+- **Adjustments** — An adjustment arises because circumstances changed after the original reporting, not because the original reporting was wrong. Examples: a price change, a cancelled supply, a bad debt written off, a change in the extent of creditable purpose, goods applied to private use. Adjustments belong in the period in which the adjustment event is accounted for, and they flow into 1A or 1B. An adjustment note is generally required before a decreasing adjustment on a supply is claimed.  _([GST Act Div 19, Div 21, Div 129](https://www.ato.gov.au/law/view/document?docid=PAC/19990055/19-10))_
 
 ### 7.2 Correcting an earlier GST error on a later BAS
 
-An error is a mistake in the earlier reporting. Most can be corrected on a later BAS instead of
-revising the earlier one, which generally avoids interest and penalties.
+**Correcting an earlier GST error on a later BAS**  _([ATO, Types of GST errors; LI 2023/32, Correcting GST Errors Determination 2023](https://www.legislation.gov.au/F2023L01284/latest))_
 
 | Condition | Credit error (too much GST reported) | Debit error (too little GST reported) |
 | --- | --- | --- |
@@ -288,45 +212,20 @@ revising the earlier one, which generally avoids interest and penalties.
 | Value limit | None | Under $20m: less than $12,500. $20m to under $100m: less than $25,000. $100m to under $500m: less than $50,000. $500m to under $1b: less than $100,000. $1b and over: less than $560,000 |
 | Other conditions | Cannot claim additional GST credits after the four-year credit time limit has ended | Must not result from recklessness or intentional disregard of a GST law |
 
-The value limit applies to the net sum of debit errors less credit errors on the same BAS. Where
-the net sum exceeds the limit, correct up to the limit on the later BAS and revise the original
-period for the excess.
-[ATO, Types of GST errors](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/correcting-gst-errors/types-of-gst-errors);
-[LI 2023/32, Correcting GST Errors Determination 2023](https://www.legislation.gov.au/F2023L01284/latest)
-
-An error cannot be corrected on a later BAS while the entity is subject to an ATO audit or other
-compliance activity for the relevant period.
+- **Net sum value limit and audit exclusion** — The value limit applies to the net sum of debit errors less credit errors on the same BAS. Where the net sum exceeds the limit, correct up to the limit on the later BAS and revise the original period for the excess. An error cannot be corrected on a later BAS while the entity is subject to an ATO audit or other compliance activity for the relevant period.  _([ATO, Types of GST errors; LI 2023/32, Correcting GST Errors Determination 2023](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/correcting-gst-errors/types-of-gst-errors))_
 
 ### 7.3 Revising an earlier BAS
 
-Where the correction rules do not permit a later-BAS correction, revise the earlier activity
-statement. The ATO treats a revised BAS as an application to amend an assessment. If the revision
-increases tax or reduces a credit, it is generally treated as a voluntary disclosure, which
-usually attracts concessional treatment of penalties and interest.
-[ATO, Revising an earlier business activity statement](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/fix-a-mistake-or-amend-your-tax-return/correct-an-activity-statement/revising-an-earlier-activity-statement)
-
----
+- **Revising an earlier BAS** — Where the correction rules do not permit a later-BAS correction, revise the earlier activity statement. The ATO treats a revised BAS as an application to amend an assessment. If the revision increases tax or reduces a credit, it is generally treated as a voluntary disclosure, which usually attracts concessional treatment of penalties and interest.  _([ATO, Revising an earlier business activity statement](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/fix-a-mistake-or-amend-your-tax-return/correct-an-activity-statement/revising-an-earlier-activity-statement))_
 
 ## Section 8 - Step 6: Calculate the result
 
-The summary is arithmetic, not judgement, once the labels are right.
-
-```
-8A  Total amounts you owe the ATO   = 1A + 4 + 5A + 6A + 7 (+ other liability labels)
-8B  Total the ATO owes you          = 1B + 5B + 6B (+ other credit labels)
-9   Net amount                      = 8A - 8B
-```
-
-If 9 is positive it is payable. If negative it is refundable, subject to offsetting against other
-ATO debts.
-
-A BAS must be lodged for every period in which the entity is registered, even where the net amount
-is nil and no GST was payable on any supply.
-[GST Act s 31-5](https://www.ato.gov.au/law/view/document?docid=PAC/19990055/31-5)
-
----
+- **BAS summary calculation** — ``` 8A  Total amounts you owe the ATO   = 1A + 4 + 5A + 6A + 7 (+ other liability labels) 8B  Total the ATO owes you          = 1B + 5B + 6B (+ other credit labels) 9   Net amount                      = 8A - 8B ``` If 9 is positive it is payable. If negative it is refundable, subject to offsetting against other ATO debts.
+- **Nil BAS still required** — A BAS must be lodged for every period in which the entity is registered, even where the net amount is nil and no GST was payable on any supply.  _([GST Act s 31-5](https://www.ato.gov.au/law/view/document?docid=PAC/19990055/31-5))_
 
 ## Section 9 - Step 7: Lodge and pay
+
+**Due dates by cycle**  _([ATO, Due dates for lodging and paying your BAS](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/due-dates-for-lodging-and-paying-your-bas))_
 
 | Cycle | Due date | Notes |
 | --- | --- | --- |
@@ -336,29 +235,16 @@ is nil and no GST was payable on any supply.
 | Quarter 3, January to March | 28 April | Online lodgment may allow an extra 2 weeks |
 | Quarter 4, April to June | 28 July | Online lodgment may allow an extra 2 weeks |
 
-A due date falling on a weekend or public holiday moves to the next business day. A registered tax
-or BAS agent may have a different lodgment program date, which is a concession attached to the
-agent's client list and is not an automatic right of the taxpayer.
-[ATO, Due dates for lodging and paying your BAS](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/due-dates-for-lodging-and-paying-your-bas)
+- **Weekend/holiday and agent program** — A due date falling on a weekend or public holiday moves to the next business day. A registered tax or BAS agent may have a different lodgment program date, which is a concession attached to the agent's client list and is not an automatic right of the taxpayer.  _([ATO, Due dates for lodging and paying your BAS](https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/due-dates-for-lodging-and-paying-your-bas))_
+- **Electronic lodgment threshold** — Entities with GST turnover of $20 million or more must lodge electronically.  _([GST Act s 31-25](https://www.ato.gov.au/law/view/document?docid=PAC/19990055/31-25))_
 
-Entities with GST turnover of $20 million or more must lodge electronically.
-[GST Act s 31-25](https://www.ato.gov.au/law/view/document?docid=PAC/19990055/31-25)
-
-**Lodgment and payment are separate obligations.** Lodging on time does not stop general interest
-charge accruing on an unpaid amount. If the amount cannot be paid, lodge anyway and contact the
-ATO about a payment arrangement before the due date. See `au-lodgment-deadlines-penalties.md`.
-
----
+**Lodgment and payment are separate obligations.** Lodging on time does not stop general interest charge accruing on an unpaid amount. If the amount cannot be paid, lodge anyway and contact the ATO about a payment arrangement before the due date. See `au-lodgment-deadlines-penalties.md`.
 
 ## Section 10 - Worked example
 
-**Facts.** Coastline Joinery Pty Ltd, a quarterly GST lodger with GST turnover of $1.4 million, so
-it uses Simpler BAS. It accounts for GST on a non-cash (accruals) basis and reports G1 including
-GST. It has four employees and is registered for PAYG withholding as a small withholder. It pays
-PAYG instalments using option 1. The period is the quarter ended 30 September 2026. All figures
-are synthetic.
+**Facts.** Coastline Joinery Pty Ltd, a quarterly GST lodger with GST turnover of $1.4 million, so it uses Simpler BAS. It accounts for GST on a non-cash (accruals) basis and reports G1 including GST. It has four employees and is registered for PAYG withholding as a small withholder. It pays PAYG instalments using option 1. The period is the quarter ended 30 September 2026. All figures are synthetic.
 
-**Transactions for the quarter.**
+**Transactions for the quarter**
 
 | Item | Amount | GST treatment |
 | --- | --- | --- |
@@ -425,17 +311,9 @@ T7 ATO instalment amount                      =   6,200
 9  = 8A - 8B                                  =  38,200 payable
 ```
 
-**Step 7, lodgment.** The quarter ended 30 September 2026, so the standard due date is
-28 October 2026. If the company lodges online it may be entitled to an extra two weeks, and its
-registered agent may have a different lodgment program date. The $38,200 must be paid by the
-applicable due date, whether or not the statement is lodged on time.
+**Step 7, lodgment.** The quarter ended 30 September 2026, so the standard due date is 28 October 2026. If the company lodges online it may be entitled to an extra two weeks, and its registered agent may have a different lodgment program date. The $38,200 must be paid by the applicable due date, whether or not the statement is lodged on time.
 
-**What the example shows.** Net GST of $13,600 is just over a third of the amount payable. The company
-must fund $18,400 of employees' withheld tax and $6,200 of its own income tax prepayment out of
-the same quarter's cash. A business that budgets for net GST alone will be short on the
-due date.
-
----
+**What the example shows.** Net GST of $13,600 is just over a third of the amount payable. The company must fund $18,400 of employees' withheld tax and $6,200 of its own income tax prepayment out of the same quarter's cash. A business that budgets for net GST alone will be short on the due date.
 
 ## Section 11 - Common errors
 
@@ -443,18 +321,15 @@ Drawn from the ATO's published analysis of GST corrections and from recurring pr
 
 **Classification errors**
 
-- Claiming GST credits on GST-free purchases such as basic food, most exports and some health
-  services, and on bank fees, stamp duty and third party insurance levies.
+- Claiming GST credits on GST-free purchases such as basic food, most exports and some health services, and on bank fees, stamp duty and third party insurance levies.
 - Claiming a credit on a purchase for private use, or failing to apportion a mixed-use purchase.
 - Treating a government fee or charge as a taxable purchase.
-- Claiming a full credit on a car costing more than the car limit, where the credit is capped.
-  Confirm the car limit for the relevant income year on ato.gov.au before claiming.
+- Claiming a full credit on a car costing more than the car limit, where the credit is capped. Confirm the car limit for the relevant income year on ato.gov.au before claiming.
 
 **Timing errors**
 
 - Reporting in the wrong period for the registered accounting basis.
-- Claiming the whole credit on a lease or hire agreement in the period the goods are delivered
-  rather than as payments become due.
+- Claiming the whole credit on a lease or hire agreement in the period the goods are delivered rather than as payments become due.
 - Claiming a credit on a real estate purchase at contract date rather than at settlement.
 
 **Evidence errors**
@@ -464,18 +339,15 @@ Drawn from the ATO's published analysis of GST corrections and from recurring pr
 
 **Process errors**
 
-- Transactions processed outside accounts payable or accounts receivable and never captured in the
-  GST control accounts.
+- Transactions processed outside accounts payable or accounts receivable and never captured in the GST control accounts.
 - Incorrect default GST codes in the accounting file after a chart of accounts change.
 - Not reconciling the GST control accounts to the BAS at all.
 - Failing to recognise an adjustment event, such as a settlement discount taken by a customer.
 
 **Threshold and registration errors**
 
-- Not noticing that the $75,000 registration threshold has been passed. Registration is required
-  within 21 days of exceeding it.
-- Changing from monthly to quarterly reporting in the first 12 months of operation without ATO
-  approval.
+- Not noticing that the $75,000 registration threshold has been passed. Registration is required within 21 days of exceeding it.
+- Changing from monthly to quarterly reporting in the first 12 months of operation without ATO approval.
 
 **PAYG errors**
 
@@ -484,8 +356,6 @@ Drawn from the ATO's published analysis of GST corrections and from recurring pr
 - Varying an instalment down without support, then falling under the 85% threshold.
 
 [ATO, Managing GST in your business](https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business)
-
----
 
 ## Section 12 - Self-checks
 
@@ -505,44 +375,27 @@ Before lodging, confirm:
 - [ ] Suspense and clearing accounts are nil or fully explained.
 - [ ] The due date has been identified, including any electronic or agent concession.
 
----
-
 ## Section 13 - Sources
 
-- A New Tax System (Goods and Services Tax) Act 1999, especially ss 11-5, 29-5, 29-10, 29-70,
-  31-5, 31-25, 93-5, and Divisions 19, 21 and 129.
-- Taxation Administration Act 1953, Schedule 1, Parts 2-5 (PAYG withholding) and 2-10
-  (PAYG instalments).
-- LI 2023/32, A New Tax System (Goods and Services Tax) (Correcting GST Errors) Determination
-  2023, https://www.legislation.gov.au/F2023L01284/latest
-- ATO, Due dates for lodging and paying your BAS,
-  https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/due-dates-for-lodging-and-paying-your-bas
-- ATO, Identify your accounting basis,
-  https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/completing-your-bas-for-gst/identify-your-accounting-basis
-- ATO, Simpler BAS GST bookkeeping guide,
-  https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst/simpler-bas-gst-bookkeeping-guide
-- ATO, Types of GST errors,
-  https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/correcting-gst-errors/types-of-gst-errors
-- ATO, PAYG instalments: how to complete your activity statement,
-  https://www.ato.gov.au/forms-and-instructions/payg-instalments-how-to-complete-your-activity-statement
-- ATO, How to vary your PAYG instalments,
-  https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/how-to-vary-your-payg-instalments
+- A New Tax System (Goods and Services Tax) Act 1999, especially ss 11-5, 29-5, 29-10, 29-70, 31-5, 31-25, 93-5, and Divisions 19, 21 and 129.
+- Taxation Administration Act 1953, Schedule 1, Parts 2-5 (PAYG withholding) and 2-10 (PAYG instalments).
+- LI 2023/32, A New Tax System (Goods and Services Tax) (Correcting GST Errors) Determination 2023, https://www.legislation.gov.au/F2023L01284/latest
+- ATO, Due dates for lodging and paying your BAS, https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/due-dates-for-lodging-and-paying-your-bas
+- ATO, Identify your accounting basis, https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/completing-your-bas-for-gst/identify-your-accounting-basis
+- ATO, Simpler BAS GST bookkeeping guide, https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/goods-and-services-tax-gst/simpler-bas-gst-bookkeeping-guide
+- ATO, Types of GST errors, https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/managing-gst-in-your-business/reporting-paying-and-activity-statements/correcting-gst-errors/types-of-gst-errors
+- ATO, PAYG instalments: how to complete your activity statement, https://www.ato.gov.au/forms-and-instructions/payg-instalments-how-to-complete-your-activity-statement
+- ATO, How to vary your PAYG instalments, https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/how-to-vary-your-payg-instalments
 
-Sources were checked on 16 September 2026. Rates, thresholds and administrative processes change;
-confirm each figure against the cited page for the period being reported.
-
----
+Sources were checked on 16 September 2026. Rates, thresholds and administrative processes change; confirm each figure against the cited page for the period being reported.
 
 ## Section 14 - Disclaimer
 
-This skill and its outputs are provided for informational and computational purposes only and do
-not constitute tax, legal or financial advice. Open Accountants and its contributors accept no
-liability for any errors, omissions or outcomes arising from the use of this skill. All outputs
-must be reviewed and signed off by a qualified professional in the relevant jurisdiction before
-lodging or acting upon them.
+This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional in the relevant jurisdiction before lodging or acting upon them.
 
-The most up-to-date version of this skill is maintained at
-[openaccountants.com](https://www.openaccountants.com).
+The most up-to-date version of this skill is maintained at [openaccountants.com](https://www.openaccountants.com).
+
+> Contributed by Ryan Duguid.
 
 <!-- openaccountants-cta-block -->
 
