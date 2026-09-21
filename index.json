@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-20T14:31:30+00:00",
+ "generated_at": "2026-09-21T09:00:12+00:00",
  "counts": {
   "guides": 2017,
   "jurisdictions": 245,
@@ -2596,7 +2596,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-18"
+   "last_updated": "2026-09-20"
   },
   {
    "slug": "au-capital-gains-2",
@@ -2620,7 +2620,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-18"
+   "last_updated": "2026-09-20"
   },
   {
    "slug": "au-company-tax",
@@ -2680,7 +2680,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-18"
+   "last_updated": "2026-09-20"
   },
   {
    "slug": "au-div7a",
@@ -2800,7 +2800,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-18"
+   "last_updated": "2026-09-20"
   },
   {
    "slug": "au-medicare-levy",
@@ -3052,7 +3052,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2025",
-   "last_updated": "2026-09-18"
+   "last_updated": "2026-09-20"
   },
   {
    "slug": "australia-financial-statements-2",
@@ -8931,8 +8931,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-20"
   },
   {
    "slug": "germany-to-switzerland-cross-border-tax",
@@ -8967,8 +8967,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-20"
   },
   {
    "slug": "references",
@@ -20979,8 +20979,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-20"
   },
   {
    "slug": "eg-freelance-intake",
