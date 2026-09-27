@@ -1,7 +1,7 @@
 # OpenAccountants — GitHub Skills Repository
 
-<!-- Entity counts below are copied from the `counts` block of index.json (generated 2026-09-06T08:51:07+00:00). Refresh them from index.json whenever this file is edited; the README stats block carries the platform-wide totals. -->
-> Open-source Tax Guides ("skills") for AI agents. 1,998 Guides across 245 jurisdictions in this repository, 171 of them accountant-reviewed and signed off by named Partners (CPAs/CAs/EAs). Live counts: the `counts` block of `index.json`.
+<!-- The counts sentence below is restamped from the `counts` block of index.json by scripts/build-index.py on every default build; do not edit its figures by hand. The README stats block carries the platform-wide totals. -->
+> Open-source Tax Guides ("skills") for AI agents. 2,023 Guides across 245 jurisdictions in this repository, 161 of them accountant-reviewed and signed off by named Partners (CPAs/CAs/EAs). Live counts: the `counts` block of `index.json`.
 
 ## What this repo is
 
@@ -132,7 +132,7 @@ https://www.openaccountants.com
 
 ========================================================================
 
-## Guide inventory (2019 guides, 245 jurisdictions, 161 accountant-reviewed)
+## Guide inventory (2023 guides, 245 jurisdictions, 161 accountant-reviewed)
 
 - us-1099-k-and-payment-processors | US | tier 2 | reviewed_by -
 - us-education-credits-8863 | US | tier 2 | reviewed_by -
@@ -358,6 +358,7 @@ https://www.openaccountants.com
 - au-deceased-estates | AU | tier 2 | reviewed_by -
 - au-deductions-offsets | AU | tier 2 | reviewed_by -
 - au-div7a | AU | tier 2 | reviewed_by -
+- au-employment-termination-payments | AU | tier 2 | reviewed_by -
 - au-fbt-year | AU | tier 2 | reviewed_by -
 - au-fbt | AU | tier 2 | reviewed_by -
 - au-foreign-currency-forex-realisation-gains-and | AU | tier 2 | reviewed_by -
@@ -374,6 +375,7 @@ https://www.openaccountants.com
 - au-partnerships | AU | tier 2 | reviewed_by -
 - au-payg-instalments-2 | AU | tier 2 | reviewed_by -
 - au-payg-instalments | AU | tier 2 | reviewed_by -
+- au-payroll-tax | AU | tier 2 | reviewed_by -
 - au-psi | AU | tier 2 | reviewed_by -
 - au-rates-2026-27 | AU | tier 2 | reviewed_by -
 - au-rd-incentive | AU | tier 2 | reviewed_by -
@@ -386,7 +388,9 @@ https://www.openaccountants.com
 - au-super-guarantee | AU | tier 2 | reviewed_by -
 - au-tax-residency-2 | AU | tier 2 | reviewed_by -
 - au-tax-residency | AU | tier 2 | reviewed_by -
+- au-tpar | AU | tier 2 | reviewed_by -
 - au-trust-distributions | AU | tier 2 | reviewed_by -
+- au-working-holiday-makers | AU | tier 2 | reviewed_by -
 - australia-bookkeeping | AU | tier 2 | reviewed_by -
 - australia-financial-statements-2 | AU | tier 2 | reviewed_by -
 - australia-financial-statements | AU | tier 2 | reviewed_by -
@@ -2266,7 +2270,7 @@ This list is derived from each skill's explicit `tier: 1` plus its reviewer name
 
 ### Source-cited drafts (Tier 2)
 
-Everything else in this repo. ~700+ skills covering 134 countries and 51 US states. Each one's frontmatter shows the research date and the authoritative sources cross-checked.
+Everything else in this repo; the `counts` block of `index.json` gives the current total. Each one's frontmatter shows the research date and the authoritative sources cross-checked.
 
 ---
 
