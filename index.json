@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-27T14:13:17+00:00",
+ "generated_at": "2026-09-27T14:17:09+00:00",
  "counts": {
   "guides": 2023,
   "jurisdictions": 245,
@@ -14464,7 +14464,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-25"
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "nl-deductions",
