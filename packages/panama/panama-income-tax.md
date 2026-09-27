@@ -3,9 +3,11 @@ name: panama-income-tax
 description: Use this skill whenever asked about Panama personal income tax (ISR — Impuesto sobre la Renta) for individuals, self-employed persons, or payroll. Trigger on phrases like "how much income tax do I pay in Panama", "Panama ISR", "declaración jurada de rentas", "income tax return Panama", "allowable deductions Panama", "CSS contributions", "Caja de Seguro Social", "seguro educativo", "territorial taxation", "Panama-source income", "self-employed CSS Law 462", "décimo tercer mes", "estimated tax instalments", "DGI filing", "non-resident withholding Panama", or any question about filing or computing personal income tax or social security for an individual or self-employed client in Panama. Also trigger when classifying a Panamanian bank statement, computing CSS/educational-insurance payroll deductions, or advising on the 15 March filing deadline. This skill covers the progressive ISR brackets, personal deductions, CSS + educational insurance under Law 462 of 2025, filing deadlines, estimated tax, penalties, minimum wage, and the territorial source rule. ALWAYS read this skill before touching any Panama income tax work.
 version: 0.1
 jurisdiction: PA
-tax_year: 2025
-last_updated: 2026-07-13
+tax_year: 2026
+last_updated: 2026-09-27
+authored_by: OpenAccountants team
 review_status: pending_review
+trust_label: By OpenAccountants
 depends_on:
   - income-tax-workflow-base
 category: international
@@ -13,588 +15,255 @@ tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# Panama Personal Income Tax (ISR) — Self-Employed & Payroll
+# Panama income tax (ISR): individuals, the self-employed, payroll, and the company rules they meet
 
-## Section 1 — Quick Reference
+Tax year 2026. Panama's tax year is the calendar year, so "2026" means income earned from 1 January to 31 December 2026, reported on the return due by 15 March 2027 (individuals) or 31 March 2027 (companies). The rules below are as published by the Dirección General de Ingresos (DGI) on dgi.mef.gob.pa, read on 25 September 2026. The DGI tax table has not changed since 2010, so the 2026 figures are the same as 2025. A short dated section covers the 2025 returns filed in 2026.
 
-**Section 1 Quick Reference table**  _(PwC, taxes-on-personal-income; PwC, tax-administration)_
+Amounts are in balboas (B/.), which trade at par with the US dollar; this Guide writes them as USD.
 
-| Field | Value |
+## Scope and who this is for ([DGI, rates](https://dgi.mef.gob.pa/DInforme/Tarifa.php); [DGI, income tax FAQ](https://dgi.mef.gob.pa/Preguntas/Rent.php))
+
+This Guide covers Panama's income tax (Impuesto sobre la Renta, ISR) for:
+
+- Individuals (personas naturales): employees, independent professionals and traders (comerciantes), resident or not, on Panama-source income.
+- Employers withholding ISR from salaries.
+- At summary level, the company rules an individual client meets: the 25% corporate rate, the alternative minimum calculation (CAIR), dividend tax, the Aviso de Operación tax, and withholding on payments abroad.
+
+It does not cover ITBMS (the goods and services tax), capital gains on real estate or securities, the special regimes (City of Knowledge, SEM, Colón Free Zone, Panamá Pacífico and other free zones), banking and insurance levies, or CSS social security rates. Those are referred.
+
+**The territorial rule.** Panama taxes only income from activities carried out in Panamanian territory, whoever earns it. DGI: the person who must pay is the taxpayer "que reciba ingresos por actividades realizadas en el territorio panameño, independientemente de la nacionalidad, domicilio o residencia del beneficiario" ([DGI FAQ, question 4](https://dgi.mef.gob.pa/Preguntas/Rent.php)). Residence does not widen the base, and non-residents are taxed on Panama-source income, mostly by withholding.
+
+Foreign-source income is still reported on the return, on its own line, "de acuerdo al parágrafo 2 del Artículo 694 del Código Fiscal" ([DGI return instructions, line 19](https://dgi.mef.gob.pa/DInforme/pdf/RENTA%20-%20NATURAL.pdf)). It is left out of taxable income, and the costs and expenses of earning it are not deductible ([DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php)).
+
+**The offshore services rules: check.** Article 694 parágrafo 2 of the Código Fiscal is generally described as treating three activities run from an office in Panama as not Panama-source: invoicing from Panama for sales of goods or services where the transaction is completed abroad; directing from Panama transactions that are completed and have effect abroad; and distributing dividends out of income that is itself foreign-source. DGI does not publish the text of that paragraph, and the Gaceta Oficial that carries it is not an allowed source for this Guide. Read article 694 in the official Código Fiscal before relying on any of the three cases, and treat mixed contracts (part of the work done in Panama) as a referral.
+
+## Ask the client first
+
+- **Where was each piece of work done, or where is each asset?** Work physically done in Panama, or a Panama property rented out, is Panama-source. Work done wholly abroad for a foreign client is not. Ask this for every income stream before anything else ([DGI FAQ, question 4](https://dgi.mef.gob.pa/Preguntas/Rent.php)).
+- **What kind of taxpayer?** A salaried employee with one employer, an employee with more than one employer, an independent professional, a trader, or the owner of a company? The answer decides whether a return is needed and which form (Form 2V for individuals with business or professional income, Form 1V8 for pure salary, Form 1V for companies) ([DGI, returns and due dates](https://dgi.mef.gob.pa/DInforme/Tab-Decla.php)).
+- **Filing jointly with a spouse?** The basic deduction of USD 800 is only for spouses who file a joint return ([DGI return instructions, line 86](https://dgi.mef.gob.pa/DInforme/pdf/RENTA%20-%20NATURAL.pdf)).
+- **Gross and net income for the year.** Income above USD 11,000 means the return must be countersigned by a Panamanian CPA ([DGI FAQ, question 45](https://dgi.mef.gob.pa/Preguntas/DeclaracionInformes.php)). An independent with net taxable income of USD 1,000 or less and gross income not over USD 3,000 need not file ([DGI, article 710](https://dgi.mef.gob.pa/DInforme/A710codigofiscal.php)).
+- **Deductions with paperwork:** medical costs in Panama, mortgage interest on the home in Panama (and whether the loan has a preferential rate), school costs for each dependant and any scholarship, pension fund payments, and donations to approved institutions. Only documented deductions count.
+- **Tax already paid:** salary withholding (the employer's annual certificate), the three estimated-tax instalments paid in 2026, and any credit carried from the 2025 return.
+- **Does the client own a company or run a business?** Ask about the Aviso de Operación, dividends paid in the year, and payments to people abroad.
+
+## The method, step by step
+
+1. **Sort every receipt by source.** Panama-source (taxable), foreign-source (reported, not taxed), exempt (for example interest on Panamanian bank deposits and on government securities, listed in article 708 of the Código Fiscal as quoted by [DGI, Form 07](https://dgi.mef.gob.pa/DInforme/Formulario07.php)). If the source of a stream is unclear, stop and refer.
+2. **Decide whether a return is needed.** Check the exemptions in "Filing and payment". A single-employer employee whose tax was fully withheld need not file, but may file to claim deductions such as school costs ([DGI FAQ, question 53](https://dgi.mef.gob.pa/Preguntas/DeclaracionInformes.php)).
+3. **Gross income.** Salaries (including the décimo tercer mes, the 13th-month pay, which DGI lists as employment income), professional fees, trading income, rents from Panama property, and other Panama-source income ([DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php)).
+4. **Business costs and expenses.** Deduct costs and expenses needed to produce Panama-source income or keep its source going. Costs of foreign-source or exempt income are not deductible, nor are income tax itself, fines, or penalty interest. Salaried workers cannot deduct transport ([DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php)).
+5. **Personal deductions**, each within its cap (table below). Then losses brought forward, within their limits.
+6. **Apply the tax table** for individuals (below) to net taxable income. Representation allowances (gastos de representación) are taxed separately on their own table.
+7. **Subtract credits:** salary withholding, estimated tax paid for the year, and any credit brought forward. The result is the balance due or the refund.
+8. **Estimated tax for next year.** The return carries an estimate of next year's income, which may not be lower than the income just declared. Tax on the estimate is paid in three instalments ([DGI, article 710](https://dgi.mef.gob.pa/DInforme/A710codigofiscal.php)).
+9. **Educational insurance** on self-employed income, computed on the same return (below).
+10. **Company add-ons**, if the client has a business: Aviso de Operación tax on the return; dividend tax within 10 days of any distribution; withholding on payments abroad.
+11. **File** on e-Tax 2.0, countersigned by a CPA if income is above USD 11,000 ([DGI FAQ, question 45](https://dgi.mef.gob.pa/Preguntas/DeclaracionInformes.php)), and **pay** by the due dates.
+
+## Figures for 2026
+
+### Individuals: the tax table ([DGI, rates](https://dgi.mef.gob.pa/DInforme/Tarifa.php); [DGI, Planilla 03](https://dgi.mef.gob.pa/DInforme/Planilla03.php))
+
+Applies to net taxable income of individuals (article 700 of the Código Fiscal). Unchanged for 2026.
+
+| Net taxable income | Tax |
 | --- | --- |
-| Country | Panama (Republic of Panama / República de Panamá) |
-| Tax | Personal income tax — ISR (Impuesto sobre la Renta), natural persons |
-| Currency | USD (the Balboa B/. is pegged 1:1 and circulates as coin; USD notes are legal tender) |
-| Tax year | Calendar year (1 January – 31 December) |
-| Tax basis | **Territorial** — only Panamanian-source income is taxed, for residents and non-residents alike (PwC, taxes-on-personal-income) |
-| Tax authority | Dirección General de Ingresos (DGI), under the Ministerio de Economía y Finanzas (MEF) |
-| Social security | Caja de Seguro Social (CSS) |
-| Filing portal | e-Tax 2.0 (DGI online portal) (PwC, tax-administration) |
-| Filing deadline (individuals) | **15 March** of the following year; one-month extension available on request (PwC, tax-administration) |
-| Estimated tax instalments | 30 June, 30 September, 31 December (PwC, tax-administration) |
-| Local/municipal income tax | None (PwC, taxes-on-personal-income) |
-| Alternate minimum tax for individuals | None (PwC, taxes-on-personal-income) |
-| Validated by | Pending — requires sign-off by a Panamanian licensed accountant (CPA) |
-| Validation date | Pending |
-| Skill version | 0.1 |
+| Up to USD 11,000 | 0% |
+| More than USD 11,000 up to USD 50,000 | 15% of the amount over USD 11,000 |
+| More than USD 50,000 | USD 5,850 on the first USD 50,000, plus 25% of the amount over USD 50,000 |
 
-### Income Tax Rate Brackets (tax year 2025)
+Check: (50,000 − 11,000) × 15% = 5,850, which is the fixed amount in the top band. Income of exactly USD 11,000 pays nothing; the 15% starts on the first balboa above it.
 
-**Income Tax Rate Brackets (tax year 2025)**  _(PwC, taxes-on-personal-income — reviewed 18 Jan 2026)_
+DGI's rate page gives only this table for individuals and no separate minimum tax for them. The CAIR alternative calculation described on DGI's pages is written for companies (below).
 
-| Taxable Income (USD) | Tax on this band | Cumulative Tax at Top of Band |
-| --- | --- | --- |
-| 0 – 11,000 | 0% | USD 0 |
-| 11,001 – 50,000 | 15% on excess over 11,000 | USD 5,850 |
-| Over 50,000 | USD 5,850 fixed + 25% on excess over 50,000 | — |
+**Representation allowances** (gastos de representación paid to managers on top of salary) are not added to salary. They are taxed at 10% up to USD 25,000, and above that USD 2,500 plus 15% of the excess ([DGI, Planilla 03](https://dgi.mef.gob.pa/DInforme/Planilla03.php)). They may not exceed 100% of the worker's salary, and a worker whose only extra income is representation allowance need not file ([DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php)).
 
-- **Arithmetic check** — Top of the 15% band: (50,000 − 11,000) × 15% = 39,000 × 15% = USD 5,850. The "Over 50,000" row therefore carries a fixed base of USD 5,850 plus 25% on the excess.  _(PwC, taxes-on-personal-income)_
-- **Territorial rule** — Citizens, residents, and non-residents are taxed only on Panama-source income. Non-residents' Panama-source income is generally subject to withholding by the payer.  _(PwC, taxes-on-personal-income)_
+### Personal deductions ([DGI return instructions](https://dgi.mef.gob.pa/DInforme/pdf/RENTA%20-%20NATURAL.pdf); [DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php); [DGI income tax FAQ](https://dgi.mef.gob.pa/Preguntas/Rent.php))
 
-### Personal Deductions / Allowances (tax year 2025)
-
-**Personal Deductions / Allowances table**  _(PwC, deductions)_
-
-| Deduction | Cap | Source |
-| --- | --- | --- |
-| Personal exemption (married individual) | USD 800 | PwC, deductions |
-| Per-dependent deduction (USD 250) | **[RESEARCH GAP — reviewer to confirm]** secondary sources cite "$800 basic + $250 per dependent" but PwC authoritative page does not confirm the $250 figure | Unconfirmed |
-| Mortgage interest (primary home in Panama or home improvements) | up to USD 15,000/year | PwC, deductions |
-| Retirement / pension fund contributions | up to USD 15,000 | PwC, deductions |
-| Education expenses | up to USD 3,600 per student (since Jan 2019) | PwC, deductions |
-| Medical expenses incurred in Panama | deductible, documented; no cap stated | PwC, deductions |
-| Charitable donations (approved local educational/charitable institutions + non-profit dues) | max USD 50,000/year | PwC, deductions |
-| Unreimbursed employment expenses (moving, travel, entertainment) | NOT deductible | PwC, deductions |
-
-### Conservative Defaults
-
-**Conservative Defaults table**
-
-| Ambiguity | Default |
+| Deduction | Limit and conditions |
 | --- | --- |
-| Source of income unknown (Panama vs foreign) | STOP — territorial rule means foreign-source income is exempt; confirm source before including |
-| Resident vs non-resident unknown | Treat as STOP — non-residents are subject to withholding, not self-assessment |
-| Unknown marital status | Apply no personal exemption (the USD 800 exemption is married-only per PwC) |
-| Unknown dependent count | 0 dependents (the $250/dependent figure is unconfirmed anyway) |
-| Unknown business-use % (vehicle, phone, home) | 0% deduction |
-| Unknown expense category | Not deductible |
-| Deduction lacks documentation | Not deductible |
-| Whether worker is employee or independent | STOP — determines CSS treatment (9.75% employee vs 9.36% IVM independent) |
+| Basic deduction | USD 800, only for spouses who file jointly |
+| Medical costs | No cap. Costs incurred in Panama for the taxpayer and dependants, backed by legal invoices or insurer certificates; health insurance premiums count. Spouses filing separately may split them but not claim more than the total. |
+| Mortgage interest | Up to USD 15,000 a year, on loans used only to buy, build or improve the taxpayer's own principal home in Panama. Loans with preferential interest do not qualify. |
+| Interest on education loans | Loans used only for education in Panama, including IFARHU loans. No cap is stated. |
+| School costs | Up to USD 3,600 per dependant (dependants up to 25), from the first level of schooling, in Panama only, net of any scholarship. Enrolment, monthly fees, supplies, uniforms and school transport, on invoices in the name of the parent or student. For a disabled dependant attending class there is no cap, but only for a salaried taxpayer with tax withheld who files a return. A salaried taxpayer with tax withheld who pays their own university may deduct enrolment and credit hours on the return. |
+| Pension fund contributions | The lower of 10% of gross annual income and USD 15,000 |
+| Donations | Up to USD 50,000 a year, to Panamanian educational or charitable institutions approved for the purpose; dues to Panamanian non-profit bodies are also deductible |
 
-## Section 2 — Required Inputs and Refusal Catalogue
+A salaried taxpayer earning more than USD 11,000 with tax withheld gets school costs back as a cash credit: 15% of the costs if income is USD 11,000 to USD 50,000, and 25% above USD 50,000. Other filers deduct school costs but get no credit ([DGI FAQ, questions 11 and 19](https://dgi.mef.gob.pa/Preguntas/Rent.php)).
 
-### Required Inputs
+DGI's list of personal deduction lines has no per-dependant deduction. Do not claim one.
 
-**Minimum viable** — bank statement for the full tax year in CSV, PDF, or pasted text; confirmation of residency status (resident/non-resident); confirmation of whether income is Panama-source; and worker classification (employee vs self-employed/independent).
+**Losses brought forward:** deductible over the next five years at 20% a year, and they may not cut net taxable income by more than 50% ([DGI return instructions, line 92](https://dgi.mef.gob.pa/DInforme/pdf/RENTA%20-%20NATURAL.pdf)).
 
-**Recommended** — all invoices/receipts (facturas) issued and received, CSS payment records, prior-year declaración jurada de rentas or DGI assessment, RUC (Registro Único de Contribuyente) number, marital status and dependent count.
+### Educational insurance and CSS for the self-employed ([DGI return instructions, lines 118-123](https://dgi.mef.gob.pa/DInforme/pdf/RENTA%20-%20NATURAL.pdf); [DGI, individual returns](https://dgi.mef.gob.pa/DInforme/DJRRPNAPI-Comerciante.php))
 
-**Ideal** — complete income and expenditure account, mortgage interest certificate, pension contribution certificates, education and medical receipts, estimated-tax instalment confirmations, employer payroll records (planilla).
+- **Educational insurance (seguro educativo)** on non-salary income is computed on the ISR return at 2.75% of a base equal to total income, less salary with withholding, income in kind, representation allowances, directors' fees, exempt income and foreign-source income, less deductible costs and expenses, plus capital gains on real estate and securities. Embassy employees apply 1.25%. It is paid with the estimated tax, in one sum or three equal instalments ([DGI filing instructions](https://dgi.mef.gob.pa/DInforme/pdf/INSTRUCTIVO%20DE%20LLENADO.pdf)).
+- **CSS contributions: check.** Law 462 of 2025 changed Caja de Seguro Social contributions for employees, employers and independent workers. DGI's return instructions still describe the old independent-worker formula, and the CSS and Gaceta Oficial sites are not allowed sources for this Guide. Do not quote a CSS rate from this Guide; take current rates from the CSS or the law itself. The ISR return does carry a CSS line for independents, and that amount is due with the annual balance by 31 March.
 
-**Refusal if minimum is missing — SOFT WARN.** No bank statement at all = hard stop. Bank statement without invoices = proceed with reviewer warning: "This return was produced from bank statement alone. The reviewer must verify Panama-source classification and that all deductions claimed are supported by valid documentation."
+### Companies, summary only ([DGI, rates](https://dgi.mef.gob.pa/DInforme/Tarifa.php); [DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php))
 
-### Refusal Catalogue
+**Rate.** Companies (personas jurídicas) pay 25% of net taxable income for 2011 and later years. Companies in which the State holds more than 40% of the shares pay 30%. The sectors once taxed at higher rates (electricity, telecoms, insurance, regulated finance companies, cement, gaming, mining, banking) have paid 25% since 1 January 2014 ([DGI, rates](https://dgi.mef.gob.pa/DInforme/Tarifa.php)).
 
-- **R-PA-1** — Source of income unclear. "Panama taxes on a strictly territorial basis. Income from foreign sources is not taxable. This skill cannot proceed until the Panama-source vs foreign-source split is confirmed for each income stream. Escalate to a licensed accountant if the source is genuinely ambiguous (e.g. services partly performed abroad)."
-- **R-PA-2** — Non-resident self-assessment. "Non-residents' Panama-source income is generally taxed by withholding at the payer, not by self-assessed return. This skill covers resident individual returns. Escalate to a licensed accountant for non-resident withholding analysis."
-- **R-PA-3** — Companies, partnerships, foundations. "This skill covers natural persons (individuals and self-employed) only. Corporations (sociedades anónimas), partnerships, and private-interest foundations file separate corporate returns. Escalate to a licensed accountant."
-- **R-PA-4** — Capital gains / real-estate transfers. "Gains on disposal of real estate and securities are taxed under separate regimes (transfer tax / advance ISR on real estate). Out of scope. Escalate to a licensed accountant."
-- **R-PA-5** — Arrears / enforcement. "Client has outstanding DGI arrears or risk of suspension of the Aviso de Operación. Penalties can be automatically generated from USD 500 upward [RESEARCH GAP — reviewer to confirm the DGI primary penalty schedule]. Do not advise. Escalate to a licensed accountant immediately."
-- **R-PA-6** — Special regimes (SEM, City of Knowledge, Colón Free Zone, Panama-Pacífico). "These regimes have bespoke income tax and social-security treatment. Out of scope. Escalate to a licensed accountant."
+**CAIR, the alternative calculation.** A company whose total taxable income (gross income less exempt, non-taxable and foreign-source income) is more than USD 1,500,000 a year pays tax on the greater of:
 
-## Section 3 — Transaction Pattern Library
+1. net taxable income worked out the normal way, and
+2. 4.67% of total taxable income.
 
-This is the deterministic pre-classifier. When a bank statement transaction matches a pattern below, apply the treatment directly. Do not second-guess. If none match, fall through to Tier 1 rules in Section 5.
+Both bases are taxed at the company's rate, so at 25% the CAIR floor is 25% of the 4.67% base. A company with taxable income of USD 1,500,000 or less is outside CAIR ([DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php)).
 
-**How to read this table.** Match by case-insensitive substring on the counterparty name or description as it appears in the bank statement. Panamanian statements are usually in Spanish. If multiple patterns match, use the most specific. If none match, fall through to Tier 1 rules. **Always confirm Panama-source before treating any credit as taxable income.**
+A company that would make a loss under CAIR, or whose effective rate under CAIR would exceed the rate in force (DGI's page also mentions 30% in one place: check), may ask DGI not to apply CAIR for up to three years. The request is due no later than 90 calendar days after the year end, or with the return if an extension was granted. If DGI has not decided by the filing deadline, the company pays on the normal method; DGI has six months after the filing deadline to decide, and silence means the request is accepted ([DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php)).
 
-### 3.1 Income Patterns (Credits / Créditos)
+**Dividend tax.** A company must withhold dividend tax when it distributes profits ([DGI, Form 07](https://dgi.mef.gob.pa/DInforme/Formulario07.php)):
 
-**Income Patterns table**
-
-| Pattern | Treatment | Notes |
-| --- | --- | --- |
-| Client name + TRANSFERENCIA, DEPÓSITO, PAGO RECIBIDO, ABONO | Business income (Panama-source) | Confirm services performed in Panama |
-| HONORARIOS, FACTURA, SERVICIOS PROFESIONALES, CONSULTORÍA | Business income | Professional fees — typical for self-employed |
-| STRIPE PAYOUT, STRIPE TRANSFER | Business income | Platform payout — match to underlying facturas; confirm source |
-| PAYPAL, WISE, REVOLUT PAYOUT | Business income | Verify against invoices; confirm Panama-source |
-| UPWORK, FIVERR, TOPTAL | Business income | Freelance platform — net of platform commission; **likely foreign-source if client and work are abroad — confirm** |
-| SALARIO, PLANILLA, SUELDO, EMPLEADOR [name] | Employment income | Subject to CSS + educational insurance + ISR withholding by employer |
-| ALQUILER, RENTA RECIBIDA | Rental income | Panama-source if property in Panama |
-| INTERESES (cuenta de ahorro / depósito a plazo panameño) | EXCLUDE | Interest on Panamanian bank savings and time deposits is exempt (PwC, taxes-on-personal-income) |
-| INTERESES (valores del Estado / government securities) | EXCLUDE | Interest on Panamanian government securities is exempt (PwC, taxes-on-personal-income) |
-| DEVOLUCIÓN DGI, REINTEGRO IMPUESTO | EXCLUDE | Tax refund from prior year |
-| DÉCIMO TERCER MES, XIII MES | Special — see Section 6 | 13th-month bonus; CSS/ISR treatment flagged [RESEARCH GAP] |
-
-### 3.2 Expense Patterns (Debits / Débitos) — Potentially Deductible
-
-Note: Panama allows employment/business expenses only where wholly business-related and documented; unreimbursed employment expenses (moving, travel, entertainment) are not deductible (PwC, deductions). For self-employed, ordinary and necessary business expenses to produce Panama-source income are deductible.
-
-**Potentially Deductible Expenses table**  _(PwC, deductions)_
-
-| Pattern | Category | Treatment | Notes |
-| --- | --- | --- | --- |
-| ALQUILER OFICINA, RENTA LOCAL COMERCIAL | Office rent | Deductible (business) | Dedicated business premises |
-| HONORARIOS CONTADOR, AUDITOR, CONTABILIDAD | Accountancy fees | Deductible (business) |  |
-| ABOGADO, LEGAL, NOTARÍA (business) | Legal fees | Deductible (business) | Must be business-related |
-| PUBLICIDAD, MARKETING, GOOGLE ADS, META ADS | Marketing/advertising | Deductible (business) |  |
-| SUMINISTROS, PAPELERÍA, OFFICE SUPPLIES | Office supplies | Deductible (business) |  |
-| GOOGLE WORKSPACE, MICROSOFT 365, ADOBE, CANVA, ZOOM | Software subscription | Deductible (business) | Recurring SaaS = operating expense |
-| ANTHROPIC, OPENAI, GITHUB, AWS, HOSTING, DOMINIO | IT infrastructure | Deductible (business) |  |
-| COMISIÓN BANCARIA, CARGO BANCO, MANTENIMIENTO CUENTA | Bank charges | Deductible (business) | Business account only |
-| INTERÉS HIPOTECARIO, HIPOTECA (vivienda principal) | Mortgage interest | Personal deduction up to USD 15,000/yr (PwC, deductions) | Primary home in Panama or improvements |
-| FONDO DE PENSIÓN, JUBILACIÓN, APORTE PENSIÓN | Pension contribution | Personal deduction up to USD 15,000 (PwC, deductions) |  |
-| COLEGIO, UNIVERSIDAD, MATRÍCULA, EDUCACIÓN | Education | Personal deduction up to USD 3,600 per student (PwC, deductions) |  |
-| CLÍNICA, HOSPITAL, FARMACIA, MÉDICO (en Panamá) | Medical | Personal deduction, documented, no cap stated (PwC, deductions) | Must be incurred in Panama |
-| DONACIÓN (institución aprobada) | Charitable donation | Personal deduction max USD 50,000/yr (PwC, deductions) | Approved local institutions |
-
-### 3.3 Expense Patterns (Debits) — NOT Deductible
-
-**NOT Deductible Expenses table**  _(PwC, deductions)_
-
-| Pattern | Category | Treatment | Notes |
-| --- | --- | --- | --- |
-| RESTAURANTE, ALMUERZO, CENA, ENTRETENIMIENTO | Entertainment | NOT deductible | Unreimbursed employment entertainment blocked (PwC, deductions) |
-| SUPERMERCADO, RIBA SMITH, EL REY, SUPER 99, PERSONAL | Personal expenses | NOT deductible | Private living costs |
-| MULTA, SANCIÓN, INFRACCIÓN | Fines/penalties | NOT deductible | Public policy |
-| PAGO ISR, IMPUESTO SOBRE LA RENTA, DGI | Tax payment | NOT deductible | Income tax cannot reduce income |
-| RETIRO, RETIRO PERSONAL, CAJERO (personal) | Drawings | NOT deductible | Not an expense |
-| MUDANZA, VIAJE PERSONAL (employee, unreimbursed) | Moving/travel | NOT deductible | Blocked for employees (PwC, deductions) |
-
-### 3.4 Social Security & Statutory (Debits)
-
-**Social Security & Statutory table**
-
-| Pattern | Category | Treatment | Notes |
-| --- | --- | --- | --- |
-| CSS, CAJA DE SEGURO SOCIAL, CUOTA OBRERO | CSS contribution | Statutory — see Section 5.5 | Employee 9.75%; independent 9.36% IVM |
-| SEGURO EDUCATIVO | Educational insurance | Statutory — see Section 5.5 | Employee 1.25% / employer 1.50% |
-| ESTIMADA, IMPUESTO ESTIMADO, CUOTA ESTIMADA | Estimated tax instalment | Credit against liability | 30 Jun / 30 Sep / 31 Dec instalments |
-
-### 3.5 Exclusions (Neither Income nor Expense)
-
-**Exclusions table**  _(PwC, taxes-on-personal-income)_
-
-| Pattern | Treatment | Notes |
-| --- | --- | --- |
-| TRANSFERENCIA PROPIA, ENTRE CUENTAS, CUENTA PROPIA | EXCLUDE | Own-account transfer |
-| PRÉSTAMO, ABONO PRÉSTAMO, CAPITAL (loan principal) | EXCLUDE | Loan principal movement |
-| INTERESES (ahorro/plazo panameño, valores del Estado) | EXCLUDE | Exempt income (PwC, taxes-on-personal-income) |
-
-### 3.6 Panamanian Banks — Statement Format Reference
-
-**Panamanian Banks table**
-
-| Bank | Common Patterns | Notes |
-| --- | --- | --- |
-| Banco General | TRANSFERENCIA, ACH, DÉBITO, CRÉDITO, ABONO | PDF/CSV; descriptions in Spanish |
-| Banistmo | PAGO, TRF, DÉBITO DIRECTO, COMISIÓN | PDF/CSV |
-| Banco Nacional de Panamá (BNP) | DEPÓSITO, RETIRO, CARGO | PDF; state bank |
-| BAC Credomatic | COMPRA, PAGO, TRANSFERENCIA, CARGO | CSV; card transactions show merchant |
-| Multibank / MMG | TRANSFERENCIA, ACH, CARGO | PDF |
-
-## Section 4 — Worked Examples
-
-### Example 1 — Client Payment (Panama-source professional fee)
-
-**Input line:**
-`15/03/2025 ; TRANSFERENCIA ACH ; CORPORACIÓN ISTMO S.A. ; HONORARIOS FACTURA 0042 ; +3,500.00 ; USD`
-
-**Reasoning:**
-Professional fee from a Panamanian company for services performed in Panama. Panama-source business income. No VAT-style gross-up applies to ISR base (Panama's consumption tax is ITBMS, handled separately). Full USD 3,500 is taxable income.
-
-**Classification:** Taxable income = USD 3,500.
-
-### Example 2 — Software Subscription (Deductible business expense)
-
-**Input line:**
-`01/04/2025 ; CARGO TARJETA ; ADOBE SYSTEMS ; CREATIVE CLOUD ABRIL ; -52.99 ; USD`
-
-**Reasoning:**
-Recurring SaaS subscription used to produce business income. Ordinary and necessary business expense, fully deductible for a self-employed taxpayer.
-
-**Classification:** Deductible business expense = USD 52.99.
-
-### Example 3 — Client Entertainment (Blocked)
-
-**Input line:**
-`22/04/2025 ; COMPRA TARJETA ; RESTAURANTE MARKET ; CENA CLIENTE ; -120.00 ; USD`
-
-**Reasoning:**
-Entertainment. Unreimbursed entertainment is not deductible per PwC deductions guidance. No partial deduction.
-
-**Classification:** NOT deductible. Remove entirely.
-
-### Example 4 — Employee CSS + Educational Insurance Deduction (payroll)
-
-**Input:** Monthly gross salary USD 2,000, employee, current (from April 2025) rates.
-
-**Reasoning:**
-- Employee CSS: 2,000 × 9.75% = USD 195.00 (PwC, other-taxes)
-- Educational insurance (employee): 2,000 × 1.25% = USD 25.00 (PwC, other-taxes; FMM)
-- Total employee statutory withholding = 195.00 + 25.00 = **USD 220.00**
-- No salary ceiling applies (PwC, other-taxes)
-
-**Classification:** Employee statutory deductions = USD 220.00/month. (ISR withholding computed separately on the progressive table.)
-
-### Example 5 — Self-Employed Annual ISR (mid-range, Panama-source)
-
-**Input:** Resident self-employed, Panama-source net taxable income USD 40,000 (after allowable business expenses), no confirmed personal deductions.
-
-**Reasoning:**
-- Falls in the 11,001–50,000 band.
-- Tax = (40,000 − 11,000) × 15% = 29,000 × 15% = **USD 4,350.00**
-
-**Classification:** ISR due = USD 4,350.00.
-
-### Example 6 — Higher-Income Self-Employed (top bracket)
-
-**Input:** Resident self-employed, Panama-source net taxable income USD 75,000.
-
-**Reasoning:**
-- Falls in the "Over 50,000" band.
-- Tax = 5,850 fixed + (75,000 − 50,000) × 25% = 5,850 + 25,000 × 25% = 5,850 + 6,250 = **USD 12,100.00**
-
-**Classification:** ISR due = USD 12,100.00.
-
-## Section 5 — Tier 1 Rules (When Data Is Clear)
-
-### 5.1 The Territorial Source Rule
-
-- **Territorial source rule** — Only Panamanian-source income is taxable, for residents and non-residents alike. Income from services performed, or assets located, outside Panama is not taxable regardless of where it is received or banked. Classify the source of every income stream before computing tax. When source is genuinely ambiguous (e.g. cross-border services), invoke R-PA-1.  _(PwC, taxes-on-personal-income)_
-
-### 5.2 Progressive ISR Computation (natural persons)
-
-**Progressive ISR Computation table**  _(PwC, taxes-on-personal-income (reviewed 18 Jan 2026))_
-
-| Taxable Income (USD) | Computation |
+| Profits distributed | Withholding |
 | --- | --- |
-| 0 – 11,000 | USD 0 |
-| 11,001 – 50,000 | (income − 11,000) × 15% |
-| Over 50,000 | 5,850 + (income − 50,000) × 25% |
+| Panama-source profits | 10% |
+| Profits from foreign-source or export income, or from exempt interest (government securities, bank deposits) | 5% |
+| Companies in the Colón Free Zone or another free zone, whatever the source | 5% |
+| Bearer shares | 20% |
 
-- **No local or AMT** — No local/municipal income tax; no individual alternate minimum tax.  _(PwC, taxes-on-personal-income)_
+- **Complementary tax.** If a company distributes nothing, or less than 40% of the year's net profits after its own tax, it pays 10% of the shortfall. For a company whose dividends are taxed at 5%, the test is 20% of net profits, and the shortfall is still taxed at 10%.
+- **Loans to shareholders** are taxed as dividends at 10%, even where the company's normal dividend rate is 5%. The exception is bearer shares: 20% must be withheld before a loan is made to a bearer shareholder.
+- **Branches** of foreign companies pay 10% of their Panama taxable income less the tax paid on it.
+- A tax treaty rate prevails where one applies. Tax treaty dividends go on Form 929 and the treaty rules are referred.
+- **Form 07** must be filed, and the tax paid, within 10 days of the distribution. Late filing adds a 10% surcharge plus interest.
 
-### 5.3 Exempt Income
+A shareholder whose only income is dividends that have already been taxed at source need not file a return ([DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php)).
 
-- **Exempt income list** — Interest on Panamanian government securities. Interest on Panamanian bank savings accounts and time deposits. Foreign-source income (territorial rule).  _(PwC, taxes-on-personal-income)_
+**Aviso de Operación tax.** A business with an Aviso de Operación (commercial licence) pays an annual tax of 2% of the company's capital (assets less liabilities subject to the tax), with a minimum of USD 100 and a maximum of USD 60,000 ([DGI return instructions, line 83](https://dgi.mef.gob.pa/DInforme/pdf/RENTA%20-%20NATURAL.pdf)). It is declared on the ISR return, so a business that holds an Aviso must file even for a year with no operations ([DGI, individual returns](https://dgi.mef.gob.pa/DInforme/DJRRPNAPI-Comerciante.php)). It is due by 31 March, and a filing extension does not defer it ([DGI, filing deadlines](https://dgi.mef.gob.pa/DInforme/P-Presentacion.php)). Liberal professions practised individually or through a sociedad civil, non-profit work, and agricultural activities do not need an Aviso ([DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php)).
 
-### 5.4 Personal Deductions
+**Tasa Única.** Separately, every sociedad anónima pays a flat annual fee of USD 300 and every private-interest foundation USD 400, with a USD 50 surcharge if late. Companies registered from 1 January to 30 June pay by 15 July each year; those registered from 1 July to 31 December pay by 15 January ([DGI, Tasa Única FAQ](https://dgi.mef.gob.pa/Preguntas/TasaU.php)).
 
-- **Personal Deductions key caps** — See Section 1 table. Key caps: personal exemption USD 800 (married); mortgage interest USD 15,000; pension USD 15,000; education USD 3,600/student; charitable donations USD 50,000; medical (no cap stated). All require documentation. The USD 250/dependent figure is [RESEARCH GAP — reviewer to confirm].  _(PwC, deductions)_
+### Payments to people abroad ([DGI, Form 05](https://dgi.mef.gob.pa/DInforme/Formulario05.php))
 
-### 5.5 Social Security (CSS) + Educational Insurance — Law 462 of 18 March 2025
+Anyone who pays or credits Panama-source income to a person based abroad must withhold tax. The rate for a company (25%) or the individual table applies to 50% of the amounts paid in the year, less withholding already made. The tax goes on Form 05 within 10 days of the payment or credit, whichever comes first ([DGI, returns and due dates](https://dgi.mef.gob.pa/DInforme/Tab-Decla.php)). Treaty relief goes on Form 433 and is referred.
 
-**Basis:** PwC, other-taxes; Fábrega Molino (FMM); Morgan & Morgan.
+## Boundaries and exceptions ([DGI, article 710](https://dgi.mef.gob.pa/DInforme/A710codigofiscal.php); [DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php); [DGI return instructions](https://dgi.mef.gob.pa/DInforme/pdf/RENTA%20-%20NATURAL.pdf))
 
-**Employees (current, from April 2025 payroll) table**  _(PwC, other-taxes; FMM)_
-
-| Component | Rate | Source |
-| --- | --- | --- |
-| CSS (employee) | 9.75% of gross salary | PwC, other-taxes; FMM |
-| Educational insurance (employee) | 1.25% of salary | PwC, other-taxes; FMM |
-| **Total employee** | **11.00%** | sum: 9.75 + 1.25 = 11.00 |
-
-**Employers (phased increase under Law 462) table**  _(PwC, other-taxes; Morgan & Morgan)_
-
-| Component | Rate | Source |
-| --- | --- | --- |
-| CSS (employer) — from 1 Apr 2025 | 13.25% | PwC, other-taxes; Morgan & Morgan |
-| CSS (employer) — from 1 Mar 2027 | 14.25% | Morgan & Morgan |
-| CSS (employer) — from 1 Mar 2029 | 15.25% | Morgan & Morgan |
-| Educational insurance (employer) | 1.50% of salary | PwC, other-taxes |
-| **Total employer (current, from Apr 2025)** | **14.75%** | sum: 13.25 + 1.50 = 14.75 |
-
-**Combined headline (current, from April 2025) table**  _(PwC, other-taxes; Morgan & Morgan)_
-
-| Party | CSS | Educational insurance | Total |
-| --- | --- | --- | --- |
-| Employee | 9.75% | 1.25% | 11.00% |
-| Employer | 13.25% | 1.50% | 14.75% |
-| **Combined** | **23.00%** | **2.75%** | **25.75%** |
-
-- **Arithmetic check** — Employee column: 9.75 + 1.25 = 11.00. Employer column: 13.25 + 1.50 = 14.75. Combined CSS: 9.75 + 13.25 = 23.00. Combined education: 1.25 + 1.50 = 2.75. Combined total: 11.00 + 14.75 = 25.75 (= 23.00 + 2.75). All reconcile.
-- **Salary ceiling/floor** — CSS and educational insurance apply with no maximum taxable limit (no ceiling) and no floor for employees.  _(PwC, other-taxes)_
-
-### 5.6 Self-Employed / Independent Workers (NEW under Law 462)
-
-**Self-Employed / Independent Workers table**  _(Morgan & Morgan; Pension Policy International)_
-
-| Component | Rate | Status |
-| --- | --- | --- |
-| IVM (Disability, Old Age, Death) | 9.36% of taxable income | Mandatory |
-| Health & maternity program | additional 8.5% of declared contributory income | Voluntary (opt-in); if opted in, declared base ≥ USD 800/month |
-
-- **Registration and gap** — Independent/self-employed workers must now register with CSS for the first time. [RESEARCH GAP — reviewer to confirm] the income threshold (if any) below which independents are exempt from the mandatory 9.36% IVM contribution; verify against CSS / Law 462 primary text.  _(Morgan & Morgan; Pension Policy International)_
-
-### 5.7 Retirement Age (unchanged by Law 462)
-
-- **Retirement age** — Women: 57. Men: 62. Subject to future actuarial review.  _(FMM)_
-
-### 5.8 Filing, Estimated Tax, and Withholding
-
-**Filing, Estimated Tax, and Withholding table**  _(PwC, tax-administration; Casattis)_
-
-| Item | Detail |
+| Situation | Treatment |
 | --- | --- |
-| Tax year | Calendar year |
-| Filing deadline (individuals) | 15 March following the tax year (FY2025 due 15 March 2026) |
-| Extension | One-month extension on request before the deadline |
-| Filing platform | e-Tax 2.0 (DGI online portal) |
-| Estimated tax instalments | Three equal instalments: 30 June, 30 September, 31 December |
-| Who must file | All taxpayers **except** employees with a single salary source where the employer withholds. Must file if claiming non-business expenses, or receiving representation allowances / salary in kind |
-| Non-residents | Panama-source income subject to withholding by the payer |
-| Form code | **[RESEARCH GAP — reviewer to confirm]** the exact DGI individual return form code (commonly the "Declaración Jurada de Rentas" for personas naturales; PwC does not give a form number) |
+| Net taxable income exactly USD 11,000 | 0%. Tax starts only on income more than USD 11,000. |
+| Net taxable income exactly USD 50,000 | USD 5,850. The 25% rate applies only to income more than USD 50,000. |
+| Annual income exactly USD 11,000 | No CPA countersignature needed; it is required when income is more than USD 11,000. |
+| Independent with net taxable income of USD 1,000 or less **and** gross income not more than USD 3,000 | No return. Both tests must be met. |
+| Agricultural activity with gross income under USD 300,000 | No return, under article 710 as DGI publishes it. DGI's general rules page still says USD 250,000: check which applies before relying on it. |
+| One employer, all tax withheld | No return needed. More than one salary means one return for all income. |
+| Pension from the CSS and no other taxable income | No return needed. |
+| Only income is dividends already taxed at source, or exempt interest | No return needed. |
+| Foreign-source income | Reported on its own line, not taxed; related costs not deductible. Mixed-place work: refer. |
+| Interest on Panamanian bank deposits and government securities | Exempt (article 708). |
+| Pension fund contributions | Lower of 10% of gross income and USD 15,000. |
+| School costs abroad or online from abroad | Not deductible; only school costs in Panama count. |
+| Mortgage interest at a preferential rate | Not deductible. |
+| Office in a property the taxpayer owns | No rent deduction for the space. Rent on property used partly for the business is deductible in proportion to the taxable use. |
+| Company taxable income exactly USD 1,500,000 | Outside CAIR; CAIR applies above that amount. |
+| Company distributes 40% or more of net profits after tax | No complementary tax (20% test for companies taxed at 5% on dividends). |
+| Return being audited by DGI | No amended return can be filed. |
 
-### 5.9 Non-Deductible Expenses (summary)
+## Worked cases ([DGI, rates](https://dgi.mef.gob.pa/DInforme/Tarifa.php); [DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php); [DGI, Form 07](https://dgi.mef.gob.pa/DInforme/Formulario07.php))
 
-**Non-Deductible Expenses table**  _(PwC, deductions)_
+All cases are for tax year 2026 and assume Panama-source income unless stated.
 
-| Expense | Reason |
-| --- | --- |
-| Entertainment (unreimbursed) | Blocked (PwC, deductions) |
-| Personal living expenses | Not business-related |
-| Fines and penalties | Public policy |
-| Income tax (ISR) itself | Tax on income |
-| Unreimbursed moving/travel (employees) | Blocked (PwC, deductions) |
-| Drawings / personal withdrawals | Not an expense |
-| Foreign-source-related expenses | Match exempt foreign income — not deductible against Panama-source |
+**Case 1. Independent professional, middle band.** Net taxable income after business expenses and deductions USD 40,000. Tax = (40,000 − 11,000) × 15% = 29,000 × 15% = USD 4,350. Income is more than USD 11,000, so the return needs a CPA countersignature; it is due by 15 March 2027.
 
-## Section 6 — Tier 2 Catalogue (Reviewer Judgement Required)
+**Case 2. Independent professional, top band.** Net taxable income USD 75,000. Tax = 5,850 + (75,000 − 50,000) × 25% = 5,850 + 6,250 = USD 12,100.
 
-### 6.1 Panama-Source vs Foreign-Source Split
+**Case 3. Consultant working abroad.** A Panama resident invoices USD 5,000 to a foreign client for work done wholly outside Panama. It is foreign-source: reported on the foreign-source line, not taxed, and the costs of earning it are not deductible. If some of the work was done in Panama, or the client relies on the offshore services rules, refer.
 
-- **Panama-source vs foreign-source split** — Where services are partly performed in Panama and partly abroad, the source split drives the entire computation. Conservative default: STOP and flag — do not allocate without reviewer confirmation. Flag for reviewer: Confirm place of performance and contractual situs for each income stream.
+**Case 4. Company inside CAIR.** Total taxable income USD 3,000,000; net taxable income by the normal method USD 100,000. Normal tax = 100,000 × 25% = USD 25,000. CAIR base = 3,000,000 × 4.67% = USD 140,100; CAIR tax = 140,100 × 25% = USD 35,025. The company pays the greater, USD 35,025, unless DGI agrees not to apply CAIR. Its effective rate under CAIR, 35,025 ÷ 100,000 = 35%, exceeds the 25% rate, so it may apply for non-application within 90 calendar days of the year end.
 
-### 6.2 Home Office / Mixed-Use Business Expenses
+**Case 5. Salaried parent claiming school costs.** Salary USD 30,000 from one employer, tax fully withheld; USD 2,000 of documented school costs in Panama for one child with no scholarship. No return is required, but the employee may file to recover school costs as a credit: 2,000 × 15% = USD 300, because income is between USD 11,000 and USD 50,000. The costs are under the USD 3,600 per-dependant cap.
 
-- **Home office / mixed-use expenses** — Only the business-use portion of home utilities, rent, phone, and internet is deductible for a self-employed taxpayer. Conservative default: 0% deduction until apportionment is documented. Flag for reviewer: Confirm dedicated workspace and apportionment basis.
+**Case 6. Pension fund cap.** Gross income USD 60,000; pension fund contributions USD 8,000. Cap = the lower of 60,000 × 10% = USD 6,000 and USD 15,000, so USD 6,000 is deductible and USD 2,000 is not.
 
-### 6.3 Motor Vehicle Business Use
+**Case 7. Estimated tax.** Case 1's return, filed by 15 March 2027, shows tax of USD 4,350 for 2026. The estimated income for 2027 may not be lower than the income declared for 2026, so on the same deductions the estimated tax is USD 4,350, paid as 4,350 ÷ 3 = USD 1,450 by each of 30 June, 30 September and 31 December 2027 (or in one payment). Any balance of 2026 tax not covered by the 2026 instalments is due by 31 March 2027.
 
-- **Motor vehicle business use** — Only the business-use percentage of fuel, insurance, and maintenance is deductible. Conservative default: 0% business use until a usage log is provided. Flag for reviewer: Confirm business percentage is documented and reasonable.
+**Case 8. Dividends and complementary tax.** A company has net profits after its own tax of USD 600,000, all Panama-source, and distributes USD 200,000. Dividend tax = 200,000 × 10% = USD 20,000, on Form 07 within 10 days. The 40% test is 600,000 × 40% = USD 240,000; the shortfall is 240,000 − 200,000 = USD 40,000, so complementary tax = 40,000 × 10% = USD 4,000.
 
-### 6.4 13th-Month Bonus (Décimo Tercer Mes)
+**Case 9. Payment abroad.** A Panama company pays a foreign company USD 10,000 for services received in Panama, its only such payment in the year. Withholding = 10,000 × 50% × 25% = USD 1,250, on Form 05 within 10 days of payment, unless a treaty applies (refer).
 
-- **13th-month bonus treatment** — Panama mandates a 13th-month bonus paid in three parts (15 April, 15 August, 15 December) under labour law. [RESEARCH GAP — reviewer to confirm] the exact CSS and ISR treatment of the décimo (e.g. whether it is subject to reduced CSS treatment); not re-verified against a primary source in this pass. Flag for reviewer: Confirm payroll and tax treatment of the décimo before finalising.
+**Case 10. Aviso de Operación tax.** A trader's capital subject to the tax is USD 50,000. Tax = 50,000 × 2% = USD 1,000, between the USD 100 minimum and the USD 60,000 maximum, declared on the ISR return and due by 31 March.
 
-### 6.5 Self-Employed Health & Maternity Opt-In
+## When to refuse or refer
 
-- **Health & maternity opt-in** — The 8.5% health & maternity CSS contribution for independents is voluntary; if elected, the declared base may not be below USD 800/month. Flag for reviewer: Confirm whether the client has opted in and the declared contributory income.
+- **Source unclear.** Work done partly in Panama and partly abroad, or a client relying on the offshore services rules in article 694 parágrafo 2. The split drives the whole computation, and this Guide cannot quote the article's text.
+- **Non-residents beyond simple withholding**, treaty claims (Forms 433, 929, 931), tax residence certificates.
+- **Companies beyond the summary**: CAIR non-application requests, special fiscal periods, groups, transfer pricing (Form 930), free zones, SEM, City of Knowledge, Panamá Pacífico, tourism and other incentive regimes, AMPYME micro-business exemptions.
+- **Capital gains** on real estate (Forms 106 and 107) or on shares and securities (Form 108).
+- **CSS contribution rates** for employees, employers or independents under Law 462 of 2025, educational insurance (seguro educativo) withheld from salaries and paid by employers, and the CSS treatment of the 13th-month pay. Not sourced here.
+- **Arrears, audits, enforcement**, closure of premises, criminal tax fraud, suspension of the Aviso de Operación, or a client already under DGI audit (no amended return is allowed).
+- **Prescription questions.** DGI's FAQ says individual income tax prescribes after 7 years in one answer and 5 years in another ([DGI FAQ, questions 6 and 32](https://dgi.mef.gob.pa/Preguntas/Rent.php)). Check the Código Fiscal before advising.
 
-### 6.6 Dependent Deductions
+## Filing and payment ([DGI, filing deadlines](https://dgi.mef.gob.pa/DInforme/P-Presentacion.php); [DGI, article 710](https://dgi.mef.gob.pa/DInforme/A710codigofiscal.php); [DGI, returns and due dates](https://dgi.mef.gob.pa/DInforme/Tab-Decla.php))
 
-- **Dependent deductions** — The USD 250/dependent deduction is unconfirmed against the authoritative PwC page. Conservative default: 0 dependent deduction. Flag for reviewer: Confirm the current dependent-deduction figure against DGI / Código Fiscal before claiming.
+### Who must file
 
-### 6.7 Medical Expenses (no stated cap)
+Every taxpayer files a sworn annual return (declaración jurada de rentas) for the previous year, except ([DGI, article 710](https://dgi.mef.gob.pa/DInforme/A710codigofiscal.php); [DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php); [DGI FAQ, question 18](https://dgi.mef.gob.pa/Preguntas/DeclaracionInformes.php)):
 
-- **Medical expenses** — PwC states medical expenses incurred in Panama are deductible (documented) with no cap stated. Flag for reviewer: Confirm documentation and that expenses were incurred in Panama.  _(PwC, deductions)_
+- a worker paid salary (and representation allowance) by one employer during the year, with all tax withheld;
+- a CSS pensioner with no other taxable income;
+- a person whose only income is dividends already taxed at source, or exempt interest;
+- an independent with net taxable income of USD 1,000 or less and gross income not more than USD 3,000 ([DGI, article 710](https://dgi.mef.gob.pa/DInforme/A710codigofiscal.php));
+- a person in agriculture with gross income under USD 300,000 ([DGI, article 710](https://dgi.mef.gob.pa/DInforme/A710codigofiscal.php); see the conflict noted in the boundary table).
 
-## Section 7 — Excel Working Paper Template
+Someone exempt from filing must still make a sworn statement of why when asking for a paz y salvo (tax clearance certificate). A person who lost a job part way through the year and earned salary from it still files ([DGI FAQ, question 43](https://dgi.mef.gob.pa/Preguntas/DeclaracionInformes.php)). A return with income above USD 11,000 must be countersigned by a CPA with a DGI security code.
 
-```
-PANAMA PERSONAL INCOME TAX (ISR) — WORKING PAPER
-Tax Year: 2025
-Client: ___________________________
-Residency: Resident / Non-resident
-Marital Status: Single / Married   Dependents: ____
-Worker Type: Employee / Self-employed (independent)
-RUC: ___________________________
+### Deadlines for the 2026 return
 
-A. PANAMA-SOURCE GROSS INCOME
-  A1. Business / professional income (Panama-source)   ___________
-  A2. Employment income (planilla)                     ___________
-  A3. Rental income (property in Panama)               ___________
-  A4. Other Panama-source income                       ___________
-  A5. TOTAL Panama-source gross income                 ___________
-
-  (EXCLUDE: foreign-source income; exempt PA bank/govt interest)
-
-B. ALLOWABLE BUSINESS EXPENSES (self-employed)
-  B1. Office rent                                      ___________
-  B2. Accountancy / legal fees                         ___________
-  B3. Software subscriptions / IT                      ___________
-  B4. Marketing / advertising                          ___________
-  B5. Bank charges                                     ___________
-  B6. Office supplies                                  ___________
-  B7. Other allowable business expenses                ___________
-  B8. TOTAL business expenses                          ___________
-
-C. NET BUSINESS INCOME (A1 - B8)                       ___________
-
-D. PERSONAL DEDUCTIONS (with caps)
-  D1. Personal exemption (married, USD 800)            ___________
-  D2. Mortgage interest (max 15,000)                   ___________
-  D3. Pension contributions (max 15,000)               ___________
-  D4. Education (max 3,600 per student)                ___________
-  D5. Medical (Panama, documented)                     ___________
-  D6. Charitable donations (max 50,000)                ___________
-  D7. Dependent deduction [RESEARCH GAP - confirm]     ___________
-  D8. TOTAL personal deductions                        ___________
-
-E. TAXABLE INCOME (C + A2 + A3 + A4 - D8)              ___________
-
-F. ISR COMPUTATION (pass to deterministic engine)
-  0-11,000: 0
-  11,001-50,000: (E - 11,000) x 15%
-  Over 50,000: 5,850 + (E - 50,000) x 25%
-  F1. ISR liability                                    ___________
-  F2. Less: estimated tax paid (Jun/Sep/Dec)           ___________
-  F3. Less: ISR withheld at source                     ___________
-  F4. ISR due / refund                                 ___________
-
-G. SOCIAL SECURITY (CSS) — informational
-  G1. Employee CSS 9.75% / Independent IVM 9.36%       ___________
-  G2. Educational insurance (employee 1.25%)           ___________
-
-REVIEWER FLAGS:
-  [ ] Panama-source vs foreign-source confirmed for each stream?
-  [ ] Residency status confirmed?
-  [ ] Worker type confirmed (employee vs independent)?
-  [ ] Personal deduction caps respected?
-  [ ] Dependent deduction figure confirmed? [RESEARCH GAP]
-  [ ] Home-office / vehicle apportionment documented?
-  [ ] Exempt interest (PA bank/govt) excluded?
-  [ ] Décimo tercer mes treatment confirmed? [RESEARCH GAP]
-  [ ] DGI return form code confirmed? [RESEARCH GAP]
-```
-
-## Section 8 — Bank Statement Reading Guide
-
-### Panamanian Bank Statement Formats
-
-**Panamanian Bank Statement Formats table**
-
-| Bank | Format | Key Fields | Notes |
-| --- | --- | --- | --- |
-| Banco General | PDF, CSV | Fecha, Descripción, Débito, Crédito, Saldo | Most common; Spanish descriptions |
-| Banistmo | PDF, CSV | Fecha valor, Descripción, Monto, Saldo | Card transactions show merchant |
-| Banco Nacional (BNP) | PDF | Fecha, Concepto, Retiro, Depósito | State bank; shorter descriptions |
-| BAC Credomatic | CSV | Fecha, Comercio/Concepto, Monto, Moneda | Clean merchant names |
-| Multibank / MMG | PDF | Fecha, Detalle, Cargo, Abono | Less common CSV |
-
-### Key Panamanian / Spanish Banking Terms
-
-**Key Banking Terms table**
-
-| Term | English | Classification Hint |
+| What | Individuals | Companies |
 | --- | --- | --- |
-| TRANSFERENCIA / TRF | Transfer | Check direction for income/expense |
-| ACH | Automated clearing house transfer | Common for payroll and bills |
-| DÉBITO DIRECTO | Direct debit | Regular expense (utility, subscription) |
-| ABONO | Credit/deposit | Potential income |
-| CARGO | Charge/debit | Expense — check merchant |
-| RETIRO / CAJERO | Withdrawal / ATM | Ask what cash was spent on |
-| COMISIÓN / SPEJJEZ→ COMISIÓN BANCARIA | Bank charge | Deductible (business account) |
-| INTERESES | Interest | Often exempt income (PA bank/govt) |
-| HONORARIOS / FACTURA | Fees / invoice | Business income |
-| PLANILLA / SALARIO / SUELDO | Payroll / salary | Employment income |
-| DÉCIMO / XIII MES | 13th-month bonus | Special treatment — flag |
-| CSS / SEGURO EDUCATIVO | Social security / educational insurance | Statutory deduction |
+| Annual return (Form 2V; Form 1V for companies) | By 15 March 2027 | By 31 March 2027 |
+| Extension, asked for on e-Tax 2.0 before the deadline | To 15 April 2027 | To 30 April 2027 |
+| Balance of 2026 tax | By 31 March 2027 | By 31 March 2027 |
+| Aviso de Operación tax | Due 31 March 2027, not deferred by an extension | Same |
+| Estimated tax for 2027 | 30 June, 30 September, 31 December 2027, or one payment | Same |
+| Special fiscal period (with DGI approval) | n/a | Return within 3 months of the year end; estimated tax 6, 9 and 12 months after it |
+| Form 1V8 (pure salary, filing only to claim deductions) | No deadline | n/a |
 
-## Section 9 — Onboarding Fallback
+The extension is for a maximum of one month and is granted on payment of the tax the taxpayer estimates is due. Any extra tax found on the return carries late-payment charges ([DGI, article 710, parágrafo 5](https://dgi.mef.gob.pa/DInforme/A710codigofiscal.php)). Final returns on ceasing business: companies within 30 days after cancellation in the Public Registry; individuals from 1 to 15 January after the year ends ([DGI, individual returns](https://dgi.mef.gob.pa/DInforme/DJRRPNAPI-Comerciante.php)).
 
-If the client provides a bank statement but cannot answer onboarding questions immediately:
+Payment codes on the DGI payment slip: 101 for income tax, 319 for educational insurance, 724 for CSS contributions ([DGI filing instructions](https://dgi.mef.gob.pa/DInforme/pdf/INSTRUCTIVO%20DE%20LLENADO.pdf)). Employers file Planilla 03 (salary withholding) monthly, within 60 calendar days after the CSS payroll is filed ([DGI, Planilla 03](https://dgi.mef.gob.pa/DInforme/Planilla03.php)).
 
-1. Classify all transactions using the pattern library (Section 3).
-2. Mark all source-ambiguous credits and all Tier 2 items as "PENDING — reviewer must confirm".
-3. Apply conservative defaults (Section 1) — including 0% personal deductions where undocumented and excluding foreign-source income only where confirmed.
-4. Generate the working paper (Section 7) with clear flags.
-5. Present the following questions to the client:
+### Amending a return
 
-```
-ONBOARDING QUESTIONS — PANAMA INCOME TAX
-1. Are you a Panama tax resident or non-resident?
-2. For each income stream: were the services performed (or assets located) in Panama, or abroad?
-3. Worker type: employee (on a planilla) or self-employed/independent?
-4. Marital status (single/married) and number of dependents?
-5. Do you have deductible: mortgage interest, pension contributions, education,
-   medical (in Panama), or charitable donations? Amounts and receipts?
-6. Do you operate a business? If so, do you have a RUC and Aviso de Operación?
-7. CSS: how much was contributed in the year? (employee 9.75% / independent IVM 9.36%)
-8. Did you make estimated tax instalments (Jun/Sep/Dec)? Amounts?
-9. Was any ISR withheld at source?
-10. Did you receive a décimo tercer mes (13th-month bonus)?
-```
+A return may be amended once per year, within 36 months of the original filing deadline. The fee is USD 100 for individuals and USD 500 for companies. A correction that lowers the tax needs a written request setting out the facts; one that raises the tax is filed online without a request. No amendment is allowed during a DGI audit ([DGI, article 710, parágrafo 4](https://dgi.mef.gob.pa/DInforme/A710codigofiscal.php); [DGI, penalties](https://dgi.mef.gob.pa/DInforme/Sanciones.php)).
 
-## Section 10 — Reference Material
+### Penalties ([DGI, fines and penalties](https://dgi.mef.gob.pa/MS/MS.php); [DGI declarations FAQ](https://dgi.mef.gob.pa/Preguntas/DeclaracionInformes.php); [DGI, amending returns](https://dgi.mef.gob.pa/DInforme/R-Dcl.php))
 
-### Key References
-
-**Key References table**
-
-| Topic | Reference |
+| Failure | Penalty |
 | --- | --- |
-| Income tax rates (natural persons) | PwC Worldwide Tax Summaries — Panama, taxes-on-personal-income (reviewed 18 Jan 2026): https://taxsummaries.pwc.com/panama/individual/taxes-on-personal-income |
-| Personal deductions | PwC — Panama, deductions: https://taxsummaries.pwc.com/panama/individual/deductions |
-| Social security & educational insurance | PwC — Panama, other-taxes: https://taxsummaries.pwc.com/panama/individual/other-taxes |
-| Filing / estimated tax / administration | PwC — Panama, tax-administration: https://taxsummaries.pwc.com/panama/individual/tax-administration |
-| Law 462 of 2025 (CSS reform) — highlights | Fábrega Molino: https://fmm.com.pa/panama-social-security-reform-2025-key-highlights-of-law-no-462/ |
-| Law 462 of 2025 — employer phased rates & self-employed | Morgan & Morgan: https://morimor.com/law-no-462-of-march-18-2025-key-reforms-to-the-social-security-fund-css-of-panama/ |
-| Self-employed CSS obligations | Pension Policy International: https://www.pensionpolicyinternational.com/panama-la-ley-462-de-la-css-beneficios-y-nuevas-obligaciones-a-trabajadores-independientes/ |
-| Filing deadlines & extensions | Casattis: https://casattis.com/en/presentaciones-de-la-declaracion-de-renta-en-panama-y-sus-prorrogas/ |
-| Penalties (non-primary) | Limitless Legal: https://www.limitlesslegal.com/en-us/blog/avoid-fines-for-non-declaration-panama-business |
-| Minimum wage (Decree 13/2025) | Galindo Arias & López; Lovill; MITRADEL (see Section 10.2) |
-| MEF official CSS reform PDF (primary, unparsed) | https://www.mef.gob.pa/wp-content/uploads/2025/05/250428-Republic-of-Panama-CSS-Reform-Takeaways.pdf |
+| Late or missing annual return | USD 100 for an individual, USD 500 for a company (DGI FAQ, question 32, and the Tax Procedure Code article quoted on DGI's amending-returns page). DGI's penalties page cites article 710 of the Código Fiscal: USD 100 to USD 1,000. Check which applies. |
+| Not keeping books or records when obliged | USD 100 to USD 500; books not up to date (within 60 days after each month end), USD 100 to USD 500 for each month late |
+| Refusing to show books or allow an inspection | USD 100 to USD 5,000 |
+| Not providing requested information within 72 hours | USD 1,000 to USD 5,000, USD 10,000 if repeated, plus closure of the premises for 2 days (up to 10 days if repeated, 15 days if it persists) |
+| Late dividend tax (Form 07) | 10% surcharge plus interest on the tax |
+| Late Planilla 03 | USD 100, USD 500 or USD 1,000, by the employer's annual income |
+| Tax paid late | Late-payment interest under article 1072-A of the Código Fiscal (rate not published on DGI's pages: check) |
 
-### 10.1 Penalties (less authoritative — law-firm sourced)
+Estimated tax paid late generates surcharges and interest and blocks the paz y salvo, which matters for public tenders ([DGI, estimated tax notice](https://dgi.mef.gob.pa/New/news?n=194)).
 
-- **Penalties** — Late/non-filing fines can be automatically generated from USD 500 (B/. 500.00) upward, with risk of tax audit or suspension of the Aviso de Operación (Limitless Legal). Companies with an active Aviso de Operación but zero income must still file a zero-income return or face automatic fines (Limitless Legal). [RESEARCH GAP — reviewer to confirm] no DGI primary-source penalty schedule (late-payment interest rate, surcharge %) was located; verify against the Código Fiscal / DGI.  _(Limitless Legal)_
+### Returns being filed now: tax year 2025
 
-### 10.2 Minimum Wage
+The 2025 returns were due by 15 March 2026 (individuals) and 31 March 2026 (companies), or 15 April and 30 April 2026 with an extension. The table, deductions and rules above applied to 2025 unchanged. A 2025 return not yet filed is late: file it at once and expect the late-filing fine. The first 2026 estimated-tax instalments (30 June and 30 September 2026) have passed; the last is due by 31 December 2026.
 
-- **Minimum wage** — Panama sets minimum wage by hourly rate, differentiated across 59 rates covering 74 economic activities, by region (Region 1 / Region 2), sector, and company size. There is no single national monthly figure (Galindo Arias & López; MITRADEL). Current (2026–2027 period): Executive Decree No. 13 of 31 Dec 2025, published 6 Jan 2026, effective 16 January 2026. Example cited: ~USD 320.00/month for some Region 2 categories (Lovill; Galindo Arias & López). [RESEARCH GAP — reviewer to confirm] the exact applicable cell must be read per activity/region/company-size from Decree No. 13/2025 (Gaceta Oficial). No single number applies.  _(Galindo Arias & López; Lovill; MITRADEL)_
+## Completion checklist
 
-### 10.3 Registration
-
-- **Registration** — Taxpayers register via the RUC (Registro Único de Contribuyente); DGI ran mandatory RUC/TIN update campaigns through 2025. Businesses need an Aviso de Operación (KPMG; FMM — general, not re-verified to a primary source in this pass).  _(KPMG; FMM)_
-
-### Test Suite
-
-Input: Resident self-employed, Panama-source taxable income USD 40,000, no confirmed personal deductions.
-Expected: 40,000 in the 11,001–50,000 band. ISR = (40,000 − 11,000) × 15% = 29,000 × 15% = **USD 4,350.00**.
-
-Input: Resident self-employed, Panama-source taxable income USD 75,000.
-Expected: ISR = 5,850 + (75,000 − 50,000) × 25% = 5,850 + 6,250 = **USD 12,100.00**.
-
-Input: Resident, Panama-source taxable income USD 11,000.
-Expected: ISR = **USD 0.00** (top of the 0% band).
-
-Input: Resident, Panama-source taxable income USD 25,000.
-Expected: ISR = (25,000 − 11,000) × 15% = 14,000 × 15% = **USD 2,100.00**.
-
-Input: Employee, monthly gross salary USD 2,000 (current rates from April 2025).
-Expected: Employee CSS = 2,000 × 9.75% = 195.00; educational insurance = 2,000 × 1.25% = 25.00; total employee statutory = **USD 220.00**. No salary ceiling.
-
-Input: Same USD 2,000 salary, employer side (from April 2025).
-Expected: Employer CSS = 2,000 × 13.25% = 265.00; employer educational insurance = 2,000 × 1.50% = 30.00; total employer statutory = **USD 295.00** (14.75% of 2,000).
-
-Input: USD 1,200 interest credited from a Panamanian bank time deposit.
-Expected: EXCLUDE — exempt income (PwC, taxes-on-personal-income). Not in taxable income.
-
-Input: USD 5,000 received for consulting work performed entirely abroad for a foreign client.
-Expected: EXCLUDE — foreign-source income is not taxable under the territorial rule. Confirm source with reviewer (R-PA-1).
-
-Input: Self-employed independent, taxable income base USD 30,000/year, did not opt into health & maternity.
-Expected: Mandatory IVM = 30,000 × 9.36% = **USD 2,808.00**. No 8.5% health/maternity (not opted in). [Confirm any exemption threshold — RESEARCH GAP.]
-
-## PROHIBITIONS
-
-- NEVER tax foreign-source income — Panama is strictly territorial.
-- NEVER include exempt interest (Panamanian bank savings/time deposits, government securities) in taxable income.
-- NEVER compute ISR for a non-resident as a self-assessed return — non-residents are taxed by withholding (R-PA-2).
-- NEVER claim a personal deduction above its statutory cap (mortgage 15,000; pension 15,000; education 3,600/student; donations 50,000).
-- NEVER claim the USD 250/dependent deduction as fact — it is unconfirmed [RESEARCH GAP].
-- NEVER allow entertainment, fines, ISR itself, or drawings as deductions.
-- NEVER apply a salary ceiling to CSS or educational insurance — there is none.
-- NEVER confuse the employee CSS rate (9.75%) with the independent IVM rate (9.36%).
-- NEVER state a penalty schedule or a minimum-wage figure as confirmed — both carry RESEARCH GAP markers.
-- NEVER present tax calculations as definitive — always label as estimated and pass the bracket computation to the deterministic engine.
-
-## Disclaimer
-
-This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional (such as a CPA, EA, tax attorney, or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
-
-The most up-to-date, verified version of this skill is maintained at [openaccountants.com](https://openaccountants.com). Log in to access the latest version, request a professional review from a licensed accountant, and track updates as tax law changes.
+- [ ] Each income stream classified as Panama-source, foreign-source or exempt, with the place of work recorded ([DGI FAQ](https://dgi.mef.gob.pa/Preguntas/Rent.php)).
+- [ ] Filing exemption tested against every item in "Who must file".
+- [ ] Business costs limited to Panama-source income; no ISR, fines or foreign-source costs deducted.
+- [ ] Basic deduction only if the spouses file jointly.
+- [ ] Mortgage interest (USD 15,000, own home in Panama, no preferential rate), pension (lower of 10% of gross and USD 15,000), school costs (USD 3,600 per dependant, Panama only, net of scholarships) and donations (USD 50,000, approved bodies) within their limits and documented ([DGI return instructions](https://dgi.mef.gob.pa/DInforme/pdf/RENTA%20-%20NATURAL.pdf)).
+- [ ] No per-dependant deduction claimed.
+- [ ] Tax computed on the 2026 table; representation allowances on their own table.
+- [ ] Withholding, 2026 instalments and credits brought forward subtracted.
+- [ ] Estimated tax for 2027 not lower than the 2026 income declared; instalment dates given to the client.
+- [ ] Educational insurance at 2.75% on self-employed income, if any ([DGI return instructions](https://dgi.mef.gob.pa/DInforme/pdf/RENTA%20-%20NATURAL.pdf)).
+- [ ] Company matters: Aviso de Operación tax, dividend tax on Form 07 within 10 days, complementary tax, CAIR if taxable income is more than USD 1,500,000, Form 05 on payments abroad, Tasa Única ([DGI, general rules](https://dgi.mef.gob.pa/DInforme/GD-ISR.php)).
+- [ ] CPA countersignature if income is more than USD 11,000 ([DGI FAQ, question 45](https://dgi.mef.gob.pa/Preguntas/DeclaracionInformes.php)).
+- [ ] Filed by 15 March 2027 (individuals) or 31 March 2027 (companies), or extension requested in time; balance paid by 31 March 2027.
+- [ ] CSS contribution rates and any offshore services claim marked "check" and referred.
 
 <!-- openaccountants-cta-block -->
 

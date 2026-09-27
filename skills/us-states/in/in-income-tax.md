@@ -3,524 +3,283 @@ name: in-income-tax
 description: Use this skill whenever asked about Indiana individual income tax. Trigger on phrases like "Indiana income tax", "IN income tax", "IT-40", "Indiana county tax", "IC 6-3". Indiana has a flat 2.95% state rate plus mandatory county income taxes (0.5%–3.38%). ALWAYS load us-tax-workflow-base first.
 version: "0.1"
 jurisdiction: IN
-tax_year: 2025
-last_updated: 2026-07-13
+tax_year: 2026
+last_updated: 2026-09-27
+authored_by: OpenAccountants team
 review_status: pending_review
+trust_label: By OpenAccountants
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# IN Income Tax
+# India income tax for resident individuals: salary, freelancers and small businesses (Tax Year 2026-27, with AY 2026-27 returns)
 
-## Section 1 -- Quick Reference
+## Scope and who this is for ([Income Tax Department: objective and scope of the new Act](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/objective-and-scope-new-act-faq))
 
-**Quick Reference**
+- This Guide covers resident individuals (not RNOR) with salary, interest, one or two house properties, and business or professional income, including presumptive income. It covers both regimes, the rebate, surcharge and cess, advance tax, TDS credits and the return deadlines.
+- **Primary year: Tax Year 2026-27** (1 April 2026 to 31 March 2027). The Income-tax Act, 2025 governs it. The portal says: "The 1961 Act stands repealed on the 01.04.2026." The new Act uses "tax year" in place of "previous year" and drops "assessment year".
+- **Returns being filed now: AY 2026-27** (income of FY 2025-26). These are filed and assessed entirely under the Income-tax Act, 1961, with the old ITR forms. See the dated section "AY 2026-27 returns (FY 2025-26), filed in 2026" below.
+- Out of scope, refer: non-residents and RNORs, capital gains beyond the ITR-1/ITR-4 limits, foreign income or assets, firms, LLPs and companies, tax audit cases, virtual digital assets.
+- Currency is Indian rupees. Amounts use Indian grouping (₹12,00,000 is twelve lakh).
 
-| Field | Value |
+## Ask the client first
+
+Source for this checklist: [Salaried Individuals for AY 2026-27](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1).
+
+- Which year is this for: Tax Year 2026-27 (new Act) or AY 2026-27 (income of FY 2025-26, old Act)? Challans and returns must name the right year.
+- Residential status for the year: days in India this year and in the previous four years, citizenship or Indian origin, and income other than foreign-source income.
+- Age at any time in the year (below 60, 60 to below 80, 80 or more). It changes the old-regime basic exemption only.
+- Regime: new (default) or old. If the client has business or professional income, did they file Form 10-IEA in an earlier year, and have they already used the one-time switch back?
+- Kind of work: a profession listed for presumptive profession income (legal, medical, engineering or architectural, accountancy, technical consultancy, interior decoration, or notified), or a business. Is any income commission, brokerage or agency income?
+- Gross receipts or turnover for the year, and how much was received in cash as opposed to account-payee cheque, draft, bank transfer or prescribed electronic mode.
+- Salary: Form 16, employer category (for the employer NPS limit), HRA and rent paid if old regime is being considered.
+- Form 26AS and AIS downloaded? Every TDS, TCS, advance tax and self-assessment challan.
+- Advance tax paid, with dates.
+- Any director role, unlisted shares, foreign asset or foreign income, brought-forward loss, short-term capital gain, or long-term gain under s.112A above ₹1,25,000. Any of these rules out ITR-1 and ITR-4 ([returns and forms](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1)).
+- For AY 2026-27: has the return already been filed, and on what date?
+
+## The method, step by step
+
+Sources: [Tax Payments FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/tax-payments-faq) and [Salaried Individuals for AY 2026-27](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1).
+
+1. **Fix the year and the Act.** Income earned from 1 April 2026 is Tax Year 2026-27 under the Income-tax Act, 2025. Income of FY 2025-26 is AY 2026-27 under the 1961 Act, even though the return is filed after 1 April 2026.
+2. **Fix residential status** under s.6 (same tests in both Acts; see the residence table below). If the client is non-resident or RNOR, stop and refer.
+3. **Sort income by head**: salary, house property, business or profession, capital gains, other sources. From bank statements: gross up any receipt net of TDS to the invoice amount; exclude loans, own-account transfers, income-tax refunds and GST refunds; keep salary and interest out of business receipts.
+4. **Business or profession income.** If eligible and chosen, apply the presumptive rates (44AD business, 44ADA profession; s.58 of the 2025 Act for Tax Year 2026-27). The client may declare more than the presumptive rate. Declaring less, or leaving the scheme, raises books and audit questions: refer. Otherwise compute actual profit from books (ITR-3).
+5. **Choose the regime.** Compute tax both ways when the client has old-regime deductions. The new regime is the default. The old regime must be chosen on time (see "Regime choice" below).
+6. **Deductions.** New regime: standard deduction on salary, employer NPS under 80CCD(2), and interest on a let-out property. Old regime: standard deduction plus Chapter VI-A deductions, HRA and home-loan interest within their limits.
+7. **Tax on total income** from the slab table for the chosen regime and age.
+8. **Rebate** (resident individuals only): new regime up to ₹60,000 where total income does not exceed ₹12,00,000, with marginal relief just above; old regime up to ₹12,500 where total income does not exceed ₹5,00,000 ([rebate table](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1)).
+9. **Surcharge** above ₹50 lakh, with marginal relief. Then **Health and Education Cess at 4%** on tax plus surcharge ([surcharge and cess](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1)).
+10. **Credits.** Subtract TDS and TCS only as shown in Form 26AS/AIS, then advance tax and self-assessment tax paid. Check interest under 234A/234B/234C (424/425 of the 2025 Act for Tax Year 2026-27) and any late fee.
+11. **Pick the ITR form** and file by the due date. E-verify, or post the signed ITR-V within 30 days.
+
+## Figures by year ([Salaried Individuals for AY 2026-27: tax slabs](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1))
+
+**Which year these figures are for.** The slab, rebate and surcharge figures below are the ones the Income Tax Department publishes "for AY 2026-27" (income of FY 2025-26). At 25 September 2026 the portal had not published a slab page for Tax Year 2026-27 under the new Act. The portal says the new regime continues "under section 202" of the 2025 Act and that the 2025 Act "does not impose any new tax". Use these figures for Tax Year 2026-27 advance tax, labelled as the AY 2026-27 figures, and confirm them against s.202 and the Finance Act, 2026 before filing the Tax Year 2026-27 return (check).
+
+### New tax regime (default), all ages, resident or non-resident ([source](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1))
+
+| Total income | Tax |
 | --- | --- |
-| Country | India (भारत) |
-| Tax | Income Tax + Health & Education Cess (4%) + Surcharge (if applicable) |
-| Currency | INR only |
-| Tax year | Financial Year (FY): 1 April -- 31 March |
-| Current year | FY 2025-26 (Assessment Year 2026-27) |
-| Primary legislation | Income Tax Act, 1961 (as amended by Finance Act, 2025) |
-| Tax authority | Central Board of Direct Taxes (CBDT) / Income Tax Department |
-| Filing portal | incometax.gov.in |
-| Filing deadline | 31 July 2026 (non-audit cases) |
-| Contributor | Open Accountants Community |
-| Validated by | Pending -- requires sign-off by a Chartered Accountant (India) |
-| Skill version | 2.0 |
+| Up to ₹4,00,000 | Nil |
+| ₹4,00,001 to ₹8,00,000 | 5% above ₹4,00,000 |
+| ₹8,00,001 to ₹12,00,000 | ₹20,000 + 10% above ₹8,00,000 |
+| ₹12,00,001 to ₹16,00,000 | ₹60,000 + 15% above ₹12,00,000 |
+| ₹16,00,001 to ₹20,00,000 | ₹1,20,000 + 20% above ₹16,00,000 |
+| ₹20,00,001 to ₹24,00,000 | ₹2,00,000 + 25% above ₹20,00,000 |
+| Above ₹24,00,000 | ₹3,00,000 + 30% above ₹24,00,000 |
 
-### New Tax Regime Rate Table -- FY 2025-26 (Default) [T1]
+### Old tax regime ([source](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1))
 
-**New Tax Regime Rate Table -- FY 2025-26 (Default) [T1]**
+| Age at any time in the year | Nil band | Then |
+| --- | --- | --- |
+| Below 60 | Up to ₹2,50,000 | 5% to ₹5,00,000; ₹12,500 + 20% above ₹5,00,000; ₹1,12,500 + 30% above ₹10,00,000 |
+| 60 or more but below 80 | Up to ₹3,00,000 | 5% to ₹5,00,000; ₹10,000 + 20% above ₹5,00,000; ₹1,10,000 + 30% above ₹10,00,000 |
+| 80 or more | Up to ₹5,00,000 | 20% to ₹10,00,000; ₹1,00,000 + 30% above ₹10,00,000 |
 
-| Total Income (INR) | Rate |
-| --- | --- |
-| 0 -- 4,00,000 | 0% |
-| 4,00,001 -- 8,00,000 | 5% |
-| 8,00,001 -- 12,00,000 | 10% |
-| 12,00,001 -- 16,00,000 | 15% |
-| 16,00,001 -- 20,00,000 | 20% |
-| 20,00,001 -- 24,00,000 | 25% |
-| Above 24,00,000 | 30% |
+### Rebate under s.87A (AY 2026-27 figures; the 2025 Act section is not named on the portal pages cited here, check) ([source](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1))
 
-- **Section 87A Rebate (New Regime)** — If taxable income ≤ Rs. 12,00,000, tax is fully rebated (zero tax). For salaried persons with Rs. 75,000 standard deduction, effective zero-tax threshold is Rs. 12,75,000.  _(Section 87A)_
-- **Cess** — Add 4% Health & Education Cess on all income tax computed (after rebate).
+| Regime | Maximum rebate | Condition |
+| --- | --- | --- |
+| New | ₹60,000 | Resident individual; taxable income does not exceed ₹12,00,000 |
+| Old | ₹12,500 | Resident individual; taxable income does not exceed ₹5,00,000 |
 
-### Old Tax Regime Rate Table (Below 60) [T1]
+- The rebate is "up to 100% of income tax subject to a maximum limit", so at ₹12,00,000 the new-regime tax of ₹60,000 is fully rebated and tax is nil. With the ₹75,000 standard deduction, a salaried resident with no other income pays nil up to a gross salary of ₹12,75,000.
+- **Marginal relief just above ₹12,00,000 (new regime).** The portal's ITR validation rules for AY 2026-27 refuse the rebate where total income excluding LTCG is "more than Rs.12,70,590" ([ITR-1 validation rules](https://www.incometax.gov.in/iec/foportal/sites/default/files/2026-05/CBDT_e-Filing_ITR%201_Validation%20Rules_AY%202026-27.pdf)). Between ₹12,00,000 and that point, tax payable is limited to the income above ₹12,00,000 (see worked case 3).
+- The rebate is for residents only. If the client has capital gains taxed at special rates, refer: this Guide does not cover how the rebate interacts with them.
 
-**Old Tax Regime Rate Table (Below 60) [T1]**
+### Surcharge, cess and marginal relief ([source](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1))
 
-| Total Income (INR) | Rate |
-| --- | --- |
-| 0 -- 2,50,000 | 0% |
-| 2,50,001 -- 5,00,000 | 5% |
-| 5,00,001 -- 10,00,000 | 20% |
-| Above 10,00,000 | 30% |
+| Total income | New regime | Old regime |
+| --- | --- | --- |
+| Up to ₹50 lakh | Nil | Nil |
+| Above ₹50 lakh to ₹1 crore | 10% | 10% |
+| Above ₹1 crore to ₹2 crores | 15% | 15% |
+| Above ₹2 crores to ₹5 crores | 25% | 25% |
+| Above ₹5 crores | 25% | 37% |
 
-- **Section 87A Rebate (Old Regime)** — If taxable income ≤ Rs. 5,00,000, rebate up to Rs. 12,500 applies.  _(Section 87A)_
+- Surcharge on income under sections 111A, 112, 112A and dividends is capped at 15%, except where taxed under 115A, 115AB, 115AC, 115ACA or 115E.
+- Marginal relief: tax plus surcharge cannot exceed the tax on income at the threshold (₹50 lakh, ₹1 crore, ₹2 crores, and under the old regime ₹5 crores) by more than the income above that threshold.
+- Health and Education Cess of 4% is paid on income tax plus surcharge, in both regimes.
 
-### Surcharge (Both Regimes) [T1]
+### Standard deduction and key deductions (AY 2026-27 rules) ([ITR-1 validation rules](https://www.incometax.gov.in/iec/foportal/sites/default/files/2026-05/CBDT_e-Filing_ITR%201_Validation%20Rules_AY%202026-27.pdf))
 
-**Surcharge (Both Regimes) [T1]**
+| Item | New regime | Old regime |
+| --- | --- | --- |
+| Standard deduction on salary, s.16(ia) | Up to ₹75,000 | Up to ₹50,000 |
+| Family pension deduction, s.57(iia) | 1/3rd, maximum ₹25,000 | Lower of 1/3rd or ₹15,000 |
+| Employer NPS contribution, 80CCD(2) | Up to 14% of salary | 10% of salary (PSU or other employer); 14% (central or state government) |
+| House property standard deduction | 30% of annual value | 30% of annual value |
 
-| Total Income (INR) | Surcharge Rate |
-| --- | --- |
-| Up to 50,00,000 | Nil |
-| 50,00,001 -- 1,00,00,000 | 10% of income tax |
-| 1,00,00,001 -- 2,00,00,000 | 15% of income tax |
-| 2,00,00,001 -- 5,00,00,000 | 25% of income tax (new regime only 25%) |
-| Above 5,00,00,000 | 37% (old regime); 25% (new regime cap) |
+Old regime only ([Salaried Individuals page, deductions](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1)):
 
-### Presumptive Taxation Rates [T1]
+- 80C, 80CCC and 80CCD(1) together: ₹1,50,000. 80CCD(1B), own NPS: ₹50,000 more.
+- 80D health insurance: ₹25,000 for self, spouse and dependent children (₹50,000 if any of them is a senior citizen), and the same again for parents; preventive check-up ₹5,000 inside those limits.
+- 80TTA savings interest (non-senior): ₹10,000. 80TTB deposit interest (resident senior citizen): ₹50,000.
+- Home-loan interest on a self-occupied house, s.24(b): ₹2,00,000 (loan on or after 1 April 1999 for purchase or construction). Let-out property loss set off against other heads: ₹2,00,000, balance carried forward up to 8 assessment years.
+- HRA exemption under s.10(13A) is old regime only.
+- New regime keeps: 80CCD(2), 80CCH (Agniveer Corpus Fund), and interest on a let-out property (but a house property loss cannot be set off or carried forward).
 
-**Presumptive Taxation Rates [T1]**
+### Presumptive income: 44AD and 44ADA (AY 2026-27), s.58 (Tax Year 2026-27) ([ITR-4 FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/itr%204-faqs))
 
-| Section | Who | Presumptive Rate | Threshold |
+| Scheme | Who | Deemed profit | Turnover or receipts limit |
 | --- | --- | --- | --- |
-| 44ADA | Specified professionals (doctors, lawyers, CAs, architects, consultants, etc.) | 50% of gross receipts = deemed profit | Gross receipts ≤ Rs. 75,00,000 |
-| 44AD | Business owners (non-professionals) | 8% of turnover (6% if digital receipts) = deemed profit | Turnover ≤ Rs. 3,00,00,000 |
+| 44AD business | Resident individual, resident HUF, resident firm (not LLP), in an eligible business | At least 6% of turnover received by account-payee cheque or draft, bank electronic clearing or prescribed electronic mode received before the specified date; at least 8% of the rest | ₹3 crore if cash receipts do not exceed 5% of total gross receipts; ₹2 crores otherwise |
+| 44ADA profession | Resident individual or firm (not LLP) in a specified profession | At least 50% of gross receipts | ₹75 lakh if cash receipts do not exceed 5% of total gross receipts; ₹50 lakh otherwise |
 
-### Conservative Defaults [T1]
+- The 6% and 8% rates, and the 50% rate, are minimums: the ITR-4 validation rules check that declared income is "more than or equal to" them ([ITR-4 validation rules](https://www.incometax.gov.in/iec/foportal/sites/default/files/2026-05/CBDT_e-Filing_ITR%204_Validation%20Rules_AY%202026-27.pdf)). Mixed receipts: 6% of the qualifying part plus 8% of the rest.
+- The "specified date" condition means a cheque or electronic receipt counts at 6% only if received by that date (the date is not stated on the portal pages cited here; check the Act); otherwise it falls in the 8% pool. Treat receipts of unknown mode as cash (8%).
+- 44AD does not cover: goods carriages (44AE), agency business, commission or brokerage income, or "a person who is required to maintain books of accounts as referred to in Section 44AA(1)" (the professions list).
+- Specified professions for 44ADA: legal, medical, engineering or architectural, accountancy, technical consultancy, interior decoration, and any other profession notified by CBDT. 44ADA does not apply to a business.
+- Once presumptive income is declared, no further business expenses are deductible; Chapter VI-A deductions still are (old regime).
+- **Clients on actual profit (ITR-3) as well:** advance tax and self-assessment tax are a way of paying the tax, not a cost of the business. The return claims them as "Total Taxes Paid" (advance tax, TDS, TCS and self-assessment tax) against the tax ([ITR-3 validation rules](https://www.incometax.gov.in/iec/foportal/sites/default/files/2026-06/CBDT_e-filing_ITR-3_Validation%20Rules_V1.0_AY%2026-27.pdf)); self-assessment tax "is merely a mode of discharging the tax liability" ([Tax Payments FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/tax-payments-faq)). Record them as tax credits, never as expenses.
+- Life insurance premium and provident fund (80C) and health insurance premium (80D) appear on the portal as Chapter VI-A deductions under "Tax deductions available to a taxpayer opting for the Old Tax Regime" ([Salaried Individuals page](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1)). Treat them as old-regime deductions, not business expenses, in ITR-3 and ITR-4 alike; under the new regime they give no deduction.
+- A 44ADA professional who declares at least 50% need not keep books under s.44AA for that profession.
+- **Tax Year 2026-27:** the 2025 Act puts 44AD, 44ADA and 44AE into one section, s.58, "in a tabular format". The portal does not restate the s.58 limits and rates on the pages cited here; confirm them in s.58 before relying on the AY 2026-27 figures for Tax Year 2026-27 (check).
 
-**Conservative Defaults [T1]**
+### Regime choice ([ITR-4 FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/itr%204-faqs))
 
-| Ambiguity | Default |
+- No business or professional income: choose the regime each year in the return itself (ITR-1 or ITR-2, no form), but only in a return filed on or before the due date under s.139(1). The validation rules say: "Old Tax Regime cannot be selected after the due date of filing of return" ([ITR-1 validation rules](https://www.incometax.gov.in/iec/foportal/sites/default/files/2026-05/CBDT_e-Filing_ITR%201_Validation%20Rules_AY%202026-27.pdf)). A belated return is therefore taxed under the new regime.
+- Business or professional income: file Form 10-IEA before the s.139(1) due date to opt out. Switching back to the new regime is also by Form 10-IEA and is available once in a lifetime; after that the old regime cannot be chosen again.
+- An employee must tell the employer the intended regime for TDS. Telling the employer is not the same as opting out; that is done in the return.
+- **Tax Year 2026-27:** an option exercised under the 1961 Act carries over; the client need not opt again ([objective and scope FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/objective-and-scope-new-act-faq), s.536(2)(f)). Check the Form 10-IEA equivalent under the Income-tax Rules, 2026 before filing (check).
+
+### Advance tax and interest ([Tax Payments FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/tax-payments-faq))
+
+| Instalment (normal case) | Cumulative amount due | By |
+| --- | --- | --- |
+| First | 15% of tax liability | 15 June |
+| Second | 45% of tax liability, less advance tax already paid | 15 September |
+| Third | 75% of tax liability, less advance tax already paid | 15 December |
+| Fourth | 100% of tax liability, less advance tax already paid | 15 March |
+
+- Source for the instalments: [ITR-1 FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/ITR1-FAQ).
+- **Threshold:** under s.404 of the 2025 Act, advance tax is payable if tax for the year is "Rs. 10,000 or more", unchanged from the old Act. (The ITR-1 FAQ says "more than ₹ 10,000"; follow the statute wording quoted in the Tax Payments FAQ.) Estimate tax net of TDS.
+- **Presumptive (44AD/44ADA; s.58 for Tax Year 2026-27):** the whole advance tax is due in one instalment on or before 15 March (s.408(2)). Anything paid by 31 March counts as advance tax for that year. There is no such concession for 44AE.
+- **Interest (Tax Year 2026-27, rates unchanged from the old Act):** s.424 (old 234B) 1% per month or part of a month where advance tax is not paid or is less than 90% of assessed tax; s.425 (old 234C) "1% or 3% for the specified period" for deferring instalments. s.405 gives a formula for the advance tax liability.
+- **AY 2026-27 shortfalls** keep 234B and 234C of the 1961 Act, even if the interest is levied after 1 April 2026.
+- Interest under 234A (late filing when tax is unpaid) is shown in the ITR schedules; its rate is not stated on the pages cited here (check).
+- Tax Year 2026-27 advance tax is paid under the 2025 Act: choose "Tax Year 2026-27" on the challan. Self-assessment tax for FY 2025-26 income is paid under the 1961 Act selecting AY 2026-27 ([General Questions FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/General%20Questions-faqs)).
+
+### Residence tests (same in both Acts) ([Non Resident FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/non%20resident%20-faq))
+
+| Test | Rule |
 | --- | --- |
-| Regime not specified | New tax regime |
-| Nature of income unclear (professional vs business) | Professional (44ADA) -- more conservative |
-| Digital vs cash receipt mix unknown | 100% cash (8% rate under 44AD, not 6%) |
-| Filing status unknown | Individual below 60 |
-| TDS credits not confirmed | Exclude until Form 26AS verified |
-| Advance tax paid unknown | Nil advance tax paid |
+| Basic | Resident if in India 182 days or more in the year, or 60 days or more in the year and 365 days or more in the four preceding years |
+| Citizen leaving for employment abroad or as crew of an Indian ship | Resident only if 182 days or more in the year |
+| Visiting Indian citizen or person of Indian origin | Resident if "more than 182 days" in the year; if income other than foreign-source income exceeds ₹15 lakh, the 60-day limb reads 120 days (with 365 days in the four preceding years) |
+| Deemed resident | Citizen with income other than foreign-source income over ₹15 lakh and not liable to tax in any country by domicile, residence or similar criteria (old s.6(1A); new s.6(7)) |
+| Not ordinarily resident | Non-resident in nine of the ten preceding years, or 729 days or less in India in the seven preceding years (old s.6(6); new s.6(13)) |
 
-### Red Flag Thresholds [T1]
+- Residence is tested year by year. FY 2025-26 counts days to 31 March 2026 under the 1961 Act; Tax Year 2026-27 uses the 2025 Act, with earlier years' days used for the look-back tests.
+- Note the two wordings: "182 days or more" (basic test) and "more than 182 days" (visiting citizen). They differ by one day.
 
-**Red Flag Thresholds [T1]**
+### TDS, Form 26AS and AIS ([Tax Credit Mismatch FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/Tax%20Credit%20Mismatch%20-FAQ))
 
-| Flag | Threshold |
+- Report the gross income and claim the TDS as a credit. The credit claimed "is restricted/provided to the amount as reflected in your Form 26 AS".
+- Download AIS and Form 26AS before filing and match every TDS, TCS and challan. If TDS is missing, the deductor must file a revised TDS return. If a challan is missing, check the challan number and PAN; after filing, correct by revised return (before the s.143(1) intimation) or rectification (after it).
+- AIS shows more than TDS: SFT information, tax payments, demand and refund, and other information. Give feedback in AIS where a figure is wrong ([AIS FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/ais%20-%20annual%20information%20statement-faqs)). AIS may not hold everything; the client must still report all income.
+- **Tax Year 2026-27:** TDS on salary is under s.392 and other TDS under s.393 (TCS s.394). Payments or credits on or after 1 April 2026 follow the 2025 Act; earlier ones the 1961 Act. AIS continues to AY 2026-27 and is replaced by Form No. 168 from Tax Year 2026-27.
+- A client who deducts TDS: deposit by the 7th of the following month (March deductions: 30 April for non-government deductors). Interest: 1% per month or part for failure to deduct, 1.5% per month or part for failure to deposit (s.398(3)(a)). TDS rates and thresholds are in the s.393 tables; this Guide does not restate them (check the table item before advising).
+
+### Which ITR form (AY 2026-27) ([Salaried Individuals for AY 2026-27: returns and forms](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1))
+
+| Form | Use when |
 | --- | --- |
-| 44ADA limit exceeded | Gross receipts > Rs. 75,00,000 -- must file ITR-3 |
-| 44AD limit exceeded | Turnover > Rs. 3,00,00,000 |
-| Advance tax mandatory | Tax liability > Rs. 10,000 in the year |
-| TAN required (deductor) | If the self-employed person pays salaries or contractor fees |
-| Tax audit required (professional) | If gross receipts > Rs. 75,00,000 under 44ADA |
+| ITR-1 (Sahaj) | Resident (not RNOR) individual; total income up to ₹50 lakh from salary or pension, up to two house properties, other sources, agricultural income up to ₹5,000, LTCG under s.112A up to ₹1,25,000 |
+| ITR-4 (Sugam) | Resident (not RNOR) individual, HUF or firm (not LLP); total income up to ₹50 lakh with presumptive income under 44AD/44ADA/44AE plus the ITR-1 kinds of income. Optional |
+| ITR-2 | Individual or HUF with no business or profession income who cannot use ITR-1 |
+| ITR-3 | Individual or HUF with business or profession income who cannot use ITR-1, ITR-2 or ITR-4 |
 
-## Section 2 -- Required Inputs and Refusal Catalogue
+- ITR-1 and ITR-4 are barred for a company director, anyone with short-term capital gains, s.112A gains above ₹1,25,000, unlisted shares held in the year, foreign assets, foreign signing authority or foreign income, deferred tax on start-up ESOPs, or any brought-forward loss or loss to carry forward. ITR-1 is also barred where TDS was deducted under s.194N.
+- From AY 2026-27, ITR-1 and ITR-4 accept up to two house properties ([ITR-1 FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/ITR1-FAQ)).
+- Tax Year 2026-27 returns will use new ITR forms under the Income-tax Rules, 2026, still to be notified.
 
-### Required Inputs
+## Boundary and exception table ([ITR-4 FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/itr%204-faqs))
 
-- **Minimum viable** — Bank statement for the full financial year (1 April -- 31 March) in PDF, CSV, or pasted text. Confirmation of whether income is professional or business, and whether new or old regime applies.
-- **Recommended** — Form 26AS / Annual Information Statement (AIS) for TDS credits, advance tax challans (ITNS 280), all client invoices, Form 16A (TDS certificates from clients), PAN.
-- **Ideal** — Complete books of accounts (if not presumptive), all receipts for deductions under 80C/80D (old regime only), GST returns (if GST-registered).
-
-### Refusal Catalogue
-
-- **R-IN-1 -- Non-Resident Indians (NRI) and RNOR** — This skill covers Resident individuals only. NRI/RNOR taxation involves different income sourcing rules, DTAA analysis, and TRC requirements. Escalate.  _(R-IN-1)_
-- **R-IN-2 -- Firms, Companies, LLPs** — This skill covers individuals (sole proprietors/freelancers) only. Partnership firms, private limited companies, and LLPs file separate returns with different rates. Out of scope.  _(R-IN-2)_
-- **R-IN-3 -- Capital Gains** — Capital gains on shares, mutual funds, property, or other assets require detailed computation under Sections 111A, 112, and 112A. Escalate.  _(R-IN-3)_
-- **R-IN-4 -- International Transactions / DTAA** — Double taxation treaty analysis, foreign tax credits, and transfer pricing are out of scope. Escalate.  _(R-IN-4)_
-- **R-IN-5 -- Tax Audit Cases (non-presumptive)** — If gross receipts exceed the presumptive threshold and a tax audit is required under Section 44AB, this skill cannot replace a statutory audit. Escalate.  _(R-IN-5)_
-
-## Section 3 -- Transaction Pattern Library
-
-This is the deterministic pre-classifier. When a bank statement line matches a pattern, apply the treatment directly. If no pattern matches, fall through to Tier 1 rules in Section 5.
-
-### 3.1 Income Patterns (Credits)
-
-**3.1 Income Patterns (Credits)**
-
-| Pattern | Tax Line | Treatment | Notes |
-| --- | --- | --- | --- |
-| NEFT CR / RTGS CR / IMPS CR [client name] | Gross receipts (44ADA/44AD) | Business income | Professional service fee received -- add to gross receipts |
-| UPI [client name] / UPI CREDIT | Gross receipts | Business income | Digital receipt -- counts as electronic for 44AD 6% rate |
-| RAZORPAY SETTLEMENT / RAZORPAY TRANSFER | Gross receipts | Business income | Payment gateway payout -- match to invoices |
-| PAYTM PAYOUT / PAYTM SETTLEMENT | Gross receipts | Business income | Digital payment payout -- electronic for 44AD |
-| CASHFREE SETTLEMENT / CASHFREE PAYOUT | Gross receipts | Business income | Payment aggregator payout |
-| STRIPE PAYOUT INDIA / STRIPE TRANSFER | Gross receipts | Business income | International invoicing via Stripe India |
-| PAYPAL TRANSFER / PAYPAL PAYOUT | Foreign income (Gross receipts) | Business income in INR | Convert at RBI reference rate on date received |
-| SALARY CREDIT / SAL ADV [employer] | Salary income (Section 17) | NOT professional income | Employment income -- separate head, Form 16 required |
-| INTEREST CREDIT / INT CREDIT / FD INTEREST | Income from Other Sources | NOT business income | Bank interest taxable; FD interest TDS may apply |
-| DIVIDEND CREDIT / DIV [company] | Income from Other Sources | Taxable dividends | Domestic dividends taxable since FY 2020-21 |
-| REFUND FROM INCOMETAX / IT REFUND | EXCLUDE | Not income | Tax refund is not taxable |
-| LOAN DISBURSEMENT / LOAN CREDIT | EXCLUDE | Not income | Loan principal is liability, not income |
-| GST REFUND / IGST REFUND | EXCLUDE | Not income | GST refund is not taxable income |
-
-### 3.2 Expense Patterns (Debits -- for ITR-3 filers; ITR-4 presumptive filers do not itemise)
-
-**3.2 Expense Patterns (Debits -- for ITR-3 filers; ITR-4 presumptive filers do not itemise)**
-
-| Pattern | Schedule C Category | Treatment | Notes |
-| --- | --- | --- | --- |
-| OFFICE RENT / COMMERCIAL RENT [landlord] | Rent | Fully deductible | Deduct TDS at 10% if monthly rent > Rs. 50,000 |
-| ELECTRICITY [BESCOM/MSEDCL/TATA POWER/TNEB] | Utilities | Deductible (business portion) | Home office: apportion by usage |
-| BROADBAND / JIOFIBER / ACT / AIRTEL BROADBAND | Communication | Deductible (business portion) | Mixed use: apportion |
-| MOBILE RECHARGE / AIRTEL / JIO / VI | Communication | Deductible (business portion) | Business calls only |
-| SWIGGY BUSINESS / ZOMATO FOR BUSINESS | Meals/entertainment | Deductible if business | Document business purpose |
-| AMAZON BUSINESS / FLIPKART BUSINESS | Office supplies | Fully deductible | Business account purchases |
-| ZOHO SUBSCRIPTION / FRESHBOOKS / TALLY | Software | Fully deductible | Business software |
-| GOOGLE ADS / META ADS / LINKEDIN ADS | Advertising | Fully deductible | Digital marketing |
-| CA FEES / LEGAL FEES / CONSULTANT FEES | Professional charges | Fully deductible | TDS may be required (Section 194J) |
-| LIC PREMIUM / TERM INSURANCE | NOT business expense | Section 80C deduction (old regime) | Personal insurance = not a business expense |
-| HEALTH INSURANCE / MEDICLAIM [Star/HDFC Ergo/Bajaj] | NOT business expense | Section 80D deduction (old regime) | NOT deductible as business expense |
-| PPF DEPOSIT / ELSS PURCHASE / NSC | NOT business expense | Section 80C deduction (old regime) | Investment deductions |
-| ADVANCE TAX CHALLAN / ITNS 280 | EXCLUDE | Prepaid tax | Not a business expense; credit against liability |
-| TDS DEDUCTED / TDS TO GOVT | EXCLUDE | Prepaid tax (credit) | Claim as credit on Form 26AS |
-| GST PAYMENT / GST CHALLAN | EXCLUDE | Indirect tax | Not deductible as income tax expense |
-| SWIPE / POS [vendor] | Mixed -- check | Identify payee | Could be office supply, travel, entertainment |
-| PROFESSIONAL TAX [state] | Deductible | Fully deductible | State professional tax paid |
-| BANK CHARGES / ACCOUNT MAINTENANCE / NEFT CHARGES | Bank charges | Fully deductible | Business account only |
-
-### 3.3 UPI and Digital Platform Patterns
-
-**3.3 UPI and Digital Platform Patterns**
-
-| Pattern | Treatment | Notes |
+| Boundary | Inside | Outside |
 | --- | --- | --- |
-| UPI/CR/[amount]/[client name] | Gross receipts | Electronic -- qualifies for 6% deemed profit under 44AD |
-| PHONEPE CR / GPAY CREDIT / PAYTM CREDIT | Gross receipts | Digital receipt |
-| BHIM UPI / BHIM CREDIT | Gross receipts | Digital receipt |
-| NEFT/RTGS credits | Gross receipts | Electronic -- qualifies for 6% under 44AD |
-| CHEQUE DEPOSIT / CHQ DEP | Gross receipts | Digital (account payee cheque) -- qualifies for 6% |
-| CASH DEPOSIT / CASH / CDM | Gross receipts | CASH -- applies 8% under 44AD, not 6% |
+| New-regime rebate | Total income does not exceed ₹12,00,000: full rebate up to ₹60,000 | Above: marginal relief; no rebate above ₹12,70,590 (total income excluding LTCG) |
+| Old-regime rebate | Total income does not exceed ₹5,00,000 | Above: no rebate |
+| 44AD limit | Turnover up to ₹3 crore if cash receipts are 5% or less of gross receipts | Otherwise ₹2 crores; above the limit, 44AD is not available |
+| 44ADA limit | Receipts up to ₹75 lakh if cash receipts are 5% or less of gross receipts | Otherwise ₹50 lakh; above, compute actual profit (ITR-3) |
+| Advance tax | Tax of ₹10,000 or more for the year | Below: no advance tax |
+| ITR-1 / ITR-4 | Total income up to ₹50 lakh | Above: ITR-2 or ITR-3 |
+| Residence, basic test | 182 days or more | 181 days or fewer (then the 60/365 limb) |
+| Visiting citizen or PIO | More than 182 days | 182 days or fewer, unless the 120-day limb applies |
+| Late fee (s.234F; s.428 from Tax Year 2026-27) | ₹1,000 if total income does not exceed ₹5 lakh | ₹5,000 in any other case |
+| Revised return fee (s.234I, AY 2026-27) | Filed on or before 31 December 2026: no fee | Filed after 31 December 2026: ₹1,000 (income up to ₹5 lakh) or ₹5,000 |
+| Old regime in the return | Return filed by the s.139(1) due date | Belated return: new regime only |
+| Losses | Return filed by the due date | Belated return: current-year losses other than house property loss cannot be carried forward |
 
-### 3.4 TDS Deductions (Credits on Statement = Tax Credits)
+## AY 2026-27 returns (FY 2025-26), filed in 2026 ([Income Tax Returns FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/%20income%20tax%20returns-faq))
 
-**3.4 TDS Deductions (Credits on Statement = Tax Credits)**
+Dated 25 September 2026. These returns are governed entirely by the Income-tax Act, 1961, use the old ITR forms, and select AY 2026-27 on the portal. The slab, rebate, surcharge, deduction and presumptive figures above are the AY 2026-27 figures.
 
-| Pattern | Treatment | Notes |
-| --- | --- | --- |
-| TDS BY [client name] / TDS DEDUCTED | Tax credit -- do NOT reduce income | Gross up income; claim TDS as credit on Form 26AS |
-| 194J TDS / TDS 194J | Professional fee TDS at 10% | Client deducted TDS on professional fees |
-| 194C TDS | Contractor TDS at 1%/2% | Contract payment TDS |
-
-## Section 4 -- Worked Examples
-
-### Example 1 -- UPI Payment from Client
-
-**Input line (HDFC Bank statement):**
-`15-Jun-2025 | UPI/CR/250615123456/ALPHA TECH SOLUTIONS | 85,000.00 CR | Bal 3,42,500.00`
-
-**Reasoning:**
-Credit via UPI from a business client. This is a professional fee receipt. Under Section 44ADA (professional), 50% of gross receipts = deemed profit. Under 44AD (business), 6% applies as UPI is digital/electronic. Confirm whether taxpayer is a specified professional. Receipt is electronic -- qualifies for the 6% rate if under 44AD.
-
-**Classification:** Gross receipts Rs. 85,000. Add to annual total.
-
-### Example 2 -- Razorpay Settlement
-
-**Input line (ICICI Bank statement):**
-`22-Aug-2025 | RAZORPAY SOFTWARE PVT LTD | 1,24,650.00 CR | Ref: RPY2025082211234`
-
-**Reasoning:**
-Razorpay collects payments on behalf of the seller, deducts their fee, and pays out net amount. The gross receipts (before Razorpay fees) are the taxable income. Razorpay fee of Rs. 350 (approx.) is a business expense. Gross receipts = Rs. 1,25,000; Razorpay fees = Rs. 350 deductible (ITR-3 filers). For presumptive filers (ITR-4), no itemisation -- deemed profit handles all expenses.
-
-**Classification:** Gross receipts Rs. 1,25,000. Razorpay fee Rs. 350 is deductible for non-presumptive filers only.
-
-### Example 3 -- LIC Premium Payment
-
-**Input line (SBI Bank statement):**
-`01-Apr-2025 | LIC PREMIUM/OTH/NEFT | 45,000.00 DR | Balance 2,85,000.00`
-
-**Reasoning:**
-Life insurance premium. This is NOT a business expense. Under the old regime, LIC premium qualifies for Section 80C deduction up to Rs. 1,50,000 combined limit. Under the new regime, 80C deductions are not available. Cannot be classified as a deductible business expense in either regime.
-
-**Classification:** EXCLUDE from business expenses. Old regime: add to 80C pool (max Rs. 1,50,000 combined). New regime: no deduction.
-
-### Example 4 -- TDS Deducted by Client
-
-**Input line (Axis Bank statement):**
-`10-Jul-2025 | NEFT CR/MNRVA CONSULTING/INV0042 LESS TDS | 90,000.00 CR`
-
-**Reasoning:**
-Client paid Rs. 90,000 after deducting 10% TDS on Rs. 1,00,000 invoice. The gross income is Rs. 1,00,000 (not Rs. 90,000). The TDS of Rs. 10,000 is a tax credit visible in Form 26AS. Report Rs. 1,00,000 as gross receipt and claim Rs. 10,000 TDS as credit.
-
-**Classification:** Gross receipts Rs. 1,00,000. TDS credit Rs. 10,000 (verify in Form 26AS).
-
-### Example 5 -- Cash Deposit
-
-**Input line (Kotak Bank statement):**
-`05-Sep-2025 | CASH DEPOSIT / CDM / BRANCH | 30,000.00 CR`
-
-**Reasoning:**
-Cash deposit. For 44AD taxpayers, cash receipts are taxed at 8% deemed profit (not the 6% digital rate). For 44ADA professionals, cash and digital are both 50% deemed -- no distinction. Cannot treat as digital receipt. Ask: was this cash collected from a client for a business service?
-
-**Classification:** Gross receipts Rs. 30,000 (cash). For 44AD: counted toward 8% deemed profit pool (not 6%).
-
-### Example 6 -- Advance Tax Challan Payment
-
-**Input line (HDFC Bank statement):**
-`14-Sep-2025 | INCOMETAX DEPT/ITNS 280/ADVANCE TAX | 25,000.00 DR`
-
-**Reasoning:**
-Advance tax payment to the Income Tax Department. This is NOT a business expense -- it is a prepayment of income tax liability. Record as advance tax paid (to be credited against final liability). Self-employed persons must pay advance tax in four instalments if annual liability exceeds Rs. 10,000.
-
-**Classification:** EXCLUDE from income/expenses. Record: Advance tax paid Rs. 25,000 (15 September instalment).
-
-## Section 5 -- Tier 1 Rules (When Data Is Clear)
-
-### 5.1 Presumptive Taxation -- Section 44ADA (Professionals)
-
-- **44ADA presumptive taxation** — Applicable to specified professionals: legal, medical, engineering, architecture, accountancy, technical consultancy, interior decoration, and any other profession notified by CBDT. Gross receipts ≤ Rs. 75,00,000: eligible for presumptive scheme. Deemed profit = 50% of gross receipts (taxpayer may declare higher). No need to maintain books of accounts. File ITR-4 (Sugam). No deduction for actual expenses allowed -- 50% covers all.  _(Section 44ADA, Income Tax Act, 1961)_
-
-### 5.2 Presumptive Taxation -- Section 44AD (Business)
-
-- **44AD presumptive taxation** — Applicable to any business (non-professional) with turnover ≤ Rs. 3,00,00,000. Deemed profit = 8% of gross turnover (cash receipts). Deemed profit = 6% of gross turnover (digital receipts: NEFT, RTGS, UPI, cheque, electronic transfer). Mixed receipts: apply 6%/8% pro-rata. File ITR-4 (Sugam).  _(Section 44AD, Income Tax Act, 1961)_
-
-### 5.3 Tax Computation Flow (New Regime)
-
-- **Tax Computation Flow (New Regime)** — Gross receipts / turnover - Presumptive expenses (44ADA: 50% of gross; 44AD: 92-94% of gross) = Presumptive profit (Business Income) + Other income (interest, dividends, salary) = Gross Total Income - Standard deduction for salaried component (if any) = Total Income Apply rate table (Section 1) = Income Tax x 1.04 (add 4% cess) = Total Tax Payable - TDS credits (from Form 26AS) - Advance tax paid = Tax due / refund
-
-### 5.4 Advance Tax Schedule
-
-**5.4 Advance Tax Schedule**  _(Sections 207-219, Income Tax Act)_
-
-| Instalment | Due Date | Cumulative % of Liability |
-| --- | --- | --- |
-| 1st | 15 June | 15% |
-| 2nd | 15 September | 45% |
-| 3rd | 15 December | 75% |
-| 4th (final) | 15 March | 100% |
-
-- **Advance tax requirement** — Advance tax is required when estimated tax liability for the year exceeds Rs. 10,000. Shortfall attracts interest under Sections 234B and 234C.  _(Sections 234B, 234C)_
-
-### 5.5 Interest for Late Payment / Default
-
-**5.5 Interest for Late Payment / Default**
-
-| Situation | Interest | Section |
-| --- | --- | --- |
-| Advance tax not paid / shortfall | 1% per month on shortfall | 234C |
-| Tax not paid by March 31 | 1% per month from April 1 | 234B |
-| Late filing after July 31 | 1% per month on tax due | 234A |
-
-### 5.6 Filing Deadlines
-
-**5.6 Filing Deadlines**
-
-| Scenario | Deadline |
+| Return | Due date or time limit |
 | --- | --- |
-| Non-audit cases (most freelancers) | 31 July 2026 (for FY 2025-26) |
-| Tax audit cases (Section 44AB) | 31 October 2026 |
-| Belated return | 31 December 2026 (with interest) |
-| Revised return | 31 December 2026 |
+| Original return, non-audit | "31st July, 2026 or 31st August for non-audit cases, etc." ITR-4: 31 August 2026 ([ITR-4 FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/itr%204-faqs)). The portal does not split the two dates by form on the pages cited here; confirm which applies to a non-business ITR-1/ITR-2 filer (check) |
+| Tax audit report | 30 September 2026 where the ITR is due 31 October 2026 |
+| Original return, audit case | 31 October 2026 |
+| Transfer pricing case | 30 November 2026 (report by 31 October 2026) |
+| Belated return, s.139(4) | By 31 December 2026, or before assessment is complete if earlier; fee under s.234F |
+| Revised return, s.139(5) | Before 31 March 2027, or before assessment is complete if earlier; fee under s.234I if filed after 31 December 2026 |
+| Updated return (ITR-U), s.139(8A) | Within the s.139(8A) time limits, even after 1 April 2026; additional tax applies |
 
-### 5.7 Non-Deductible Items (Both Regimes)
+- On 25 September 2026 the July and August dates have passed. A non-audit client who has not filed can only file a belated return: new regime only, 234F fee, 234A interest on unpaid tax, and business or capital losses of the year cannot be carried forward.
+- Portal validation for AY 2026-27: if the original return was belated, a revised return cannot choose the old regime; and the regime cannot be changed in a revised return filed after the original due date ([ITR-1 validation rules](https://www.incometax.gov.in/iec/foportal/sites/default/files/2026-05/CBDT_e-Filing_ITR%201_Validation%20Rules_AY%202026-27.pdf); [ITR-3 validation rules](https://www.incometax.gov.in/iec/foportal/sites/default/files/2026-06/CBDT_e-filing_ITR-3_Validation%20Rules_V1.0_AY%2026-27.pdf)).
+- Revised or belated returns for AY 2025-26 or earlier can no longer be filed; only ITR-U remains.
+- 234B/234C interest for FY 2025-26 advance tax stays under the 1961 Act.
+- **Tax Year 2026-27 time limits under s.263 of the 2025 Act:** belated return within 9 months from the end of the tax year; revised return within 12 months from the end of the tax year, and updated return within 48 months from the end of the financial year after the tax year (the portal marks both "as proposed in the Finance Bill, 2026"). Additional tax on an updated return is under s.267. The portal says the Tax Year 2026-27 return "is not due until July 2027"; confirm the dates for business and audit cases on the e-Filing calendar (check).
 
-**5.7 Non-Deductible Items (Both Regimes)**
+## Worked cases ([Salaried Individuals for AY 2026-27: tax slabs](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1))
 
-| Item | Reason |
-| --- | --- |
-| Income tax itself (advance tax, self-assessment tax) | Not deductible |
-| LIC premiums, PPF, ELSS | Personal investments (80C in old regime only) |
-| Mediclaim/health insurance | Section 80D (old regime only) |
-| Personal drawings / withdrawals | Not a business expense |
-| GST paid on sales | Indirect tax, not income tax deduction |
-| Fines and penalties | Not incurred for business |
+All cases: resident individual below 60, AY 2026-27 slab figures, no other income unless stated. For Tax Year 2026-27 the same arithmetic applies if s.202 keeps these figures (check).
 
-## Section 6 -- Tier 2 Catalogue (Reviewer Judgement Required)
+1. **Salaried, new regime, zero tax.** Gross salary ₹12,75,000. Standard deduction ₹75,000. Total income ₹12,00,000. Tax: ₹20,000 + 10% of ₹4,00,000 = ₹60,000. Rebate ₹60,000. Tax payable nil. Cess nil.
+2. **Salaried, new regime, above the rebate.** Gross salary ₹16,75,000. Total income ₹16,00,000. Tax: ₹60,000 + 15% of ₹4,00,000 = ₹1,20,000. No rebate. Cess at 4% ₹4,800. Total ₹1,24,800, less TDS in Form 26AS.
+3. **Marginal relief.** Freelancer, total income ₹12,10,000, new regime. Slab tax: ₹60,000 + 15% of ₹10,000 = ₹61,500. Income above ₹12,00,000 is ₹10,000, so tax is limited to ₹10,000 and the rebate is ₹51,500. Cess ₹400. Total ₹10,400.
+4. **44ADA consultant.** Receipts ₹40,00,000, all by bank transfer, so cash is below 5% and the ₹75 lakh limit applies. Deemed profit at 50%: ₹20,00,000. New regime tax: ₹1,20,000 + 20% of ₹4,00,000 = ₹2,00,000. Cess ₹8,000. Total ₹2,08,000. Advance tax: all of it by 15 March, net of any TDS.
+5. **44AD trader with cash.** Turnover ₹1,00,00,000: ₹90,00,000 received electronically before the specified date, ₹10,00,000 in cash. Cash is 10% of receipts, more than 5%, so the limit is ₹2 crores; the trader is inside it. Deemed profit: 6% of ₹90,00,000 = ₹5,40,000, plus 8% of ₹10,00,000 = ₹80,000, total ₹6,20,000. New regime tax: 5% of ₹2,20,000 = ₹11,000. Rebate ₹11,000. Tax nil. Had turnover been ₹2,50,00,000 with the same cash share, 44AD would not be available.
+6. **Late AY 2026-27 return.** Salaried client, total income ₹9,00,000, never filed, files ITR-1 on 1 October 2026. The return is belated (s.139(4)); it must use the new regime; late fee ₹5,000 because total income exceeds ₹5 lakh. New regime tax: ₹20,000 + 10% of ₹1,00,000 = ₹30,000, fully rebated. Fee ₹5,000 is still payable.
 
-### 6.1 Regime Selection Optimisation
+## When to refuse or refer
 
-- **Regime selection optimisation** — Old regime is better only when total deductions (80C + 80D + HRA + home loan interest + other) exceed the tax saving from wider new regime slabs. Flag for reviewer to compute both and compare. Typical breakeven: substantial 80C investments + home loan interest + HRA.
+Sources: [Non Resident FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/non%20resident%20-faq) and [objective and scope FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/objective-and-scope-new-act-faq).
 
-### 6.2 Mixed Professional and Business Income
+- Non-resident, RNOR or deemed-resident client, or a year where the day count is close to 182 or 120: refer.
+- Capital gains other than s.112A gains within the ITR-1/ITR-4 limit, virtual digital assets, lottery or special-rate income: refer.
+- Foreign income, foreign assets or treaty relief (Form 67 must be filed by the s.139(1) due date): refer.
+- Turnover or receipts above the presumptive limits, profit declared below the presumptive rate, or a client who has moved in and out of 44AD: refer for books, audit and re-entry rules not covered here.
+- Any tax audit case, transfer pricing, firm, LLP, company or trust: refer.
+- Pending notice, scrutiny, reassessment or search: refer. Proceedings for AY 2026-27 and earlier stay under the 1961 Act (s.536(2)(c)).
+- Income above ₹50 lakh: compute surcharge and marginal relief carefully and have it checked ([surcharge table](https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1)).
+- Never present a figure as final: the Tax Year 2026-27 figures here are the AY 2026-27 figures pending confirmation under the 2025 Act.
 
-- **Mixed professional and business income** — If a taxpayer has both professional income (44ADA) and business income (44AD), each must be computed separately using its own presumptive rate. Combined income is then aggregated. Flag for reviewer.
+## Filing and payment ([Tax Payments FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/tax-payments-faq))
 
-### 6.3 Home Office Deduction (ITR-3 filers only)
+- Pay by e-Pay Tax on the portal: net banking, debit card, payment gateway (including credit card and UPI), NEFT/RTGS mandate, or over the counter ([General Questions FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/General%20Questions-faqs)). A generated challan expires 15 days after the CRN is created.
+- Choose the Act and year on the challan: AY 2026-27 (1961 Act) for FY 2025-26 self-assessment tax; Tax Year 2026-27 (2025 Act) for current advance tax. A wrong year means the credit lands in the wrong year.
+- Self-assessment tax for AY 2026-27 is under s.140A of the 1961 Act: pay it, enter the challan in the return, then file.
+- Returns: file on the e-Filing portal, then e-verify (Aadhaar OTP, net banking, digital signature) or send the signed ITR-V by speed post to CPC Bengaluru within 30 days. No documents are attached; keep them for any enquiry.
+- Late fee: s.234F for AY 2026-27 (₹1,000 or ₹5,000); s.428 of the 2025 Act from Tax Year 2026-27, same amounts.
+- Keep FY 2025-26 and FY 2026-27 records, TDS and challans separate, and reconcile Form 26AS for each year separately.
 
-- **Home office deduction** — Self-employed persons maintaining regular books (ITR-3) may claim proportionate rent, electricity, and internet for a home office. Acceptable apportionment: floor area ratio or dedicated usage hours. 44ADA/44AD presumptive filers cannot claim this separately -- covered by deemed profit.
+## Completion checklist ([ITR-1 FAQs](https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/ITR1-FAQ))
 
-### 6.4 PayPal / Foreign Client Receipts
-
-- **PayPal / foreign client receipts** — Foreign receipts converted to INR at SBI TT buying rate on date of receipt (or RBI reference rate). If annual foreign receipts exceed Rs. 20,00,000, the taxpayer may have GST implications. Flag for reviewer.
-
-### 6.5 Clubbing of Income (Spouse / Minor)
-
-- **Clubbing of income** — If income earned by a spouse or minor child is attributable to the taxpayer's assets or business, it may be clubbed with the taxpayer's income. Flag for reviewer if transfers to spouse or minor detected.
-
-## Section 7 -- Excel Working Paper Template
-
-```
-INDIA INCOME TAX WORKING PAPER -- FY 2025-26
-Taxpayer name: _______________  PAN: ___________
-Filing form: ITR-4 (Presumptive) / ITR-3 (Regular) [circle one]
-Regime: New / Old [circle one]
-
-A. GROSS RECEIPTS / TURNOVER
-  A1. Digital receipts (UPI, NEFT, RTGS, cheque)   ___________
-  A2. Cash receipts                                  ___________
-  A3. Total gross receipts (A1 + A2)                ___________
-
-B. PRESUMPTIVE PROFIT (ITR-4 only)
-  B1. 44ADA: A3 x 50%                               ___________
-  B2. 44AD digital: A1 x 6%                         ___________
-  B3. 44AD cash: A2 x 8%                            ___________
-  B4. Presumptive profit (B1 or B2+B3)              ___________
-
-C. OTHER INCOME
-  C1. Interest income                                ___________
-  C2. Dividend income                                ___________
-  C3. Salary / pension                               ___________
-  C4. Total other income                             ___________
-
-D. GROSS TOTAL INCOME (B4 + C4)                     ___________
-
-E. DEDUCTIONS (Old Regime only)
-  E1. Section 80C (LIC, PPF, ELSS, tuition, etc.)  ___________
-  E2. Section 80D (health insurance)                ___________
-  E3. Section 80G (donations)                       ___________
-  E4. Total deductions (max 80C: 1,50,000)          ___________
-
-F. TOTAL INCOME (D - E)                              ___________
-
-G. TAX COMPUTATION
-  G1. Income tax (per rate table)                    ___________
-  G2. Less: Section 87A rebate                       ___________
-  G3. Surcharge (if applicable)                      ___________
-  G4. Health & Education Cess (4% of G1+G3-G2)     ___________
-  G5. Total tax payable                              ___________
-
-H. TAX CREDITS
-  H1. TDS (from Form 26AS)                          ___________
-  H2. Advance tax paid                               ___________
-  H3. Total credits                                  ___________
-
-I. NET TAX DUE / REFUND (G5 - H3)                  ___________
-
-REVIEWER FLAGS:
-  [ ] Form 26AS verified against bank statement?
-  [ ] Regime choice confirmed?
-  [ ] Cash vs digital receipt split confirmed?
-  [ ] TDS certificates received for all credits?
-  [ ] Advance tax interest computed (234B/234C)?
-```
-
-## Section 8 -- Bank Statement Reading Guide
-
-### Indian Bank Statement Formats
-
-**Indian Bank Statement Formats**
-
-| Bank | Key Format | Key Fields |
-| --- | --- | --- |
-| HDFC Bank | CSV / PDF | Date, Narration, Value Date, Debit, Credit, Closing Balance |
-| ICICI Bank | CSV / Excel | S.No, Value Date, Transaction Date, Cheque/Ref No, Transaction Remarks, Withdrawal (Dr), Deposit (Cr), Balance |
-| SBI | CSV / PDF | Txn Date, Value Date, Description, Ref No/Cheque No, Debit, Credit, Balance |
-| Axis Bank | CSV | Tran Date, CHQNO, Particulars, Debit, Credit, Balance |
-| Kotak Mahindra | XLS | Date, Description, Chq/Ref No, Debit(INR), Credit(INR), Bal(INR) |
-
-### Key Narration Patterns
-
-**Key Narration Patterns**
-
-| Narration | Meaning | Tax Action |
-| --- | --- | --- |
-| NEFT/CR/[ref]/[sender] | Electronic credit via NEFT | Business income |
-| UPI/CR/[date]/[ref]/[sender] | UPI credit | Business income (digital) |
-| CASH DEP / CDM | Cash deposit | Business income (cash) |
-| TRF TO [own account] | Internal transfer | Exclude |
-| IMPS/[ref]/[name] | IMPS credit | Business income (digital) |
-| ATW/[ATM ref]/[branch] | ATM withdrawal | Investigate -- personal or business? |
-| INT PD / INTEREST CREDIT | Bank interest | Other income |
-| SALARY/SAL | Salary credit | Employment income |
-| ADVNC TAX / ITNS 280 | Advance tax payment | Tax prepayment (credit) |
-
-## Section 9 -- Onboarding Fallback
-
-If the client provides a bank statement but cannot answer onboarding questions immediately:
-
-1. Classify all UPI/NEFT/RTGS/cheque credits as potential gross receipts (digital)
-2. Classify all CDM/cash deposits as potential gross receipts (cash)
-3. Apply conservative defaults: new regime, professional (44ADA), 50% presumptive profit
-4. Mark all salary credits and interest separately
-5. Flag advance tax challans as prepaid tax credits
-6. Generate working paper with clear PENDING flags
-
-Present these questions:
-
-```
-ONBOARDING QUESTIONS -- INDIA INCOME TAX
-1. Are you a specified professional (doctor, CA, lawyer, architect, etc.) or a general business?
-2. New or old tax regime? (Default: new)
-3. Total gross receipts for FY 2025-26?
-4. What % of receipts were received via UPI/NEFT/RTGS/cheque (vs cash)?
-5. TDS deducted by clients -- do you have Form 26AS / AIS downloaded?
-6. Advance tax paid -- any ITNS 280 challans this year?
-7. Old regime only: any LIC, PPF, ELSS, health insurance, home loan repayments?
-8. Is your PAN linked to your bank account?
-```
-
-## Section 10 -- Reference Material
-
-### Key Legislation
-
-**Key Legislation**
-
-| Topic | Section |
-| --- | --- |
-| Presumptive taxation (professionals) | Section 44ADA |
-| Presumptive taxation (business) | Section 44AD |
-| New tax regime | Section 115BAC |
-| Advance tax | Sections 207-219 |
-| Interest for default | Sections 234A, 234B, 234C |
-| TDS on professional fees | Section 194J |
-| TDS on rent | Section 194I |
-| Section 80C deductions | Section 80C |
-| Health insurance deduction | Section 80D |
-
-### ITR Form Guide
-
-**ITR Form Guide**
-
-| Form | Who Uses It |
-| --- | --- |
-| ITR-4 (Sugam) | Presumptive income (44ADA/44AD), total income ≤ Rs. 50,00,000 |
-| ITR-3 | Business/professional income NOT under presumptive scheme |
-| ITR-1 (Sahaj) | Salaried individuals only, no business income |
-
-### Known Gaps / Out of Scope
-
-- Capital gains (Sections 111A, 112, 112A)
-- NRI / RNOR taxation
-- Partnership firms, companies, LLPs
-- DTAA / double taxation relief
-- Cryptocurrency taxation (VDA -- Section 115BBH)
-
-### Changelog
-
-**Changelog**
-
-| Version | Date | Change |
-| --- | --- | --- |
-| 2.0 | April 2026 | Full rewrite to v2.0 structure; transaction pattern library; local bank formats; worked examples |
-| 1.0 | 2025 | Initial version |
-
-### Self-Check
-
-- [ ] New regime applied by default unless old regime confirmed?
-- [ ] 4% cess applied after rebate?
-- [ ] Surcharge checked for income > Rs. 50,00,000?
-- [ ] Cash vs digital receipts split verified for 44AD?
-- [ ] TDS credits verified against Form 26AS, not just bank statement?
-- [ ] Advance tax interest computed if shortfall > Rs. 10,000?
-
-## PROHIBITIONS
-
-- NEVER apply old regime without explicit confirmation from client
-- NEVER allow LIC/PPF/health insurance premiums as business expenses (they are 80C/80D items in old regime only)
-- NEVER use net bank receipt as gross income when TDS was deducted -- always gross up
-- NEVER allow income tax (advance tax, self-assessment tax) as a business deduction
-- NEVER apply the 6% deemed profit rate to cash receipts under 44AD (8% applies)
-- NEVER advise NRI clients using this skill -- escalate
-- NEVER present tax calculations as definitive -- always label as estimated and direct client to their Chartered Accountant for confirmation
-
-## Disclaimer
-
-This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional (such as a Chartered Accountant or equivalent licensed practitioner in India) before filing or acting upon.
-
-The most up-to-date, verified version of this skill is maintained at [openaccountants.com](https://openaccountants.com). Log in to access the latest version, request a professional review from a licensed accountant, and track updates as tax law changes.
+- [ ] Year and Act fixed: Tax Year 2026-27 (2025 Act) or AY 2026-27 (1961 Act).
+- [ ] Residential status tested with day counts; resident and not RNOR.
+- [ ] All receipts grossed up for TDS; loans, transfers and refunds excluded.
+- [ ] Presumptive eligibility checked: business type, limit, cash share of 5% or less for the higher limit, 6%/8% split by mode and date, 50% for professions.
+- [ ] Regime compared; old regime only if the return is on time (and Form 10-IEA filed for business income).
+- [ ] Standard deduction applied (₹75,000 new, ₹50,000 old).
+- [ ] Rebate checked for residents, including marginal relief above ₹12,00,000.
+- [ ] Surcharge and marginal relief checked above ₹50 lakh; cess at 4% on tax plus surcharge.
+- [ ] TDS and TCS claimed only as shown in Form 26AS/AIS; mismatches raised with the deductor.
+- [ ] Advance tax and interest (234B/234C or 424/425) computed; presumptive clients paid by 15 March.
+- [ ] Correct ITR form; due date and any late fee checked; return e-verified.
+- [ ] Every "check" item in this Guide confirmed against the Act before filing.
 
 <!-- openaccountants-cta-block -->
 

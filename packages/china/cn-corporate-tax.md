@@ -2,433 +2,302 @@
 name: cn-corporate-tax
 description: "当被问及中国企业所得税（CIT）相关事宜时使用本技能。触发关键词包括：\"中国企业所得税\"、\"CIT 25%\"、\"小型微利企业\"、\"高新技术企业 15%\"、\"研发费用加计扣除 200%\"、\"年度汇算清缴企业所得税\"、\"季度预缴企业所得税\"、\"海南自贸港 15%\"、\"横琴粤澳 15%\"、\"非居民企业预提所得税\"、\"支柱二 全球最低税\"。覆盖《中华人民共和国企业所得税法》25%标准税率、小型微利企业优惠（应纳税所得额≤300万元部分实际税负5%）、高新技术企业15%税率、技术先进型服务企业15%、研发费用加计扣除（一般及制造业100%加计、集成电路与工业母机120%加计）、区域性税率优惠（海南、横琴、前海、上海临港、西部大开发）、非居民企业预提所得税、反避税与转让定价、季度预缴与5月31日前年度汇算清缴。Trigger also on: \"China CIT\", \"China corporate income tax\", \"small low-profit enterprise China\", \"HNTE 15%\", \"R&D super deduction\", \"advanced technology service enterprise\", \"Hainan Free Trade Port 15%\", \"Hengqin 15%\", \"China withholding tax\", \"China Pillar Two GloBE\". 不在范围：个人所得税（见 china-pit）、增值税（见 china-vat）、消费税、关税、契税、印花税、土地增值税、银行/保险/石油/采矿特殊行业、合并纳税、信托与合伙企业穿透、税收居民身份认定争议。在处理任何中国企业所得税事项前，必须先阅读本技能。"
 jurisdiction: CN
-tax_year: 2025
-last_updated: 2026-07-13
+tax_year: 2026
+last_updated: 2026-09-27
+authored_by: OpenAccountants team
 review_status: pending_review
+trust_label: By OpenAccountants
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# CN Corporate Tax
+# China Enterprise Income Tax (企业所得税): rates, small low-profit enterprises, HNTE and regional 15%, R&D super-deduction, withholding, losses and filing for 2026
+
+## Scope and who this is for ([CIT Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [Implementation Regulations](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html))
+
+This Guide covers mainland China Enterprise Income Tax (CIT, 企业所得税) for tax year 2026, which is the calendar year 1 January to 31 December 2026. It is for companies and other enterprises, and for their advisers, who prepare or review quarterly prepayments, the annual settlement (汇算清缴) or withholding on payments to non-residents.
+
+The legal base is the **Enterprise Income Tax Law (中华人民共和国企业所得税法)**, as last amended on 29 December 2018, and its **Implementation Regulations (企业所得税法实施条例, State Council Decree No. 512)**. Most of the reliefs that matter in practice sit in announcements from the Ministry of Finance (MOF) and the State Taxation Administration (STA). Several of them expire on 31 December 2027, so check the end date of every relief you apply.
+
+Who pays:
+- **Resident enterprises** are enterprises set up under Chinese law, or foreign-law enterprises whose place of effective management is in China. They pay tax on their worldwide income (Law Art. 2-3).
+- **Non-resident enterprises with an establishment in China** pay tax on income connected with that establishment (Law Art. 3).
+- **Non-resident enterprises without an establishment**, or whose income is not connected with one, pay on China-source income by withholding at source (Law Art. 3, 37).
+- Sole proprietorships and partnerships are **not** CIT taxpayers (Law Art. 1). Their owners fall under individual income tax.
+
+Currency: tax is computed in renminbi. Income in foreign currency is converted to renminbi (Law Art. 56).
+
+Out of scope: Hong Kong, Macao and Taiwan; individual income tax; VAT and surcharges; banks, insurers, securities firms, oil, gas and mining; cross-region consolidated filing by head offices and branches; special tax treatment of reorganisations; tax audits and disputes; and Pillar Two. See "When to refuse or refer".
+
+## What is new or confirmed for 2026 ([MOF/STA announcement 2023 No. 12](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468162.html); [MOF/STA announcement 2025 No. 16](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202601/t478898.html); [STA announcement 2025 No. 17](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202507/t477034.html); [Hainan Tax Bureau 2025 No. 2](https://hainan.chinatax.gov.cn/xxgk_6_1/14160619.html))
 
-## 中国 — 企业所得税（CIT）— 技能 v1.0
+| Topic | Position for 2026 | Source |
+|---|---|---|
+| Standard rate | 25%, unchanged | Law Art. 4 |
+| Small low-profit enterprise | Taxable income reduced to 25% and taxed at 20%. The announcement extends this to 2027-12-31 | MOF/STA announcement 2023 No. 12 Art. 3 |
+| R&D super-deduction | Extra 100% of actual R&D cost, or 200% amortisation where an intangible asset is created, from 2023-01-01 with no end date | MOF/STA announcement 2023 No. 7 |
+| IC and machine-tool enterprises | Extra 120%, or 220% amortisation, from 2023-01-01 to 2027-12-31 | MOF/STA announcement 2023 No. 44 |
+| Western region | 15% for encouraged-industry enterprises from 2021-01-01 to 2030-12-31 | MOF/STA/NDRC 2020 No. 23 |
+| Hainan Free Trade Port | 15% for encouraged-industry enterprises with substantive operations. The current extension runs from 2025-01-01 to 2027-12-31 | Hainan Tax Bureau 2025 No. 2 |
+| Advertising cap | New announcement from 2026-01-01 to 2027-12-31: 30% cap for cosmetics manufacturing or sales, pharmaceutical manufacturing and beverage manufacturing (excluding alcohol); related enterprises with a cost-sharing agreement may shift deductible amounts between them; tobacco advertising is never deductible | MOF/STA announcement 2025 No. 16 |
+| Prepayment return | Revised A-type monthly or quarterly prepayment return, used from 2025-10-01 | STA announcement 2025 No. 17; Shanghai Tax Bureau Q&A |
 
-> **由 OpenAccountants（openaccountants.com）出品**
->
-> 本技能仅用于信息参考用途，不构成税务、法律或财务建议。所有输出在申报或据此采取行动之前，必须由具备资质的中国注册税务师或注册会计师审核并签字确认。
-
-## 一、快速参考
-
-**快速参考表**
-
-| 项目 | 内容 |
-| --- | --- |
-| 国家 | 中华人民共和国 |
-| 税种 | 企业所得税（Corporate Income Tax，CIT） |
-| 本位币 | 人民币（RMB / CNY）；外币账簿须经主管税务机关批准 |
-| 纳税年度 | 公历年度（1月1日至12月31日） |
-| 主要法律 | 《中华人民共和国企业所得税法》（2007年通过，2017、2018年修正） |
-| 实施条例 | 《企业所得税法实施条例》（国务院令第512号，2019年修订） |
-| 主管机关 | 国家税务总局（State Taxation Administration，STA）及各级税务局 |
-| 标准税率 | **25%**（《企业所得税法》第四条） |
-| 小型微利企业税率 | 应纳税所得额≤300万元部分：减按25%计入应纳税所得额，按20%征收 → **实际税负 5%**（延续至2027年12月31日，以最新公告为准） |
-| 高新技术企业（HNTE） | **15%**（《企业所得税法》第二十八条） |
-| 技术先进型服务企业（TASE） | **15%**（特定试点地区） |
-| 海南自由贸易港鼓励类产业 | **15%**（2020–2034） |
-| 横琴粤澳深度合作区 | **15%**（特定鼓励产业） |
-| 西部大开发鼓励类产业 | **15%** |
-| 研发费用加计扣除 — 一般企业 | **100%**（按研发费用 200% 税前扣除） |
-| 研发费用加计扣除 — 制造业 | **100%**（按 200% 扣除） |
-| 研发费用加计扣除 — 集成电路与工业母机企业 | **120%**（按 220% 扣除，2023.1.1–2027.12.31） |
-| 亏损弥补期限 | 一般企业 5 年；HNTE 与科技型中小企业 **10 年** |
-| 非居民企业（无机构场所） | 20%（实际优惠至 **10%** 预提所得税） |
-| 非居民企业（有机构场所） | 25% CIT |
-| 申报方式 | 电子税务局（eTax）线上申报 |
-| 季度预缴申报 | 季度终了后 **15 日内**（4月15日、7月15日、10月15日、次年1月15日） |
-| 年度汇算清缴 | 年度终了后 **5个月内**，即次年 **5月31日前** |
-| 账簿与凭证保存 | 至少 **10 年**（《税收征收管理法》） |
-| 审核签字人 | 待定 — 由中国注册税务师（CTA）或注册会计师（CPA）审核 |
-| 技能版本 | 1.0 |
+## Ask the client first
 
-### 1.1 保守默认值
+- **Residence and structure.** Is the entity a resident enterprise? Is it a legal person, or a branch? Branches without legal personality are combined with head office for every test in this Guide ([STA announcement 2023 No. 6 Art. 1](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202303/t466615.html)).
+- **Industry.** Is the business in a restricted or prohibited industry (small low-profit test)? Is it in an R&D negative-list industry, such as tobacco, hotels and catering, wholesale and retail, real estate, leasing and business services, or entertainment ([Caishui 2015 No. 119](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201511/t419949.html))?
+- **Size, measured as quarterly averages for the year.** What are the headcount (employees plus labour-dispatch workers) and total assets? What is the expected taxable income for 2026?
+- **Certificates and lists.** Does it hold an HNTE certificate, and what is the issue date on it? Is it a registered technology-based SME? Is it on the IC or machine-tool enterprise list?
+- **Location.** Is it registered and substantively operating in a western-region province or in the Hainan Free Trade Port? What share of revenue does its encouraged-industry main business provide?
+- **R&D records.** Are R&D costs kept in a separate ledger for each project? Were any R&D projects commissioned from overseas?
+- **Losses.** What losses from each of 2021 to 2025 remain unused, and was the company an HNTE or technology-based SME in any of those years?
+- **Cross-border payments.** Does it pay dividends, interest, royalties, rent or other China-source income to non-residents? Does the recipient claim a tax treaty?
+- **Prepayments.** Is it on monthly or quarterly prepayment, how much has been prepaid for 2026, and which method does it use (actual profit or another approved method)?
+- **Open matters.** Is there any audit, notice from the tax bureau, reorganisation, group consolidation or Pillar Two exposure? If yes, see "When to refuse or refer".
 
-**保守默认值表**
+## The method, step by step
 
-| 不明事项 | 保守默认 |
-| --- | --- |
-| 高新技术企业资格不明 | 非 HNTE（适用 25%） |
-| 小型微利企业资格不明 | 不享受小微优惠（25%） |
-| 研发费用归集不规范 | 不予加计扣除 |
-| 海南/横琴/前海等区域资格未确认 | 适用 25% 标准税率 |
-| 关联方身份不明 | 视为关联方 |
-| 同期资料备案要求 | 视为需准备（关联交易超阈值） |
-| 资产用途不明 | 不予税前扣除（视为非经营用途） |
-| 跨境支付性质不明 | 按非居民企业服务费处理，扣缴 10% 预提所得税 |
-| 支柱二 IIR 适用性不明 | 标注"以最新财政部/STA公告为准" |
+1. **Confirm the taxpayer type.** A resident enterprise is taxed on worldwide income at 25%. A non-resident without an establishment is taxed by withholding (step 9) ([CIT Law Art. 3-4](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html)).
+2. **Start from accounting profit and build taxable income.** Taxable income = total income − non-taxable income − exempt income − deductions − losses allowed to be carried forward ([CIT Law Art. 5](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html)). Income is recognised on an accrual basis ([Implementation Regulations Art. 9](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html)).
+3. **Remove non-taxable and exempt income.** Non-taxable income is fiscal appropriations, administrative fees and government funds, and other income the State Council designates (Law Art. 7). Exempt income includes treasury bond interest and qualifying dividends between resident enterprises (Law Art. 26). The dividend exemption does not cover shares of a listed resident company held continuously for less than 12 months, and it does not apply to distributions from partnerships or foreign enterprises ([Shanghai Tax Bureau Q&A, 2026](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202604/t479958.html)).
+4. **Apply the capped deductions.** See "Capped deductions and other income rules": business entertainment, advertising, donations and staff education.
+5. **Add the R&D super-deduction** if the conditions are met (see "R&D super-deduction").
+6. **Offset losses** from the previous 5 years (10 for HNTEs and technology-based SMEs, under the conditions below).
+7. **Choose the rate.** Use 25% unless the entity has documented eligibility for one preference: small low-profit enterprise, HNTE 15%, western region 15% or Hainan 15%. Apply the preference that gives the lowest tax, and do not stack them on the same income.
+8. **Deduct credits and reliefs**, such as foreign tax credits and equipment credits, then compare with the prepayments.
+9. **Withholding on non-residents.** On each payment of China-source income to a non-resident without an establishment, the payer withholds at 10% unless a treaty gives a lower rate. The payer pays the tax over within seven days of withholding ([CIT Law Art. 37, 40](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [Implementation Regulations Art. 91](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html)).
+10. **File and pay.** Prepay within fifteen days of each quarter end. Settle the year by 31 May 2027 for tax year 2026 (see "Filing and payment").
 
-## 二、必备输入与拒绝清单
+## Rates for tax year 2026 ([CIT Law Art. 4, 28](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [Implementation Regulations Art. 91](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html))
 
-### 2.1 必备输入
+| Who | Rate | Condition | Source |
+|---|---|---|---|
+| Resident enterprise (standard) | 25% | Default rate | Law Art. 4 ("企业所得税的税率为25％") |
+| Non-resident establishment, connected income | 25% | Income effectively connected with the establishment | Law Art. 3-4 |
+| Non-resident without an establishment, China-source passive income | Statutory 20%, **reduced to 10%** | Dividends, interest, rent, royalties, property gains and similar income. A treaty may lower it further | Law Art. 4, 27(5); Regulations Art. 91 ("减按10%的税率征收企业所得税") |
+| Small low-profit enterprise | Effectively 5% on all its taxable income | All three size tests met, and not in a restricted or prohibited industry | MOF/STA announcement 2023 No. 12 |
+| High and new technology enterprise (HNTE) | 15% | Valid certificate for the year | Law Art. 28 ("减按15％的税率征收企业所得税") |
+| Western region encouraged industry | 15% | 2021-2030; main business on the catalogue provides 60% or more of revenue | MOF/STA/NDRC 2020 No. 23 |
+| Hainan Free Trade Port encouraged industry | 15% | 2025-2027 extension; substantive operation in Hainan | Hainan Tax Bureau 2025 No. 2 |
 
-**最低可行输入** — 全年财务报表（资产负债表、利润表、现金流量表）、上年度企业所得税年度纳税申报表（A类）、营业执照与统一社会信用代码、营业收入与从业人数确认（用于小微判定）、HNTE/TASE 证书（如有）。
+Rate formula: tax payable = taxable income × applicable rate − reliefs − credits (Law Art. 22).
 
-**建议输入** — 总账与明细账、固定资产台账、研发费用辅助账（PMK/RDA 格式）、关联交易明细、季度预缴 PPS 凭证、各项税收优惠备案文件、上年度亏损弥补台账。
+## Small low-profit enterprises (小型微利企业) ([MOF/STA announcement 2023 No. 12](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468162.html); [STA announcement 2023 No. 6](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202303/t466615.html))
 
-**理想输入** — 经审计的财务报表（CPA 签字）、完整税会差异调整明细、转让定价同期资料（本地文档/主体文档/国别报告，如适用）、税收居民身份证明、税收协定备案表（如适用）。
+**The relief.** Taxable income is reduced to 25% of its amount and taxed at 20%. The effective rate is 25% × 20% = 5%. Announcement 2023 No. 12 Art. 3 continues this to 31 December 2027, so it covers tax years 2026 and 2027.
 
-**硬性停止条件 ——** 缺少财务报表或上年度申报表，不得出具企业所得税计算结果。
+**Who qualifies.** The company must be in an industry that is not restricted or prohibited, **and** meet all three tests at the same time (Art. 5):
+- annual taxable income **not over** 300万元 (three million yuan);
+- headcount **not over** 300 people;
+- total assets **not over** 5000万元 (fifty million yuan).
 
-### 2.2 拒绝清单
+**It is all-or-nothing.** If taxable income is more than three million yuan, or either size test fails, the company is not a small low-profit enterprise. It then pays the normal rate on its **whole** income. There is no 5% band on the first three million yuan for a larger company.
 
-- **R-CN-CIT-1** — 仅处理中国居民企业。常设机构（PE）的利润归属、税收协定适用、境外承包工程等情形不在本技能范围。请转交注册税务师。 (非居民企业 / 常设机构)
-- **R-CN-CIT-2** — 银行业、保险业、证券业、信托、石油天然气开采、煤炭与矿业、电信与广播等行业有专门税收办法，不在本技能范围。 (特殊行业)
-- **R-CN-CIT-3** — 跨地区经营汇总纳税企业（总分机构）、企业集团合并纳税不在本技能范围。 (合并/汇总纳税)
-- **R-CN-CIT-4** — 在未取得 HNTE 证书、TASE 资格备案、海南/横琴鼓励类产业目录确认前，不得适用对应优惠税率，应按 25% 计算并标注待办事项。 (税收优惠尚未取得资格)
-- **R-CN-CIT-5** — 进行中的税务稽查、纳税评估、争议复议、行政诉讼，或已发出的《税务事项通知书》《税务处理决定书》。须立即转交。 (税务检查与争议)
-- **R-CN-CIT-6** — 企业合并、分立、股权收购、资产收购适用特殊性税务处理（财税〔2009〕59号、〔2014〕109号）不在本技能范围。 (重大重组与特殊性税务处理)
-- **R-CN-CIT-7** — 个人所得税 → china-pit；增值税 → china-vat；其他流转税与财产行为税请转交。 (跨技能范围)
-- **R-CN-CIT-8** — 跨国集团 IIR/UTPR/QDMTT 在中国境内的具体补足税计算，待财政部与STA最新公告。仅做风险提示。 (支柱二（Pillar Two）实施细节)
+**How the tests are measured.**
+- Headcount includes employees under a labour contract **and** labour-dispatch workers the company uses.
+- Headcount and total assets are the average of the four quarters. Each quarter's value = (value at the start of the quarter + value at the end) ÷ 2. The year's value = sum of the quarterly values ÷ 4.
+- A company that starts or stops business during the year uses its actual period of operation as the year.
+- The final test is the annual settlement. A new company registered as a VAT general taxpayer may claim the relief before its first annual settlement if headcount is 300 or fewer and total assets are 5000万元 or less at the end of the month before filing (Art. 5).
+- A company without legal-person branches adds up the head office and all branches for all three tests. A branch cannot claim the relief on its own ([STA announcement 2023 No. 6 Art. 1](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202303/t466615.html); [Shanghai Tax Bureau Q&A](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202601/t478977.html)).
 
-## 三、第一层规则（标准计算）
+**How it is claimed.** The company claims by completing the prepayment and annual returns. No prior application is needed. This relief applies whether tax is assessed on the books or on a deemed basis (STA announcement 2023 No. 6 Art. 2-3). The R&D super-deduction is different: it is only for companies assessed on actual profit (see "R&D super-deduction").
 
-### 3.1 25% 标准税率
+**At prepayment.** Test the figures cumulatively to the end of the period. If a company qualifies part way through the year, it computes the relief cumulatively and sets any earlier overpayment against later prepayments. If it claimed the relief at prepayment but fails at the annual settlement, it pays the difference (Art. 4-6). Small low-profit enterprises prepay **quarterly**. A monthly filer that qualifies at the April, July or October filing moves to quarterly from the next period and stays quarterly for the rest of the year (Art. 7).
 
-- **标准税率** — 25%  _(《企业所得税法》第四条)_
-- **应纳税额公式** — 应纳税额 = 应纳税所得额 × 25% − 减免税额 − 抵免税额  _(《企业所得税法》第四条)_
-- **应纳税所得额公式** — 应纳税所得额 = 收入总额 − 不征税收入 − 免税收入 − 各项扣除 − 允许弥补的以前年度亏损  _(《企业所得税法》第五条)_
+## High and new technology enterprises (HNTE, 高新技术企业) at 15% ([CIT Law Art. 28](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [HNTE Administrative Measures, Guokefahuo 2016 No. 32](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201603/t422248.html); [Shanghai Tax Bureau HNTE Q&A](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202505/t476449.html))
 
-### 3.2 小型微利企业优惠
+An HNTE pays 15% instead of 25%. The status comes from a certificate that the provincial science, finance and tax authorities issue jointly. It is not self-assessed.
 
-- **资格条件** — 1. 从事国家非限制和禁止行业；2. 年度应纳税所得额 ≤ 300 万元；3. 从业人数 ≤ 300 人；4. 资产总额 ≤ 5,000 万元。  _(《企业所得税法》第二十八条第一款；财税〔2023〕12号；财政部 税务总局公告2023年第6号；后续延续公告（沿用至2027年12月31日，以最新公告为准）)_
-- **小微计算公式** — 应纳税所得额 ≤ 300 万元的部分：应纳税所得额 × 25% × 20% = 实际税负 5%  _(财税〔2023〕12号；财政部 税务总局公告2023年第6号)_
+**Conditions for recognition (Measures Art. 11). All must be met:**
+- registered for **at least one year** when it applies;
+- owns intellectual property that gives core technical support to its main products or services;
+- that technology falls within the State's key supported high-tech fields;
+- science and technology staff are **not less than 10%** of total staff for the year;
+- R&D spending over the last three accounting years, as a share of sales revenue, is not less than:
+  - 5% where sales in the latest year are 5,000万元 (fifty million yuan) or less;
+  - 4% where sales are over 5,000万元 and up to 2亿元 (two hundred million yuan);
+  - 3% where sales are over 2亿元;
+  - and R&D spent in China is not less than 60% of total R&D;
+- revenue from high-tech products and services in the latest year is not less than 60% of total revenue;
+- the innovation capability assessment meets the required standard;
+- no major safety or quality incident and no serious environmental violation in the year before applying.
 
-> **注意：** "减按25%计入应纳税所得额"为政策表述方式之一；最终效果为对该部分按 **5%** 实际税负征收。本优惠延续期限以财政部/STA最新公告为准；2025纳税年度仍适用。
+**Timing.** The certificate is valid for three years from its issue date, and the company then has to be recognised again. The 15% rate applies from the year in which the certificate is issued (Measures Art. 9-10).
 
-**自动适用：** 符合条件的小型微利企业按季度预缴时即可享受，无需事先申请，年度汇算时确认。
+**Every year.** The company must still meet the conditions in each year it claims the rate. If it stops meeting them, it cannot use 15% for that year. Keep the evidence (staff ratios, R&D ratios and high-tech revenue) on file.
 
-### 3.3 高新技术企业（HNTE）15% 税率
+**HNTE and the small low-profit relief.** Both reduce the rate on the same income, so apply whichever gives the lower tax. For a company that meets the small low-profit tests, the effective 5% beats 15%.
 
-**HNTE资格条件表**  _(《企业所得税法》第二十八条第二款；《高新技术企业认定管理办法》（国科发火〔2016〕32号，2016年修订）；财税〔2017〕79号、〔2018〕76号等)_
+## Regional 15% rates ([MOF/STA/NDRC 2020 No. 23](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202005/t453507.html); [Hainan Tax Bureau 2025 No. 2](https://hainan.chinatax.gov.cn/xxgk_6_1/14160619.html); [Caishui 2020 No. 31](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202009/t455145.html))
 
-| 条件 | 要求 |
-| --- | --- |
-| 注册成立时间 | 须满 1 年以上 |
-| 知识产权 | 通过自主研发、受让、受赠、并购等方式拥有对其主要产品（服务）发挥核心支持作用的知识产权 |
-| 主要产品（服务）领域 | 属于《国家重点支持的高新技术领域》 |
-| 科技人员占比 | 占企业当年职工总数 ≥ 10% |
-| 近三年研发费用占比 | 销售收入 ≤ 5,000 万元：研发费用/销售收入 ≥ 5%；5,000 万–2 亿元：≥ 4%；> 2 亿元：≥ 3% |
-| 高新技术产品（服务）收入 | 占企业当年总收入的 ≥ 60% |
-| 综合评分 | ≥ 71 分（按四项指标加权打分） |
-| 申报方式 | 通过省级科技、财政、税务部门联合认定，取得 HNTE 证书 |
+**Western region (西部大开发).** From 1 January 2021 to 31 December 2030, an encouraged-industry enterprise located in the western region pays 15%. An encouraged-industry enterprise is one whose main business is a project in the *Catalogue of Encouraged Industries in the Western Region*, and whose main-business revenue is **60% or more** of total revenue. The western region is Inner Mongolia, Guangxi, Chongqing, Sichuan, Guizhou, Yunnan, Tibet, Shaanxi, Gansu, Qinghai, Ningxia, Xinjiang and the Xinjiang Production and Construction Corps. Xiangxi (Hunan), Enshi (Hubei), Yanbian (Jilin) and Ganzhou (Jiangxi) apply the same policy. When the catalogue is revised, the new version applies from its effective date.
 
-- **HNTE适用税率** — 15% percent  _(《企业所得税法》第二十八条第二款)_
-- **有效期与叠加规则** — 有效期：3 年；期满需重新认定。适用税率：应纳税所得额 × 15%。与小微优惠的关系：小微企业优惠（5%实际税负）与 HNTE（15%）不可叠加；按从优原则适用其中之一。如同时符合，通常 HNTE 适用于较大规模企业，小微更优惠（5% < 15%）；但小微以应纳税所得额≤300万为限。保守默认：未取得有效 HNTE 证书前，按 25% 计算。  _(《企业所得税法》第二十八条第二款)_
+**Hainan Free Trade Port (海南自由贸易港).** An encouraged-industry enterprise that is registered in the Hainan Free Trade Port and has substantive operations there pays 15%. The current extension runs from 1 January 2025 to 31 December 2027. The original notice (Caishui 2020 No. 31) set these conditions:
+- main-business revenue from the Hainan encouraged-industry catalogue is 60% or more of total revenue;
+- the place of effective management is in Hainan, with substantive, comprehensive control of production, staff, accounts and assets there.
 
-### 3.4 技术先进型服务企业（TASE）15% 税率
+If the head office is in Hainan, only the income of the Hainan head office and Hainan branches gets 15%. If the head office is outside Hainan, only a qualifying Hainan branch's income gets 15%. New outbound direct investment made from 2020-01-01 to 2027-12-31 by Hainan tourism, modern services and high-tech enterprises can be exempt, subject to conditions that include a holding of **20% or more** in a foreign subsidiary. Refer these cases.
 
-- **资格条件** — 在中华人民共和国境内（不包括港澳台）注册的法人企业；从事《技术先进型服务业务认定范围（试行）》中的技术先进型服务业务；具有大专以上学历的员工占企业职工总数 ≥ 50%；从事技术先进型服务业务取得的收入占企业当年总收入的 ≥ 50%；从事离岸服务外包业务取得的收入不低于企业当年总收入的 35%（特定服务外包类）；经省级商务、科技、财政、税务、发改部门联合认定。  _(财税〔2017〕79号（全国推广）；财税〔2018〕44号（服务贸易类）)_
-- **TASE适用税率** — 15%  _(财税〔2017〕79号；财税〔2018〕44号)_
-- **职工教育经费扣除提高** — 不超过工资薪金总额 8% 的部分准予税前扣除（一般企业为 8% 上限，自2018年起对所有企业适用） percent
-- **保守默认** — 未取得 TASE 资格备案前，按 25% 计算。
+**Other zones.** Hengqin (Guangdong-Macao), Qianhai (Shenzhen-Hong Kong) and the Lingang New Area (Shanghai) have their own 15% regimes, each with its own catalogue and end date. This Guide does not apply them: refer.
 
-### 3.5 应纳税所得额计算
+**Conservative default.** Until location, substantive operations and the 60% revenue test are documented, use 25%.
 
-- **收入总额** — 包括：销售货物收入、提供劳务收入、转让财产收入、股息红利等权益性投资收益、利息收入、租金收入、特许权使用费收入、接受捐赠收入、其他收入。  _(《企业所得税法》第六条)_
-- **不征税收入** — 财政拨款；依法收取并纳入财政管理的行政事业性收费、政府性基金；国务院规定的其他不征税收入。  _(《企业所得税法》第七条)_
-- **免税收入** — 国债利息收入；符合条件的居民企业之间的股息红利等权益性投资收益；在中国境内设立机构、场所的非居民企业从居民企业取得与该机构场所有实际联系的股息红利；符合条件的非营利组织收入。  _(《企业所得税法》第二十六条)_
+## R&D super-deduction (研发费用加计扣除) ([MOF/STA announcement 2023 No. 7](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202304/t466643.html); [MOF/STA announcement 2023 No. 44](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202309/t468737.html); [Caishui 2015 No. 119](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201511/t419949.html); [Caishui 2018 No. 64](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201807/t440577.html); [Shanghai Tax Bureau R&D Q&A](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202111/t461170.html))
 
-## 四、第二层规则（需审核人判断）
+| Enterprise | R&D expensed in the year | R&D that creates an intangible asset | Period |
+|---|---|---|---|
+| All eligible enterprises | Actual cost deducted, **plus** an extra 100% of the actual cost | Amortised on 200% of the asset's cost | From 2023-01-01, no end date |
+| Listed IC and machine-tool enterprises | Actual cost deducted, plus an extra 120% | Amortised on 220% of cost | 2023-01-01 to 2027-12-31 |
 
-### 4.1 研发费用加计扣除
+**Who may claim.** Only resident enterprises that keep sound accounts, are assessed on actual profit (查账征收, not on a deemed basis) and can collect R&D costs accurately may claim. Caishui 2015 No. 119 Part 5(1) says: "本通知适用于会计核算健全、实行查账征收并能够准确归集研发费用的居民企业". A company on deemed (核定) assessment cannot claim.
 
-**加计扣除比例表（2025纳税年度）**  _(《企业所得税法》第三十条；财税〔2015〕119号；财税〔2018〕99号；财政部 税务总局公告2021年第13号；财政部 税务总局 科技部公告2022年第28号；财政部 税务总局公告2023年第7号；财政部 税务总局公告2023年第44号（集成电路和工业母机）)_
+**Who cannot claim.** Industries on the negative list cannot claim: tobacco manufacturing; accommodation and catering; wholesale and retail; real estate; leasing and business services; entertainment; and any others MOF and STA designate (Caishui 2015 No. 119 Part 4).
 
-| 企业类型 | 加计比例 | 实际税前扣除比例 | 政策有效期 |
-| --- | --- | --- | --- |
-| 一般企业 | 100% | 200% | 自 2023.1.1 起长期 |
-| 制造业 | 100% | 200% | 自 2023.1.1 起长期 |
-| 集成电路企业 | 120% | 220% | 2023.1.1–2027.12.31 |
-| 工业母机企业 | 120% | 220% | 2023.1.1–2027.12.31 |
-| 形成无形资产 — 一般 | 200% 摊销 | 同上比例对应 | — |
+**What is not R&D.** Routine upgrades of products or services, direct application of published research results, after-sales technical support, and similar routine work do not qualify (No. 119 Part 1(2)).
 
-- **适用范围** — 不适用于烟草制造业、住宿和餐饮业、批发和零售业、房地产业、租赁和商务服务业、娱乐业，以及财政部和STA规定的其他行业（"负面清单"行业）。
-- **研发活动定义** — 为获得科学与技术（不包括人文、社会科学）新知识，创造性运用科学技术新知识，或实质性改进技术、产品（服务）、工艺而持续进行的具有明确目标的系统性活动。
-- **研发费用归集** — 必须按项目设立研发费用辅助账（RDA），归集口径包括：人员人工费用、直接投入费用、折旧费用、无形资产摊销、新产品设计费、其他相关费用（限额不得超过可加计扣除研发费用总额的 10%）。  _(财税〔2015〕119号)_
-- **保守默认** — 研发费用辅助账不规范或未按项目归集的，不予加计扣除。
+**Record-keeping.** Costs must be recorded separately for each project. Costs that cannot be separated from production costs do not qualify for the super-deduction (No. 119 Part 3).
 
-### 4.2 区域性税率优惠
+**"Other related costs" cap.** Other related costs (literature, IP fees, travel, meetings and similar) may not exceed 10% of the total eligible R&D cost. Since 2021 the cap has been computed across all projects together: cap = (sum of the five main cost categories) × 10% ÷ (1 − 10%) ([Shanghai Tax Bureau Q&A on STA announcement 2021 No. 28](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202111/t461170.html)).
 
-#### 4.2.1 海南自由贸易港鼓励类产业 15%
+**R&D commissioned overseas.** 80% of the actual cost counts as the commissioning company's overseas R&D cost. That amount qualifies only up to two-thirds of the company's eligible domestic R&D cost (Caishui 2018 No. 64).
 
-- **适用条件** — 注册在海南自由贸易港；从事《海南自由贸易港鼓励类产业目录》中的产业项目；实质性运营（生产经营、人员、账务、资产四要素在海南）。  _(财税〔2020〕31号（《海南自由贸易港鼓励类产业企业所得税优惠政策》）；后续目录更新)_
-- **优惠税率** — 15%  _(财税〔2020〕31号)_
-- **期限** — 2020.1.1–2024.12.31，已延续至 2027.12.31（按最新公告执行）。
-- **境外所得免税** — 海南自贸港在境外新设分支机构取得的所得，或从其持股 ≥ 20% 的境外子公司分回的所得，符合条件的免征 CIT。
+**IC and machine-tool enterprises.** The 120% rate applies only to enterprises on the lists that NDRC, MIIT, MOF and STA compile (2023 No. 44 Art. 2-3). Check the list for the year.
 
-#### 4.2.2 横琴粤澳深度合作区 15%
+**Conservative default.** If costs are not tracked by project, the industry is on the negative list, or tax is assessed on a deemed basis, do not claim.
 
-- **横琴优惠税率** — 15%  _(财政部 税务总局公告2022年第19号)_
+## Losses carried forward ([CIT Law Art. 18](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [Caishui 2018 No. 76](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201807/t440878.html))
 
-注册在横琴粤澳深度合作区并实质性运营的鼓励类产业企业，减按 15% 征收 CIT。
+- **General rule.** A tax loss can be carried forward and set against later profits for up to 5 years. The Law says the carry-forward period "may not exceed five years" (Art. 18). A loss is taxable income below zero, computed under the Law (Regulations Art. 10). There is no carry-back.
+- **HNTEs and technology-based SMEs.** From 2018, a company that holds HNTE or technology-based SME status **in a given year** may carry forward unused losses from the 5 years before that year for up to 10 years instead of 5. A technology-based SME must hold a registration number under the technology-based SME evaluation rules (Caishui 2018 No. 76).
+- Use losses oldest first, and keep a schedule of each year's loss and use.
 
-#### 4.2.3 前海深港现代服务业合作区
+## Capped deductions and other income rules ([Implementation Regulations Art. 43-44](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html); [MOF/STA announcement 2025 No. 16](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202601/t478898.html); [Caishui 2018 No. 15](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201803/t436949.html); [Caishui 2018 No. 51](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201805/t439366.html); [MOF/STA announcement 2023 No. 37](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202309/t468599.html))
 
-- **前海优惠税率** — 15%  _(财政部 税务总局公告2021年第30号 及后续更新)_
+| Item | Rule | Source |
+|---|---|---|
+| Business entertainment | 60% of the amount spent, capped at 5‰ of sales (operating) revenue. No carry-forward | Regulations Art. 43 |
+| Advertising and promotion (general) | Up to 15% of sales (operating) revenue. The excess carries forward to later years | Regulations Art. 44 |
+| Advertising: cosmetics manufacturing or sales, pharmaceutical manufacturing, beverages (not alcohol) | Up to 30% of sales revenue, excess carried forward, for 2026-01-01 to 2027-12-31 | MOF/STA announcement 2025 No. 16 |
+| Tobacco advertising | Never deductible | MOF/STA announcement 2025 No. 16 |
+| Advertising: related enterprises with a cost-sharing agreement | One party may deduct its own advertising within its cap, or move part or all of it to the other party under the agreement. The other party leaves the amount received out of its own cap calculation | MOF/STA announcement 2025 No. 16 Art. 2 |
+| Wages paid to disabled employees | Actual wages deducted, plus an extra 100% of those wages | Regulations Art. 96 |
+| Venture capital enterprise investing in an unlisted small or medium HNTE for 2 years or more | 70% of the investment may be set against the venture capital enterprise's taxable income in the year the holding reaches 2 years. Any unused amount carries forward | Regulations Art. 97 |
+| Environmental protection, energy and water saving, or work safety equipment on the official catalogues | 10% of the investment is credited against tax payable. Any unused credit carries forward for 5 years. The credit is clawed back if the equipment is transferred or leased out within 5 years | Regulations Art. 100 |
+| Charitable donations through qualifying bodies | Up to 12% of annual accounting profit. The excess carries forward three years | Law Art. 9; Caishui 2018 No. 15 |
+| Staff education | Up to 8% of total wages. The excess carries forward | Caishui 2018 No. 51 |
+| Equipment bought 2024-01-01 to 2027-12-31 | Unit value up to 500万元 (five million yuan) may be deducted in full in the year instead of depreciated | MOF/STA announcement 2023 No. 37 |
+| Fines, penalties and late-payment surcharges | Not deductible | Law Art. 10 |
+| Supporting documents | If an invoice is missing, it must be obtained before the end of the annual settlement period. An expense of an earlier year that was never deducted can be carried back to the year it arose, for up to five years back, once proper documents are obtained | [Shanghai Tax Bureau Q&A, April 2026](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202604/t480124.html) |
 
-注册在前海合作区并从事现代服务业等鼓励类产业的企业，减按 15% 征收 CIT。
+## Withholding on non-residents (源泉扣缴) ([CIT Law Art. 3, 19, 27, 37-40](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [Implementation Regulations Art. 91](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html))
 
-#### 4.2.4 上海临港新片区
+- **Who.** A non-resident enterprise without an establishment in China, or whose China-source income is not effectively connected with its establishment.
+- **Rate.** The statutory rate is 20% (Law Art. 4), and Regulations Art. 91 reduces it to **10%**. A tax treaty may reduce it further. Confirm the treaty, the beneficial owner and the documents before applying a lower rate, and refer treaty claims.
+- **Base.** For dividends, interest, rent and royalties the base is the gross amount. For property transfers it is the proceeds less the net value of the property (Law Art. 19).
+- **Exempt.** Interest on loans from foreign governments to the Chinese government, interest on concessional loans from international financial organisations to the Chinese government and resident enterprises, and other income the State Council approves (Regulations Art. 91).
+- **Mechanics.** The payer is the withholding agent. It withholds on each payment, or on the date payment falls due, and pays the tax to the treasury within seven days, filing a withholding report (Law Art. 37, 40). If the payer does not withhold, the non-resident must pay where the income arises (Law Art. 39).
+- **Conservative default.** If a cross-border payment's nature is unclear, withhold at 10% and refer.
 
-- **上海临港优惠税率** — 15%  _(财政部 税务总局 发改委 科技部公告2020年第38号)_
-- **适用范围与期限** — 对符合条件的从事集成电路、人工智能、生物医药、民用航空等关键领域核心环节相关业务的法人企业，自设立之日起 5 年内减按 15% 征收 CIT。
+## Anti-avoidance in brief ([CIT Law Ch. 6](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [Implementation Regulations Art. 118](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html))
 
-#### 4.2.5 西部大开发
+- **Transfer pricing.** Related-party transactions must be at arm's length, or the tax bureau may adjust them (Art. 41). An annual related-party transaction report is filed with the annual return (Art. 43). Contemporaneous documentation duties depend on transaction thresholds: refer.
+- **Controlled foreign companies.** Profits that a company controlled by resident enterprises (or by them together with Chinese residents) keeps in a country whose effective tax is clearly below the 25% rate, without a genuine business reason, can be taxed on the resident. "Clearly below" means below 50% of the 25% rate (Law Art. 45; Regulations Art. 118).
+- **Thin capitalisation.** Interest on related-party debt above the prescribed debt-to-equity ratio is not deductible (Art. 46).
+- **General anti-avoidance.** Arrangements without a reasonable commercial purpose can be adjusted (Art. 47). An adjustment carries interest (Art. 48).
 
-- **西部大开发优惠税率** — 15%  _(财政部 税务总局 国家发改委公告2020年第23号)_
-- **适用范围与期限** — 对设在西部地区（12省区市）的鼓励类产业企业，减按 15% 征收 CIT，适用至 2030.12.31。
+## Boundary and exception table
 
-### 4.2 区域性税率优惠
+| Situation | Treatment | Source |
+|---|---|---|
+| Taxable income exactly 300万元, 300 staff, assets 5000万元 | Qualifies: each test is "not over" | [MOF/STA announcement 2023 No. 12 Art. 5](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468162.html) |
+| Taxable income above 300万元 | Not a small low-profit enterprise. Whole income at 25% (or another preference) | MOF/STA announcement 2023 No. 12 Art. 5 |
+| Company in a restricted or prohibited industry | No small low-profit relief, whatever its size | MOF/STA announcement 2023 No. 12 Art. 5 |
+| Branch without legal personality | Cannot claim the small low-profit relief alone. Combine with head office | [STA announcement 2023 No. 6 Art. 1](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202303/t466615.html) |
+| Claimed small low-profit at prepayment, fails at year end | Pay the difference at the annual settlement | STA announcement 2023 No. 6 Art. 6 |
+| HNTE certificate issued part way through 2026 | 15% from tax year 2026, the year of issue | [HNTE Measures Art. 10](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201603/t422248.html) |
+| HNTE certificate expired and not renewed | 25% from the year it lapses, unless another preference applies | HNTE Measures Art. 9 |
+| Western-region company, encouraged business below 60% of revenue | No 15%. Use 25% | [MOF/STA/NDRC 2020 No. 23](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202005/t453507.html) |
+| Retailer runs an R&D project | No super-deduction (negative-list industry). The actual cost is still deductible | [Caishui 2015 No. 119](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201511/t419949.html) |
+| Overseas R&D above two-thirds of domestic R&D | The excess gets no super-deduction | [Caishui 2018 No. 64](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201807/t440577.html) |
+| Loss from 2020 still unused in 2026, ordinary company | Expired after 2025 (5 years) | [CIT Law Art. 18](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html) |
+| Company is an HNTE in 2026, with an unused 2021 loss | May use it for up to 10 years from 2021 | [Caishui 2018 No. 76](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/201807/t440878.html) |
+| Dividend from a listed resident company held less than 12 months | Taxable, not exempt | [Shanghai Tax Bureau Q&A](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202604/t479958.html) |
+| Dividend from a partnership or foreign company | Not exempt resident-to-resident dividend income | Shanghai Tax Bureau Q&A |
+| Royalty paid to a non-resident with no treaty claim | Withhold 10% on the gross amount | [Implementation Regulations Art. 91](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html) |
 
-- **保守默认** — 区域优惠须确认四要素实质性运营、主营业务收入符合目录占比要求（通常 ≥ 60%）。未确认前按 25% 计算。
+## Worked cases ([MOF/STA announcement 2023 No. 12](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468162.html); [CIT Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [MOF/STA announcement 2023 No. 7](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202304/t466643.html); [Implementation Regulations](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html))
 
-### 4.3 非居民企业税收
+All amounts are in yuan and relate to tax year 2026.
 
-- **(a) 在中国境内未设立机构、场所** — 来源于中国境内的所得（股息、利息、租金、特许权使用费、转让财产所得等），按 20% 法定税率征收，实际减按 10% 征收企业所得税预提（《实施条例》第九十一条）。  _(《企业所得税法》第三、四、二十七条；实施条例)_
-- **(b) 在中国境内设立机构、场所** — 所得与该机构场所有实际联系的，按 25% 征收 CIT。  _(《企业所得税法》第三、四、二十七条；实施条例)_
-- **(c) 税收协定** — 如适用税收协定，预提税率可降至 5% / 7% / 8% 等（取决于协定与所得类型），须按国家税务总局公告2019年第35号等办理税收协定待遇备案。  _(国家税务总局公告2019年第35号)_
-- **(d) 间接转让中国境内财产（"7号公告"反避税）** — 非居民企业通过实施不具有合理商业目的的安排，间接转让中国居民企业股权或不动产等，按国家税务总局公告2015年第7号穿透认定，可能在境内征税。  _(国家税务总局公告2015年第7号)_
-- **(e) 受控外国企业（CFC）** — 非居民国家（地区）税负 < 12.5% 且由居民企业控制并无合理经营需要不作分配的，应视同分配计入居民企业当期所得。  _(《企业所得税法》第四十五条；实施条例第一百一十八条)_
-- **保守默认** — 跨境支付应扣未扣预提税的，由扣缴义务人承担。性质不明的跨境支付按服务费 / 特许权使用费扣缴 10%。
+**Case 1: small low-profit enterprise.** A resident technology services company that is not in a restricted industry. Its quarterly-average headcount is 48 and its quarterly-average total assets are 12,000,000 yuan. Accounting profit is 2,600,000. Adjustments: entertainment over the cap +50,000; a non-qualifying donation +30,000; treasury bond interest (exempt) −20,000. Taxable income = 2,600,000 + 50,000 + 30,000 − 20,000 = 2,660,000. All three tests are met (not over three million yuan, 300 staff and fifty million yuan). Tax = 2,660,000 × 25% × 20% = 133,000, an effective 5%. Prepaid 60,000, so 73,000 is due with the annual settlement by 31 May 2027.
 
-### 4.4 反避税与转让定价
+**Case 2: just over the income test.** Same company, but taxable income is 3,100,000. It is **not** a small low-profit enterprise. Tax = 3,100,000 × 25% = 775,000. No part of its income is taxed at 5%. If it has an HNTE certificate for 2026, tax = 3,100,000 × 15% = 465,000.
 
-- **关联交易申报** — 企业与其关联方发生关联交易的，须随年度纳税申报表附报《中华人民共和国企业年度关联业务往来报告表》。  _(《企业所得税法》第六章；国家税务总局公告2016年第42号；国家税务总局公告2017年第6号；BEPS 行动计划在中国的实施)_
+**Case 3: HNTE.** A company whose HNTE certificate was issued in October 2024 (valid until October 2027) has adjusted taxable income of 48,000,000. It still meets the staff, R&D and high-tech revenue ratios for 2026. Tax = 48,000,000 × 15% = 7,200,000. Prepaid 5,000,000, so 2,200,000 is due by 31 May 2027. The certificate is valid for three years from issue, so it lapses in October 2027. The company keeps 15% for tax year 2027 only if it is recognised again, so plan for that during 2027.
 
-**同期资料要求（2016年第42号）**  _(国家税务总局公告2016年第42号)_
+**Case 4: R&D super-deduction.** A manufacturing company (not on the negative list, not an HNTE) has accounting profit of 15,000,000, after expensing R&D of 8,000,000 tracked by project. No intangible asset was created. Extra deduction = 8,000,000 × 100% = 8,000,000. Taxable income = 15,000,000 − 8,000,000 = 7,000,000. Tax = 7,000,000 × 25% = 1,750,000. Without the super-deduction, tax would be 15,000,000 × 25% = 3,750,000, so the saving is 2,000,000.
 
-| 文档 | 触发条件 |
-| --- | --- |
-| **主体文档（Master File）** | 当年发生跨境关联交易，且集团合并财务报表中,合并收入金额超过 10 亿元 |
-| **本地文档（Local File）** | 关联交易：有形资产转让 > 2 亿元；金融资产 / 无形资产转让 > 1 亿元；其他（含劳务） > 4,000 万元 |
-| **国别报告（CbCR）** | 集团最终控股企业为中国居民企业且上年度合并收入 > 55 亿元人民币；或被指定报送 |
+**Case 5: royalty to a non-resident.** A Shanghai company pays a royalty of 1,000,000 to a foreign company that has no establishment in China and makes no treaty claim. Withholding = 1,000,000 × 10% = 100,000. The company pays it to the treasury within seven days of withholding and files the withholding report.
 
-- **同期资料准备期限** — 同期资料应在关联交易发生年度的次年 6月30日前准备完毕；自税务机关要求之日起 30日内提供。
-- **保守默认** — 关联交易达任一阈值时，标注同期资料强制要求；未准备的视为转让定价调整风险。
+**Case 6: losses.** An ordinary company (never an HNTE or technology-based SME) has 2026 profit of 1,000,000 before losses. It has an unused 2020 loss of 300,000 and an unused 2022 loss of 400,000. The 2020 loss expired after 2025. The 2022 loss is used: taxable income = 1,000,000 − 400,000 = 600,000. If it meets the small low-profit tests, tax = 600,000 × 25% × 20% = 30,000.
 
-### 4.5 其他主要税收优惠
+## When to refuse or refer
 
-**其他税收优惠表**
+Refer to a Chinese certified tax agent or CPA, and do not finalise, when:
+- the entity is a bank, insurer, securities firm, trust, oil or gas producer, or mining company, or is otherwise subject to industry-specific rules;
+- head office and branches are in different provinces (cross-region consolidated filing), or the matter is group consolidation;
+- the matter is a merger, division, share or asset acquisition claiming special tax treatment, or a reorganisation under [STA announcement 2026 No. 13](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202607/t480970.html);
+- there is a tax audit, assessment, notice from the tax bureau, reconsideration or litigation;
+- the matter is a permanent establishment, profit attribution, treaty relief or indirect transfer of Chinese property by a non-resident;
+- the matter is transfer pricing documentation, an advance pricing arrangement, a CFC, thin capitalisation or a general anti-avoidance adjustment;
+- a Hengqin, Qianhai, Lingang, TASE, software or IC tax holiday, or Hainan outbound-investment exemption is claimed;
+- **Pillar Two / global minimum tax.** No MOF or STA rule implementing the income inclusion rule, the undertaxed profits rule or a domestic minimum top-up tax could be found on the official hosts at retrieval. If a multinational group within the OECD rules asks, say so and refer. Check the STA policy library for any later announcement;
+- the company cannot show its financial statements, prior-year return or loss schedule;
+- eligibility for a preference cannot be documented. In that case compute at 25% and flag the preference as pending.
 
-| 优惠类型 | 内容 | 主要依据 |
-| --- | --- | --- |
-| 软件企业 / 集成电路企业"两免三减半" | 第一二年免征，第三至五年减半 | 财税〔2012〕27号；财税〔2016〕49号 |
-| 节能节水、安全生产专用设备 | 投资额的 10% 抵免应纳税额 | 《企业所得税法》第三十四条 |
-| 创业投资企业 | 投资额 70% 抵扣应纳税所得额 | 财税〔2017〕38号 等 |
-| 安置残疾人员工资 | 加计 100% 扣除 | 财税〔2009〕70号 |
-| 设备一次性税前扣除 | 单位价值 ≤ 500 万元的固定资产可一次性扣除 | 财税〔2018〕54号、〔2023〕37号 等（延续至2027） |
-| 公益性捐赠 | 不超过年度利润总额 12%，超过部分可结转 3 年 | 《企业所得税法》第九条 |
+## Filing and payment ([CIT Law Art. 54-55](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [Implementation Regulations Art. 128-129](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html); [STA announcement 2025 No. 17](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202507/t477034.html); [Shanghai Tax Bureau settlement Q&A](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202405/t471967.html); [Tax Collection Administration Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/swzsgl/200609/t284229.html))
 
-## 五、计算示例
+**Prepayment (预缴).**
+- CIT is prepaid monthly or quarterly, as the tax bureau decides. Small low-profit enterprises always prepay quarterly ([STA announcement 2023 No. 6 Art. 7](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202303/t466615.html)).
+- The prepayment return is filed, and the tax paid, **within fifteen days** after the end of each month or quarter (Law Art. 54). For quarterly filers in 2026 that means by mid-April, mid-July and mid-October 2026, and mid-January 2027, subject to the published calendar, which may extend a deadline for public holidays.
+- Prepay on actual profit to date. If that is difficult, the company may use one-twelfth or one-quarter of the previous year's taxable income, or another method the tax bureau approves. Once chosen, the method may not be changed at will within the year (Regulations Art. 128).
+- Resident enterprises taxed on their books use the revised A-type monthly (quarterly) prepayment return, in use from 1 October 2025 (STA announcement 2025 No. 17; [Shanghai Tax Bureau Q&A](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202511/t478219.html)).
+- The R&D super-deduction and the small low-profit relief can both be claimed at prepayment, and are confirmed at the annual settlement.
 
-### 5.1 小型微利企业（实际税负 5%）
+**Annual settlement (年度汇算清缴).**
+- Within five months after the year end, file the annual return and settle the balance, whether the company made a profit or a loss and whether or not it is in a tax holiday (Law Art. 54; Regulations Art. 129). For tax year 2026 the deadline is **31 May 2027**. The Shanghai bureau's Q&A shows the same pattern for an earlier year: settlement "在2024年5月31日前" for tax year 2023.
+- File the financial statements with the return. File the related-party transaction report where required (Law Art. 43).
+- Preferences are self-assessed and claimed on the return. Supporting documents are kept for inspection, not filed in advance ([Shanghai Tax Bureau Q&A, April 2026](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202604/t480124.html)).
+- An overpayment can be refunded or set against later tax.
+- A company that stops business during the year settles within 60 days of stopping (Law Art. 55; Shanghai settlement Q&A).
 
-**情况：** 某科技服务有限公司（居民企业，非HNTE），2025纳税年度数据：
-- 营业收入：1,800 万元；从业人数：48 人；资产总额：1,200 万元。
-- 利润总额：260 万元。
-- 纳税调整：业务招待费超标 +5 万元；非公益性捐赠 +3 万元；国债利息收入（免税）−2 万元。
-- 已预缴 CIT：6 万元。
+**Late payment and penalties** ([Tax Collection Administration Law Art. 32, 62, 63](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/swzsgl/200609/t284229.html)).
+- Late payment: a surcharge of five ten-thousandths (万分之五) of the unpaid tax for each day, from the day the tax became overdue.
+- Late filing: the bureau orders correction and may fine up to two thousand yuan. In serious cases the fine is two thousand to ten thousand yuan.
+- Tax evasion (false returns, hidden income and the like): the tax and surcharge are recovered, plus a fine of half to five times the unpaid tax. Criminal liability applies where the conduct is a crime.
+- Records: keep books, vouchers, returns and other tax records for ten years unless a law says otherwise ([Detailed Rules for the Tax Collection Administration Law, Art. 29](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/swzsgl/200402/t284445.html)).
 
-- **5.1.1 应纳税所得额** — 应纳税所得额 = 260 + 5 + 3 − 2 = 266 万元
+## Returns for tax year 2025 being filed or corrected now ([Shanghai Tax Bureau 2025 settlement Q&A](https://shanghai.chinatax.gov.cn/tax/zcfw/rdwd/202604/t479958.html); [CIT Law Art. 54](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html))
 
-应纳税所得额 266 万元 ≤ 300 万元；从业人数 48 ≤ 300；资产总额 1,200 万 ≤ 5,000 万；非限制行业 → **符合小型微利企业**。
+The annual settlement for tax year 2025 was due by 31 May 2026. Every resident enterprise that operated in 2025 had to settle, including those that made a loss or were in a tax holiday. On 25 September 2026 that deadline has passed, so any 2025 work is either a correction of a filed return or a late filing:
+- a missing 2025 settlement is late, so file at once and expect the daily surcharge and a possible penalty;
+- if a 2025 return is wrong, file a correction. Underpaid tax carries the daily surcharge;
+- the 2025 rules are the same as those in this Guide for the small low-profit relief, the R&D super-deduction, the western and Hainan 15% rates, HNTE and losses. The advertising rule is different: for 2025 the earlier announcement (MOF/STA announcement 2020 No. 43) applied, and MOF/STA announcement 2025 No. 16 replaced it only from 1 January 2026.
 
-- **5.1.3 应纳税额** — 应纳税额 = 266 万 × 25% × 20% = 266 万 × 5% = 13.30 万元
-- **5.1.4 年度汇算** — 应补缴 CIT = 13.30 − 6.00 = 7.30 万元。应于 **2026年5月31日前**完成年度汇算清缴并补缴。
+## Completion checklist ([CIT Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286573.html); [MOF/STA announcement 2023 No. 12](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468162.html); [MOF/STA announcement 2023 No. 7](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/202304/t466643.html); [Implementation Regulations](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/qysds/200801/t286574.html))
 
-### 5.2 高新技术企业（15%）
-
-**情况：** 某高新技术企业（HNTE 证书有效期2024–2026），2025年度：
-- 应纳税所得额（调整后）：4,800 万元。
-- 已预缴 CIT：500 万元。
-
-- **5.2.1 应纳税额** — 应纳税额 = 4,800 万 × 15% = 720 万元
-- **5.2.2 应补缴** — 应补 = 720 − 500 = 220 万元
-
-> **审核要点：** 须确认 2025 年度仍满足 HNTE 各项指标（科技人员占比、研发费用占比、高新收入占比），否则当年不得继续适用 15%。
-
-### 5.3 研发费用加计扣除（一般企业 100%）
-
-**情况：** 某制造业一般居民企业（非HNTE），2025年度：
-- 会计利润：1,500 万元；其他纳税调整净额：0。
-- 当年发生研发费用（按 RDA 规范归集）：800 万元，全部计入当期损益。
-- 形成无形资产部分：0。
-
-- **5.3.1 加计扣除金额** — 加计扣除额 = 800 万 × 100% = 800 万元
-- **5.3.2 应纳税所得额** — 应纳税所得额 = 1,500 − 800 = 700 万元（注：会计上 800 万研发费已计入损益；税法上额外加计扣除 800 万）
-- **5.3.3 应纳税额** — 应纳税额 = 700 万 × 25% = 175 万元
-
-**对比：** 若不享受加计扣除，应纳税额 = 1,500 万 × 25% = 375 万元；加计扣除节税 **200 万元**。
-
-> **审核要点：** 研发费用辅助账（RDA）须按项目设立；负面清单行业不得享受；委托境外研发按实际发生额的 80% 计入，且不超过境内研发费用的 2/3。
-
-## 六、申报与缴纳
-
-### 6.1 季度预缴
-
-- **预缴时间** — 季度终了之日起 15 日内预缴。  _(《企业所得税法》第五十四条；国家税务总局公告2021年第3号（A类申报表）；2022年第8号修订)_
-
-**季度申报缴款期限表**
-
-| 季度 | 申报缴款期限 |
-| --- | --- |
-| 第一季度（1–3月） | 4月15日前 |
-| 第二季度（4–6月） | 7月15日前 |
-| 第三季度（7–9月） | 10月15日前 |
-| 第四季度（10–12月） | 次年1月15日前 |
-
-- **预缴方式与申报表** — 预缴方式：按实际利润额（A类申报表，主流）；个别行业或经核定可采用核定征收。预缴申报表：《中华人民共和国企业所得税月（季）度预缴纳税申报表（A类，2018年版及后续版本）》。
-
-### 6.2 年度汇算清缴
-
-- **汇算清缴期限** — 纳税年度终了之日起 5个月内完成汇算清缴，结清应缴应退税款。公历年度纳税人：次年5月31日前。  _(《企业所得税法》第五十四条；国家税务总局公告2017年第54号、2018年第57号 等)_
-- **申报表** — 《中华人民共和国企业所得税年度纳税申报表（A类）》及其附表（A100000 至 A100000 系列）。
-
-**核心附表表**
-
-| 表号 | 名称 |
-| --- | --- |
-| A100000 | 主表 — 应纳税所得额与应纳税额 |
-| A105000 | 纳税调整项目明细表 |
-| A105050 | 职工薪酬支出及纳税调整明细表 |
-| A105080 | 资产折旧、摊销及纳税调整明细表 |
-| A107010 | 免税、减计收入及加计扣除优惠明细表 |
-| A107012 | 研发费用加计扣除优惠明细表 |
-| A107040 | 减免所得税优惠明细表 |
-| A108000 | 境外所得税收抵免明细表 |
-| A109000 / A109010 | 跨地区经营汇总纳税分支机构所得税分配表（如适用） |
-
-### 6.3 多缴 / 少缴税款的处理
-
-- **多缴** — 汇算清缴产生的多缴税款，可申请退税或抵缴下期。
-- **少缴** — 应补税款须在 5月31日前入库；逾期按日加收 万分之五滞纳金（《税收征收管理法》第三十二条）。  _(《税收征收管理法》第三十二条)_
-
-### 6.4 申报渠道
-
-- **电子税务局**（各省"国家税务总局XX省电子税务局"）：主流线上申报渠道；
-- **办税服务厅**：线下办理；
-- **金税系统**：底层征管平台（与发票、申报、缴款联通）。
-
-### 6.5 处罚要点
-
-**处罚要点表**
-
-| 违章行为 | 处罚 |
-| --- | --- |
-| 逾期申报 | 处 2,000 元以下罚款；情节严重处 2,000–10,000 元（《征管法》第六十二条） |
-| 逾期缴税 | 按日加收 万分之五滞纳金 |
-| 偷税（虚假申报等） | 追缴税款 + 滞纳金 + 0.5–5 倍罚款；构成犯罪追究刑责（《征管法》第六十三条） |
-| 逃避追缴欠税 | 罚款及刑事责任（《征管法》第六十五条） |
-| 不进行纳税申报 | 由税务机关核定应纳税额，追缴并处罚款 |
-
-- **保守默认** — 准时申报，准时缴款；不建议任何形式的延期 / 推迟策略。
-
-### 6.6 支柱二（Pillar Two / GloBE）— 风险提示
-
-- **支柱二适用范围** — 中国对在境内设立机构、场所或最终母公司位于中国的大型跨国企业集团（合并收入 ≥ 7.5亿欧元），自 2024 年起实施 收入纳入规则（IIR），对低税成员实体征收补足税至 15% 全球最低税。2025年起，合格的国内最低补足税（QDMTT）与低税利润规则（UTPR）的具体实施细则以 财政部 / 国家税务总局最新公告 为准。
-
-**审核要点：**
-- 仅适用于跨国集团；纯境内企业不受影响。
-- 现有 HNTE 15%、海南 / 横琴 / 西部 15%、研发加计扣除等优惠，如导致集团有效税率低于 15%，**可能触发补足税**。
-- 建议进行 GloBE 安全港测试与 ETR 模拟。
-
-- **保守默认** — 涉及跨国集团且合并收入 ≥ 7.5 亿欧元时，标注"支柱二补足税需专项评估，以最新公告为准"，不在本技能内完成补足税计算。
-
-## 七、保守默认值汇总
-
-**保守默认值汇总表**
-
-| 事项 | 保守默认 |
-| --- | --- |
-| 税率适用 | 25%（除非取得明确优惠资格证明） |
-| 小微优惠 | 不适用，除非应纳税所得额、人数、资产均确认满足 |
-| HNTE 15% | 不适用，除非有有效 HNTE 证书且当年指标持续达标 |
-| 区域优惠 | 不适用，除非确认四要素实质性运营并符合目录 |
-| 研发加计扣除 | 不予加计，除非 RDA 辅助账规范、项目立项 / 鉴定齐备 |
-| 资产折旧 | 按《实施条例》第六十条法定最低年限 |
-| 关联方判定 | 视为关联方 |
-| 同期资料 | 达阈值视为强制 |
-| 跨境支付预提税 | 按 10% 扣缴（除非取得协定待遇备案） |
-| 公益性捐赠 | 不超过利润总额 12%；超额结转 3 年 |
-| 业务招待费 | 按实际发生额 60% 扣除，且不超过营业收入 5‰ |
-| 广告费和业务宣传费 | 一般企业不超过销售收入 15%；超额结转（特定行业 30%） |
-| 业务宣传费 | 同上口径 |
-| 滞纳金 / 罚款 | 不得税前扣除 |
-| 支柱二 | 跨国集团合并收入 ≥ 7.5 亿欧元时单独评估 |
-
-## 八、参考资料
-
-**主要法律**
-
-- 《中华人民共和国企业所得税法》（2007年通过，2017、2018年修正）。
-- 《中华人民共和国企业所得税法实施条例》（国务院令第512号，2019年修订）。
-- 《中华人民共和国税收征收管理法》及其实施细则。
-
-**主要财政部 / 国家税务总局规范性文件**
-
-- **财税〔2015〕119号** — 研发费用加计扣除政策。
-- **财税〔2018〕99号** — 研发费用加计扣除比例提高至 75%（已被后续替代）。
-- **财政部 税务总局公告2021年第13号** — 制造业研发费用加计扣除 100%。
-- **财政部 税务总局公告2023年第7号** — 研发费用加计扣除 100% 普适化。
-- **财政部 税务总局公告2023年第44号** — 集成电路与工业母机企业研发费用加计扣除 120%。
-- **财税〔2023〕12号 / 财政部 税务总局公告2023年第6号** — 小型微利企业优惠（5% 实际税负）。
-- **国科发火〔2016〕32号** — 《高新技术企业认定管理办法》。
-- **财税〔2017〕79号、〔2018〕44号** — 技术先进型服务企业 15%。
-- **财税〔2020〕31号** — 海南自由贸易港鼓励类产业 CIT 15%。
-- **财政部 税务总局公告2022年第19号** — 横琴粤澳深度合作区 CIT 15%。
-- **财政部 税务总局公告2021年第30号** — 前海合作区 CIT 15%。
-- **财政部 税务总局 发改委 科技部公告2020年第38号** — 上海临港新片区 15%。
-- **财政部 税务总局 国家发改委公告2020年第23号** — 西部大开发鼓励类产业 15%。
-- **国家税务总局公告2016年第42号** — 关联交易申报与同期资料。
-- **国家税务总局公告2017年第6号** — 特别纳税调查调整及相互协商程序。
-- **国家税务总局公告2015年第7号** — 非居民企业间接转让财产反避税。
-- **财税〔2018〕54号 / 财政部 税务总局公告2023年第37号** — 设备一次性税前扣除。
-- **财税〔2012〕27号 / 〔2016〕49号** — 软件与集成电路企业优惠。
-- **国家税务总局公告2019年第35号** — 税收协定待遇备案。
-
-**支柱二（Pillar Two / GloBE）**
-
-- OECD GloBE Model Rules（2021–2023）及中国实施公告（以财政部 / STA最新公告为准）。
-
-**国际参考**
-
-- OECD Transfer Pricing Guidelines（2022 版及更新）。
-- BEPS Action 13（同期资料三层结构）。
-
-**平台**
-
-- 电子税务局（各省）— 申报与缴款主渠道。
-- 金税四期 — 征管底层平台。
-
-## 禁止事项（PROHIBITIONS）
-
-- 在未取得 HNTE 证书或证书失效 / 当年指标未达标的情况下，严禁适用 15% 优惠。
-- 在未确认四要素实质性运营前，严禁适用海南 / 横琴 / 前海 / 上海临港 / 西部大开发 15% 优惠。
-- 严禁对负面清单行业适用研发费用加计扣除。
-- 严禁对未按项目设立 RDA 辅助账的研发费用进行加计扣除。
-- 严禁将企业所得税本身、滞纳金、行政罚款、刑事罚金作税前扣除。
-- 严禁将股息红利分配作税前扣除。
-- 严禁忽略关联交易同期资料阈值；超阈值未准备视为高风险。
-- 严禁对未办理税收协定待遇备案的跨境支付直接适用低于 10% 的预提税率。
-- 严禁以当年利润为基础计算季度预缴（应按实际利润额，且非简单等分上年税负）。
-- 严禁将小微优惠与 HNTE 15% 叠加适用 — 按从优原则只享其一。
-- 严禁对跨国集团合并收入 ≥ 7.5 亿欧元的情形忽略支柱二补足税评估。
-- 严禁将本技能输出作为最终申报依据 — 必须由注册税务师或注册会计师审核签字。
-
-## 免责声明
-
-本技能及其输出仅用于信息和计算参考用途，不构成税务、法律或财务建议。所有输出在申报或据此采取行动之前，必须由具备资质的中国注册税务师（CTA）或注册会计师（CPA）审核并签字确认。最新经审核版本维护于 [openaccountants.com](https://openaccountants.com)。
-
-*OpenAccountants — 面向 AI 的开源会计技能*
+- [ ] Resident or non-resident status confirmed. Legal person or branch identified.
+- [ ] Taxable income reconciled from accounting profit, with non-taxable and exempt income removed and caps applied.
+- [ ] Small low-profit tests run on quarterly averages (headcount including dispatched workers), with the industry test and the all-or-nothing rule applied.
+- [ ] HNTE certificate issue date and validity checked, and the 2026 ratios evidenced.
+- [ ] Regional 15%: location, substantive operation and the 60% main-business test documented, with the period (western region to 2030, Hainan to 2027) checked.
+- [ ] R&D: not a negative-list industry, costs tracked by project, other-costs cap and overseas limits applied, 100% (or 120% if listed) used.
+- [ ] Loss schedule by year. Expired losses removed. HNTE or technology-based SME ten-year rule checked year by year.
+- [ ] Only one rate preference applied to the same income.
+- [ ] Non-resident payments: 10% withheld (or treaty rate documented and referred) and paid within seven days.
+- [ ] Prepayments reconciled: fifteen-day deadlines met; small low-profit enterprises on quarterly filing.
+- [ ] Annual settlement for 2026 diarised for 31 May 2027. Any 2025 corrections filed.
+- [ ] Referral items (Pillar Two, reorganisations, transfer pricing, special zones, audits) flagged and not finalised.
 
 <!-- openaccountants-cta-block -->
 

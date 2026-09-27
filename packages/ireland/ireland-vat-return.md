@@ -4,7 +4,7 @@ description: Use this skill whenever asked to prepare, review, or classify trans
 version: 2.0
 jurisdiction: IE
 tax_year: 2026
-last_updated: 2026-09-25
+last_updated: 2026-09-26
 authored_by: OpenAccountants team
 review_status: pending_review
 trust_label: By OpenAccountants
@@ -115,6 +115,7 @@ Sources for each line: [standard rate](https://www.revenue.ie/en/vat/vat-rates/w
 
 - **Deadline:** file and pay by the 19th of the month after the period ends; for ROS filers the time limit is extended to the 23rd. For 2026 two-monthly periods on ROS: January–February by 23 March, March–April by 23 May, May–June by 23 July, July–August by 23 September, September–October by 23 November, November–December by 23 January 2027.
 - **Payment** is made through ROS or myAccount ([how do you pay VAT](https://www.revenue.ie/en/vat/accounting-for-vat/how-do-you-pay-vat/index.aspx)).
+- **Direct debit and an annual return:** Revenue's interest guidance describes traders who pay by monthly direct debit and file one annual VAT return for their accounting year ([interest](https://www.revenue.ie/en/vat/interest-and-penalties/when-is-interest-applied-by-revenue/index.aspx)). This needs Revenue's agreement; check what ROS shows for the client before assuming it.
 - **Repayments** go to a bank account; Revenue may withhold them if returns are outstanding and may offset them against other tax owed ([repayment of VAT](https://www.revenue.ie/en/vat/accounting-for-vat/how-to-account-for-value-added-tax/vat-repayment.aspx)).
 
 ## The Return of Trading Details (RTD) ([Tax and Duty Manual: VAT RTD](https://www.revenue.ie/en/tax-professionals/tdm/value-added-tax/part09-obligations-accountable-persons/return/VAT-RTD-S76.pdf))
@@ -137,7 +138,7 @@ Sources for each line: [standard rate](https://www.revenue.ie/en/vat/vat-rates/w
 
 - **Conditions:** the cost is used for your taxable supplies or qualifying activities; you hold a valid VAT invoice or relevant customs receipt; the claim is made through the VAT3. No credit for costs of exempt supplies or non-business activities; costs used for both are apportioned.
 - **Time limit:** four years for claiming a repayment.
-- **Blocked even for fully taxable businesses:** food, drink or other personal services for you, agents or employees (unless part of a taxable supply of services); accommodation (except qualifying conference accommodation); food, drink, accommodation or entertainment forming part of the cost of advertising services; entertainment; passenger motor vehicles (except qualifying vehicles or stock-in-trade); petrol (unless stock-in-trade); goods bought under a margin scheme; property costs used for a non-business purpose.
+- **Blocked even for fully taxable businesses:** food, drink or other personal services for you, agents or employees (unless part of a taxable supply of services); accommodation (except qualifying conference accommodation); food, drink, accommodation or entertainment forming part of the cost of advertising services; entertainment; passenger motor vehicles (except qualifying vehicles, vehicles held as stock-in-trade, and vehicles used in a car-hire or driving-school business, which follow Revenue's separate manual "Recovery of VAT on Motor Vehicles" ([partial recovery manual, introduction](https://www.revenue.ie/en/tax-professionals/tdm/value-added-tax/part03-taxable-transactions-goods-ica-services/Goods/partial-recovery-of-VAT-on-qualifying-passenger-motor-vehicles.pdf))); petrol (unless stock-in-trade); contract work involving the handing over of goods when those goods are themselves not deductible; goods bought under a margin scheme; property costs used for a non-business purpose.
 - **Qualifying cars** ([Tax and Duty Manual: partial recovery](https://www.revenue.ie/en/tax-professionals/tdm/value-added-tax/part03-taxable-transactions-goods-ica-services/Goods/partial-recovery-of-VAT-on-qualifying-passenger-motor-vehicles.pdf)): up to 20% of the VAT on buying, hiring, acquiring or importing the car is deductible if the car is used at least 60% for business for 2 years or more, and it was first registered from 1 January 2021 with CO2 under 140g/km (or registered 2009 to 2020 with CO2 under 156g/km). On a lease, 20% of the VAT on each monthly charge. If a car bought is sold within 2 years, part or all of the credit is paid back: all within 6 months, 75% at 6 to 12 months, 50% at 12 to 18 months, 25% at 18 to 24 months. The same scale applies if, within 2 years, business use stops or falls below 60%; the use is reviewed every 6 months. No adjustment for hired or leased cars. Vans are not passenger motor vehicles.
 - **Diesel** is not on the blocked list; petrol is.
 
@@ -180,7 +181,8 @@ When a service includes goods, compare the VAT-exclusive **cost** of the goods w
 | Subcontractor invoice to you as RCT principal | Self-account, usually at the reduced rate | T1 and T2 |
 | Restaurant meal, client entertainment, hotel stay | Blocked (except qualifying conference accommodation) | None |
 | Petrol | Blocked unless stock-in-trade | None |
-| Qualifying car bought or leased | Part of the VAT, if all conditions met | T2 (part) |
+| Qualifying car bought or leased (not stock, car-hire or driving-school use) | Part of the VAT, if all conditions met | T2 (part) |
+| Car held as stock-in-trade, or used in a car-hire or driving-school business | Separate rules in Revenue's manual "Recovery of VAT on Motor Vehicles"; refer if unsure | T2 as that manual allows |
 | Bank charges, loan interest, insurance premiums, wages, PRSI, PAYE, tax payments, transfers between own accounts | No VAT to reclaim; exclude | None |
 | Commercial rent with VAT on the invoice | Domestic purchase | T2 |
 | Residential rent | No VAT; exclude | None |

@@ -4,10 +4,10 @@ description: Use this skill whenever asked about Spanish personal income tax (IR
 version: 2.0
 jurisdiction: ES
 tax_year: 2026
-last_updated: 2026-09-22
+last_updated: 2026-09-26
+authored_by: OpenAccountants team
 review_status: pending_review
-drafted_by: OpenAccountants
-approved_by: pending
+trust_label: By OpenAccountants
 depends_on:
   - income-tax-workflow-base
 category: international
@@ -15,520 +15,369 @@ tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# Spain: income tax (IRPF) for the self-employed (autonomo)
+# Spain: income tax (IRPF) for the self-employed (autónomo)
 
-How Spain taxes a self-employed individual under IRPF: residence, the two tax bases, the state scale and the community half the state does not set, the minimums, deductible expenses, depreciation, withholding on invoices, and the modelo 100 return. Figures are for tax year 2026. Two pages carry another year and are named where used: the Agencia Tributaria page giving the return window is the Renta 2025 campaign page (2025 income, filed in 2026), and the page stating the 2026 legal and late payment interest sits in that same Renta 2025 manual. No figure set by an autonomous community is in this Guide: each community sets its own half of the general scale and no official page publishes the seventeen together, so this Guide gives the state half and routes.
+How Spain taxes a self-employed individual under IRPF (Impuesto sobre la Renta de las Personas Físicas) in common territory: residence, the state half of the general scale and where to find the regional half, the savings scale, the personal and family minimum, deductible expenses under estimación directa, the hard-to-justify reduction, módulos limits, withholding on invoices, modelo 130 instalments, the modelo 100 return, and surcharges and penalties.
 
-## Spain income tax (IRPF): self-employed (autonomo). Guide version 2.0
+Primary year: **2026** (calendar year, income earned 1 January to 31 December 2026, returned in spring 2027). A dated section covers the **2025 return**, filed from 8 April to 30 June 2026. Laws were read in the consolidated texts on boe.es in September 2026. No 2026 State Budget Law has been approved, so figures that a Budget Law would normally update (interest rates) are rolled over and dated where used.
 
-## Section 1: Quick Reference
+## Scope
 
-| Field | Value |
-| --- | --- |
-| Country | Spain |
-| Tax | IRPF (Impuesto sobre la Renta de las Personas Fisicas) |
-| Currency | EUR only |
-| Tax year | Calendar year (ano natural) |
-| Legislation | Ley 35/2006 del IRPF; Real Decreto 439/2007 (Reglamento); Ley 58/2003 |
-| Tax authority | Agencia Estatal de Administracion Tributaria (AEAT) |
-| Annual return | Modelo 100, in the campaign of the following spring: see 5.6 |
-| Status | Drafted from the official pages. No accountant has reviewed it yet |
+- **Who.** A natural person resident in Spain for tax purposes who carries on a business or professional activity (actividad económica) as an autónomo, in common territory.
+- **Residence.** Article 9 of [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764): resident if **either** (a) more than 183 days in Spain in the calendar year (sporadic absences count unless tax residence elsewhere is proved), **or** (b) the main base or centre of activities or economic interests is in Spain. There is also a rebuttable presumption where the spouse (not legally separated) and minor children live in Spain. A resident is taxed on worldwide income.
+- **Which community.** Article 72: the community where the person spent more days of the year; failing that, where the main centre of interests is; failing that, the last declared residence. The community decides the regional half of the scale.
+- **Who must file.** Everyone who was registered in RETA (the self-employed Social Security scheme) **at any time** in the year must file, whatever their income. Article 96.2 says they are "en cualquier caso obligadas a declarar".
+- **Out of scope** (see "When to refuse or refer"): non-residents, who pay non-resident tax and do not file modelo 100 ([Real Decreto Legislativo 5/2004](https://www.boe.es/buscar/act.php?id=BOE-A-2004-4527)); the foral territories; companies; módulos computations.
+- **Related Guides.** Social Security contributions (RETA bases, rates and the yearly regularisation): **es-social-contributions**. The box-by-box modelo 130 computation: **es-estimated-tax**.
 
-### Residence: who this Guide covers [T1]
-
-Article 9 Ley 35/2006 makes a person resident if ANY one test is met: more than 183 days in Spanish territory in the calendar year (sporadic absences count unless tax residence elsewhere is proved), or the main base or core of their activities or economic interests is in Spain, directly or indirectly. A rebuttable presumption also runs from the residence of a spouse and minor children. A resident is taxed on worldwide income and is inside this Guide. Someone meeting no test is not: they pay the non-resident tax (Real Decreto Legislativo 5/2004) on Spanish-source income at the rates in the routing table below, and file the non-resident forms, not the modelo 100. Which community a resident belongs to is settled separately by article 72: where they spent the greater number of days, failing that where their main centre of interests is, failing that the last declared residence.
-
-### IRPF tax brackets: state portion (escala estatal) 2026 [T1]
-
-This is HALF the tax. Article 63 sets the state scale; article 74 leaves a second scale to each community, and the resident pays both. There is no single "Spanish income tax rate", and this Guide prints no combined rate.
-
-**State general scale, on the base liquidable general (article 63.1 Ley 35/2006)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764 |
-| Rate, first band | 9.5% | "12.450,00 9,50" |
-| Top of the first band | EUR 12,450 | "12.450,00 9,50" |
-| Rate, second band | 12% | "7.750,00 12,00" |
-| Top of the second band | EUR 20,200 | "20.200,00" |
-| Rate, third band | 15% | "15.000,00 15,00" |
-| Top of the third band | EUR 35,200 | "35.200,00" |
-| Rate, fourth band | 18.5% | "24.800,00 18,50" |
-| Top of the fourth band | EUR 60,000 | "60.000,00" |
-| Rate, fifth band | 22.5% | "240.000,00 22,50" |
-| Top of the fifth band | EUR 300,000 | "300.000,00" |
-| Rate above that | 24.5% | "adelante 24,50" |
-
-- **Routing the other half.** Ask which community the client was resident in, then read that community's own scale in its own law. The 19, 24, 30, 37, 45 and 47 per cent figures sold as "the Spanish brackets" are the PAYROLL WITHHOLDING scale of article 101, not the tax scale, and doubling the state scale is not any community's tax either. The live Guide did both. Both are removed.
-
-### Savings income rates (rentas del ahorro) 2026 [T1]
-
-Savings income has its own base and scale. State law fixes both halves: article 66.1 the state half and article 76 the autonomous half, at the same rates. No community sets the savings scale, so these totals are the same across the common territory. Article 66.2 prints the same totals in one table, but it is written for a contributor habitually resident abroad, so cite articles 66.1 and 76 for a resident.
-
-**Savings scale, on the base liquidable del ahorro (articles 66.1 and 76 Ley 35/2006, the two halves added)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764 |
-| Rate, first band | 19% | "0 0 6.000 19" |
-| Top of the first band | EUR 6,000 | "6.000,00 1.140" |
-| Rate, second band | 21% | "44.000 21" |
-| Top of the second band | EUR 50,000 | "50.000,00" |
-| Rate, third band | 23% | "150.000 23" |
-| Top of the third band | EUR 200,000 | "200.000,00" |
-| Rate, fourth band | 27% | "100.000 27" |
-| Top of the fourth band | EUR 300,000 | "300.000,00" |
-| Rate above that | 30% | "adelante 30" |
-
-- **Which base.** Business and professional income, employment income, rent and most imputed income go in the general base. Interest, dividends, insurance returns and gains on transfers go in the savings base. Losses do not cross freely.
-
-### Key allowances [T1]
-
-The minimum is not a deduction from income: article 63.1 applies the scale twice, once to the base liquidable general and once to the minimum, and subtracts the second result. The effect is a band at nil.
-
-**Personal and family minimums (articles 57 to 61 and article 20 Ley 35/2006)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764 |
-| Minimo del contribuyente | EUR 5,550 | "de 5.550 euros" |
-| Increase, taxpayer over 65 | EUR 1,150 | "en 1.150 euros" |
-| Further increase, taxpayer over 75 | EUR 1,400 | "en 1.400 euros" |
-| Descendant, first child | EUR 2,400 | "2.400 euros" |
-| Second child | EUR 2,700 | "2.700 euros" |
-| Third child | EUR 4,000 | "4.000 euros" |
-| Fourth and each later child | EUR 4,500 | "4.500 euros" |
-| Increase for a descendant under three | EUR 2,800 | "en 2.800 euros" |
-| Minimo por ascendientes | EUR 1,150 | "1.150 euros" |
-| Annual income, exempt income excluded, a relative may not exceed and still count | EUR 8,000 | "no tenga rentas anuales, excluidas las exentas, superiores a 8.000 euros" |
-| Minimo por discapacidad of the taxpayer | EUR 3,000 | "3.000 euros" |
-| The same at the higher degree of disability | EUR 9,000 | "9.000 euros" |
-| Assistance costs increase | EUR 3,000 | "3.000 euros" |
-| Joint return, spouses together | EUR 3,400 | "3.400 euros" |
-| Joint return, single parent unit | EUR 2,150 | "2.150 euros" |
-| Employment income up to which the full work reduction is given | EUR 14,852 | "14.852 euros" |
-| That full work reduction | EUR 7,302 | "iguales o inferiores a 14.852 euros: 7.302 euros anuales" |
-| Net employment income at or above which no work reduction is given at all | EUR 19,747.5 | "rendimientos netos del trabajo inferiores a 19.747,5 euros" |
-| Other income, exempt income excluded, above which no work reduction is given at all | EUR 6,500 | "distintas de las del trabajo superiores a 6.500 euros" |
-| Income above which a relative filing their own return cancels the minimum | EUR 1,800 | "rentas superiores a 1.800 euros" |
-
-- Each amount is annual and per person. Where two taxpayers are entitled for the same descendant or ascendant, article 61 splits it. The relative's income limit is a cliff, not a taper. The work reduction is for employment income, not for self-employment income, and it has two gates: net employment income must be below the upper figure above, and other income excluding exempt income must not be above the other-income figure above. Most autonomos with a business income above that figure get no work reduction at all, whatever their salary. Between the full-reduction threshold and the upper figure the reduction tapers rather than stopping. The live Guide's work reduction of "up to 6,498" is superseded and corrected above. A descendant or ascendant who files their own return with income above the article 61 threshold above gives no minimum at all, however low the figure in the table.
-
-### Quarterly payments (modelo 130) [T1]
-
-The quarter by quarter computation, the boxes and a carried-forward negative quarter are in the `es-estimated-tax` Guide. Rate and exemption only here.
-
-**Pago fraccionado in estimacion directa (article 110 Real Decreto 439/2007) and the exemption (article 109 Real Decreto 439/2007)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820 |
-| Rate on net income from the start of the year, less earlier payments | 20% | "el 20 por ciento del rendimiento neto" |
-| Share of last year's professional income that must have been withheld, to be exempt | 70% | "al menos el 70 por ciento de los ingresos" |
-
-- **The exemption is in article 109.2 and is tested on the PREVIOUS calendar year.** A professional who cleared that share last year files no modelo 130 this year. A business activity in seccion primera of the IAE tariffs does not get it; articles 109.3 and 109.4 give the same test to agricultural, livestock and forestry activity. In the year an activity starts there is no previous year, and article 109.5 measures the share over the period the payment itself covers. Modulos uses modelo 131 and is out of scope.
-
-### Retenciones (withholding on professional invoices) [T1]
-
-**Withholding on professional activity income (article 95 Real Decreto 439/2007)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820 |
-| Standard rate on gross professional fees | 15% | "el tipo de retención del 15 por ciento sobre los ingresos íntegros" |
-| Rate in the year activity starts and the two following | 7% | "será del 7 por ciento en el período impositivo de inicio de actividades" |
-
-**Withholding on other income the client may receive (article 101 Ley 35/2006)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764 |
-| Rent of urban property | 19% | "inmuebles urbanos, cualquiera que sea su calificación, será del 19 por ciento" |
-| Investment income (interest, dividends) | 19% | "capital mobiliario será del 19 por ciento" |
-
-- **Scope.** These rates apply to consideration for a PROFESSIONAL activity. A business activity in seccion primera of the IAE tariffs is not withheld on the same way.
-- **The reduced rate is not "the first three years" loosely.** Article 95 gives it for the period in which the activity starts and the TWO following, and only if no professional activity was carried on in the year before the start date. The client must tell the payer, who keeps the signed notice.
-- **A retencion is a prepayment, never a cut in income.** Gross income is the full invoice before withholding.
-
-### Non-resident rates, for routing only [T1]
-
-**Non-resident tax (article 25 Real Decreto Legislativo 5/2004)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2004-4527 |
-| General rate | 24% | "Con carácter general el 24 por 100" |
-| Resident of another EU state, or of the EEA with exchange of information | 19% | "el 19 por ciento cuando se trate de contribuyentes residentes" |
-
-### Conservative defaults [T1]
-
-| Ambiguity | Default |
-| --- | --- |
-| Unknown autonomous community | State half only, and say the community half is missing. Never publish a combined general-scale rate |
-| Unknown estimation regime | Estimacion directa simplificada |
-| Unknown business-use share of a vehicle, phone or home | No deduction |
-| Unknown expense category | Not deductible |
-| Unknown whether professional or business activity | Professional |
-| Unknown withholding rate | The standard professional rate above |
-| Unknown residence | Ask. Never assume it from a Spanish address |
-
-## Section 2: Required Inputs and Refusal Catalogue
-
-### Required Inputs
-
-Minimum: bank statement for the full tax year, the autonomous community of fiscal residence, the type of activity. Recommended: facturas emitidas and recibidas, modelo 130 filings, Social Security receipts. Ideal: complete libro registro de ingresos y de gastos, asset register, prior year modelo 100, all certificados de retenciones.
-
-### Refusal Catalogue
-
-- **R-ES-1, estimacion objetiva (modulos).** Estimacion directa only here. Modulos uses activity modules and modelo 131.
-- **R-ES-2, non-resident.** Someone failing every test in article 9 files under the non-resident tax. Out of scope beyond the routing table.
-- **R-ES-3, companies.** A company files Impuesto sobre Sociedades. Natural persons only here.
-- **R-ES-4, foral territories.** Navarra, Araba, Bizkaia and Gipuzkoa run their own income tax, rates and forms.
-- **R-ES-5, complex capital gains.** Property disposals, share sales and similar need their own computation. Escalate.
-- **R-ES-6, the community half of the scale.** This Guide cannot supply it. Read the community's own law.
-
-## Section 3: Transaction Pattern Library
-
-### 3.1 Income Patterns (Credits on Bank Statement)
-
-| Pattern | Tax Line | Treatment |
-| --- | --- | --- |
-| FACTURA EMITIDA, COBRO FACTURA | Actividades economicas | Business income, net of IVA if registered |
-| RETENCION, RETENCION IRPF | Reduces cash, not income | Rate from the retenciones table; reconcile to the certificado |
-| STRIPE PAYOUT, PAYPAL PAYOUT | Ingresos | Business income; match to invoices, gross up for fees withheld |
-| NOMINA, SALARIO, SUELDO | Rendimientos del trabajo | NOT self-employment, separate category |
-| INTERESES, DIVIDENDO | Rentas del ahorro | NOT self-employment, savings base |
-| ALQUILER RECIBIDO, RENTA COBRADA | Capital inmobiliario | NOT self-employment, separate |
-| DEVOLUCION HACIENDA, DEVOLUCION AEAT | EXCLUDE | Tax refund, not income |
-| SUBVENCION, AYUDA | Check | Grants are generally taxable |
-
-### 3.2 Expense Patterns (Debits on Bank Statement)
-
-| Pattern | Tax Line | Tier | Treatment |
-| --- | --- | --- | --- |
-| ALQUILER OFICINA, RENTA LOCAL | Arrendamientos y canones | T1 | Deductible where the premises serve the activity |
-| SUMINISTROS, LUZ, GAS, AGUA | Suministros | T2 | Home partly used: share rule in 5.2. Separate premises: full |
-| TELEFONO, MOVISTAR, VODAFONE | Suministros | T2 | Business portion; nothing if the split is unknown |
-| INTERNET, FIBRA | Suministros | T2 | Business portion; home share rule if working from home |
-| GASOLINA, REPSOL, COMBUSTIBLE | Otros gastos (vehiculo) | T2 | Business portion, with records. Input IVA separate |
-| COMIDA, RESTAURANTE (own meals) | Otros gastos deducibles | T2 | Only within the limits AND conditions in 5.2 |
-| RESTAURANTE (entertaining a client) | Separate rule | T2 | Own ceiling, not covered here |
-| CUOTA AUTONOMOS, SEGURIDAD SOCIAL | Gastos de personal | T1 | Contributions of the owner: deductible |
-| ASESORIA, GESTORIA, ABOGADO, NOTARIO | Servicios profesionales | T1 | Deductible if related to the activity |
-| MATERIAL OFICINA, PAPELERIA | Otros gastos | T1 | Deductible |
-| SOFTWARE, SUSCRIPCION, LICENCIA | Otros gastos | T1 | Deductible if used in the activity |
-| PUBLICIDAD, MARKETING, GOOGLE ADS | Publicidad | T1 | Deductible |
-| FORMACION, CURSO, MASTER | Otros gastos | T1 | Deductible if related to the activity |
-| SEGURO RESPONSABILIDAD, PROFESIONAL | Primas de seguros | T1 | Deductible |
-| SEGURO SALUD (own health cover) | Primas de seguros | T1 | Capped: see 5.2 |
-| SEGURO HOGAR, SEGURO COCHE (personal) | Not deductible | T2 | Vehicle: business portion only |
-| COMISION BANCO, COMISION TPV, STRIPE FEE | Gastos financieros | T1 | Deductible |
-| HACIENDA, AEAT, IRPF, MODELO 130 | EXCLUDE | T1 | Prepayments of tax, not expenses |
-| IVA LIQUIDACION, IVA PAGO | EXCLUDE from IRPF | T1 | Separate tax; record net where registered |
-| HIPOTECA, PRESTAMO | EXCLUDE | T1 | Loan principal |
-| INTERESES PRESTAMO (business) | Gastos financieros | T1 | Deductible |
-
-### 3.3 SaaS Subscriptions
-
-| Pattern | Treatment |
-| --- | --- |
-| GOOGLE, MICROSOFT, ADOBE, SLACK, ZOOM, META | Otros gastos, deductible if used in the activity. The IVA reverse charge is separate |
-| NOTION, GITHUB, FIGMA, CANVA, AWS, OPENAI | Otros gastos, deductible if used in the activity. The IVA reverse charge is separate |
-
-### 3.4 Internal Transfers and Exclusions
-
-| Pattern | Treatment |
-| --- | --- |
-| TRASPASO, TRANSFERENCIA PROPIA | EXCLUDE, internal movement |
-| PRESTAMO, AMORTIZACION CAPITAL | EXCLUDE, loan principal |
-| RETIRADA EFECTIVO, CAJERO | T2, ask. Default exclude |
-| DONACION, DONATIVO | A credit in the tax computation, not a cost of the activity |
-
-## Section 4: Worked Examples
-
-Amounts here are sample data in euro, not figures from an official page. Rates come from the tables above.
-
-### Example 1: standard autonomo (IT consultant)
-
-Invoiced 55,000, all at the standard professional withholding. Costs: rent 6,000, Social Security 4,200, accountant 1,200, software 800, travel 2,000.
-
-- Ingresos 55,000; withholding does not reduce income. Gastos 6,000 plus 4,200 plus 1,200 plus 800 plus 2,000, giving 14,200. Rendimiento neto previo 40,800.
-- Hard-to-justify reduction at 5% of 40,800 is 2,040, above the ceiling, so use EUR 2,000. Rendimiento neto reducido 38,800.
-- Withheld at 15% of 55,000: 8,250, credited against the final tax.
-
-### Example 2: home office (suministros)
-
-Home 80 square metres, room used for the activity 12 square metres. Supplies: electricity 1,200, gas 600, water 300, internet 480.
-
-- Area proportion 12 divided by 80, giving 0.15. Deductible share: 30% of that, so 0.045 of each bill. Electricity 54, gas 27, water 13.50, internet 21.60, total 116.10.
-- [T2] Flag: article 30.2 rule 5 letter b allows a higher OR lower percentage where proved. The table figure is a default, not a ceiling.
-
-### Example 3: retencion reconciliation
-
-Certificados total 8,250; modelo 130 payments total 4,000; final liability 10,500. Prepaid 8,250 plus 4,000, giving 12,250. Against 10,500, that is 1,750 repayable.
-
-### Example 4: dietas (own meals while working)
-
-- Capped at the per-day limit in 5.2; the day rate depends on an overnight stay and on whether the trip was inside Spain.
-- Both conditions in article 30.2 rule 5 letter c must also hold: taken in a restaurant or hospitality establishment AND paid electronically. Cash fails.
-- [T2] Flag: confirm the overnight stay and the payment method first.
-
-## Section 5: Tier 1 Rules (When Data Is Clear)
-
-### 5.1 Rendimientos de Actividades Economicas [T1]
-
-- All business and professional income. Simplificada applies by default where prior-year turnover was under the limit in 5.4 and the taxpayer has not opted out. (Articles 27 to 32 Ley 35/2006; article 28 Real Decreto 439/2007.)
-
-### 5.2 Gastos Deducibles [T1]
-
-- An expense must be linked to the activity, evidenced by a proper invoice, and entered in the libro registro de gastos. (Article 28 Ley 35/2006; articles 28 to 30 Real Decreto 439/2007.)
-
-**Special self-employed expense rules (article 30.2 Ley 35/2006)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764 |
-| Share of home supplies deductible, applied to the area proportion, unless another share is proved | 30% | "aplicar el 30 por ciento a la proporción" |
-| Health insurance premium ceiling, per person covered | EUR 500 | "deducción será de 500 euros" |
-| The same ceiling where that person has a disability | EUR 1,500 | "o de 1.500 euros por cada una de ellas" |
-
-- Health cover may include the taxpayer, their spouse and children under twenty-five living with them. The ceiling is per person, per year.
-- Home supplies: the share applies to the proportion the area used for the activity bears to total area. A higher or lower percentage is allowed where proved, so it is a default, not a cap.
-
-**Own meal costs while working (article 30.2 rule 5 letter c Ley 35/2006, limits of article 9 Real Decreto 439/2007)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820 |
-| Per day in Spain, with an overnight stay | EUR 53.34 | "53,34 euros diarios" |
-| Per day abroad, with an overnight stay | EUR 91.35 | "o 91,35 euros diarios" |
-| Per day in Spain, no overnight stay | EUR 26.67 | "no excedan de 26,67" |
-| Per day abroad, no overnight stay | EUR 48.08 | "26,67 ó 48,08 euros" |
-
-- Both conditions are required: a restaurant or hospitality establishment AND electronic payment.
-
-### 5.3 Amortizacion (Depreciation) [T1]
-
-Under simplificada use the table below, which is the whole official table. Under normal use the corporate tax table.
-
-**Tabla de amortizacion simplificada (Agencia Tributaria, Manual de actividades economicas)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/folleto-actividades-economicas/3-impuesto-sobre-renta-personas-fisicas/3_5-estimacion-directa-simplificada/3_5_4-tabla-amortizacion-simplificada.html |
-| Grupo 1, buildings and constructions, max 68 years | 3% | "Edificios y otras construcciones" |
-| Grupo 2, installations, furniture, fittings, other tangible assets, max 20 years | 10% | "Instalaciones, mobiliario, enseres" |
-| Grupo 3, machinery, max 18 years | 12% | "Maquinaria" |
-| Grupo 4, transport elements, max 14 years | 16% | "Elementos de Transporte" |
-| Grupo 5, data processing equipment and computer systems and programs, max 10 years | 26% | "Equipos para tratamiento de la información" |
-| Grupo 6, tools and implements, max 8 years | 30% | "herramientas 30 % 8" |
-| Grupo 7, cattle, pigs, sheep, goats, max 14 years | 16% | "Ganado vacuno, porcino" |
-| Grupo 8, horses and non-citrus fruit trees, max 25 years | 8% | "Ganado equino y frutales no cítricos" |
-| Grupo 9, citrus trees and vines, max 50 years | 4% | "Frutales cítricos y viñedos" |
-| Grupo 10, olive groves, max 100 years | 2% | "Olivar" |
-
-- **There is no separate software line.** Computer programs sit in grupo 5 with the hardware. The live Guide's separate software rate, and its second lower transport line, are not in the official table and are removed.
-
-### 5.4 Reduccion por Estimacion Directa Simplificada [T1]
-
-**Turnover limit and the hard-to-justify reduction (articles 28 and 30 Real Decreto 439/2007)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820 |
-| Prior-year turnover under which simplificada applies | EUR 600,000 | "no supere los 600.000 euros" |
-| Reduction for hard-to-justify expenses, on net income before it | 5% | "el porcentaje del 5 por ciento sobre el rendimiento neto" |
-| Annual ceiling on that reduction | EUR 2,000 | "no pueda superar 2.000 euros" |
-
-- **The ceiling covers more than the reduction.** That annual amount caps deductible provisions AND hard-to-justify expenses together, not the reduction alone.
-- The turnover limit is a cliff, tested on the prior year, across all the taxpayer's activities together.
-
-### 5.5 Modelo 130 Computation [T1]
-
-- Rate and exemption are in the quarterly payments table above; the computation, the boxes and a negative quarter are in the `es-estimated-tax` Guide. A negative quarter produces no repayment: an overpayment comes back through the modelo 100.
-
-### 5.6 Filing Deadlines [T1]
-
-- **Modelo 130,** first three quarters: between the 1st and the 20th of April, July and October. Fourth quarter: between the 1st and the 30th of January of the following year. A due date on a Saturday or non-working day moves to the next working day. (Agencia Tributaria, pagos fraccionados: see Sources.)
-- **Modelo 100:** the campaign window is set fresh for each year and is not a standing rule. For the Renta 2025 campaign, covering 2025 income, it ran from 8 April to 30 June 2026 inclusive, with direct debit closing on 25 June 2026. Read the Agencia Tributaria campaign page for the year you are filing: do not assume the same dates. (Agencia Tributaria, Renta 2025 manual: see Sources.)
-- **Modelo 303 for IVA** follows the same quarterly pattern as the modelo 130.
-
-### 5.7 Penalties [T1]
-
-**Late filing and penalties (Ley 58/2003, articles 27, 28 and 191)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2003-23186 |
-| Voluntary late filing, from the day the deadline passes, and the same again for each complete month of delay up to twelve | 1% | "igual al 1 por ciento más otro 1 por ciento adicional por cada mes" |
-| Voluntary late filing after twelve months, plus interest, penalties excluded | 15% | "el recargo será del 15 por ciento y excluirá las sanciones" |
-| Cut in that surcharge where it and the debt are paid on time | 25% | "se reducirá en el 25 por ciento" |
-| Penalty for a minor (leve) failure to pay the self-assessed tax | 50% | "leve consistirá en multa pecuniaria proporcional del 50 por ciento" |
-| Base of penalty at or below which a failure is minor | EUR 3,000 | "inferior o igual a 3.000 euros" |
-| Top of the band for a grave failure | 100% | "proporcional del 50 al 100 por ciento" |
-| Top of the band for a very grave failure | 150% | "proporcional del 100 al 150 por ciento" |
-| Recargo de apremio reducido | 10% | "apremio reducido será del 10 por ciento" |
-| Recargo de apremio ordinario | 20% | "apremio ordinario será del 20 por ciento" |
-
-- **How the three bands are picked.** At or below that base the failure is minor. Above it, it is still minor where there was no concealment, and grave where there was. It is never minor where false invoices were used, where incorrect books affected more than a tenth of the base, or where amounts withheld were not paid over. Fraudulent means make it very grave in every case.
-
-**Enforcement surcharge (Agencia Tributaria)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://sede.agenciatributaria.gob.es/Sede/deudas-apremios-embargos-subastas/apremios/tipos-recargos.html |
-| Recargo ejecutivo | 5% | "Recargo ejecutivo: es el 5% del importe principal" |
-
-**Interest for 2026 (Agencia Tributaria, Renta 2025 manual)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/irpf-2025/guia-principales-novedades/otras-cuestiones-interes.html |
-| Interes de demora | 4.0625% | "el interés de demora en el 4,0625 por 100" |
-| Interes legal del dinero | 3.25% | "el interés legal en el 3,25 por 100" |
-
-- **The old ladder is gone.** The live Guide's late-payment ladder of four rising percentages was the pre-2021 late-filing surcharge and no longer exists. Voluntary late filing uses the monthly surcharge above; in enforcement the apremio surcharges apply instead.
-- **Both interest rates carry a condition.** They are held over from the last approved Budget and stay until a Budget Law for 2026 takes effect. Date them whenever you quote them.
-
-## Section 6: Tier 2 Catalogue (Reviewer Judgement Required)
-
-### 6.1 Home Office (Suministros) [T2]
-
-- Deductible share equals the area used for the activity over total area, multiplied by the share in 5.2, and a different percentage is allowed in EITHER direction where proved. It covers water, gas, electricity, telephony and internet. Reviewer: the measurements, whether the room genuinely serves the activity, and whether another percentage can be evidenced.
-
-### 6.2 Vehicle Expenses [T2]
-
-- For IRPF, the portion used in the activity only, supported by records. Input IVA on a vehicle has its own restriction and belongs to the IVA Guide. Reviewer: the business share and the evidence for it.
-
-### 6.3 Estimacion Directa Normal vs Simplificada [T2]
-
-| Feature | Simplificada | Normal |
-| --- | --- | --- |
-| Turnover limit | The prior-year limit in 5.4 | None |
-| Hard-to-justify reduction | Yes, subject to the ceiling in 5.4 | No |
-| Depreciation table | Simplified table in 5.3 | Corporate tax table |
-| Deductible provisions | Covered by the same ceiling | Computed separately |
-
-Flag for the reviewer where turnover approaches the limit, or where provisions are material.
-
-### 6.4 Minimo Personal y Familiar [T2]
-
-- These amounts do not reduce the base imponible: the scale is applied to them separately and the result subtracted from the gross tax, producing a band taxed at nil. A community may set its own amounts for its half. Reviewer: family situation, ages, disability certificates, and who else claims the same relative.
-
-## Section 7: Excel Working Paper Template
-
-IRPF WORKING PAPER, tax year 2026
-
-A. INGRESOS: A1 rendimientos de actividades economicas; A2 other business income; A3 total ingresos.
-
-B. GASTOS DEDUCIBLES: B1 consumos de explotacion; B2 sueldos y salarios; B3 Seguridad Social del titular; B4 otros gastos de personal; B5 arrendamientos y canones; B6 suministros; B7 servicios profesionales; B8 primas de seguros; B9 gastos financieros; B10 amortizaciones; B11 publicidad; B12 otros gastos deducibles; B13 total gastos.
-
-C. RENDIMIENTO NETO PREVIO (A3 less B13). D. REDUCCION, capped as in 5.4. E. RENDIMIENTO NETO REDUCIDO (C less D).
-
-F. PREPAYMENTS: F1 retenciones; F2 modelo 130 payments; F3 total prepaid.
-
-REVIEWER FLAGS: residence confirmed under article 9; community confirmed and its own scale read; estimation regime confirmed; home office area ratio verified; vehicle business use documented; retenciones certificates reconciled.
-
-## Section 8: Bank Statement Reading Guide
-
-### Spanish Bank Statement Formats
-
-| Bank | Format | Key Fields |
-| --- | --- | --- |
-| CaixaBank, BBVA, Santander | CSV, PDF | Fecha, Concepto, Importe, Saldo |
-| Sabadell, Bankinter | CSV, PDF | Fecha Valor, Descripcion, Cargo/Abono |
-| N26, Revolut | CSV | Date, Counterparty, Amount |
-| ING Direct | CSV | Fecha, Movimiento, Importe |
-
-### Key Spanish Banking Terms
-
-| Spanish Term | English | Classification Hint |
-| --- | --- | --- |
-| Ingreso | Credit (incoming) | Potential income |
-| Cargo | Debit (outgoing) | Potential expense |
-| Transferencia | Bank transfer | Check direction |
-| Recibo / Domiciliacion | Direct debit | Regular expense |
-| Bizum | Mobile payment | Could be income or expense |
-| Reintegro | Cash withdrawal | Ask what it was for |
-| Comisiones | Bank charges | Gastos financieros |
-| Nomina | Salary payment | Employment income |
-
-## Section 9: Onboarding Fallback
-
-ONBOARDING QUESTIONS, SPAIN IRPF: (1) more than 183 days in Spain last year, or main economic base here? (2) which autonomous community? (3) professional or business activity? (4) directa simplificada or normal? (5) is this the year you started, or one of the two after it? (6) home used for the activity: dedicated room, area ratio? (7) vehicle business share and records? (8) all certificados de retenciones? (9) marital status and dependants, with ages and any disability certificate? (10) contribution amount per month, and prior year modelo 100?
-
-## The method, step by step
-
-1. Settle residence under article 9 Ley 35/2006, then the community under article 72. Someone failing every test is outside this Guide. [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764)
-2. Fix the regime. Simplificada applies by default under the prior-year turnover limit in 5.4 unless the taxpayer opted out; modulos is a separate method with its own form. [Real Decreto 439/2007](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820)
-3. Build net income: income in the libro registro, less expenses linked to the activity and evidenced, less depreciation from the simplified table in 5.3, then the hard-to-justify reduction under simplificada. (Agencia Tributaria simplified depreciation table: see Sources.)
-4. Pay in during the year with modelo 130 by the quarterly deadlines in 5.6, unless the professional exemption applies; mechanics in the `es-estimated-tax` Guide. (Agencia Tributaria, pagos fraccionados: see Sources.)
-5. Split income into the general base and the savings base, apply the state scale and the community's own scale to the general base, apply the savings scale, then subtract the tax on the personal and family minimum. [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764)
-6. Subtract the retenciones on the certificates and the modelo 130 payments, then file the modelo 100 inside the campaign window published for that year. (Agencia Tributaria, Renta 2025 manual: see Sources.)
+There is **no single Spanish income tax rate**. The general base is taxed twice: once on the state scale (article 63) and once on the scale of the taxpayer's community (article 74). This Guide gives the state half only. Doubling it is not any community's tax.
 
 ## Ask the client first
 
-- Which community were you tax resident in, and did you move during the year? The community half of the scale and its deductions both turn on it, and this Guide supplies neither.
-- Professional or business activity? It decides the withholding on your invoices and whether the modelo 130 exemption can apply.
-- Is this the year the activity started, or one of the two following it, and had you carried on any professional activity in the year before you started?
-- More than 183 days in Spain, and is your main economic base here? If neither, you are on the non-resident tax and none of this applies.
-- For meals claimed: taken in a restaurant or hospitality establishment, and paid electronically? Both are conditions, not good practice.
-- For a home used for the activity: what are the two areas, and can you evidence a share other than the default?
+- **Residence.** More than 183 days in Spain in the year, or main economic base here? Did you arrive or leave during the year? (If not resident, or a split year: refer.)
+- **Community.** Which autonomous community did you live in for most of the year? Did you move? Is it Navarra or the Basque Country? (Foral: refer.)
+- **Activity type.** Professional (Sections 2 and 3 of the IAE tariffs) or business (Section 1)? This decides withholding on invoices and whether the modelo 130 exemption can apply.
+- **Start date.** Did the activity start this year or in the two years before? Did you carry on any professional activity in the year before you started? (Reduced withholding test.)
+- **Method.** Estimación directa simplificada, normal, or módulos (estimación objetiva)? Last year's turnover for all activities together? Any renuncia (opt-out) filed?
+- **Home.** Do you work from your **main home** (vivienda habitual)? Floor area of the home and of the part used for the activity? Can you prove a share other than the default?
+- **Meals.** Were meals taken in restaurants or hospitality businesses, and paid by card or other electronic means? Overnight stay? In Spain or abroad?
+- **Prepayments.** All withholding certificates from clients; modelo 130 filings and amounts for the year.
+- **Family.** Marital status, joint or individual return, children and parents living with you (ages, their own income, any disability certificate), and who else claims them.
+- **Other income.** Salary, rent, interest, dividends, gains. Each goes in its own category.
+
+## The method, step by step
+
+1. **Settle residence and community.** Apply article 9, then article 72, of [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764). Not resident, a split year, or foral territory: stop and refer.
+2. **Fix the method for the activity.**
+   - Estimación directa simplificada applies by default when the net turnover of all activities together was not more than EUR 600,000 in the previous year, the person is not in módulos, and has not opted out ([Real Decreto 439/2007, art. 28](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820)).
+   - Above that, or after an opt-out, estimación directa normal applies.
+   - Módulos is a separate method with its own limits (see "Módulos limits" below) and modelo 131. Refer any módulos computation.
+3. **Compute net activity income (rendimiento neto).**
+   - Income: everything invoiced or earned in the activity, **gross of withholding**. Withholding is a prepayment, not a cost.
+   - Less expenses linked to the activity, supported by a proper invoice and entered in the expense book. Special rules for home supplies, own meals and health insurance are in "Deductible expenses" below.
+   - Less depreciation. Under simplificada use the simplified table below; under normal, the corporate tax table.
+   - Own RETA contributions are a deductible expense of the activity. How the yearly RETA regularisation is booked is in **es-social-contributions**.
+4. **Simplificada only: deduct the hard-to-justify reduction.** 5% of net income before this item, capped at EUR 2,000 a year for provisions and hard-to-justify expenses together ([Real Decreto 439/2007, art. 30](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820)). Not under normal. Not if the article 32.2 reduction (economically dependent self-employed and similar) is taken instead. Ceuta exception for 2026 below.
+5. **Build the two bases.** Activity income, employment income, rent and most imputed income go to the **general base**. Interest, dividends, insurance returns and gains on transfers go to the **savings base**.
+6. **Apply the scales and the minimum.**
+   - General base: state scale (below) **and** the community's own scale.
+   - From each result, subtract the same scale applied to the personal and family minimum (article 63.1.2º). The minimum is not a deduction from income. It creates a band taxed at nil.
+   - Savings base: the savings scale (both halves are set by state law). The minimum sits in the general base first; only where the general base is smaller than the minimum does the rest go to the savings base (article 56.2).
+7. **Deduct credits** (state and community deductions). Community deductions: read the community's law.
+8. **Deduct prepayments.** Withholding on invoices (per the certificates) and modelo 130 instalments. A negative result is a refund.
+9. **File modelo 100** in the campaign window published for that year. Pay in one go or in two instalments (see "Filing and payment").
+
+## Figures by year
+
+### State general scale, 2026 and 2025 (article 63.1, [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764))
+
+Unchanged since 2021. Same for the 2025 and 2026 years. This is the **state half only**.
+
+| Base liquidable general, from | up to | State rate |
+| --- | --- | --- |
+| EUR 0 | EUR 12,450 | 9.5% |
+| EUR 12,450 | EUR 20,200 | 12% |
+| EUR 20,200 | EUR 35,200 | 15% |
+| EUR 35,200 | EUR 60,000 | 18.5% |
+| EUR 60,000 | EUR 300,000 | 22.5% |
+| EUR 300,000 | no limit | 24.5% |
+
+State tax at the top of each band (from the law's own table): EUR 1,182.75 at EUR 12,450; EUR 2,112.75 at EUR 20,200; EUR 4,362.75 at EUR 35,200; EUR 8,950.75 at EUR 60,000; EUR 62,950.75 at EUR 300,000.
+
+**The regional half.** Each community approves its own scale under article 74. For **2025**, the Agencia Tributaria Renta 2025 manual prints every community's scale on one page: "Para el ejercicio 2025 cada contribuyente deberá aplicar la escala autonómica que corresponda" ([Agencia Tributaria, gravamen autonómico 2025](https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/irpf-2025/c15-calculo-impuesto-determinacion-cuotas-integras/gravamen-base-liquidable-general/gravamen-autonomico.html)). Residents of Ceuta and Melilla use a scale set in the state law itself. For **2026**, read the community's own law in force for 2026; that manual covers 2025 only.
+
+Do not confuse the tax scale with the payroll withholding scale of article 101. The 19, 24, 30, 37, 45 and 47 per cent steps often sold as "the Spanish brackets" are that withholding scale, not the tax.
+
+### Savings scale, 2026 and 2025 (articles 66.1 and 76, [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764))
+
+State law sets both halves at the same rates: article 66.1 the state half and article 76 the regional half. So the total is the same everywhere in common territory. The top band applies from 2025 (Ley 7/2024).
+
+| Base liquidable del ahorro, from | up to | State half | Regional half | Total |
+| --- | --- | --- | --- | --- |
+| EUR 0 | EUR 6,000 | 9.5% | 9.5% | 19% |
+| EUR 6,000 | EUR 50,000 | 10.5% | 10.5% | 21% |
+| EUR 50,000 | EUR 200,000 | 11.5% | 11.5% | 23% |
+| EUR 200,000 | EUR 300,000 | 13.5% | 13.5% | 27% |
+| EUR 300,000 | no limit | 15% | 15% | 30% |
+
+### Personal and family minimum, 2026 and 2025 (articles 56 to 61, [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764))
+
+These are the **state** amounts. A community may set its own amounts for its half (article 56.3). All amounts are annual.
+
+| Item | Amount | Condition |
+| --- | --- | --- |
+| Taxpayer | EUR 5,550 | Everyone |
+| Taxpayer over 65 | plus EUR 1,150 | Age more than 65 |
+| Taxpayer over 75 | plus a further EUR 1,400 | Age more than 75 |
+| First descendant | EUR 2,400 | Under 25 (or disabled at any age), lives with the taxpayer, own income (exempt income excluded) not more than EUR 8,000 |
+| Second descendant | EUR 2,700 | Same |
+| Third descendant | EUR 4,000 | Same |
+| Fourth and each later | EUR 4,500 | Same |
+| Descendant under three | plus EUR 2,800 | Also for adoption or foster care, in the year of registration and the two following |
+| Each ascendant | EUR 1,150 | Over 65 (or disabled at any age), lives with the taxpayer, own income not more than EUR 8,000 |
+| Ascendant over 75 | plus EUR 1,400 | |
+| Disability of taxpayer | EUR 3,000 | Recognised disability |
+| Same, 65% or more | EUR 9,000 | Degree of disability 65% or more |
+| Assistance costs | plus EUR 3,000 | Needs help of others or reduced mobility, or 65% or more |
+| Disability of each descendant or ascendant | EUR 3,000, or EUR 9,000 at 65% or more | Only for a relative who already gives a minimum |
+
+- **Cliffs, not tapers.** A relative with income above EUR 8,000 gives nothing.
+- **Own return.** A descendant or ascendant who files their own return with income above EUR 1,800 gives no minimum at all (article 61).
+- **Sharing.** Where two taxpayers qualify for the same relative, the amount is split equally; if their degree of kinship differs, it goes to the closer relative (article 61).
+
+**Joint return reductions** (article 84): married couple unit, EUR 3,400 off the base; single-parent unit, EUR 2,150.
+
+**Work reduction (employment income only, article 20).** It does not apply to activity income. EUR 7,302 where net employment income is at most EUR 14,852, tapering to nil at EUR 19,747.5. It is lost entirely where other income (exempt income excluded) is more than EUR 6,500. Most autónomos with a real activity get none.
+
+### Deductible expenses: special rules for estimación directa (article 30.2 rule 5, [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764))
+
+The general rule: an expense is deductible if it is linked to the activity, backed by a proper invoice, and recorded in the expense book. Three special rules apply in **both** normal and simplificada.
+
+**Home supplies (suministros).**
+- Only where part of the taxpayer's **main home** (vivienda habitual) is used for the activity. A second home is not covered by this rule.
+- Covers water, gas, electricity, telephone and internet of that home.
+- Deductible share: **30%** of the proportion "entre los metros cuadrados de la vivienda destinados a la actividad respecto a su superficie total", "salvo que se pruebe un porcentaje superior o inferior". The 30% is a default, not a cap, and it can be lower too.
+- Separate business premises: supplies of those premises are deductible in full under the general rule.
+
+**Own meals (manutención) while working.**
+- Both conditions must hold: the meal is taken "en establecimientos de restauración y hostelería", **and** it is paid "utilizando cualquier medio electrónico de pago". Cash fails.
+- Capped at the employee per-diem limits of article 9 of [Real Decreto 439/2007](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820):
+
+| Situation | In Spain | Abroad |
+| --- | --- | --- |
+| With an overnight stay in another municipality | EUR 53.34 a day | EUR 91.35 a day |
+| No overnight stay | EUR 26.67 a day | EUR 48.08 a day |
+
+- Entertaining clients is a different expense with its own rules; it is not covered here.
+
+**Health insurance.** Premiums for the taxpayer, spouse and children under 25 living with them: up to EUR 500 a person a year, or EUR 1,500 for a person with a disability.
+
+**Vehicles, phones, other mixed use.** Only the part used in the activity, with records. If the split is unknown, deduct nothing.
+
+**Not expenses.** Modelo 130 payments, withholding, IRPF itself, loan principal, and VAT paid to the tax office (VAT is a separate tax; record amounts net where VAT-registered).
+
+### Hard-to-justify reduction (simplificada only), 2026 and 2025 ([Real Decreto 439/2007, art. 30](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820))
+
+| Item | Figure |
+| --- | --- |
+| Rate, applied to net income before this item | 5% |
+| Annual ceiling | EUR 2,000 |
+| Previous-year turnover limit for simplificada | EUR 600,000 |
+
+- **Which years.** The law sets 5%, "sin que la cuantía resultante pueda superar 2.000 euros anuales". The only year-specific change in Ley 35/2006 was for 2023 ("durante el período impositivo 2023, del 7 por ciento"). Nothing changes it for 2024, **2025** or **2026**. So both the 2025 return and 2026 use 5% capped at EUR 2,000.
+- **The ceiling covers provisions too.** The EUR 2,000 caps deductible provisions and hard-to-justify expenses together.
+- **Not with the article 32.2 reduction.** It does not apply where the taxpayer opts for the reduction in article 32.2 of the Ley (for economically dependent self-employed people and others meeting its conditions), which article 26.1 of the regulation governs. That reduction is outside this Guide: refer.
+- **Ceuta, 2026 only.** For activities in Ceuta whose income qualifies for the article 68.4 deduction, the rate is **10%** for 2026 (Ley 35/2006, sixty-fourth additional provision, added by Real Decreto-ley 22/2026 of 1 September 2026, in force 3 September 2026). It counts for 2026 instalments whose filing period starts one month after that date. The EUR 2,000 ceiling is not changed by that provision. A decree-law must be validated by Congress: check that it has been.
+
+### Módulos (estimación objetiva) limits: routing only
+
+Módulos is outside this Guide. The limits matter because exceeding them forces the taxpayer into estimación directa for the following year.
+
+| Limit, measured on the previous year | Permanent text (article 31 [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764)) | Figures applied 2016 to 2024 |
+| --- | --- | --- |
+| Gross income, all activities except farming | EUR 150,000 | EUR 250,000 |
+| Of which invoiced to business or professional customers | EUR 75,000 | EUR 125,000 |
+| Farming, livestock and forestry | EUR 250,000 | EUR 250,000 |
+| Purchases of goods and services (fixed assets excluded) | EUR 150,000 | EUR 250,000 |
+
+- **2026: no extension is enacted in law.** Real Decreto-ley 16/2025 (23 December 2025) and Real Decreto-ley 2/2026 (3 February 2026) both extended the higher figures, and Congress repealed both. The consolidated law still headlines the transitional rule "ejercicios 2016 a 2024".
+- **The Agencia Tributaria position for 2026.** Its note of 1 April 2026, following the Dirección General de Tributos: "Respecto al ejercicio 2026 se mantienen los límites para la aplicación del método de estimación objetiva vigentes en los ejercicios 2016 a 2024" ([Agencia Tributaria note](https://sede.agenciatributaria.gob.es/Sede/todas-noticias/2026/abril/1/nota-sobre-efectos-ambito-tributario-febrero.html)). Opt-outs and revocations filed while either decree-law was in force are valid.
+- **2025: check.** The same note does not state the 2025 limits separately. Refer.
+- **Módulos for 2026** is set by [Orden HAC/1425/2025](https://www.boe.es/buscar/act.php?id=BOE-A-2025-25272), which keeps a 5% reduction of the módulos net income for 2026.
+- **Instalments in módulos** use modelo 131: 4% of módulos income, 3% with one employee, 2% with none ([Real Decreto 439/2007, art. 110](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820)).
+
+### Simplified depreciation table ([Agencia Tributaria, activity manual](https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/folleto-actividades-economicas/3-impuesto-sobre-renta-personas-fisicas/3_5-estimacion-directa-simplificada/3_5_4-tabla-amortizacion-simplificada.html))
+
+Simplificada only. Under normal, use the corporate tax table.
+
+| Group | Assets | Maximum straight-line rate | Maximum years |
+| --- | --- | --- | --- |
+| 1 | Buildings and other constructions | 3% | 68 |
+| 2 | Installations, furniture, fittings, other tangible assets | 10% | 20 |
+| 3 | Machinery | 12% | 18 |
+| 4 | Transport | 16% | 14 |
+| 5 | Data processing equipment **and software** | 26% | 10 |
+| 6 | Tools and implements | 30% | 8 |
+| 7 | Cattle, pigs, sheep, goats | 16% | 14 |
+| 8 | Horses, non-citrus fruit trees | 8% | 25 |
+| 9 | Citrus trees and vines | 4% | 50 |
+| 10 | Olive groves | 2% | 100 |
+
+There is no separate software line: programs sit in group 5 with the hardware.
+
+### Withholding on invoices (retenciones), 2026 and 2025 ([Real Decreto 439/2007, art. 95](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820))
+
+| Case | Rate on gross fees |
+| --- | --- |
+| Professional activity, standard | 15% |
+| Professional starting activity: year of start and the two following | 7% |
+| Either rate where the income qualifies for the Ceuta and Melilla deduction (article 68.4) | reduced by 60% |
+| Certain módulos activities (article 95.6) | 1% |
+
+- **Who withholds.** A business or professional client paying for **professional** services (Sections 2 and 3 of the IAE tariffs). Business activities in Section 1 are generally not withheld on this way. Private individuals do not withhold.
+- **The reduced rate has two conditions.** It applies "en el período impositivo de inicio de actividades y en los dos siguientes", and only if the person did not carry on any professional activity in the year before the start date. The professional must tell the client in writing; the client keeps the signed notice.
+- **Other listed activities** (municipal collectors, certain insurance intermediaries, certain artistic activities under EUR 15,000 that are more than 75% of income) also have a reduced rate. Refer.
+- **Withholding is a prepayment.** Gross income is the full invoice before withholding. The amount withheld is credited against the final tax.
+- **Other income the client may have** (article 101 [Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764)): rent of urban property and investment income are withheld at 19%.
+
+### Quarterly instalments (modelo 130), 2026 and 2025 ([Real Decreto 439/2007, arts. 109 and 110](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820))
+
+- **Rate.** 20% of net income from 1 January to the end of the quarter, less earlier instalments of the year and withholding. Box-by-box computation: **es-estimated-tax**.
+- **Exemption for professionals.** No modelo 130 for a professional activity if, in the **previous calendar year**, at least 70% of the activity income was subject to withholding. In the year the activity starts, the 70% is measured over the period the instalment covers. A business activity does not get this exemption (farming and forestry have their own 70% test).
+- **Deadlines** ([Agencia Tributaria, instalments](https://sede.agenciatributaria.gob.es/Sede/irpf/retenciones-ingresos-cuenta-pagos-fraccionados/pagos-fraccionados/plazos-declaracion-ingreso.html)): first three quarters between the 1st and 20th of April, July and October; fourth quarter between the 1st and 30th of January of the following year. A deadline on a non-working day moves to the next working day. A quarter with nothing to pay still needs a nil return.
+- **A negative quarter** gives no refund. Any overpayment comes back through modelo 100.
+- **VAT** (modelo 303) follows the same quarterly calendar. It is a separate tax.
+
+### Non-resident rates (routing only, article 25, [Real Decreto Legislativo 5/2004](https://www.boe.es/buscar/act.php?id=BOE-A-2004-4527))
+
+General rate 24%; 19% for residents of another EU state, or of an EEA state with effective exchange of tax information. Refer non-residents.
+
+### Surcharges, penalties and interest, 2026 and 2025 ([Ley 58/2003](https://www.boe.es/buscar/act.php?id=BOE-A-2003-23186))
+
+**Late filing without a prior request from the tax office (article 27).**
+
+| Delay after the deadline | Surcharge on the amount due |
+| --- | --- |
+| Up to 12 months | 1%, plus 1% for each **complete** month of delay |
+| More than 12 months | 15%, plus late-payment interest from the day after the 12 months end |
+
+- The surcharge replaces penalties ("excluirá las sanciones").
+- It is cut by 25% where the surcharge and the tax are paid in full on time (article 27.5).
+
+**Late filing where no tax is lost** (for example a nil or refund return filed late), article 198: a fixed penalty of EUR 200, halved where the return is filed late without a prior request.
+
+**Failure to pay tax due on a self-assessment (article 191).** The base is the tax not paid.
+
+| Level | When | Penalty |
+| --- | --- | --- |
+| Minor (leve) | Base EUR 3,000 or less, or more but no concealment | 50% |
+| Serious (grave) | Base more than EUR 3,000 **and** concealment; or false invoices; or books wrong by more than 10% and up to 50% of the base; or withholding not paid over of up to 50% of the base | 50% to 100% |
+| Very serious (muy grave) | Fraudulent means, in every case; or withholding not paid over of more than 50% of the base | 100% to 150% |
+
+- It is never minor where false invoices were used, books were wrong by more than 10% of the base, or withheld amounts were not paid over.
+- **Reductions (article 188):** 30% for agreement (conformidad); then a further 40% for paying the penalty on time without appeal.
+
+**Enforcement surcharges (article 28, and [Agencia Tributaria](https://sede.agenciatributaria.gob.es/Sede/deudas-apremios-embargos-subastas/apremios/tipos-recargos.html)).**
+
+| Surcharge | Rate | When |
+| --- | --- | --- |
+| Recargo ejecutivo | 5% | Whole debt paid before the enforcement notice |
+| Recargo de apremio reducido | 10% | Debt and surcharge paid within the period in the enforcement notice |
+| Recargo de apremio ordinario | 20% | Otherwise, plus interest |
+
+**Interest for 2026** ([Agencia Tributaria, Renta 2025 manual](https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/irpf-2025/guia-principales-novedades/otras-cuestiones-interes.html)): late-payment interest (interés de demora) 4.0625%; legal interest 3.25%. Same as 2025. They stay until a 2026 Budget Law takes effect, so date them when you quote them.
+
+## Boundaries and exceptions ([Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764))
+
+| Situation | Rule | Source |
+| --- | --- | --- |
+| Exactly 183 days in Spain | Not "more than 183": the day test is not met. Check the economic-interests test and the family presumption | [Ley 35/2006, art. 9](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) |
+| Previous-year turnover exactly EUR 600,000 | Simplificada still applies ("no supere"). One euro more and it does not, for the following year | [RD 439/2007, art. 28](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820) |
+| 5% of net income is more than EUR 2,000 | Use EUR 2,000. The cap is annual and also covers provisions | [RD 439/2007, art. 30](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820) |
+| Working from a second home or rented studio | The 30% home-supplies rule does not apply (main home only). Separate premises: general rule, supplies deductible where linked to the activity | [Ley 35/2006, art. 30.2](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) |
+| Meal paid in cash, or bought at a supermarket | Not deductible under the meals rule | [Ley 35/2006, art. 30.2](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) |
+| Meal costs more than the daily limit | Only the limit is deductible | [RD 439/2007, art. 9](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820) |
+| Relative's own income exactly EUR 8,000 | Still counts ("superiores a 8.000"). One euro more and the minimum is lost | [Ley 35/2006, arts. 58 and 59](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) |
+| Professional who had a professional activity the year before starting again | No reduced withholding: standard rate | [RD 439/2007, art. 95](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820) |
+| Exactly 70% of last year's professional income withheld | Exempt from modelo 130 ("al menos el 70 por ciento") | [RD 439/2007, art. 109](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820) |
+| Return filed late, exactly 12 months after the deadline | Still the monthly scale; the 15% applies only once more than 12 months have passed | [Ley 58/2003, art. 27](https://www.boe.es/buscar/act.php?id=BOE-A-2003-23186) |
+| Tax not paid, base exactly EUR 3,000 | Minor ("inferior o igual a 3.000 euros"), unless one of the aggravating cases applies | [Ley 58/2003, art. 191](https://www.boe.es/buscar/act.php?id=BOE-A-2003-23186) |
+| Activity in Ceuta qualifying for the article 68.4 deduction, 2026 | Hard-to-justify rate 10% instead of 5%, and withholding reduced by 60%. Check the decree-law was validated | [Ley 35/2006, 64th additional provision](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) |
+| Módulos taxpayer whose previous-year income is between the permanent and the 2016-2024 limits | For 2026 the Agencia Tributaria keeps the higher limits; the law text has no extension. Refer | [Agencia Tributaria note](https://sede.agenciatributaria.gob.es/Sede/todas-noticias/2026/abril/1/nota-sobre-efectos-ambito-tributario-febrero.html) |
+
+**Defaults when a fact is missing.** Unknown community: give the state half only and say the regional half is missing. Unknown method: simplificada. Unknown business-use share (car, phone, home): no deduction. Unknown expense type: not deductible. Unknown whether professional or business: professional. Unknown withholding rate: the standard rate. Unknown residence: ask; never assume it from a Spanish address.
+
+**Classifying bank lines.** Salary (nómina) is employment income, not activity income. Interest and dividends go to the savings base. Rent received is property income. Tax refunds (devolución Hacienda), modelo 130 and IRPF payments, VAT payments, loan principal and transfers between own accounts are not income or expenses. Bank and card fees and business loan interest are expenses. Card processor payouts (Stripe, PayPal) are income gross of the fees they keep; the fees are expenses.
+
+## Worked cases ([Ley 35/2006](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764); [Real Decreto 439/2007](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820))
+
+Amounts are sample data. Rates come from the tables above. Every case is an estimate for review, not a final computation.
+
+**Case 1: IT consultant, simplificada, 2026.**
+- Invoiced EUR 55,000 to business clients, all with 15% withholding.
+- Expenses: office rent EUR 6,000; own RETA contributions EUR 4,200; accountant EUR 1,200; software EUR 800; travel EUR 2,000. Total EUR 14,200.
+- Net income before the reduction: EUR 55,000 less EUR 14,200 = EUR 40,800.
+- Reduction: 5% of EUR 40,800 is EUR 2,040, above the ceiling, so EUR 2,000.
+- Net activity income: EUR 38,800. It goes to the general base.
+- Withheld by clients: 15% of EUR 55,000 = EUR 8,250, credited against the final tax.
+
+**Case 2: home office in the main home, 2026.**
+- Home 80 square metres; room used only for the activity 12 square metres. Share of area: 12 / 80 = 15%.
+- Deductible share: 30% of 15% = 4.5% of each bill.
+- Bills: electricity EUR 1,200, gas EUR 600, water EUR 300, internet EUR 480.
+- Deductible: EUR 54 + EUR 27 + EUR 13.50 + EUR 21.60 = EUR 116.10.
+- If the client can prove a different share (for example a separate meter), use that instead, higher or lower.
+
+**Case 3: meals, 2026.**
+- Day 1, work trip in Spain, no overnight stay, lunch in a restaurant EUR 32 paid by card: deductible EUR 26.67 (the daily limit).
+- Day 2, same trip type, lunch EUR 20 paid in cash: deductible nil (not paid electronically).
+- Total deductible: EUR 26.67.
+
+**Case 4: reconciling prepayments on the return.**
+- Final tax (state and regional halves) EUR 10,500.
+- Withholding certificates EUR 8,250; modelo 130 paid EUR 4,000. Total prepaid EUR 12,250.
+- Result: EUR 12,250 less EUR 10,500 = EUR 1,750 refund.
+
+**Case 5: new professional's invoice, 2026.**
+- Started in March 2026, no professional activity in 2025, gave the client the signed notice. Invoice EUR 2,000.
+- Withholding: 7% of EUR 2,000 = EUR 140.
+- In 2027 and 2028 the 7% still applies; from 2029, 15%.
+
+**Case 6: late return with tax to pay.**
+- Modelo 100 with EUR 1,000 to pay, filed without any request 3 complete months after 30 June (plus some days).
+- Surcharge: 1% + 3 x 1% = 4% of EUR 1,000 = EUR 40. No penalty.
+- If the surcharge and the tax are paid in full on time: cut by 25%, so EUR 30.
 
 ## When to refuse or refer
 
-- Estimacion objetiva (modulos) and its form. Different method, different rules, and the module limits are themselves contested.
-- Anything in Navarra, Araba, Bizkaia or Gipuzkoa. Those territories run their own income tax and forms.
-- A non-resident, or a year in which the client arrived or left. Split years, treaty tie-breakers and the inbound worker regime are all outside this Guide.
-- Any request for one combined marginal rate for "Spain". Without a named community it cannot be answered, and inventing one is the commonest error in Spanish tax content.
-- Property disposals, share sales and other gains needing their own computation.
-- A company, or a person taxed through a company. Different tax entirely.
+- **Any request for one combined "Spanish rate"** without a named community. It cannot be answered; inventing one is the commonest error in Spanish tax content.
+- **The regional half of the scale, regional minimums and regional deductions** for 2026. Read the community's own law.
+- **Módulos (estimación objetiva)**: computations, modelo 131, and any case near the limits. The 2026 limits rest on an administrative position, not an enacted extension.
+- **Foral territories**: Navarra, Araba/Álava, Bizkaia, Gipuzkoa.
+- **Non-residents, arrival or departure years**, treaty tie-breakers, and the special regime for workers moving to Spain.
+- **The article 32.2 reduction** for economically dependent self-employed people and similar.
+- **Ceuta and Melilla** activities: the 60% withholding cut, the 10% Ceuta rate for 2026 and the article 68.4 deduction.
+- **Property disposals, share sales** and other gains needing their own computation.
+- **Companies**, or a person taxed through a company (corporate tax).
+- **Penalty proceedings** already opened by the tax office, and any case involving false invoices or unpaid withholding.
 
-## Section 10: Reference Material
+## Filing and payment
 
-### Key Legislation
+### 2026 income (return filed in 2027)
 
-| Topic | Reference |
-| --- | --- |
-| Residence; community residence; filing obligation | Articles 9, 72 and 96 Ley 35/2006 |
-| Self-employment income; deductible expenses | Articles 27 to 32, article 30.2 Ley 35/2006; articles 28 to 30 Real Decreto 439/2007 |
-| Home supplies and own meals | Article 30.2 rule 5 Ley 35/2006; article 9 Real Decreto 439/2007 |
-| Depreciation, simplificada | Agencia Tributaria simplified table |
-| Retenciones; modelo 130 | Articles 95, 109 and 110 Real Decreto 439/2007; article 101 Ley 35/2006 |
-| Minimums; work reduction | Articles 56 to 61 and article 20 Ley 35/2006 |
-| General scale; savings scale | Articles 63, 74 and 66 Ley 35/2006 |
-| Surcharges, penalties, interest | Articles 27, 28 and 191 Ley 58/2003 |
-| Non-residents | Real Decreto Legislativo 5/2004 |
+- **Form:** modelo 100, filed online through the Agencia Tributaria electronic office (Renta WEB), by phone, or in person where the office allows.
+- **When:** the campaign window is set each year by ministerial order. The window for the 2026 return had not been published when this Guide was written. Do not assume the 2025 dates.
+- **Instalments during 2026:** modelo 130 by 20 April, 20 July and 20 October 2026, and 30 January 2027 (see above). 30 January 2027 is a Saturday, so under the non-working-day rule that period runs to the next working day.
 
-## PROHIBITIONS
+### 2025 income (return filed in 2026) ([Agencia Tributaria, Renta 2025 manual](https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/irpf-2025/c01-campana-declaracion-renta/confirmacion-borrador-presentacion-declaraciones/plazo-forma-presentacion.html))
 
-- NEVER give a combined Spanish marginal rate, and never compute IRPF without knowing the community of residence. The community half is not here, and doubling the state scale is not any community's tax.
-- NEVER present the payroll withholding scale of article 101 as the income tax brackets.
-- NEVER deduct income tax payments (modelo 130, retenciones) as business expenses, and never treat a retencion as a reduction in income.
-- NEVER apply modulos rules to a taxpayer in estimacion directa, or foral territory rules to a common territory taxpayer, or the reverse.
-- NEVER allow a meal paid in cash, or taken outside a restaurant or hospitality establishment.
-- NEVER treat the home supplies share as a fixed ceiling: it is a default, provable either way.
-- NEVER allow vehicle costs in full without documented evidence of the business share.
-- NEVER forget the hard-to-justify reduction under simplificada, subject to its ceiling, unless the taxpayer has taken the separate reduction that displaces it.
-- NEVER present a computation as definitive. Label it an estimate for review.
+- **Filing window:** "entre los días 8 de abril hasta el 30 de junio de 2026, ambos inclusive", whatever the result. The window has closed; a 2025 return filed now is late (see surcharges).
+- **Direct debit:** "hasta el 25 de junio de 2026".
+- **Two instalments** ([Agencia Tributaria, modelo 100 manual](https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-ayuda-presentacion/irpf-2025/3-cuestiones-generales/3_3-declaracion-irpf/3_3_4-fraccionamiento-pago-domiciliacion.html)): 60% when filing and 40% "hasta el 5 de noviembre de 2026 inclusive", with no interest or surcharge. Only if the return was filed within the window and 60% was paid then. Not available for a supplementary return. If the first 60% is not paid on time, enforcement starts for the whole amount. The second instalment alone could be set up for direct debit until 30 June 2026.
+- **Same rules as 2026** for the state scale, savings scale, minimums, 5% capped at EUR 2,000, withholding, modelo 130 and penalties. The 2025 regional scales are in the Agencia Tributaria page linked under "The regional half".
+- **RETA regularisation** notices for 2025 arrive after this return: booking them is in **es-social-contributions**.
+- **Mistakes on a filed 2025 return:** a supplementary return (autoliquidación complementaria) where more tax is due; a rectification request where too much was paid.
 
-## Sources
+## Completion checklist ([Real Decreto 439/2007](https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820))
 
-- Ley 35/2006, IRPF: https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764
-- Real Decreto 439/2007, Reglamento del IRPF: https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820
-- Ley 58/2003, General Tributaria: https://www.boe.es/buscar/act.php?id=BOE-A-2003-23186
-- Real Decreto Legislativo 5/2004, no residentes: https://www.boe.es/buscar/act.php?id=BOE-A-2004-4527
-- Tabla de amortizacion simplificada: https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/folleto-actividades-economicas/3-impuesto-sobre-renta-personas-fisicas/3_5-estimacion-directa-simplificada/3_5_4-tabla-amortizacion-simplificada.html
-- Pagos fraccionados, plazos: https://sede.agenciatributaria.gob.es/Sede/irpf/retenciones-ingresos-cuenta-pagos-fraccionados/pagos-fraccionados/plazos-declaracion-ingreso.html
-- Plazo y forma de presentacion, Renta 2025: https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/irpf-2025/c01-campana-declaracion-renta/confirmacion-borrador-presentacion-declaraciones/plazo-forma-presentacion.html
-- Tipos de recargos del periodo ejecutivo: https://sede.agenciatributaria.gob.es/Sede/deudas-apremios-embargos-subastas/apremios/tipos-recargos.html
-- Otras cuestiones de interes: https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/irpf-2025/guia-principales-novedades/otras-cuestiones-interes.html
+- [ ] Residence confirmed (article 9) and community confirmed (article 72); not foral, not a split year.
+- [ ] Filing duty confirmed (RETA registration at any time in the year means a return).
+- [ ] Method confirmed: simplificada, normal or módulos; previous-year turnover checked against EUR 600,000.
+- [ ] Income taken gross of withholding and reconciled to invoices and certificates.
+- [ ] Every expense linked to the activity, invoiced and recorded; mixed-use items split with evidence.
+- [ ] Home supplies: main home only; areas measured; 30% default or proven share.
+- [ ] Meals: restaurant or hospitality, electronic payment, within the daily limits.
+- [ ] Depreciation from the simplified table (simplificada) or corporate table (normal).
+- [ ] Hard-to-justify reduction 5%, capped at EUR 2,000 (simplificada only; Ceuta 2026: refer).
+- [ ] Bases split: general and savings.
+- [ ] State scale applied; community scale read from the community's law and applied; minimum applied through the scale, not deducted from income.
+- [ ] Withholding certificates and modelo 130 payments deducted.
+- [ ] Filing window and payment option (single or 60/40) confirmed for the year.
+- [ ] Output labelled as an estimate for review by a qualified adviser (asesor fiscal).
 
 ## Disclaimer
 
-This Guide and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this Guide. All outputs must be reviewed and signed off by a qualified professional (such as an asesor fiscal or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
-
-> Contributed by OpenAccountants.
+This Guide is for information and computation only and is not tax, legal or financial advice. Outputs must be reviewed by a qualified professional (such as an asesor fiscal) before filing or acting on them.
 
 <!-- openaccountants-cta-block -->
 

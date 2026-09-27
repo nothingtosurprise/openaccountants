@@ -4,10 +4,10 @@ description: Use this skill whenever asked about New Zealand GST returns for sel
 version: 2.0
 jurisdiction: NZ
 tax_year: 2026
-last_updated: 2026-09-22
+last_updated: 2026-09-26
+authored_by: OpenAccountants team
 review_status: pending_review
-drafted_by: OpenAccountants
-approved_by: pending
+trust_label: By OpenAccountants
 depends_on:
   - vat-workflow-base
 category: international
@@ -15,524 +15,366 @@ tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# New Zealand GST Return: Preparing and Filing the GST101A
+# New Zealand GST: registration, rate, invoices, filing, input tax and adjustments (2026-27)
 
-Figures are for tax year 2026. In New Zealand that is the income year from 1 April 2026 to 31 March 2027, which Inland Revenue calls the 2027 income year. GST has no tax year: it runs by taxable period, and this Guide covers GST taxable periods ending from 30 April 2026 to 31 March 2027. The rules below stand until changed and were current on 22 September 2026. The GST101A form is dated April 2023 (still IRD's current download); IR375 is dated March 2026.
+Figures are for tax year 2026, meaning the New Zealand 2026-27 income year from 1 April 2026 to 31 March 2027 (which IRD calls the 2027 income year). GST itself has no tax year. It runs by taxable period, and the rules below apply to every period until the law changes. A short dated section near the end covers returns still being filed for 2025-26. Sources are Inland Revenue (IRD) web pages read on 25 September 2026, the IR375 GST guide (March 2026 edition) and IRD interpretation statement IS 25/21 (8 October 2025). All amounts are New Zealand dollars.
 
-## Section 1: Quick Reference
+## Scope and who this is for
 
-**Quick Reference**
-
-| Field | Value |
-| --- | --- |
-| Country | New Zealand |
-| Tax | Goods and Services Tax (GST) at the standard rate in the Rate Table below |
-| Currency | NZD only |
-| Tax year basis | Balance date (typically 31 March). GST taxable periods must align with it |
-| Primary legislation | Goods and Services Tax Act 1985 (GSTA 1985) |
-| Tax authority | Inland Revenue (IR / Te Tari Taake) |
-| Filing portal | myIR, accounting software that files directly, or the paper GST101A |
-| Filing deadline | 28th of the month after the period ends, with two exceptions (see 5.3) |
-| Validated by | Pending: needs a New Zealand chartered accountant |
-
-### Rate Table
-
-**Rate Table**
-
-| Rate | Application | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf |
-| 15% | Standard rate on all taxable supplies | IR295 (April 2026): "The current rate is 15%." |
-| 0% | Zero-rated supplies: exported goods, sales of going concerns, sale of land (where certain criteria are met) | IR375: "GST is charged at 0%." |
-| Exempt | Financial services (such as interest), supplying a residential dwelling, donated goods and services sold by not-for-profit organisations | IR375: "not included in your GST return" |
-
-### Tax Fraction
-
-- **Tax fraction for GST-inclusive amounts**: 3/23. It is how Box 8 and Box 12 of the GST101A work. See [IR375](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf): "3/23rds of the GST inclusive amount".
-
-### Key Thresholds
-
-**Key Thresholds: registration**
-
-| Item | Amount | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/gst/registering-for-gst |
-| Compulsory GST registration | NZD 60,000 | Last 12 months or expected next 12 months. Web page: "at least $60,000"; IR375: "over $60,000" |
-
-**Key Thresholds: accounting basis and filing frequency**
-
-| Item | Amount | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/gst/registering-for-gst/which-gst-accounting-basis-and-filing-frequency-should-i-use |
-| Payments basis eligibility | NZD 2 million | Last 12 months, or likely in any 12-month period |
-| Six-monthly filing eligibility | NZD 500,000 | Under it in any 12-month period |
-| Monthly filing compulsory | NZD 24 million | Over it in any 12-month period |
-
-**Key Thresholds: taxable supply information (replaced tax invoices)**
-
-| Item | Amount | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf |
-| Seller need not give taxable supply information (both parties still keep records) | NZD 200 | "If the sale is $200 or less (including GST)" |
-| Middle band upper limit | NZD 1,000 | "More than $200 and up to $1,000"; above NZD 1,000 full buyer details are required |
-
-### Conservative Defaults
-
-**Conservative Defaults**
-
-| Ambiguity | Default |
-| --- | --- |
-| GST registration status unknown | STOP: do not compute |
-| Accounting basis unknown | Invoice basis (IRD's default if none was chosen at registration) |
-| Supply classification unknown | Standard-rated |
-| Private use proportion unknown | No GST recovery on that item |
-| Going concern status unknown | Not a going concern (charge GST) |
-
-## Section 2: Required Inputs and Refusal Catalogue
-
-### Required Inputs
-
-**Minimum viable:** Bank statement for the GST period in CSV, PDF, or pasted text, plus confirmation of GST registration status, accounting basis and taxable period.
-
-**Recommended:** Sales records, taxable supply information for every claim, GST number, Customs documents.
-
-**Ideal:** Invoice register, prior period return, IR372 workings.
-
-### Refusal Catalogue
-
-- **R-NZ-1: Not GST-registered.** If turnover is below the registration threshold in Key Thresholds and the client is not voluntarily registered, no GST return is required. Stop.
-- **R-NZ-2: Companies and partnerships.** This Guide covers individual self-employed persons only. Company and partnership GST returns may have additional requirements.
-- **R-NZ-3: Financial services (complex).** Complex financial services GST treatment requires specialist review. Escalate.
-- **R-NZ-4: Cross-border digital services (complex).** Non-resident digital services GST has specific registration and collection rules. Escalate if amounts are material.
-
-## Section 3: Transaction Pattern Library
-
-### 3.1 Income Patterns (Credits)
-
-**Income Patterns (Credits)**
-
-| Pattern | Tax Line | Treatment | Notes |
-| --- | --- | --- | --- |
-| DIRECT CREDIT [client] / DC [client] | Taxable supply | GST-inclusive revenue, Box 5 | Standard client payment |
-| EFTPOS SETTLEMENT / EFTPOS CREDIT | Taxable supply | Revenue, Box 5 | Card terminal settlement |
-| INTERNET BANKING CREDIT [client] | Taxable supply | Revenue, Box 5 | Online bank transfer |
-| STRIPE NZ / STRIPE PAYOUT | Taxable supply | Revenue (net of fees) | Gross up fees |
-| SHOPIFY PAYOUT / SHOPIFY SETTLEMENT | Taxable supply | Revenue | E-commerce platform settlement |
-| XERO INVOICE PAYMENT | Taxable supply | Revenue | Xero-linked payment |
-| INTEREST / INT EARNED [bank] | Exempt | NOT in the GST return | Bank interest: exempt financial service |
-| DIVIDEND [company] | Exempt | NOT in the GST return | Dividend |
-| IRD REFUND / TAX REFUND | EXCLUDE | Not income | Tax refund |
-| LOAN DRAWDOWN | EXCLUDE | Not income | Loan proceeds |
-
-### 3.2 Expense Patterns (Debits)
-
-**Expense Patterns (Debits)**
-
-| Pattern | Expense Category | Treatment | Notes |
-| --- | --- | --- | --- |
-| SPARK / VODAFONE / 2DEGREES | Communications | Business portion claimable | Mixed use: apportion |
-| VECTOR / MERCURY / GENESIS / CONTACT ENERGY | Utilities | Business portion claimable | Home office: apportion |
-| COUNTDOWN / PAK'N SAVE / NEW WORLD | NOT business | Private | Unless business entertainment (see 5.4) |
-| BUNNINGS / Mitre 10 | Office supplies | Claimable if business | Keep receipts |
-| GOOGLE ADS / META / LINKEDIN | Advertising | Claimable | Check the supplier charged NZ GST |
-| ADOBE / MICROSOFT / XERO / SLACK | Software | Claimable | Check the supplier charged NZ GST |
-| AIR NEW ZEALAND / JETSTAR | Travel | Claimable if business | Keep itinerary |
-| UBER NZ / TAXI | Travel | Claimable if business | Not commuting |
-| ACC LEVY | EXCLUDE | Government levy | Not in the GST return |
-| IRD INCOME TAX / IRD PAYE | EXCLUDE | Tax payment | Not in the GST return |
-| BANK FEE / ANZ FEE / ASB FEE / BNZ FEE / WESTPAC FEE | Exempt | No GST on bank fees | Financial service exempt |
-| CUSTOMS / IMPORT GST | Imports | NOT in Box 11 | Claim from the Customs document, see 5.1 |
-| PERSONAL TRANSFER / OWN ACCOUNT | EXCLUDE | Drawings | Not business |
-
-### 3.3 Zero-Rated Supply Indicators
-
-**Zero-Rated Supply Indicators**
-
-| Pattern | Treatment | Notes |
-| --- | --- | --- |
-| EXPORT / INTERNATIONAL FREIGHT | Zero-rated output | Goods exported from NZ. In Box 5 and again in Box 6 |
-| GOING CONCERN SALE | Zero-rated output | IR375: the whole or a stand-alone part of a taxable activity, "from one registered person to another", agreed in writing by both parties |
-| LAND SALE (REGISTERED BUYER) | Zero-rated where certain criteria are met | Refer: specialist area |
-
-## Section 4: Worked Examples
-
-Examples 3 and 4 use Inland Revenue's own figures from IR375.
-
-### Example 1: Standard Two-Monthly Return
-
-**Input:** Two-monthly filer, 31 March balance date, period February to March. All standard-rated. No adjustments.
-
-**Reasoning:** Box 6 is nil, so Box 7 equals Box 5 and Box 8 is Box 7 x 3/23. Box 12 is Box 11 x 3/23. Box 15 is the difference between Box 10 and Box 14.
-
-**Classification:** Box 10 larger than Box 14: GST to pay. The period ends 31 March, so the return and payment are due 7 May, not 28 April.
-
-### Example 2: Exporter in Refund Position
-
-**Input:** IR375's Joe exports apples. Assume all this period's sales are exports.
-
-**Reasoning:** The export sales go in Box 5 and again in Box 6, so Box 7 and Box 8 are nil. GST on his fertilisers and sprays goes through Box 11 and Box 12.
-
-**Classification:** Box 14 larger than Box 10: GST refund. IRD pays refunds "within 15 working days" of a filed return ([File your GST return](https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/filing-gst/file-your-gst-return)).
-
-### Example 3: Entertainment Expense
-
-**Input:** IR375's business lunch for clients.
-
-| Step | Amount | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf |
-| Lunch cost including GST | NZD 230 | "The lunch cost $230 including GST" |
-| GST in the cost (x 3/23) | NZD 30 | "$230 × 3 ÷ 23 = $30" |
-| GST-exclusive cost | NZD 200 | "$230 − $30 = $200" |
-| Not deductible for income tax | NZD 100 | "$200 × 50% = $100" |
-| Rate applied to the non-deductible amount | 15% | "Multiply the non-deductible amount by 15% (or 0.15)" |
-| GST adjustment | NZD 15.00 | "$100 × 15% = $15.00" |
-
-**Reasoning:** The whole cost is claimed in Box 11 during the year. Once a year the adjustment goes on the IR372 and into Box 9, in the return set out in 5.4.
-
-**Classification:** Box 9 debit adjustment. Do NOT halve the claim each period.
-
-### Example 4: Private Use Apportionment
-
-**Input:** IR375's Amy buys a car mainly for private use.
-
-| Item | Amount | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf |
-| Car price excluding GST | NZD 9,000 | "She buys a car for $9,000 plus GST of $1,350" |
-| GST charged | NZD 1,350 | same quote |
-| Business use estimate | 20% | "Using the apportionment method, Amy can claim 20%" |
-| Line for the principal purpose method | NZD 10,000 | Goods and services costing NZD 10,000 or less (GST-exclusive) |
-
-**Reasoning:** Up to the line in the table (GST-exclusive), the client chooses the principal purpose method (Amy claims nothing: the car is mainly private) or the apportionment method (she claims the business share of the GST, and must use that method for all such goods for at least 24 months).
-
-**Classification:** Claim the business share of the GST only. Flag for reviewer on apportionment basis.
-
-## Section 5: Tier 1 Rules (When Data Is Clear)
-
-### 5.1 GST101A Return Line-by-Line
-
-Taken from the GST101A form and IR375. The GST103B (GST and provisional tax) has the same Boxes 1 to 15; its page 2 is provisional tax.
-
-**GST101A Return Line-by-Line**
-
-| Box | Form label | How to populate |
-| --- | --- | --- |
-| Source | all boxes below | https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/gst100---gst199/gst101a/gst101a-2023.pdf |
-| 1 to 4 | Registration no., period covered, postal address, daytime phone (the due date is printed but has no box number) | Pre-printed on paper; print Box 3 or 4 only if the details shown are wrong |
-| 5 | Total sales and income for the period (including GST and any zero-rated supplies) | All taxable sales including GST, plus zero-rated sales. Exempt supplies are NOT included |
-| 6 | Zero-rated supplies included in Box 5 | Exports and other 0% supplies |
-| 7 | Subtract Box 6 from Box 5 and enter the difference here | Box 5 minus Box 6 |
-| 8 | Multiply the amount in Box 7 by three (3) and then divide by twenty-three (23) | Box 7 x 3/23 |
-| 9 | Adjustments from your calculation sheet | Debit adjustments from the IR372 (for example entertainment, private use, bad debts recovered, insurance payments received) |
-| 10 | Add Box 8 and Box 9. This is your total GST collected on sales and income | Box 8 + Box 9 |
-| 11 | Total purchases and expenses (including GST), excluding any imported goods | Only with taxable supply information held. No exempt, private or imported items |
-| 12 | Multiply the amount in Box 11 by three (3) and then divide by twenty-three (23) | Box 11 x 3/23 |
-| 13 | Credit adjustments from your calculation sheet | Credit adjustments from the IR372 (for example bad debts written off, the GST shown on a Customs document for imported goods, change-in-use increases) |
-| 14 | Add Box 12 and Box 13. This is your total GST credit for purchases and expenses | Box 12 + Box 13 |
-| 15 | Print the difference between Box 10 and Box 14 here | Box 14 larger: refund. Box 10 larger: GST to pay. Equal: nil return, still filed |
-
-
-In myIR the same figures go under sales and income, purchases and expenses, and credit and debit adjustments ([File your GST return](https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/filing-gst/file-your-gst-return)).
-
-Imported goods: "Do not include imported goods under purchases on your GST return." Instead "claim the GST content shown on the Customs document as a credit adjustment or in Box 13" (IR375).
-
-### 5.2 Accounting Basis (s 19, 19A)
-
-**Accounting Basis**
-
-| Basis | Rule | Eligibility |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/gst/registering-for-gst/which-gst-accounting-basis-and-filing-frequency-should-i-use |
-| Invoice basis | Sales when invoiced (or paid, if earlier); purchases when invoiced | Anyone. IRD's default |
-| Payments basis | Account for GST when payment is received or made | Total sales NZD 2 million or less in the last 12 months, or likely in any 12-month period |
-| Hybrid basis | Invoice basis for sales, payments basis for expenses | Anyone. IRD: "not commonly used by small businesses" |
-
-The basis can be changed in myIR to one you are eligible for; a payments basis user whose sales pass the payments basis limit must change.
-
-### 5.3 Filing Frequency and Deadlines (s 15, 16)
-
-**Filing Frequency**
-
-| Frequency | Eligibility | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/gst/registering-for-gst/which-gst-accounting-basis-and-filing-frequency-should-i-use |
-| Six-monthly | Sales under NZD 500,000 in any 12-month period | With a 31 March balance date: periods ending 30 September and 31 March |
-| Two-monthly | Sales under NZD 24 million in any 12-month period | IRD's default if no period was chosen. With a 31 March balance date: periods ending in odd months |
-| Monthly | Anyone; compulsory if sales are over NZD 24 million | Suits businesses with regular refunds |
-
-**Deadlines** ([Filing GST](https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/filing-gst)):
-
-- Return and payment are due by the 28th of the month after the taxable period ends.
-- Period ending 31 March: due 7 May. Period ending 30 November: due 15 January.
-- A due date on a weekend or public holiday moves to the next working day (IR375).
-- "You must file a GST return for every taxable period, even if it is nil. You cannot get an extension of time to file a GST return."
-
-### 5.4 Input Tax Rules (s 20, 21)
-
-- **Input tax claimable conditions.** Supply by a GST-registered person, taxable supply information held (bands in Key Thresholds), used in the taxable activity. Payments basis: only what you have paid. See [IR375](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf).
-- **Input tax not claimable conditions.** Not claimable: private use, and expenses relating to exempt supplies ("You cannot claim expenses relating to exempt supplies"). Mixed-use goods are apportioned (Example 4).
-- **Entertainment.** Claim the full business entertainment cost in Box 11 during the year. Once a year make a debit adjustment of 15% of the GST-exclusive non-deductible amount (see Example 3; the income tax restriction is "only 50% of business entertainment expenses are deductible", IR375). It goes in the GST return covering: the earlier of the income tax return's due date or filing date (no tax agent); the earlier of its filing date or 31 March after the due date (tax agent); or its actual filing date (tax agent with an extension of time).
-
-### 5.5 Penalties
-
-**Late filing**
-
-| Offence | Penalty | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/penalties-and-debt/late-filing-penalties |
-| Late GST return, payments basis | NZD 50 | "There is a late filing penalty of $50 if you're on the payments basis." |
-| Late GST return, invoice or hybrid basis | NZD 250 | "There is a $250 penalty for late filing on the hybrid or invoice basis." |
-
-The basis in force when the return is due decides the penalty.
-
-**Late payment**
-
-| Stage | Penalty | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/penalties-and-debt/late-payment-penalties |
-| Day after the due date | 1% | "1% penalty on the day after" |
-| 7th day after the due date | 4% | "4% penalty for remaining tax including penalties" |
-| Monthly penalty | Does NOT apply to GST | "1% penalty every month ... (except for GST, income tax including provisional tax, and Working for Families overpayments)" |
-
-**Interest (use-of-money interest)**
-
-| Item | Rate | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/interest-on-overpayments-and-underpayments |
-| Underpaid tax, from 16 January 2026 | 8.97% | "16 January 2026 8.97% 2.25%" |
-| Overpaid tax, from 16 January 2026 | 2.25% | same row |
-| De minimis | NZD 100 | IRD does not apply interest to "amounts under $100" |
-
-## Section 6: Tier 2 Catalogue (Reviewer Judgement Required)
-
-### 6.1 Mixed-Use Assets
-
-- **Mixed-use assets adjustment flag.** If the proportion of taxable use changes, a change-in-use adjustment may be required. Flag for reviewer any asset above the principal-purpose line.
-
-| Item | Amount | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf |
-| No adjustment periods needed (GST-exclusive cost) | NZD 10,000 | "$10,000 or less Not required" |
-| Top of the 5 adjustment period band | NZD 500,000 | Lower band of 2 periods and higher band of 10: see IR375 |
-| De minimis change | 10% | "within the 10% or $1,000 threshold" |
-| De minimis change (amount) | NZD 1,000 | same quote |
-
-### 6.2 Bad Debts (s 26)
-
-- **Bad debt adjustment.** On the invoice or hybrid basis, when you write off a debt you returned GST on, show 3/23 of the amount written off on the IR372 and include it in Box 13 (credit adjustment) in the period you write it off. A bad debt later recovered is a debit adjustment (3/23 of the amount recovered, Box 9). See [IR375](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf).
-
-| Item | Amount | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf |
-| IR375 example: invoice written off (GST-inclusive) | NZD 115 | Brent shows the amount x 3 / 23 on his IR372 and in Box 13 |
-
-### 6.3 Second-Hand Goods Input Tax
-
-- **Second-hand goods input tax claim.** Claimable on second-hand goods bought from a non-registered person, subject to IR375's conditions and records.
-
-### 6.4 Change of Use Adjustments
-
-- **Change of use adjustment.** When business/private use of an asset changes, an adjustment may be required. Use the 6.1 limits; above the principal-purpose line, review use each year.
-
-## Section 7: Working Paper Template
-
-~~~
-NZ GST WORKING PAPER (GST101A)
-Taxpayer: ____________  GST Number: ___________
-Period: ___________  Basis: Invoice / Payments / Hybrid
-Filing Frequency: Monthly / 2-Monthly / 6-Monthly
-
-SALES AND INCOME
-  Box 5  Total sales incl. GST and zero-rated       ___________
-         (exclude exempt supplies)
-  Box 6  Zero-rated supplies included in Box 5      ___________
-  Box 7  Box 5 minus Box 6                           ___________
-  Box 8  Box 7 x 3/23                                ___________
-  Box 9  Debit adjustments (IR372)                   ___________
-  Box 10 Box 8 plus Box 9                            ___________
-
-PURCHASES AND EXPENSES
-  Box 11 Total purchases incl. GST                   ___________
-         (exclude imported goods, exempt, private)
-  Box 12 Box 11 x 3/23                               ___________
-  Box 13 Credit adjustments (IR372)                  ___________
-  Box 14 Box 12 plus Box 13                          ___________
-
-RESULT
-  Box 15 Difference between Box 10 and Box 14        ___________
-         Box 14 larger: refund. Box 10 larger: to pay.
-
-REVIEWER FLAGS:
-  [ ] Registration status confirmed?
-  [ ] Accounting basis confirmed?
-  [ ] Entertainment adjustment due in this period?
-  [ ] Private use apportionment applied?
-  [ ] Taxable supply information held for all claims?
-~~~
-
-## Section 8: Bank Statement Reading Guide
-
-### NZ Bank Statement Formats
-
-Unverified: bank export layouts, not from Inland Revenue.
-
-**NZ Bank Statement Formats**
-
-| Bank | Format | Key Fields |
-| --- | --- | --- |
-| ANZ NZ | CSV / PDF | Date, Description, Amount, Balance |
-| ASB | CSV | Date, Unique Id, Tran Type, Cheque Number, Payee, Memo, Amount |
-| BNZ | CSV | Date, Description, Debit, Credit, Balance |
-| Westpac NZ | CSV | Date, Description, Debit, Credit, Balance |
-| Kiwibank | CSV | Date, Description, Amount, Balance |
-| TSB | CSV | Date, Details, Debit, Credit, Balance |
-
-### Key NZ Banking Narrations
-
-**Key NZ Banking Narrations**
-
-| Narration | Meaning | Classification Hint |
-| --- | --- | --- |
-| D/C or DIRECT CREDIT | Bank transfer in | Potential income |
-| AP or AUTOPAY | Automatic payment out | Regular expense |
-| EFTPOS | Card terminal payment | Expense or income |
-| TFR / TRANSFER | Internal transfer | May be drawings |
-| DD / DIRECT DEBIT | Direct debit | Regular expense |
-| IRD / INLAND REVENUE | Tax payment or refund | Exclude |
-| ACC | ACC levy | Exclude from GST |
-
-## Section 9: Onboarding Fallback
-
-If the client provides a bank statement but cannot answer onboarding questions immediately:
-
-1. Classify all business-name credits as potential taxable supplies
-2. Classify all regular debits to known suppliers as potential input tax claims
-3. Apply conservative defaults: invoice basis, no private use recovery
-4. Flag all entertainment expenses for the annual adjustment
-5. Generate working paper with PENDING flags
-
-Present these questions:
-
-~~~
-ONBOARDING QUESTIONS: NZ GST RETURN.
-1. Are you GST-registered? If so, what is your GST number?
-2. What is your filing frequency (monthly, 2-monthly, 6-monthly)?
-3. Are you on the invoice, payments or hybrid basis?
-4. What is your balance date?
-5. Do you make any zero-rated supplies (exports)?
-6. Do you make any exempt supplies (financial services, residential rent)?
-7. Do you use a vehicle for business? What share is business use?
-8. Do you work from home? What share is business use?
-9. Did you import goods this period (Customs documents)?
-~~~
-
-## The method, step by step
-
-1. Confirm registration, accounting basis and taxable period. Source: [which basis and filing frequency](https://www.ird.govt.nz/gst/registering-for-gst/which-gst-accounting-basis-and-filing-frequency-should-i-use).
-2. Sort sales (taxable, zero-rated, exempt) and purchases (claimable, private, exempt, imported); exempt sales and private or exempt costs stay out of the return. Source: [IR375 GST guide](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf).
-3. Work out adjustments on the IR372: debits to Box 9, credits to Box 13. Source: [IR375 GST guide](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf).
-4. Fill Boxes 5 to 15 of the GST101A exactly as the form's labels say (table in 5.1). Source: [GST101A form](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/gst100---gst199/gst101a/gst101a-2023.pdf).
-5. File in myIR (or accounting software, or paper) and pay by the due date; there is no extension of time. Source: [Filing GST](https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/filing-gst).
-6. Fix a later-found error by amending in myIR or, where IR375's conditions are met, in a later period. Source: [IR375 GST guide](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf).
+- **Covers:** anyone who is, or may need to be, registered for New Zealand GST (sole trader, partnership, company or trust): registration and cancellation, the rate, zero-rated and exempt supplies, taxable supply information, accounting bases, filing frequency, input tax and change of use, secondhand goods, entertainment, bad debts, online marketplaces, remote services and low value imported goods, the GST101A, due dates, penalties and interest.
+- **Does not cover:** GST groups, the financial services zero-rating election, the compulsory zero-rating of land between registered persons, non-profit bodies selling donated goods, mixed-use holiday homes, boats and aircraft, fringe benefit tax, and the income tax side of any item. The "When to refuse or refer" section lists where to send these.
+- **Bank-statement work:** use the classification defaults below with the runbook in `vat-workflow-base`.
 
 ## Ask the client first
 
-- Invoice, payments or hybrid basis? (Timing of GST and the late filing penalty.)
-- Taxable period and balance date? (Periods ending 31 March or 30 November have other due dates.)
-- Any exempt supplies, such as residential rent or interest? (Out of Box 5; related costs not claimable.)
-- Exports, or a sale of a business or land? (Possible zero-rating, Box 6.)
-- Imports, or bad debts written off or recovered? (Box 9 and Box 13.)
-- Tax agent, and income tax return filing date? (Timing of the entertainment adjustment.)
+- Are you registered for GST? If not, what were your sales from all taxable activities in the last 12 months, and what do you expect in the next 12 months? Do you add GST to your prices?
+- Which accounting basis are you on (payments, invoice or hybrid), how often do you file, and what is your balance date? If you never chose, IRD put you on the invoice basis and on 2-monthly filing matched to your balance date.
+- Are you liable for provisional tax? That decides whether you file a GST101A or a GST103.
+- Do you make any exempt supplies, such as residential rent, interest or other financial services?
+- Do any sales go to customers overseas? Were those customers outside New Zealand when you did the work? Do you export goods?
+- Do you sell ride-sharing, food and beverage delivery, or short-stay accommodation through an app or website such as Uber or Airbnb? Do you also take direct bookings?
+- Do you use any asset partly for private purposes? Did you claim GST on it using the principal purpose method or the apportionment method?
+- Do you buy secondhand goods from people who are not registered? Do you buy from relatives or associated companies or trusts?
+- Did you spend money on business entertainment this year, and does a tax agent file your income tax return?
+- Do you import goods and pay GST to Customs? Did you write off, or recover, any bad debts?
+
+## The method, step by step
+
+1. **Test registration.** Add up supplies from all the person's taxable activities for the last 12 months, and estimate the next 12 months. Compare each with the registration line in the registration table below. Registration is compulsory if either test is passed, or if the person adds GST to their prices. Check the provisos before telling someone they must register, and refer a client sitting at exactly the line.
+2. **Fix the basis and period.** Confirm the accounting basis and filing frequency, and check the person still qualifies for them using the limits in the tables below. The basis decides which period each transaction falls in.
+3. **Classify each sale.** Each sale is standard-rated (15%, [What GST is](https://www.ird.govt.nz/gst/what-gst-is)), zero-rated, exempt, or outside GST. Exempt and out-of-scope items stay off the return. Zero-rated sales go in Box 5 and again in Box 6. Marketplace listed services sold by a registered seller are zero-rated.
+4. **Classify each purchase.** Claim GST only on purchases used to make taxable supplies, only where the taxable supply information for the size band is held, and only to the extent of taxable use. No GST charged means no claim, unless the secondhand goods rule applies.
+5. **Work out the adjustments.** Debit adjustments go in Box 9 and credit adjustments in Box 13 (see the box table).
+6. **Complete the return.** Enter GST-inclusive totals in Boxes 5 and 11, and apply the tax fraction. Box 15 is GST to pay or a refund.
+7. **File and pay by the due date.** File every period, including nil periods. Payment is due the same day as the return.
+8. **Keep the records** for 7 years.
+
+## Figures and rules for 2026-27
+
+### Rate and tax fraction ([What GST is](https://www.ird.govt.nz/gst/what-gst-is); [Charging GST](https://www.ird.govt.nz/gst/charging-gst))
+
+| What | Value | Note |
+| --- | --- | --- |
+| Standard rate | 15% | The only positive rate. There are no reduced rates. |
+| Zero rate | 0% | "Zero-rated supplies are supplies that have GST charged at 0% where certain requirements are met." |
+| GST inside a GST-inclusive price | 3/23 | IRD example: $115 including GST contains $15 GST. |
+| GST to add to a GST-exclusive price | 15% | IRD example: $100 plus GST is $115. |
+
+### Registration ([Registering for GST](https://www.ird.govt.nz/gst/registering-for-gst); [IR375](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf); [IS 25/21](https://www.taxtechnical.ird.govt.nz/-/media/project/ir/tt/pdfs/interpretation-statements/2025/is-25-21.pdf?modified=20251023203446))
+
+| What | Value | Note |
+| --- | --- | --- |
+| Registration line, past 12 months | $60,000 | Supplies from all taxable activities, including certain imported services received |
+| Registration line, next 12 months | $60,000 | Supplies expected in the next 12 months |
+| Voluntary registration | below $60,000 | Needs a taxable activity |
+
+- **Who.** An entity that carries on a taxable activity. A taxable activity is one "carried on continuously or regularly" that involves supplying goods or services to another person for consideration (IR375). Starting a business does not by itself mean registering.
+- **"At least" or "over".** The IRD web page says turnover "was at least $60,000 in the last 12 months" or is expected to be "at least $60,000 in the next 12 months". IR375 says "was over $60,000" or "is expected to go over $60,000". IS 25/21 says section 51(1) applies when supplies are "exceeding $60,000 in a 12-month period (looking backwards under section 51(1)(a) or looking forwards under section 51(1)(b))". The difference matters only at exactly $60,000. Refer that case.
+- **Adding GST to prices.** Anyone who carries on a taxable activity and adds GST to their prices must register, whatever their turnover.
+- **Provisos (IS 25/21).**
+  - Registration is not required if the past 12 months passed the line but IRD "is satisfied that the value of supplies in the next 12-month period will not exceed $60,000". This covers one-off sales.
+  - Registration is not required where IRD is satisfied that the line will be passed only because an activity is ending (including ending early) or being substantially and permanently reduced in size. This does not cover a subdivision where the sale proceeds are the expected result of the activity: refer.
+  - Registration is not required where IRD is satisfied that the line will be passed only because plant or another capital asset used in the activity is replaced.
+- **Voluntary registration** is allowed below the line. The person then must add GST, file regularly and faces penalties for lateness ([Registering voluntarily](https://www.ird.govt.nz/gst/registering-for-gst/registering-for-gst-voluntarily)).
+
+### Cancelling registration ([When to cancel](https://www.ird.govt.nz/gst/gst-cancellation/when-to-cancel-your-gst-registration))
+
+- **Must cancel** within 21 days if the person stops their taxable activity and does not intend to start a new one within the next 12 months.
+- **May cancel** if turnover for the next 12 months will be under $60,000, or if they have filed nil returns for more than 12 months.
+- **Cannot cancel** while GST is included in their prices, even if annual turnover is under $60,000.
+
+### Taxable supply information ([How taxable supply information works](https://www.ird.govt.nz/gst/tax-invoices-for-gst/how-taxable-supply-information-for-gst-works); [Taxable supply information for GST](https://www.ird.govt.nz/gst/tax-invoices-for-gst))
+
+From 1 April 2023, tax invoices were replaced by a duty to provide and keep **taxable supply information** (TSI). Invoices, bank statements, agreements and contracts can hold it together; a document still headed "tax invoice" complies. Debit and credit notes are now **supply correction information**.
+
+| Supply value (including GST) | Seller must give it to a registered buyer? | What the records must show |
+| --- | --- | --- |
+| $200 or less | No; both sides still keep records | Seller name, date, description, the consideration |
+| More than $200 and up to $1,000 | Yes, within 28 days of a request | As above, plus the seller's GST number and either (a) the GST-exclusive amount, the GST amount and the GST-inclusive amount, or (b) the GST-inclusive amount and a statement that GST is included |
+| More than $1,000 | Yes, within 28 days of a request | As the middle band, plus the buyer's name and one identifier (address, phone, email, trading name, NZBN or website) |
+| Secondhand goods from an unregistered seller | Buyer keeps the record | Seller name and address, date supplied, description, quantity or volume, the consideration |
+
+A buyer claims input tax only when they hold the TSI for the band.
+
+### Accounting bases ([Which accounting basis and filing frequency](https://www.ird.govt.nz/gst/registering-for-gst/which-gst-accounting-basis-and-filing-frequency-should-i-use); [Changing your accounting basis](https://www.ird.govt.nz/gst/changing-your-filing-frequency-or-accounting-basis/changing-your-gst-accounting-basis); [Special supplies](https://www.ird.govt.nz/gst/charging-gst/special-supplies))
+
+| Basis | Who may use it | Sales go in the period when | Purchases go in the period when |
+| --- | --- | --- | --- |
+| Payments | Total sales of $2 million or less in the last 12 months, or likely to be $2 million or less in any 12-month period beginning on the first day of a month | You are paid | You pay, if you hold TSI |
+| Invoice | Anyone. This is the default if no basis was chosen at registration (IR375) | You invoice; if the customer pays any amount before you invoice, return the full sale price then | You are invoiced or pay, if you hold TSI, even if not fully paid |
+| Hybrid | Anyone | Invoice basis | Payments basis |
+
+- **Leaving the payments basis.** A person on the payments basis must change basis if annual sales increase to more than $2 million.
+- **Large single supplies.** A supply of goods and services for more than $225,000 must be accounted for on the invoice basis whatever the person's basis. The exception is a short-term agreement, where settlement or performance happens within 365 days of the agreement.
+- **Hire purchase.** Hire purchase sales and purchases go in the period the agreement is entered into, on every basis.
+
+### Filing frequency ([Which accounting basis and filing frequency](https://www.ird.govt.nz/gst/registering-for-gst/which-gst-accounting-basis-and-filing-frequency-should-i-use))
+
+| Frequency | Who may use it |
+| --- | --- |
+| Monthly | Anyone. Compulsory if sales are over $24 million in any 12-month period |
+| 2-monthly | Sales under $24 million in any 12-month period. This is the default if no period was chosen (IR375) |
+| 6-monthly | Sales under $500,000 in any 12-month period |
+
+- **GST groups.** For a GST group, each limit applies to the group as a whole.
+- **Balance date.** Periods align with the income tax balance date. With a 31 March balance date, 2-monthly periods end in odd months (May, July, September, November, January, March), and 6-monthly periods end 30 September and 31 March.
+- **Changing** frequency or basis: ask in myIR and wait for IRD to confirm.
+
+### Input tax, apportionment and change of use ([Claiming GST](https://www.ird.govt.nz/gst/claiming-gst); [Change-in-use adjustments](https://www.ird.govt.nz/gst/gst-adjustments/change-in-use-adjustments-for-gst))
+
+GST can be claimed only to the extent goods and services are used to make taxable supplies. There is no claim for private use or for making exempt supplies.
+
+| GST-exclusive cost | Method | Adjustment periods |
+| --- | --- | --- |
+| $10,000 or less | Principal purpose (all the GST if the main purpose is taxable use, none if not) or apportionment | None |
+| $10,001 to $20,000 | Apportionment | 2 |
+| $20,001 to $500,000 | Apportionment | 5 |
+| Over $500,000, or land of any value | Apportionment | 10 |
+
+- **Apportionment lock-in.** A person who chooses apportionment for a purchase of $10,000 or less must use it for all such purchases for a minimum of 24 months (IR375).
+- **Adjustment periods.** The first runs from acquisition to the end of the current income year, or to the end of the income year at least 12 months after acquisition (the person chooses). Each later period is an income year. At the end of each, compare actual taxable use with the use already claimed. The adjustment goes in the first return after balance date.
+- **No adjustment needed if any of these applies:**
+  - the GST-exclusive cost is $10,000 or less;
+  - the change in taxable use is less than 10% and the adjustment is under $1,000 (web page) or $1,000 or less (IR375), refer an adjustment of exactly $1,000;
+  - the person makes taxable and exempt supplies, and exempt supplies in the adjustment period are less than both $90,000 and 5% of total taxable and exempt supplies.
+- **Permanent change (wash-up).** Adjustment = (full GST x new percentage) minus GST already claimed. Make it in the period the use permanently changes, even inside the 10% or $1,000 threshold. Annual adjustments then stop.
+- **Sale of a partly-claimed asset.** Final adjustment = 3/23 x sale price (GST-inclusive) x (1 minus previous taxable use). This is a credit.
+- **Mixed-use holiday homes, boats and aircraft** follow separate rules. Refer.
+- **Non-taxable election.** Land, dwellings and vehicles acquired mainly for private use can be elected to be non-taxable, so no GST arises on a later sale. Conditions apply (IR375). Refer before making it.
+
+### Entertainment ([IR375](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf))
+
+| What | Value |
+| --- | --- |
+| Share of business entertainment usually deductible for income tax | 50% |
+| Annual GST adjustment on the GST-exclusive non-deductible amount | 15% |
+
+- **Private entertainment.** No GST claim.
+- **Business entertainment.** Show the full cost in purchases during the year, then make one debit adjustment a year for the part not deductible for income tax.
+- **When to make the adjustment:**
+  - no tax agent: the return covering the earlier of the income tax return's due date and its filing date;
+  - tax agent, no extension of time: the earlier of filing and 31 March after the due date;
+  - tax agent with an extension of time: the return covering the filing date.
+- **Exemption.** Bodies not liable for income tax, such as charities, make no adjustment.
+- **Which items are limited** is an income tax question (IRD guide IR268).
+
+### Online marketplaces and listed services ([GST for drivers, deliverers and accommodation owners](https://www.ird.govt.nz/sharing-economy/sellers-of-listed-services/gst-for-listed-services); [Flat-rate credit scheme](https://www.ird.govt.nz/sharing-economy/listing-intermediary-rules/flat-rate-credit-scheme))
+
+From 1 April 2024, an online marketplace must collect and pay GST on **listed services** performed, provided or received in New Zealand, whether or not the seller is registered. Listed services are ride-sharing, food and beverage delivery, and short-stay and visitor accommodation. Short-stay means guests staying up to 4 consecutive weeks at a time. Closely connected services charged through the platform, such as a cleaning fee, are included.
+
+| What | Value |
+| --- | --- |
+| GST the marketplace collects on listed services | 15% |
+| Part the marketplace pays to IRD for an unregistered seller | 6.5% |
+| Flat-rate credit passed to an unregistered seller | 8.5% |
+
+- **Unregistered seller.** Keeps the flat-rate credit, and may treat it as assessable or excluded income for income tax. Marketplace income still counts towards the registration line ([Short-stay accommodation](https://www.ird.govt.nz/sharing-economy/sellers-of-listed-services/short-stay-accommodation)).
+- **Registered seller.** Reports sales of listed services made through a GST-registered online marketplace as **zero-rated** supplies. Can still claim GST on costs. A flat-rate credit received while registered must be paid back as a debit adjustment. The seller must tell the marketplace they are registered.
+- **Outside the platform.** Direct bookings through the seller's own website, and services that do not go through a marketplace, follow the normal rules.
+- **Selling assets.** A registered seller generally returns GST on the sale of a vehicle or property used for listed services, unless a non-taxable election applies.
+- **Not a marketplace.** A platform that supplies the service itself and hires the driver as an employee or contractor is not a marketplace for these rules.
+
+### Remote services and low value imported goods ([Supplying remote services](https://www.ird.govt.nz/gst/gst-for-overseas-businesses/supplying-remote-services-into-new-zealand); [Low value imported goods](https://www.ird.govt.nz/gst/gst-for-overseas-businesses/supplying-low-value-imported-goods))
+
+| What | Value |
+| --- | --- |
+| Overseas supplier must register when supplies to NZ customers were more than, or are expected to be more than | $60,000 |
+| Low value good (physical good, excluding GST) | NZ$1,000 or less |
+
+- **Remote services** (digital content, apps, software, legal, accounting or consultancy services) supplied by an overseas business to NZ-resident consumers: the supplier, or a marketplace such as an app store, registers above the line, charges GST and files quarterly.
+- **Business customers.** No registration is needed if the supplier supplies only GST-registered NZ businesses for business use. It treats a customer as unregistered unless the customer says it is registered or gives a GST number or NZBN, so a registered business should give its GST number.
+- **Low value goods.** An overseas seller, marketplace or redeliverer may have to charge GST on goods of NZ$1,000 or less sold to a **consumer**. A consumer is anyone not registered, or a registered person using the goods only privately. Goods over NZ$1,000 have GST charged at the border by Customs.
+- **Buyer's side.** NZ GST charged by an overseas supplier on a business purchase is claimable only with TSI. No NZ GST on the invoice means no claim.
+
+### Penalties and interest ([Late filing penalties](https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/penalties-and-debt/late-filing-penalties); [Late payment penalties](https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/penalties-and-debt/late-payment-penalties); [Interest](https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/interest-on-overpayments-and-underpayments))
+
+| What | Value |
+| --- | --- |
+| Late filing, payments basis (basis when the return is due) | $50 |
+| Late filing, invoice or hybrid basis | $250 |
+| Late payment, day after the due date | 1% |
+| Late payment, 7th day after the due date, on remaining tax including penalties | 4% |
+| Monthly late payment penalty | Does not apply to GST |
+| Interest IRD charges on underpaid tax, from 16 January 2026 | 8.97% |
+| Interest IRD pays on overpaid tax, from 16 January 2026 | 2.25% |
+| No interest on amounts under | $100 |
+
+- **First late payment.** If it is the first late payment in a 2-year period, IRD may give a grace period before charging penalties.
+- **Late filing penalty due date.** It is usually due on the 28th of the month after the return was due. A penalty that would fall due on 28 December is due 15 January, and one that would fall due on 28 May is due 7 June.
+- **Interest** is daily, not compounding, and the rates change: read the newest row of IRD's table.
+
+## GST101A and GST103 boxes ([IR375](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf))
+
+File a GST101A if not liable for provisional tax, and a form in the GST103 series if liable. The sales and purchases boxes are the same. All amounts are GST-inclusive on every basis. The basis decides only which period an item falls in.
+
+| Box | What goes in it |
+| --- | --- |
+| 1 to 4 | Registration number, period covered, postal address, daytime phone. Pre-printed on the paper form; print a correct postal address in Box 3 or phone number in Box 4 only if the one shown is wrong. Online, or on a return without pre-printed details, complete Boxes 1 to 4 |
+| 5 | Total sales and income for the period, including GST and including zero-rated supplies |
+| 6 | Zero-rated supplies included in Box 5 |
+| 7 | Box 5 minus Box 6 |
+| 8 | Box 7 x 3 / 23 |
+| 9 | Debit adjustments from the calculation sheet (IR372): entertainment, flat-rate credits received while registered, bad debts recovered, exported secondhand goods, change of use, insurance payments received, barter |
+| 10 | Box 8 plus Box 9: total GST collected |
+| 11 | Total purchases and expenses, including GST, **excluding imported goods**. Only items with TSI |
+| 12 | Box 11 x 3 / 23 |
+| 13 | Credit adjustments: bad debts written off, GST paid to Customs on imported goods, change of use |
+| 14 | Box 12 plus Box 13: total GST credit |
+| 15 | Difference between Box 10 and Box 14. Box 10 larger: GST to pay. Box 14 larger: refund. Equal: nil return, still filed |
+
+On a paper return, read and sign the declaration (IR375).
+
+## Boundaries and exceptions ([Zero-rated supplies](https://www.ird.govt.nz/gst/charging-gst/zero-rated-supplies); [Exempt supplies](https://www.ird.govt.nz/gst/charging-gst/exempt-supplies); [Special supplies](https://www.ird.govt.nz/gst/charging-gst/special-supplies); [Other GST credit adjustments](https://www.ird.govt.nz/gst/gst-adjustments/other-gst-credit-adjustments))
+
+| Item | Treatment | Condition or exception |
+| --- | --- | --- |
+| Exported goods | Zero-rated | Goods entered for export must leave within 28 days of the time of supply unless IRD extends it. Items under $1,000 with no export entry qualify if export is proved |
+| Services to a non-resident | Zero-rated | Only if the non-resident is outside New Zealand when the service is performed. Further conditions are in the Act (check against section 11A before relying on it for a large supply) |
+| Remote services to non-residents; services performed outside NZ | Zero-rated | Remote services need evidence the customer is not NZ resident: the supplier's own systems, or any 2 of billing address, IP address, bank details, SIM country code, landline location |
+| International passenger transport | Zero-rated | Domestic legs too if part of the same international booking |
+| Sale of a going concern | Zero-rated | Registered seller to registered buyer; the whole or a stand-alone part of the activity; all goods and services needed to keep it running; both parties agree in writing that it is a going concern and intend the buyer can carry it on; the business is operating up to transfer |
+| Land between registered persons | Compulsorily zero-rated | Buyer registered, buying for taxable supplies, not as a home for the buyer or a relative, at settlement. Refer |
+| Listed services sold through a GST-registered online marketplace, registered seller | Zero-rated | See the marketplace section |
+| Financial services (interest, loans, bank fees, shares, currency exchange) | Exempt | Zero-rating election for some business-to-business supplies: refer |
+| Renting a residential dwelling | Exempt | No GST claim on the dwelling's costs. Commercial dwellings (hotels, motels, boarding houses) are taxable |
+| Residential accommodation under a head lease | Exempt | If the property is for the principal purpose of residential accommodation. Taxable only if all three apply: the parties agree the exemption does not apply, the lease was entered into before 16 May 2000, and earlier supplies were treated as taxable |
+| Sale of a dwelling rented for at least 5 years | Exempt | If sold as part of a taxable activity |
+| Sale of a registered person's private assets | Generally not taxable; not in the return | Unless the asset was used in the taxable activity |
+| Penalty interest on overdue accounts | Exempt | Statutory fines and parking penalties are outside GST |
+| Donated goods sold by a non-profit | Exempt | Refer |
+| Secondhand goods from an unregistered seller | Credit may be claimed | Must pay before claiming, on any basis. Keep the secondhand goods TSI record. Not secondhand goods: new goods, unused primary produce, leased or rented goods, livestock, fine metal. Purchases from associated persons: refer. Box: the previous version of this Guide claimed it with purchases in Box 11; IRD's pages read for this Guide do not name the box (check) |
+| Exporting secondhand goods on which a credit was claimed | Debit adjustment of 3/23 of the full purchase price | Zero-rating also needs the goods entered for export, export within 28 days and a no-reimport declaration |
+| GST paid to Customs on imported goods | Credit adjustment (Box 13), not Box 11 | Claimable in full if the goods are used solely to make taxable supplies ([Claiming GST](https://www.ird.govt.nz/gst/claiming-gst)); apportion otherwise. Invoice basis: earlier of invoice or payment. Payments or hybrid basis: when paid |
+| Imported services, taxable use under 95% | Reverse charge: return 15% GST on the price | Applies where intended or actual taxable use is less than 95%. Can also push turnover past $60,000 |
+| Supplies to an associated person who cannot claim | GST on the greater of market value and the price | |
+| Bad debt written off (GST already returned) | Credit adjustment of 3/23 of the amount written off | Keep a record of recovery steps. Payments basis: no claim, except hire purchase and door-to-door sales. Partly-taxed supplies use (written off / total consideration) x GST included |
+| Bad debt recovered | Debit adjustment of 3/23 of the amount recovered | |
+| Insurance payout relating to the taxable activity | Debit adjustment for the GST content | |
+
+## Classifying bank-statement lines: conservative defaults
+
+| Unknown | Default |
+| --- | --- |
+| Rate on a sale | Standard rate |
+| GST status of a purchase, or no TSI | No claim |
+| Business-use share of a vehicle, phone or home office | No claim until a percentage is evidenced |
+| Personal or business | Personal, no claim |
+| Customer overseas, evidence missing | Standard rate |
+| Restaurant, cafe or bar | No claim until business purpose is confirmed |
+| Bank fees, interest, loan principal, tax payments, ACC levies, wages, drawings, transfers, residential rent | Exclude |
+| Marketplace payouts to a registered seller | Zero-rated sale (Boxes 5 and 6) |
+| Sale of the owner's private goods | Exclude |
+
+## Worked cases
+
+### Case 1: registration on the forward test ([Registering for GST](https://www.ird.govt.nz/gst/registering-for-gst); [IS 25/21](https://www.taxtechnical.ird.govt.nz/-/media/project/ir/tt/pdfs/interpretation-statements/2025/is-25-21.pdf?modified=20251023203446))
+
+A landscaper's sales for the 12 months to 31 August 2026 were $52,000. On 1 September 2026 he signs a contract, and he now expects $75,000 over the next 12 months.
+
+- The past test is not met ($52,000 is under $60,000).
+- The forward test is met ($75,000 is over $60,000), so he must register.
+- If instead the only reason for passing the line had been selling his old trailer and mower when replacing them, he would not be liable if IRD is satisfied that replacing the assets is the only reason (the capital-asset proviso).
+
+### Case 2: claiming GST on a purchase ([How taxable supply information works](https://www.ird.govt.nz/gst/tax-invoices-for-gst/how-taxable-supply-information-for-gst-works); [Calculating GST](https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/calculating-your-gst))
+
+A registered plumber on the payments basis buys tools for $920 including GST, and pays in the period.
+
+- The supply is more than $200 and up to $1,000. The record must show the seller's name and GST number, the date, a description, and the amounts (or the inclusive amount with a GST-included statement).
+- GST inside the price: $920 x 3/23 = $120.
+- $920 goes in Box 11. Box 12 picks up the $120.
+- Unpaid at period end: on the payments basis it waits until paid. On the invoice basis it is claimed now.
+
+### Case 3: zero-rated services to an overseas client ([Zero-rated supplies](https://www.ird.govt.nz/gst/charging-gst/zero-rated-supplies))
+
+An Auckland consultant invoices a Sydney company $8,500 for advice. The company has no New Zealand presence and its staff were in Australia throughout.
+
+- This is a service supplied to a non-resident outside New Zealand when performed. It is zero-rated.
+- $8,500 goes in Box 5 and in Box 6. No GST is collected.
+- GST on the consultant's related costs can still be claimed.
+- If the client's staff attended workshops in Auckland, zero-rating may fail: refer.
+
+### Case 4: short-stay accommodation through a marketplace ([GST for listed services](https://www.ird.govt.nz/sharing-economy/sellers-of-listed-services/gst-for-listed-services); [Flat-rate credit scheme](https://www.ird.govt.nz/sharing-economy/listing-intermediary-rules/flat-rate-credit-scheme))
+
+A host rents a sleep-out for 3-night stays through a marketplace. The value of the accommodation in the period is $2,000.
+
+- **Host not registered.** The marketplace collects 15% of $2,000 = $300. It pays 6.5% of $2,000 = $130 to IRD and passes 8.5% of $2,000 = $170 to the host as a flat-rate credit.
+- **Host registered.** The marketplace still collects the GST. The host reports the $2,000 as a zero-rated supply (Boxes 5 and 6) and claims GST on costs. Any flat-rate credit the platform paid in error goes back as a debit adjustment (Box 9).
+- **Direct bookings.** Stays booked directly through the host's own website are standard-rated under the normal rules.
+
+### Case 5: selling a partly-claimed vehicle ([Change-in-use adjustments](https://www.ird.govt.nz/gst/gst-adjustments/change-in-use-adjustments-for-gst))
+
+A registered builder claimed 70% of the GST on a van. He sells it for $23,000 including GST.
+
+- Previous taxable use was 70%, so the unclaimed share is 30%.
+- Final adjustment: 3/23 x $23,000 x (1 minus 0.7) = $900, a credit adjustment in Box 13.
+- The full $23,000 sale goes in Box 5.
+
+### Case 6: annual entertainment adjustment ([Other GST debit adjustments](https://www.ird.govt.nz/gst/gst-adjustments/other-gst-debit-adjustments))
+
+A company spent $2,300 including GST on business client dinners during 2026-27, all claimed in Box 11 as incurred. The dinners are 50% deductible for income tax.
+
+- GST-exclusive cost: $2,300 x 20/23 = $2,000.
+- Non-deductible part: 50% of $2,000 = $1,000.
+- Adjustment: 15% of $1,000 = $150, a debit adjustment in Box 9. It goes in the return set by the timing rules in the entertainment section.
+
+### Case 7: bad debt and late payment ([Other GST credit adjustments](https://www.ird.govt.nz/gst/gst-adjustments/other-gst-credit-adjustments); [Late payment penalties](https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/penalties-and-debt/late-payment-penalties))
+
+An invoice-basis trader returned GST on a $1,150 sale. The customer is now insolvent and the debt is written off.
+
+- Credit adjustment: $1,150 x 3/23 = $150 in Box 13 in the period of the write-off.
+- If $1,150 is later recovered, $150 goes back as a debit adjustment.
+- **Late payment.** Separately, the trader's $4,000 of GST for the period ending 30 September 2026 is due 28 October 2026 and is not paid on time.
+  - A 1% penalty ($40) is added on 29 October.
+  - On the 7th day after the due date, 4% of $4,040 = $161.60 is added.
+  - Interest runs from the day after the due date.
+  - No monthly penalty follows, because GST is excluded.
+
+## Returns being filed now for 2025-26 ([Filing GST](https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/filing-gst); [Late filing penalties](https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/penalties-and-debt/late-filing-penalties))
+
+Periods ending on or before 31 March 2026 use the same rate (15%), the same $60,000 registration line, and the same bases and frequencies. Points that differ:
+
+- **Due date.** The 2-monthly or 6-monthly period ending 31 March 2026 was due 7 May 2026. A return filed now is late: the late filing penalty is $50 on the payments basis or $250 on the invoice or hybrid basis, plus late payment penalties.
+- **Interest.** IRD charged 9.89% and paid 3.27% from 8 May 2025 until the change on 16 January 2026 ([Interest](https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/interest-on-overpayments-and-underpayments)).
+- **Entertainment.** The adjustment for 2025-26 business entertainment is timed by the 2025-26 income tax return, under the timing rules in the entertainment section.
+- **Change of use and errors.** Adjustments for the period ending at a 31 March 2026 balance date go in the first return after it. Correct 2025-26 errors under the rules in "Filing and payment".
 
 ## When to refuse or refer
 
-- The client is not registered and not required to register: no return to prepare.
-- Land, a going concern or a commercial dwelling: refer.
-- Financial services, GST groups, associated persons or non-resident digital services: refer.
-- Assets above the principal-purpose line with changing use, or a final return on cancelling registration: refer.
-- A tax position the client wants to change after filing: disputes process (IR770), not a correction. Refer.
+- The client is in a GST group, or asks about the financial services zero-rating election.
+- Land is bought or sold between registered persons (compulsory zero-rating), or a sale may be a going concern.
+- A non-profit sells donated goods or services.
+- A mixed-use holiday home, boat or aircraft, or any asset over $500,000 or land ([Change-in-use adjustments](https://www.ird.govt.nz/gst/gst-adjustments/change-in-use-adjustments-for-gst)) with changing use.
+- An asset is being elected non-taxable, or a large accommodation owner is opting out of the marketplace rules.
+- A business that makes exempt supplies receives services from overseas (reverse charge).
+- Secondhand goods are bought from an associated person, or supplies are made to associated persons.
+- Turnover is at exactly $60,000 ([Registering for GST](https://www.ird.govt.nz/gst/registering-for-gst)), or a change-of-use adjustment is exactly $1,000. IRD's own documents word these tests differently.
+- Zero-rating of services where the non-resident's staff or goods were in New Zealand.
+- A non-resident's NZ registration.
+- A default assessment, audit, dispute, or an error too large to correct in a later return.
+- The income tax side of any item (entertainment limits, vehicle logbooks, provisional tax): send to the matching income tax Guide.
 
-## Section 10: Reference Material
+## Filing and payment ([Filing GST](https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/filing-gst); [Paying GST](https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/paying-gst); [IR375](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf))
 
-### Key Legislation
+- **Due date.** The 28th of the month after the period ends. The two exceptions are a period ending 31 March (due 7 May) and a period ending 30 November (due 15 January). If the due date falls on a weekend or public holiday, it moves to the next working day.
+- **Payment** is due the same day as the return.
+- **Every period** needs a return, even a nil one. There is no extension of time to file.
+- **How to file:** in myIR, through accounting software that files with IRD, or on paper. In myIR the figures go under "Sales and income details", "Purchases and expenses" and "Credit and debit adjustments" ([File your GST return](https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/filing-gst/file-your-gst-return)).
+- **Refunds.** If Box 14 is larger, IRD says: "If you have a refund we'll pay it within 15 working days" (IRD's "what happens next" after the return is submitted).
+- **No return filed.** IRD may issue a default assessment, usually higher than the real amount. The return must still be filed.
+- **Errors.** An error can be corrected in the next return, instead of amending the original, where the total discrepancy is $1,000 or less, or where it is no more than the lower of $10,000 and 2% of the GST collected (and the delay is not deliberate). An unclaimed input tax deduction can be included in a later return if it is within 2 years of when it was left out, or, with no time limit stated in IR375, if the delay was caused by one of the reasons IR375 lists (for example, no invoice could be obtained, the amount was disputed, or a clear mistake or simple oversight). Otherwise amend the return in myIR, or use the disputes process (Notice of proposed adjustment IR770 within 4 months of the return's due date) where a chosen tax position is being changed.
+- **Records.** Keep them for 7 years: TSI, supply correction information, bank statements and the cashbook.
 
-Section numbers here and in the headings of 5.2, 5.3, 5.4 and 6.2 are legacy and not checked: do not cite them as verified. Only s 8, s 14 and s 51 are confirmed, in IRD interpretation statement IS 25/21.
+## Completion checklist
 
-**Key Legislation**
-
-| Topic | Section |
-| --- | --- |
-| Imposition of GST | GSTA 1985, s 8 |
-| Zero-rated supplies | GSTA 1985, s 11 |
-| Exempt supplies | GSTA 1985, s 14 |
-| Registration | GSTA 1985, s 51 |
-| Accounting basis | GSTA 1985, s 19, 19A |
-| Input tax | GSTA 1985, s 20, 21 |
-| Filing periods | GSTA 1985, s 15, 16 |
-| Bad debts | GSTA 1985, s 26 |
-
-### Known Gaps / Out of Scope
-
-- Company and partnership GST returns
-- Complex financial services
-- Cross-border digital services (non-resident supplier rules)
-- Associated persons transactions
-- GST grouping
-- Provisional tax on the GST103B: `nz-provisional-tax`. Registration and general GST rules: `new-zealand-gst`
-
-### Changelog
-
-**Changelog**
-
-| Version | Date | Change |
-| --- | --- | --- |
-| 2.1 | September 2026 | Box map rebuilt from the GST101A; exempt, entertainment, bad debt, import and penalty rules corrected |
-| 2.0 | April 2026 | Full rewrite to v2.0 structure; NZ bank formats; local platform patterns; worked examples |
-| 1.0 | 2025 | Initial version |
-
-### Self-Check
-
-- [ ] Registration confirmed and GST number recorded?
-- [ ] Accounting basis confirmed (invoice, payments or hybrid)?
-- [ ] Tax fraction 3/23 used consistently?
-- [ ] Entertainment adjustment made in the right period (Box 9)?
-- [ ] Exempt supplies left out of Box 5 and related costs left out of Box 11?
-- [ ] Zero-rated supplies in Box 5 and again in Box 6?
-- [ ] Imported goods left out of Box 11?
-
-## Sources
-
-- GST101A: https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/gst100---gst199/gst101a/gst101a-2023.pdf
-- IR375 (March 2026): https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf
-- IR295 (April 2026): https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir200---ir299/ir295/ir295.pdf
-- File your GST return: https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/filing-gst/file-your-gst-return
-- Filing GST: https://www.ird.govt.nz/gst/filing-and-paying-gst-and-refunds/filing-gst
-- Registering: https://www.ird.govt.nz/gst/registering-for-gst
-- Basis and frequency: https://www.ird.govt.nz/gst/registering-for-gst/which-gst-accounting-basis-and-filing-frequency-should-i-use
-- Late filing: https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/penalties-and-debt/late-filing-penalties
-- Late payment: https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/penalties-and-debt/late-payment-penalties
-- Interest: https://www.ird.govt.nz/managing-my-tax/penalties-and-interest/interest-on-overpayments-and-underpayments
-
-## PROHIBITIONS
-
-- NEVER charge GST if the person is not GST-registered
-- NEVER claim input tax on private expenditure
-- NEVER cut business entertainment claims in half each period: claim in full in Box 11 and make the annual Box 9 adjustment
-- NEVER use a tax fraction other than 3/23 for the standard rate
-- NEVER allow a going concern zero-rating unless both parties are registered and agree in writing (IR375)
-- NEVER ignore the accounting basis: invoice vs payments basis changes when GST is accounted for
-- NEVER include exempt supplies in Box 5: they are not included in the GST return
-- NEVER include imported goods in Box 11
-- NEVER present calculations as definitive: label as estimated and refer to IR or a NZ chartered accountant
-
-## Disclaimer
-
-This Guide and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this Guide. All outputs must be reviewed and signed off by a qualified professional (such as a New Zealand Chartered Accountant or equivalent licensed practitioner) before filing or acting upon.
-
-The most up-to-date version of this Guide is maintained at openaccountants.com. Log in to access the latest version, request a professional review from a licensed accountant, and track updates as tax law changes.
-
-> Contributed by OpenAccountants.
+- [ ] Registration tested on the past and forward 12 months, provisos considered, exact-line cases referred.
+- [ ] Basis and frequency confirmed and still available; large single supplies checked.
+- [ ] Every sale classified, with evidence for each zero-rating.
+- [ ] Every claim backed by TSI for its band; private and exempt use removed.
+- [ ] Secondhand goods paid for and fully recorded.
+- [ ] Adjustments worked out and put in Box 9 or Box 13.
+- [ ] Boxes 5 to 15 complete, GST101A or GST103 as appropriate, amounts GST-inclusive.
+- [ ] Filed and paid by the due date, moved to the next working day if needed.
+- [ ] Records kept for 7 years.
 
 <!-- openaccountants-cta-block -->
 

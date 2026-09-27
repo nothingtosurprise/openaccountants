@@ -4,10 +4,10 @@ description: Use this skill whenever asked about Spanish self-employed social co
 version: 2.0
 jurisdiction: ES
 tax_year: 2026
-last_updated: 2026-09-23
+last_updated: 2026-09-26
+authored_by: OpenAccountants team
 review_status: pending_review
-drafted_by: OpenAccountants
-approved_by: pending
+trust_label: By OpenAccountants
 depends_on:
   - social-contributions-workflow-base
 category: international
@@ -15,519 +15,424 @@ tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# Spanish self-employed social contributions (RETA)
+# Spanish social contributions: self-employed (RETA) and employer payroll
 
-Contributions to the Spanish regime for self-employed workers (RETA): the income bands that fix the monthly base, the rates, the yearly regularisation, and the IRPF deduction. Figures are for tax year 2026, from Orden PJC/297/2026, which applies them "desde el 1 de enero de 2026". There is no 2026 Budget Law. Two things carry another year, marked where used: the reduced starting fee in Rule 5 has a legal amount for 2023 to 2025 only, and the sick pay percentages in Section 10 come from the general Social Security page on temporary incapacity.
+## Scope
 
-## Section 1: Quick reference
+This Guide covers Spanish social security contributions for tax year 2026. It deals with two groups:
 
-| Field | Value |
-| --- | --- |
-| Country | Spain |
-| Regime | RETA, the special regime for self-employed workers |
-| Primary legislation | Ley General de la Seguridad Social (RDLeg 8/2015); Real Decreto-ley 13/2022; Ley 20/2007 (article 38 ter) |
-| Rules for this year | Orden PJC/297/2026 |
-| Collecting body | Tesoreria General de la Seguridad Social (TGSS) |
-| Currency | EUR only |
-| Payment | Monthly, direct debit, last working day of the month |
-| Contributor | Open Accountants |
-| Validated by | Pending. Requires sign-off by a qualified asesor fiscal |
-| Validation date | Pending |
+- **Self-employed people (autónomos) in RETA**, the special regime for self-employed workers. It covers the income bands that set the monthly base, the rates, the reduced starting fee (tarifa plana), the yearly regularisation against actual net income, family collaborators, company members and pluriactividad.
+- **Employers and employees in the Régimen General.** It covers the employer and employee rates, the minimum and maximum bases, the intergenerational equity contribution (MEI) and the solidarity contribution on pay above the maximum base.
 
-**Read this section before computing or classifying anything.**
+The figures for 2026 come from [Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296), the yearly contribution order. It was published in the BOE on 31 March 2026, and its bases and rates apply "desde el 1 de enero de 2026". No 2026 State Budget Law has been approved. The 2023 budget has been rolled over, and the order says so: "se ha producido automáticamente la prórroga presupuestaria". Two things in this Guide have no 2026 figure set in law, and each is marked where it is used:
 
-**Conservative defaults**
+- the amount of the reduced starting fee;
+- the sick-pay percentages, which come from the Social Security page on temporary incapacity, not from the order.
 
-| Ambiguity | Default |
-| --- | --- |
-| Unknown persona fisica vs societario | Ask. Minimum base rules differ. Rule 6 |
-| Unknown net income estimate | STOP. An estimate is needed to pick a band |
-| Unknown whether first-time autonomo | Ask. Reduced fee eligibility. Rule 5 |
-| Unknown generic deduction | Ask which case in article 305.2 applies |
+A short dated section gives the 2025 figures, because 2025 is being regularised during 2026 and 2027.
 
-### Required inputs
+**Out of scope.** The following are covered elsewhere:
 
-**Minimum viable.** The case in article 305.2, the expected monthly average of annual net income, and whether this is a first registration.
+- income tax on the same person: es-income-tax;
+- quarterly income tax instalments: es-estimated-tax;
+- VAT: es-vat-return;
+- the whole picture of self-employment in Spain: es-autonomous-worker.
 
-**Recommended.** Bank statements with TGSS debits, date of alta, prior RETA history, the IRPF declaration.
-
-**Ideal.** Full IRPF data, the Informe de bases de cotizacion, the alta and baja history.
-
-### Refusal catalogue
-
-- **R-ES-SC-1. Disability regimes.** A disability affecting contribution rules: "This needs a case-specific TGSS assessment. Escalate."
-- **R-ES-SC-2. Cross-border posted workers.** Posted from another EU country: "EU social security coordination applies. Escalate."
-- **R-ES-SC-3. Mutuas MATEPSS specifics.** A Mutua's own benefits or cover: "Out of scope. Contact the relevant Mutua."
-
-## Section 3: Payment pattern library
-
-### 3.1 TGSS direct debits (monthly cuota)
-
-| Pattern | Treatment |
-| --- | --- |
-| TGSS, TESORERIA GENERAL | EXCLUDE. RETA cuota |
-| SEGURIDAD SOCIAL, SS | EXCLUDE. RETA cuota |
-| CUOTA AUTONOMOS | EXCLUDE. RETA cuota |
-| RETA, REG ESP TRAB AUTONOMOS | EXCLUDE. RETA cuota |
-| DOMICILIACION TGSS | EXCLUDE. RETA cuota |
-
-### 3.2 Regularisation payments (TGSS demands additional cuotas)
-
-| Pattern | Treatment |
-| --- | --- |
-| TGSS REGULARIZACION | EXCLUDE. RETA regularisation, Rule 9 |
-| TGSS COMPLEMENTO | EXCLUDE. Adjustment to the provisional base |
-
-### 3.3 TGSS refunds (overpayment)
-
-| Pattern | Treatment |
-| --- | --- |
-| TGSS DEVOLUCION | EXCLUDE. Refund of excess cuotas, Rule 9 |
-| TGSS REINTEGRO | EXCLUDE. Same, and the pluriactividad refund, T2-1 |
-
-### 3.4 Tarifa plana payments
-
-| Pattern | Treatment |
-| --- | --- |
-| TGSS debit identical each month, far below any band cuota | EXCLUDE. Reduced starting fee. Do not assume an amount: read the TGSS award, Rule 5 |
-
-### 3.5 Tax authority (NOT RETA)
-
-| Pattern | Treatment |
-| --- | --- |
-| AEAT, AGENCIA TRIBUTARIA | EXCLUDE. Income tax or VAT, not social contributions |
-| HACIENDA | EXCLUDE. Tax, not RETA |
-| IVA, IRPF (tax reference) | EXCLUDE. Tax, not RETA |
-
-### 3.6 Employee social security (employer obligations)
-
-| Pattern | Treatment |
-| --- | --- |
-| TGSS REGIMEN GENERAL | EXCLUDE. Employer's duty for staff, not the autonomo's RETA. Section 10 |
-| TC1, TC2 (payroll references) | EXCLUDE. Employer payroll obligations |
-
-## Section 4: Worked examples
-
-Amounts are blank: the cuota depends on the base chosen.
-
-### Example 1: Standard monthly RETA cuota (TGSS direct debit)
-
-`30.04.2026 ; TGSS TESORERIA GENERAL ; ADEUDO ; CUOTA AUTONOMOS ABRIL ; -[amount] ; EUR`
-
-Pattern 3.1: the chosen base with each Rule 3 rate applied. EXCLUDE, deductible.
-
-### Example 2: Tarifa plana cuota (new autonomo)
-
-`31.03.2026 ; TGSS ; ADEUDO ; CUOTA TARIFA PLANA MARZO ; -[amount] ; EUR`
-
-Pattern 3.1: a fixed fee instead of base times rate. Do not assume the amount, Rule 5. EXCLUDE, deductible.
-
-### Example 3: Regularisation demand from TGSS
-
-`25.09.2026 ; TGSS REGULARIZACION ; ADEUDO ; COMPLEMENTO CUOTAS ; -[amount] ; EUR`
-
-Pattern 3.2: the final base exceeded the provisional one, Rule 9. EXCLUDE, a higher deductible expense of the year paid, Rule 10.
-
-### Example 4: TGSS refund (overpaid cuotas)
-
-`15.10.2026 ; TGSS DEVOLUCION ; ABONO ; DEVOLUCION CUOTAS ; +[amount] ; EUR`
-
-Pattern 3.3: the final base was below the provisional one. EXCLUDE from VAT; for IRPF it is not simply income, Rule 10.
-
-### Example 5: AEAT tax payment (NOT RETA)
-
-`20.04.2026 ; AGENCIA TRIBUTARIA ; ADEUDO ; PAGO FRACCIONADO IRPF ; -[amount] ; EUR`
-
-Pattern 3.5: a quarterly IRPF instalment. EXCLUDE, income tax.
-
-### Example 6: Employer TGSS payment (not autonomo's own RETA)
-
-`30.04.2026 ; TGSS REGIMEN GENERAL ; ADEUDO ; SS EMPLEADOS ; -[amount] ; EUR`
-
-Pattern 3.6: employer social security for staff, not the autonomo's cuota. EXCLUDE.
-
-### Rule 1: Net income formula for tranche determination
-
-Article 308.1.c. Computable income is the net income of every economic activity under the IRPF rules; under direct estimation, that income increased by the owner's own social security cuotas and payments to alternative mutual societies. Where the activity uses the module method, the computable income is the prior net income, reduced for farming, forestry and livestock and unreduced otherwise. For a person under article 305.2.b the whole of the income from holdings in the company and the work income from it is counted as well. The deduction below is then applied and the result divided into months. Ninety days registered in the period regularised is enough for the lower rate.
-
-**Generic expenses deduction**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724 |
-| Ordinary self-employed | 7% | "gastos genéricos del 7 por ciento" |
-| Cases in article 305.2 b) and e) | 3% | "la deducción será del 3 por ciento" |
-
-### Rule 2: Tranche table, 15 bands, tax year 2026
-
-The bands are numbered as the order numbers them, each table from one. The 2025 edition of this Guide numbered the general table from four, so a band number taken from an older working paper must be re-read against the table below.
-
-The reduced table applies when the monthly average is expected to fall below the lowest income in the general table. The law sets that floor as the general regime minimum contribution base, but the order fixes the 2026 tables at the figure in the table below, which is not the group 7 minimum in Rule 6. Use the table, not the general regime minimum. Every minimum base is unchanged from 2025; only the top two general maximum bases moved, to the new ceiling.
-
-**Reduced table (bands 1 to 3), 2026**
-
-| Band, by monthly net income in EUR | Minimum base | Maximum base |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296 |
-| 1: 670 or less | EUR 653.59 | EUR 718.94 |
-| 2: over 670 to 900 | EUR 718.95 | EUR 900.00 |
-| 3: over 900, below 1,166.70 | EUR 849.67 | EUR 1,166.70 |
-
-**General table (bands 1 to 12), 2026**
-
-| Band, by monthly net income in EUR | Minimum base | Maximum base |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296 |
-| 1: 1,166.70 or more, to 1,300.00 | EUR 950.98 | EUR 1,300.00 |
-| 2: over 1,300.00 to 1,500.00 | EUR 960.78 | EUR 1,500.00 |
-| 3: over 1,500.00 to 1,700.00 | EUR 960.78 | EUR 1,700.00 |
-| 4: over 1,700.00 to 1,850.00 | EUR 1,143.79 | EUR 1,850.00 |
-| 5: over 1,850.00 to 2,030.00 | EUR 1,209.15 | EUR 2,030.00 |
-| 6: over 2,030.00 to 2,330.00 | EUR 1,274.51 | EUR 2,330.00 |
-| 7: over 2,330.00 to 2,760.00 | EUR 1,356.21 | EUR 2,760.00 |
-| 8: over 2,760.00 to 3,190.00 | EUR 1,437.91 | EUR 3,190.00 |
-| 9: over 3,190.00 to 3,620.00 | EUR 1,519.61 | EUR 3,620.00 |
-| 10: over 3,620.00 to 4,050.00 | EUR 1,601.31 | EUR 4,050.00 |
-| 11: over 4,050.00 to 6,000.00 | EUR 1,732.03 | EUR 5,101.20 |
-| 12: over 6,000.00 | EUR 1,928.10 | EUR 5,101.20 |
-
-Inside the band the client chooses the base. Whatever the net income, no base may exceed EUR 5,101.20 a month, and the lowest base in either table is EUR 653.59.
-
-### Rule 3: Contribution rate breakdown, tax year 2026
-
-Each rate applies to the base. There is no employer half in RETA: the worker pays all of each.
-
-**RETA rates 2026**
-
-| Concept | Rate | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296 |
-| Contingencias comunes | 28.30% | "28,30 por ciento" |
-| Contingencias profesionales | 1.30% | "1,30 por ciento" |
-| Of which temporary incapacity | 0.66% | "0,66 por ciento" |
-| Of which permanent incapacity, death, survivors | 0.64% | "0,64 por ciento" |
-| Cese de actividad | 0.90% | "0,90 por ciento" |
-| Cese de actividad, agrarian special system inside this regime | 2.20% | "el 2,20 por ciento" |
-| Formacion profesional | 0.10% | "0,10 por ciento" |
-| Mecanismo de equidad intergeneracional | 0.90% | "tipo del 0,90 por ciento" |
-| Extra charge where accident cover is not taken | 0.10% | "adicional equivalente al 0,10 por ciento" |
-
-No official page prints a combined RETA percentage, so this Guide states none. Read the total from the TGSS receipt.
-
-### Rule 4: Cuota formula
-
-Article 308.1.b: the monthly cuota is the Rule 2 base with the Rule 3 rates applied. Where temporary incapacity is covered in another regime and the person does not opt in here, the order applies a reduction coefficient to the common contingencies cuota.
-
-### Rule 5: Tarifa plana
-
-A fixed monthly fee instead of base times rate, for a first registration or someone not in RETA in the two years before the date of effect (article 38 ter of Ley 20/2007). Nothing is contributed for cessation of activity or training during it, and benefits run on the general band 1 minimum.
-
-**Reduced fee amounts set by law**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2022-12482 |
-| Monthly reduced fee, 2023 to 2025 | EUR 80 | "será de 80 euros mensuales" |
-| From month twenty-five in the article 38 ter(10) cases | EUR 160 | "de 160 euros a partir del mes vigesimoquinto" |
-
-**The 2026 position.** Transitional provision five of Real Decreto-ley 13/2022 fixed the fee for 2023 to 2025 only and leaves later years to each State Budget Law; article 38 ter(1) says the same. No Budget Law has been approved for 2026, and neither Orden PJC/297/2026 nor Real Decreto-ley 3/2026 sets an amount: "cuota reducida", "tarifa plana" and "38 ter" appear in neither. TGSS guidance still shows EUR 80 a month plus the intergenerational equity contribution. Do not state a 2026 amount from memory: read it from the TGSS award and receipt, and name that document as the source.
-
-**Duration and conditions** (article 38 ter): twelve complete calendar months from the date of effect, then a further twelve if net income in that second period is below the annual minimum wage, met in each calendar year it spans. Apply at registration, and again before the second period. Anyone who has used the fee before must have been out of RETA three years, not two. The first period is not regularised; the second only for a year in which income exceeded the annual minimum wage. Family members up to the second degree are excluded. For a recognised disability of at least 33 per cent, or a victim of gender violence or terrorism, the periods are twenty-four and thirty-six months. The right ends if the worker deregisters from this regime during either period.
-
-### Rule 6: Autonomo societario minimum
-
-Rule four of article 308.1.a: family members under article 305.2.k, and self-employed people under article 305.2 b) and e), where company directors and working members of companies sit, may not choose a monthly base below the general regime group 7 minimum, and the final base at regularisation may not be below it either. Ninety days registered in the period is enough for it to bite. Article 18.4 of the order also lets them keep the 2025 provisional base during 2026.
-
-**Group 7 minimum base**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296 |
-| Minimum monthly base, general regime group 7, 2026 | EUR 1,424.40 | "7 Auxiliares Administrativos. 1.424,40" |
-
-### Rule 7: Payment schedule
-
-Monthly, charged on the last working day of the month, by direct debit through a bank or collaborating institution. Paying late brings the surcharges below. Interest under article 31 is added where the debt is still unpaid fifteen days after the providencia de apremio is notified, or after the start of the deduction procedure.
-
-**Surcharges for paying late (article 30)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724 |
-| Duties met, paid in the first calendar month after the deadline | 10% | "Recargo del 10 por ciento" |
-| Duties met, paid from the second calendar month | 20% | "a partir del segundo mes natural" |
-| Duties not met, paid before the deadline in the demand | 20% | "antes de la terminación del plazo" |
-| Duties not met, paid after that deadline | 35% | "Recargo del 35 por ciento" |
-
-The duties are those in article 29: filing the contribution documents, with the data the regulations require, within the payment period.
-
-### Rule 8: Base change windows (6 per year)
-
-Six changes a year; the window decides when a change takes effect, per the TGSS base and income service listed in Sources. Asked 1 January to the last day of February, effective 1 March; 1 March to 30 April, effective 1 May; 1 May to 30 June, 1 July; 1 July to 31 August, 1 September; 1 September to 31 October, 1 November; 1 November to 31 December, 1 January next. A change during sick leave takes effect the day after the medical discharge.
-
-### Rule 9: Annual regularisation (automatic)
-
-Article 308.1.c. The TGSS compares the bases chosen with the income the tax administration sends it and regularises automatically. The result arrives as an electronic notification.
-
-- Paid below the cuota for the band's minimum base: the difference is payable up to the last day of the month after notification, without interest or surcharge.
-- Paid above the cuota for the band's maximum base: the TGSS refunds the difference of its own motion, without interest, before 30 April of the year after the income was sent.
-- Surcharges and interest are never refunded; debts already run up on provisional bases stand.
-- No IRPF return, or one with no income declared under direct estimation: the final base is the group 7 minimum in Rule 6.
-- Excluded: months already used for a benefit granted, the reduced fee period, and the T2-4 late registration period.
-
-### Rule 10: Tax deductibility
-
-The Agencia Tributaria states that cuotas paid to RETA for the activity are a deductible expense of it. The regularisation is picked up in the year it is settled, not the year regularised: an amount to pay is a higher deductible social security expense of that year (box 0196); an amount returned reduces that year's expense (box 0197); any part of the refund above the cuotas paid that year is higher income (box 0178). The page is in Sources. Keep principal, surcharge and interest apart. No page read for this refresh says whether a late surcharge is deductible, so leave it out of the expense until an accountant rules on it.
-
-### T2-1: Pluriactividad (simultaneous employment + RETA)
-
-**Trigger:** employee under the general regime and in RETA at the same time.
-**Issue:** contributions are due in both. Where the two together pass the threshold below, part of the excess is refunded.
-**Action:** flag for the reviewer. The TGSS pays the refund within four months of the regularisation, later where the contribution has particular features or the worker has to supply data.
-
-**Pluriactividad refund 2026**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores/36537 |
-| Combined common contingencies contributions above which a refund arises | EUR 17,323.68 | "superen la cuantía de 17.323,68 euros" |
-| Share of the excess refunded, capped at that share of the RETA cuotas paid | 50% | "del 50 por ciento del exceso" |
-
-### T2-2: Autonomo over age 47
-
-**Trigger:** someone aged 47 or over asks whether age restricts the base they may elect.
-**Issue:** it does not. Neither the LGSS nor Orden PJC/297/2026 carries an age restriction: "cuarenta y siete" and "47 años" appear in neither. That rule belonged to the system replaced on 1 January 2023. What survives is article 18.5 of the order, on transitional provision six of Real Decreto-ley 13/2022: someone contributing before 1 January 2023 on a base higher than their income would give, unchanged since, may keep it during 2026, or choose a lower base than that one.
-**Action:** check the history before moving a long-standing high base; the right is lost once it changes.
-
-### T2-3: Large regularisation demand
-
-**Trigger:** a large additional amount because the estimated band was far below the final one.
-**Issue:** payable up to the last day of the month after notification, without interest or surcharge. A deferral (aplazamiento) can be applied for.
-**Action:** flag for the reviewer.
-
-### T2-4: Mid-year alta (pro-rata)
-
-**Trigger:** registration part way through a month.
-**Issue:** the start date can be chosen only three times a year, and only if applied for in time; those registrations run from the day of alta. Any other registration that year takes effect on the first day of the month work starts, and the whole month is contributed for. Deregistrations work the same way. Where registration was reported late, the base from the day activity started to the last day of the month it was reported is the general band 1 minimum, and that period is left out of the regularisation. A late alta also loses the right to reductions in the cuota, and carries a penalty.
-**Action:** confirm the date of alta and whether it was reported in time.
-
-**Late registration base**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://portal.seg-social.gob.es/wps/portal/importass/importass/Colectivos/trabajo+autonomo/guia |
-| Base for the late registration period, 2026 | EUR 950.98 | "que en 2026 son 950,98 €/mes" |
-
-### T2-5: Tarifa plana extension rejected
-
-**Trigger:** income in the first period reached the annual minimum wage.
-**Issue:** the second twelve months are not available. Contribution for all protected contingencies starts on the first day of the month after the first period ends.
-**Action:** confirm the income and the date the ordinary cuota starts.
-
-### T2-6: Ceuta and Melilla
-
-**Trigger:** the client lives and works in Ceuta or Melilla.
-**Issue:** a self-employed worker resident and active there in the listed sectors pays a reduced share of the common contingencies cuota on the provisional or final base. The share changed during 2026, so a full year needs both rows below. The sector list also changed: the earlier wording named building construction inside the exception clause, so a builder was OUT, and the wording in force from 1 October 2026 does not name it at all, so a builder is IN. That one sentence carries its exceptions inside it, so read article 36 for the period in question before deciding a sector is in or out.
-**Action:** confirm the sector and split the year at the boundary date before quoting a cuota.
-
-**Reduction of the common contingencies cuota, Ceuta and Melilla**
-
-| Cuotas accrued | Value | Note |
-| --- | --- | --- |
-| Source, first row | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2023-625 |
-| Before 1 October 2026 | 50% | "bonificación del 50 por ciento de la cuota por contingencias comunes" |
-| Source, second row | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409 |
-| From 1 October 2026 | 75% | "bonificación del 75 por ciento de la cuota por contingencias comunes" |
-
-## Section 7: Excel working paper template
-
-~~~
-SPAIN RETA CONTRIBUTIONS. WORKING PAPER
-Client: [name]  Tax Year: [year]  Prepared: [date]
-
-INPUT
-  Case in article 305.2:  [individual / letter b) or e)]
-  Revenue, expenses:      EUR [__] / EUR [__]
-  Net income, deduction:  EUR [__] / EUR [__]
-  Net for RETA, monthly:  EUR [__] / EUR [__]
-  Band, date of alta:     [__] / [__]
-  Reduced fee eligible:   [YES / NO]
-
-CUOTA
-  Chosen base in band:    EUR [__]
-  Rates applied (Rule 3): [each concept and its rate]
-  Monthly, annual cuota:  EUR [__] / EUR [__]
-  Or reduced fee awarded: EUR [__] for [__] months
-
-REGULARISATION
-  Final band, min base:   [__] / EUR [__]
-  Monthly difference:     EUR [__]
-  Annual adjustment:      EUR [__] / [DEMAND / REFUND]
-
-IRPF
-  Total cuotas paid:      EUR [__]
-  Box (Rule 10):          [0196 / 0197 / 0178]
-
-REVIEWER FLAGS
-  [List any Tier 2 flags]
-~~~
-
-## Section 8: Bank statement reading guide
-
-### How RETA payments appear on Spanish bank statements
-
-**Debits:** "TGSS", "TESORERIA GENERAL", "SEGURIDAD SOCIAL", "CUOTA AUTONOMOS", on the last working day of each month, a consistent amount unless the base changed in a Rule 8 window. **Regularisation:** "TGSS REGULARIZACION", "COMPLEMENTO CUOTAS". **Refunds:** "TGSS DEVOLUCION", "TGSS REINTEGRO", a CREDIT due before 30 April, Rule 9.
-
-**Key identification tips:**
-1. RETA is monthly, not quarterly: look for a consistent end-of-month debit.
-2. Do not read the band off the debit. Different bases give similar cuotas, and a reduced fee, a bonificacion or a mid-month alta break the pattern. Take the base from the Informe de bases de cotizacion.
-3. AEAT debits are tax.
-
-## Section 9: Onboarding fallback
-
-If the client provides only a bank statement:
-
-1. **Scan for TGSS debits** and identify the monthly pattern and amount.
-2. **Do not infer the band.** Ask for the TGSS Informe de bases de cotizacion.
-3. **Spot a possible reduced fee:** a small identical monthly debit, confirmed on the award.
-4. **Look for a regularisation:** a large debit or credit outside the pattern.
-5. **Flag:** "The RETA base was not read from a TGSS document. The reviewer must confirm before the IRPF filing."
-
-## Section 10: Reference material
-
-### Net income example
-
-Work it out in this order, with the client's own amounts. Do not carry an example number into a client file.
-
-1. Computable income: net income under the IRPF rules, increased by the owner's own social security cuotas (article 308.1.c).
-2. Apply the Rule 1 deduction, then divide by the months in the period for the monthly average.
-3. Find the band in Rule 2 whose income range contains that average, and choose a base between its minimum and maximum. The cuota follows from Rule 3.
-
-### Employee and employer contributions in the general regime, 2026
-
-A client with staff pays these as an employer; one in pluriactividad pays them as an employee. No official page prints a combined employer percentage, so the parts are given as the order prints them. The accident and occupational disease premium is the tariff by activity in additional provision 61. The maximum base is the Rule 2 ceiling and the group 7 minimum is in Rule 6; other group minimums are in article 3 of the order.
-
-**General regime rates 2026**
-
-| Concept | Total | Employer and employee shares |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296 |
-| Contingencias comunes | 28.30% | employer 23.60%, employee 4.70% |
-| Unemployment, permanent contract | 7.05% | employer 5.5%, employee 1.55% |
-| Unemployment, fixed-term contract | 8.30% | employer 6.70%, employee 1.60% |
-| FOGASA | 0.20% | employer only |
-| Formacion profesional | 0.70% | employer 0.60%, employee 0.10% |
-| Mecanismo de equidad intergeneracional | 0.90% | employer 0.75%, employee 0.15% |
-
-**Solidarity contribution 2026**, on the part of pay above the maximum base. For artists and for bullfighting professionals the order makes this contribution definitive for the employer and provisional for the worker, regularised at the end of the year; for everyone else it says nothing of the kind.
-
-| Part of pay | Rate | Employer and employee shares |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296 |
-| From EUR 5,101.21 to EUR 5,611.32 | 1.15% | employer 0.96%, employee 0.19% |
-| From EUR 5,611.33 to EUR 7,651.80 | 1.25% | employer 1.04%, employee 0.21% |
-| Above EUR 7,651.80 | 1.46% | employer 1.22%, employee 0.24% |
-
-### Cese de actividad (cessation benefit)
-
-The regulatory base is the average of the bases contributed over the twelve continuous months before the legal cessation. Duration depends on the months contributed for cessation of activity in the forty-eight before it, at least twelve in the last twenty-four: four months of benefit for twelve to seventeen contributed, up to twenty-four months for forty-eight or more. A new award needs eighteen months since the last. Voluntary cessation that is not a legal cessation does not qualify. Maximum and minimum amounts are percentages of the IPREM in article 339.3.
-
-**Rate applied to the regulatory base**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724 |
-| General rate, whole period of the benefit | 70% | "la base reguladora el 70 por ciento" |
-| Article 331.1.a) points four and five, and partial suspension for force majeure | 50% | "será del 50 por ciento" |
-
-### IT (sick leave) coverage
-
-A self-employed worker gets the subsidy from the fourth day of a sick leave that is not work related, must be registered and up to date with the cuotas, and must have contributed at least 180 days in the five years before. The percentages below are what Social Security publishes for temporary incapacity, on the general page for the benefit, not a RETA page. A higher base gives a higher daily benefit: the regulatory base is the common contingencies base of the month before the leave started. For a self-employed worker the subsidy for a work accident or an occupational disease runs from the day after the sick note, and no minimum contribution period is required. Once sixty days of the sick leave have passed from the medical sign off, the mutua, or where relevant the state employment service, pays the cuotas for every contingency.
-
-**Percentage of the regulatory base**
-
-| Case | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/PrestacionesPensionesTrabajadores/10952/28362/28365 |
-| Common illness or non-work accident, day 4 to day 20 | 60% | "60% desde el día 4 hasta el 20" |
-| Common illness or non-work accident, from day 21 | 75% | "75% desde el día 21 en adelante" |
-| Accident at work or occupational disease, from the day the right arises | 75% | "75% desde el día en que se produzca" |
-
-### Test suite
-
-None states a cuota: that depends on the base chosen inside the band and on which rates apply.
-
-- Monthly average EUR 2,330.00: general band 6, which runs up to and including its top figure.
-- Monthly average exactly EUR 1,166.70: general band 1, not reduced band 3, which stops below it.
-- Monthly average at the 6,000.00 boundary in Rule 2: general band 11, not band 12, which begins above it.
-- Company member under article 305.2.b, average EUR 900.00: the base may not be below the group 7 minimum.
-- Chose the minimum of general band 2, final income in general band 10: the difference is payable up to the last day of the month after notification.
-- No IRPF return filed: final base is the group 7 minimum.
-- New registration with the reduced fee: twelve complete calendar months from the date of effect, no cessation or training contribution in them, and no amount stated for this year.
-- Regularisation settled this year for last year's cuotas: an amount to pay goes in box 0196, an amount returned in box 0197, and any excess over the cuotas paid in box 0178.
-
-### Prohibitions
-
-- NEVER compute without knowing which case in article 305.2 applies
-- NEVER use gross income for the band. Apply the Rule 1 deduction first
-- NEVER say a registered client can avoid RETA
-- NEVER present the reduced fee as automatic. It is applied for at registration
-- NEVER state a 2026 reduced fee from memory. No Budget Law has set one
-- NEVER add the Rule 3 rates together and call the sum an official rate
-- NEVER ignore the regularisation
-- NEVER advise on pluriactividad without the reviewer
-- NEVER present a cuota as exact without naming the base
-- NEVER confuse the monthly payment with a quarterly one
-- NEVER deduct a late surcharge. The live Guide treated surcharges and penalties as not deductible, and no page read for this refresh confirms or denies it. Keep it out and ask the accountant
-- NEVER compute sick pay without the base of the month before the leave
-
-## The method, step by step
-
-1. Confirm which case in article 305.2 applies: it decides the Rule 1 deduction and the Rule 6 floor. See the [LGSS](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724).
-2. Estimate the monthly average of annual net income under article 308.1.c, apply the Rule 1 deduction, and find the band in [Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296).
-3. Choose a base inside that band, subject to the Rule 6 floor, through the TGSS base and income service in Sources, in one of the Rule 8 windows.
-4. For someone starting out, apply for the reduced fee at registration under article 38 ter of [Ley 20/2007](https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409) and record the amount the TGSS awards, since the law sets none for 2026.
-5. Pay by direct debit on the last working day of each month, per the TGSS guide linked in T2-4. Late payment brings the Rule 7 surcharges.
-6. Re-estimate income in the year and move the base in the next window if it changed (article 308.1.a).
-7. File the IRPF return. The TGSS regularises automatically: read the notification, settle or expect the refund on the Rule 9 timetable, and book it as Rule 10 directs.
+This Guide does not cover the foral territories' own tax administrations. It also does not cover EU coordination for posted or cross-border workers. For both, see "When to refuse or refer".
 
 ## Ask the client first
 
-- Are you registered as an individual, or as a company director or working member? It decides the generic deduction and the group 7 floor.
-- Have you been in RETA in the last two years, and ever used the reduced fee? It sets eligibility and whether the wait is two years or three.
-- What do you expect to earn this year, and has that changed since you chose your base?
-- Are you also an employee under the general regime? That opens the T2-1 refund.
-- Were you registered late, or did you pick the start date? It changes the opening period's base and whether it is regularised.
-- Have you had a regularisation notification, and did you pay or receive on it?
-- Do you live and work in Ceuta or Melilla? It reduces the common contingencies cuota, and the reduction changed during the year.
+- **Are you an individual autónomo, a company director or working member, or a family member who works in a relative's business?** The answer decides the generic expenses deduction (7% or 3%) and whether the group 7 minimum base applies. ([source](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724))
+- **Have you been in RETA in the last two years? Have you ever had the reduced starting fee?** This decides eligibility for the fee, and whether the wait is two years or three.
+- **What net income do you expect this year, and has it changed since you chose your base?** An estimate is needed to pick a band. Do not work without one.
+- **Are you also an employee in the Régimen General at the same time?** That is pluriactividad, and it can open a partial refund.
+- **When did you register (alta)? Was it on time? Did you choose the start date?** This changes the base for the first period and whether that period is regularised.
+- **Have you received a regularisation notice? Did you pay it, or receive a refund?**
+- **Do you live and work in Ceuta or Melilla? In which sector?** The reduction of the common-contingencies cuota changed on 1 October 2026.
+- **For employers: how many staff do you have, on which contract type (permanent or fixed-term), and in which contribution group? Does anyone earn more than the maximum base?** These set the unemployment rate, the minimum base and the solidarity contribution.
+- **Did you file an IRPF return for the year being regularised?** If not, a special rule applies (step 8 of the method below).
+
+## The method, step by step
+
+**Self-employed (RETA)**
+
+1. **Classify the person** under article 305.2 of the [LGSS](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724):
+   - an individual;
+   - a company director or working member (letters b and e);
+   - a family collaborator (letter k).
+   The class decides the deduction in step 2 and the floor in step 4.
+2. **Work out computable net income** under article 308.1.c:
+   - Start from net income of every activity under the IRPF rules.
+   - Under direct estimation, add back the person's own social security cuotas.
+   - Under the module method (estimación objetiva), use the prior net income (rendimiento neto previo). For farming, forestry and livestock, use the reduced figure.
+   - Company members and partners also add the work and capital income they draw from the company, as article 308.1.c lists for their letter.
+   - Deduct generic expenses: 7% in general, or 3% for letters b and e. The 3% applies once the person has been registered for ninety days under one of those letters in the period being regularised. ([source](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724))
+   - Divide by the months in the period to get the monthly average.
+3. **Find the band.** Use the reduced or general table for 2026 (in "Figures by year"). If the monthly average is below EUR 1,166.70, use the reduced table. Otherwise use the general table. ([source](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+4. **Choose a base inside that band**, between its minimum and its maximum. Company members and family collaborators may not choose below the group 7 minimum of EUR 1,424.40. The exception is that they may keep a provisional base carried from 2025 (see the boundary table). ([source](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724))
+5. **Apply the RETA rates to the base.** Show each rate on its own line. Do not quote a combined official rate.
+6. **Check for a reduced fee or bonus:**
+   - the tarifa plana for a first registration;
+   - the family-collaborator bonus;
+   - the Ceuta and Melilla reduction.
+   Each has conditions and must be applied for or awarded. Read the amount from the TGSS award, not from memory.
+7. **Pay and adjust during the year.**
+   - The cuota is paid by direct debit within the same month. It is charged on the last working day.
+   - The base can be changed six times a year, in the windows in the boundary table.
+   - Re-estimate income whenever it changes.
+8. **Regularise.**
+   - After the IRPF return, the TGSS compares the bases paid with the actual income the tax agency sends. It regularises automatically.
+   - If the base paid was below the minimum for the actual band, the difference is due by the last day of the month after notification. No interest or surcharge is added. For a large demand, the client can apply for a deferral (aplazamiento) under LGSS article 23.
+   - If the base paid was above the band maximum, the TGSS refunds the difference without interest. It pays before 30 April of the year after the tax agency sends it the income. For 2025 income, sent in 2026, that means before 30 April 2027.
+   - Surcharges and interest are never refunded. Debts already run up on the provisional bases stand and are not changed.
+   - If no IRPF return was filed, or no activity income was declared under direct estimation, the final base is the general-regime group 7 minimum (EUR 1,424.40). This applies from 2026; for 2025, see the previous-year section. ([source](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724))
+9. **Book it in IRPF.** The regularisation is booked in the year it is settled, not the year it relates to (see the filing section).
+
+**Employers (Régimen General)**
+
+1. **Put each employee in a contribution group** (1 to 11). Take the monthly common-contingencies base from their pay. Keep it between the group's minimum and the EUR 5,101.20 ceiling. ([source](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+2. **Apply the rates**, split between employer and employee:
+   - common contingencies and MEI go on the common-contingencies base;
+   - unemployment (by contract type), FOGASA and training go on the accident and occupational disease base, which includes overtime (order article 33.1).
+   Add the occupational accident premium, which the employer pays alone at the tariff rate for the activity.
+3. **Add the solidarity contribution** on any part of pay above EUR 5,101.20 a month. ([source](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+4. **File through the Sistema RED** and pay within the month after the month the pay accrues (see the filing section).
+
+## Figures by year: 2026
+
+All 2026 figures in this section come from [Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296) unless a row says otherwise.
+
+### RETA: tables of bases by monthly net income, 2026 (order, article 18) ([Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+
+Each table is numbered from band 1, as the order numbers it. Older working papers numbered the general table from band 4, so re-read any band number taken from them.
+
+**Reduced table**
+
+| Band, monthly net income | Minimum base | Maximum base |
+| --- | --- | --- |
+| 1: EUR 670 or less | EUR 653.59 | EUR 718.94 |
+| 2: over EUR 670, up to EUR 900 | EUR 718.95 | EUR 900.00 |
+| 3: over EUR 900, below EUR 1,166.70 | EUR 849.67 | EUR 1,166.70 |
+
+**General table**
+
+| Band, monthly net income | Minimum base | Maximum base |
+| --- | --- | --- |
+| 1: EUR 1,166.70 up to EUR 1,300.00 | EUR 950.98 | EUR 1,300.00 |
+| 2: over EUR 1,300.00 up to EUR 1,500.00 | EUR 960.78 | EUR 1,500.00 |
+| 3: over EUR 1,500.00 up to EUR 1,700.00 | EUR 960.78 | EUR 1,700.00 |
+| 4: over EUR 1,700.00 up to EUR 1,850.00 | EUR 1,143.79 | EUR 1,850.00 |
+| 5: over EUR 1,850.00 up to EUR 2,030.00 | EUR 1,209.15 | EUR 2,030.00 |
+| 6: over EUR 2,030.00 up to EUR 2,330.00 | EUR 1,274.51 | EUR 2,330.00 |
+| 7: over EUR 2,330.00 up to EUR 2,760.00 | EUR 1,356.21 | EUR 2,760.00 |
+| 8: over EUR 2,760.00 up to EUR 3,190.00 | EUR 1,437.91 | EUR 3,190.00 |
+| 9: over EUR 3,190.00 up to EUR 3,620.00 | EUR 1,519.61 | EUR 3,620.00 |
+| 10: over EUR 3,620.00 up to EUR 4,050.00 | EUR 1,601.31 | EUR 4,050.00 |
+| 11: over EUR 4,050.00 up to EUR 6,000 | EUR 1,732.03 | EUR 5,101.20 |
+| 12: over EUR 6,000 | EUR 1,928.10 | EUR 5,101.20 |
+
+- The upper figure of each band is included in that band. EUR 1,166.70 exactly is general band 1, not reduced band 3.
+- No RETA base may exceed EUR 5,101.20 a month. The lowest base in either table is EUR 653.59.
+- The law pegs the edge of the reduced table to the general-regime minimum base, but the order fixes it at EUR 1,166.70. Use the order's figure, not the group 7 minimum.
+- All minimum bases are the same as in 2025. Only the top two maximum bases moved, to the new ceiling.
+
+### RETA: rates, 2026 (order, article 18) ([Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+
+There is no employer share in RETA. The self-employed person pays all of each rate.
+
+| Concept | Rate |
+| --- | --- |
+| Common contingencies (contingencias comunes) | 28.30% |
+| Occupational contingencies (accident at work and occupational disease) | 1.30% |
+| of which temporary incapacity | 0.66% |
+| of which permanent incapacity, death and survivors | 0.64% |
+| Cessation of activity (cese de actividad) | 0.90% |
+| Cessation of activity, agrarian special system | 2.20% |
+| Vocational training (formación profesional) | 0.10% |
+| MEI (intergenerational equity) | 0.90% |
+| Extra charge where occupational cover is not taken | 0.10% |
+
+No official page prints a combined RETA percentage, so this Guide gives none. Read the total from the TGSS receipt. Where temporary incapacity is covered in another regime and the person does not opt in here, the order applies a reduction coefficient to the common-contingencies cuota.
+
+### RETA: reduced starting fee (tarifa plana) ([Real Decreto-ley 13/2022](https://www.boe.es/buscar/act.php?id=BOE-A-2022-12482))
+
+| What | Amount | Source |
+| --- | --- | --- |
+| Monthly reduced fee set by law, 2023 to 2025 only | EUR 80 | [Real Decreto-ley 13/2022, transitional provision 5](https://www.boe.es/buscar/act.php?id=BOE-A-2022-12482): "será de 80 euros mensuales" |
+| From month twenty-five, in the article 38 ter(10) cases | EUR 160 | same: "de 160 euros a partir del mes vigesimoquinto" |
+| 2026 amount | Not set in law | see below |
+
+**The 2026 position.** Transitional provision 5 of Real Decreto-ley 13/2022 fixed the fee for 2023 to 2025. It leaves later years to each State Budget Law: "A partir del año 2026, el importe de dichas cuotas será fijado por la Ley de Presupuestos Generales del Estado de cada ejercicio". Article 38 ter(1) of [Ley 20/2007](https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409) says the same. No 2026 Budget Law has been approved, and the 2026 order does not mention the reduced fee. The TGSS Importass guide still shows EUR 80 a month plus MEI at 0.9%, for a total of EUR 88.64. That total does not reconcile with the base the guide describes, so do not certify it. Read the amount from the TGSS award and the receipt, and name that document as the source.
+
+### Régimen General: minimum and maximum bases, 2026 (order, articles 2 and 3) ([Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+
+| Group | Categories | Minimum | Maximum |
+| --- | --- | --- | --- |
+| 1 | Engineers and graduates, senior management | EUR 1,989.30 a month | EUR 5,101.20 a month |
+| 2 | Technical engineers, experts and qualified assistants | EUR 1,649.70 a month | EUR 5,101.20 a month |
+| 3 | Administrative and workshop heads | EUR 1,435.20 a month | EUR 5,101.20 a month |
+| 4 to 7 | Unqualified assistants, administrative officers, junior staff, administrative assistants | EUR 1,424.40 a month | EUR 5,101.20 a month |
+| 8 to 11 | First, second and third class tradespeople, specialists, labourers, workers under eighteen | EUR 47.48 a day | EUR 170.04 a day |
+
+- The ceiling on the base (tope máximo) is EUR 5,101.20 a month from 1 January 2026.
+- The floor for accident and occupational disease contributions is the minimum wage plus one sixth, and never below EUR 1,424.40.
+
+### Régimen General: rates, 2026 (order, articles 4, 16 and 33) ([Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+
+| Concept | Total | Employer | Employee |
+| --- | --- | --- | --- |
+| Common contingencies | 28.30% | 23.60% | 4.70% |
+| Unemployment, permanent contracts (including part-time, fixed-discontinuous, and workers with a disability of at least 33%) | 7.05% | 5.5% | 1.55% |
+| Unemployment, fixed-term contracts | 8.30% | 6.70% | 1.60% |
+| FOGASA (wage guarantee fund) | 0.20% | 0.20% | none |
+| Vocational training | 0.70% | 0.60% | 0.10% |
+| MEI (intergenerational equity) | 0.90% | 0.75% | 0.15% |
+| Accident at work and occupational disease | tariff by activity (LGSS, additional provision 61) | all | none |
+
+- Several contract types count as permanent for the unemployment rate, including replacement (sustitución) and relief (relevo) contracts. A fixed-term contract converted to permanent moves to the permanent rate from the date of conversion.
+- The MEI is charged on the common-contingencies base. It cannot be reduced by any bonus or reduction (LGSS article 127 bis).
+- No official page prints a combined employer percentage. The parts are given as the order prints them.
+
+### Régimen General: solidarity contribution (cotización adicional de solidaridad), from 2025 (order, article 17) ([Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+
+The solidarity contribution is charged on the part of an employee's monthly pay above the maximum base. It applies from 1 January 2025 (LGSS article 19 bis). It covers employees only; it does not apply to RETA. The rates rise each year to 2045 under LGSS transitional provision 42. The employer and employee shares follow the same proportion as common contingencies.
+
+| Part of monthly pay, 2026 | Total | Employer | Employee |
+| --- | --- | --- | --- |
+| EUR 5,101.21 to EUR 5,611.32 | 1.15% | 0.96% | 0.19% |
+| EUR 5,611.33 to EUR 7,651.80 | 1.25% | 1.04% | 0.21% |
+| Above EUR 7,651.80 | 1.46% | 1.22% | 0.24% |
+
+- The three bands run from the ceiling to 10% above it, then up to 50% above it, then beyond.
+- The final rates for 2045 are 5.50%, 6.00% and 7.00%.
+- For artists and bullfighting professionals, the order makes the contribution final for the employer and provisional for the worker, with a year-end regularisation.
+
+### Pluriactividad refund, 2026 (order, article 18) ([Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+
+A person who is both an employee in the Régimen General and self-employed in RETA pays in both regimes. If their combined common-contingencies contributions in the year exceed EUR 17,323.68, the TGSS refunds 50% of the excess. The refund is capped at 50% of the RETA common-contingencies cuotas paid. The TGSS pays it within four months of the regularisation, or later where the case has particular features or the worker must supply data. No application is needed.
+
+### Surcharges for late payment (LGSS article 30) ([LGSS](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724))
+
+These apply to RETA and to employers alike.
+
+| Situation | Surcharge |
+| --- | --- |
+| Contribution documents filed on time, paid in the first calendar month after the deadline | 10% |
+| Filed on time, paid from the second calendar month after the deadline | 20% |
+| Not filed on time, paid before the deadline in the TGSS demand (reclamación de deuda) or assessment | 20% |
+| Not filed on time, paid after that deadline | 35% |
+
+- "Filed on time" means the duties in article 29 were met: sending the contribution data within the payment period.
+- Debts other than contributions carry 20%.
+- Interest (article 31) is added where the debt is still unpaid fifteen days after the enforcement order (providencia de apremio) is notified, or fifteen days after the start of the deduction procedure is communicated.
+
+## Previous year: 2025 figures (for the 2025 regularisation) ([Orden PJC/178/2025](https://www.boe.es/buscar/act.php?id=BOE-A-2025-3780))
+
+The 2025 regularisation is issued after the 2025 IRPF return, so it arrives in the second half of 2026 and into 2027. The figures below come from [Orden PJC/178/2025](https://www.boe.es/buscar/act.php?id=BOE-A-2025-3780).
+
+| Item | 2025 |
+| --- | --- |
+| Maximum base (tope máximo), Régimen General and top RETA bands | EUR 4,909.50 a month |
+| MEI in the Régimen General | 0.80% (employer 0.67%, employee 0.13%) |
+| MEI in RETA | 0.80% |
+| Pluriactividad threshold | EUR 16,672.66 |
+| Solidarity, EUR 4,909.51 to EUR 5,400.45 | 0.92% (employer 0.77%, employee 0.15%) |
+| Solidarity, EUR 5,400.46 to EUR 7,364.25 | 1% (employer 0.83%, employee 0.17%) |
+| Solidarity, above EUR 7,364.25 | 1.17% (employer 0.98%, employee 0.19%) |
+
+- The RETA minimum bases and the other rates were the same in 2025 as in 2026.
+- For 2025, three groups had a floor of EUR 1,000 instead of the group 7 minimum (order 2025, article 18.4, and Real Decreto-ley 13/2022, transitional provision 7):
+  - company members (art. 305.2 b and e), once the ninety days were met;
+  - family collaborators (art. 305.2 k);
+  - people who filed no 2025 IRPF return, or declared no activity income under direct estimation (art. 308.1.c, rule 5.ª).
+  So in the 2025 regularisation, a non-filer's final base is EUR 1,000. The group 7 base of EUR 1,424.40 applies only from 2026.
+
+**The 2026 order was retroactive.** It was published on 31 March 2026 but applies from 1 January. Its transitional provisions gave catch-up windows, and those windows have now closed:
+
+- Differences on self-assessed contributions made from 1 January 2026 could be paid without a surcharge. The deadline was the last day of the second month after publication.
+- Differences on direct-settlement assessments made from 1 February 2026 could be paid without a surcharge. The deadline was the last day of the month after the TGSS reported the updated assessments.
+- RETA workers already on the maximum base could choose a higher base, effective from 1 January 2026. The deadline was the last day of the month after publication.
+
+Look at these only if a client asks about a catch-up assessment they received in 2026.
+
+## Boundaries and exceptions ([Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+
+| Situation | Rule | Source |
+| --- | --- | --- |
+| Monthly average exactly at a band's upper figure | It belongs to that band ("up to and including"). EUR 2,330.00 is general band 6, and EUR 6,000 is band 11, not 12. | [Order, art. 18](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296) |
+| Company director or working member (art. 305.2 b, e) or family collaborator (art. 305.2 k) | Rule 4.ª of art. 308.1.a: the base chosen, and the final base at regularisation, may not be below the group 7 minimum (EUR 1,424.40). Ninety days registered in the year is enough for the floor to apply. They may keep during 2026 a provisional base carried from 2025 (order art. 18.4). Importass gives that base as at least EUR 1,000. | [LGSS](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724); [Importass guide](https://portal.seg-social.gob.es/wps/portal/importass/importass/Colectivos/trabajo%2Bautonomo/guia) |
+| Tarifa plana: who qualifies | First registration, or not in RETA in the two years before the date of effect. The wait is three years for anyone who has had the fee before. Relatives of an autónomo up to the second degree, by blood, marriage or adoption, who join RETA are excluded (art. 38 ter.11). It must be applied for at registration. | [Ley 20/2007, art. 38 ter](https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409) |
+| Tarifa plana: how long | Twelve full calendar months from the date of effect. A further twelve months if net income in that second period is below the annual minimum wage; this is applied for again before the second period. Where the second period spans two calendar years, the income test must be met in each year ("se deberá cumplir en cada uno de ellos", art. 38 ter.2). When the reduced fee ends, contributions for every contingency start on the first day of the month after it ends (art. 38 ter.8). That applies whether it ends after the first period (extension refused or not sought) or after the second. For a disability of at least 33%, or victims of gender violence or terrorism, the periods are 24 and 36 months. The right ends on deregistering from RETA during either period. | same |
+| Tarifa plana: what it covers | No cessation-of-activity or training contribution is paid during it. Benefits are worked out on the general band 1 minimum. The first period is not regularised. The second period is regularised only for a year in which income exceeded the annual minimum wage. | same |
+| Family collaborator bonus | A spouse, registered partner or relative up to the second degree who joins RETA, works in the activity, and has not been in RETA in the last five years. Bonus of 50% for eighteen months, then 25% for six months, of the common-contingencies cuota on the general band 1 minimum base. | [Ley 20/2007, art. 35](https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409) |
+| Registering part way through a month | The start date can be chosen three times a year, and those registrations run from the start day. Other registrations take effect on the first day of the month; the whole month is paid. Deregistrations work the same way. | [Importass guide](https://portal.seg-social.gob.es/wps/portal/importass/importass/Colectivos/trabajo%2Bautonomo/guia) |
+| Late registration | From the start of activity to the end of the month the registration is made, the base is the general band 1 minimum (EUR 950.98 in 2026). That period is left out of the regularisation. A late registration also loses cuota reductions and carries a penalty. | same |
+| Changing the base | Six changes a year. A request made 1 Jan to end Feb takes effect 1 Mar. 1 Mar to 30 Apr: 1 May. 1 May to 30 Jun: 1 Jul. 1 Jul to 31 Aug: 1 Sep. 1 Sep to 31 Oct: 1 Nov. 1 Nov to 31 Dec: 1 Jan. A change requested during sick leave takes effect the day after discharge. | [Importass, base and income service](https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Altas,+bajas+y+modificaciones/Bajas+y+modificaciones/BCRendimientos) |
+| Contributing since before 2023 on a high base | A person on a base above what their income would now give, unchanged since before 1 January 2023, may keep it during 2026 or choose a lower one. The right is lost once the base changes. There is no age-47 limit on choosing a base any more. That rule ended with the old system on 1 January 2023. | [Order, art. 18.5](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296); [Real Decreto-ley 13/2022](https://www.boe.es/buscar/act.php?id=BOE-A-2022-12482) |
+| Ceuta and Melilla | Residents working there in the listed sectors get a reduction of the common-contingencies cuota. It is 50% for cuotas accrued before 1 October 2026 and 75% from 1 October 2026 (Real Decreto-ley 22/2026, art. 36). The sector list also changed on that date: the old text excluded building construction, the new one does not mention it. Split the year at 1 October and read article 36 for each part. A decree-law must be validated by Congress, so check it has been validated. | [Real Decreto-ley 1/2023](https://www.boe.es/buscar/act.php?id=BOE-A-2023-625); [Ley 20/2007, art. 36](https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409); [Real Decreto-ley 22/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-18429) |
+| No IRPF return, or no income declared under direct estimation | From 2026, the final base is the group 7 minimum (EUR 1,424.40). For 2025 it is EUR 1,000; see the previous-year section. | [LGSS art. 308.1.c, rule 5.ª](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724) |
+| Months left out of regularisation | Months for which a benefit was already granted, the reduced-fee first period, and a late-registration period. | same |
+
+## Worked cases ([Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+
+These cases use made-up client figures to show the method. The rates and bases are the 2026 ones above. Do not copy a case amount into a client file.
+
+**Case 1: individual autónomo, finding the band and the cuota lines.**
+
+- The client's IRPF net income from the activity is EUR 30,000. Their own RETA cuotas of EUR 4,800 were deducted in reaching it.
+- Add back the cuotas: EUR 34,800.
+- Deduct 7%: EUR 2,436.00, leaving EUR 32,364.00.
+- Monthly average: EUR 2,697.00. That falls in general band 7 (over EUR 2,330.00, up to EUR 2,760.00).
+- The client chooses the band minimum, EUR 1,356.21. The monthly lines are:
+  - common contingencies at 28.30%: EUR 383.81;
+  - occupational contingencies at 1.30%: EUR 17.63;
+  - cessation at 0.90%: EUR 12.21;
+  - training at 0.10%: EUR 1.36;
+  - MEI at 0.90%: EUR 12.21.
+- The rounded lines add up to EUR 427.22. That is the sum of this client's lines, not an official combined rate. Check it against the TGSS receipt.
+
+**Case 2: base too low, regularisation demand.**
+
+- The client paid all 2026 on EUR 960.78, the band 2 minimum.
+- Their final income falls in general band 7, whose minimum is EUR 1,356.21.
+- The base shortfall is EUR 395.43 a month, or EUR 4,745.16 for the year.
+- The TGSS applies each rate to that difference. The common-contingencies part alone is EUR 1,342.88.
+- The demand is payable by the last day of the month after notification, with no surcharge or interest.
+- If the final income had fallen in band 2 or 3, where EUR 960.78 is inside the range, the base would stand and nothing would change.
+
+**Case 3: employer, one permanent employee in group 1 earning EUR 6,000 a month.**
+
+- The base is capped at EUR 5,101.20.
+- Employer lines:
+  - common contingencies at 23.60%: EUR 1,203.88;
+  - unemployment at 5.5%: EUR 280.57;
+  - FOGASA at 0.20%: EUR 10.20;
+  - training at 0.60%: EUR 30.61;
+  - MEI at 0.75%: EUR 38.26;
+  - plus the accident premium for the activity.
+- Employee lines:
+  - common contingencies at 4.70%: EUR 239.76;
+  - unemployment at 1.55%: EUR 79.07;
+  - training at 0.10%: EUR 5.10;
+  - MEI at 0.15%: EUR 7.65.
+- Solidarity is due on the EUR 898.80 above the ceiling:
+  - EUR 510.12 is in the first band. The employer pays EUR 4.90 and the employee EUR 0.97.
+  - EUR 388.68 is in the second band. The employer pays EUR 4.04 and the employee EUR 0.82.
+
+**Case 4: pluriactividad refund.**
+
+- In 2026 a client's common-contingencies contributions across both regimes total EUR 20,000. Of that, EUR 3,500 was RETA common-contingencies cuotas.
+- The excess over EUR 17,323.68 is EUR 2,676.32.
+- Half of it is EUR 1,338.16. The cap is half the RETA cuotas, EUR 1,750.
+- The refund is EUR 1,338.16, paid within four months of the regularisation.
+
+**Case 5: family collaborator bonus.**
+
+- A client's son joins RETA to work in the family shop. He has never been registered.
+- The bonus is worked out on the common-contingencies cuota at the general band 1 minimum: 28.30% of EUR 950.98, which is EUR 269.13.
+- The reduction is EUR 134.56 a month for eighteen months, then EUR 67.28 a month for six months.
+- His own base still cannot be below the group 7 minimum at regularisation. The tarifa plana is not available to him, because he is a first-degree relative.
+
+**Case 6: bank statement only.**
+
+- A client sends only statements showing an identical small TGSS debit each month.
+- Do not infer a band or assume a reduced fee.
+- Ask for the TGSS contribution base report (Informe de bases de cotización) and any award notice.
+- Flag the file: "RETA base not read from a TGSS document."
 
 ## When to refuse or refer
 
-- Anyone asking the exact reduced fee. The periods are in Rule 5; the 2026 amount is not set in law.
-- Anyone posted to or from another EU country, or contributing in two member states.
-- A specific Mutua's benefits, cover or payment of a claim.
-- The employer's accident and occupational disease premium: the tariff by activity in additional provision 61 of the LGSS.
-- Autonomous community and foral questions. Alava, Bizkaia, Gipuzkoa and Navarra run their own tax administrations.
-- Whether a late surcharge is deductible for IRPF. No page read here answers it.
-- Any request for a combined RETA percentage, an effective rate, or a cuota without a named base.
+- **The exact 2026 reduced-fee amount.** No law sets it. Give the conditions and periods, and read the amount from the TGSS award.
+- **Posted or cross-border workers**, or anyone contributing in two EU states. EU coordination rules apply. Escalate.
+- **Disability-specific contribution rules**, beyond the longer tarifa plana periods. These need a case-specific TGSS assessment.
+- **A particular mutual insurer's (mutua) benefits, cover or claim.** Refer to that mutua.
+- **The employer's accident premium for a given activity.** This is the tariff in LGSS additional provision 61. It needs the activity code (CNAE) and the occupation.
+- **The foral territories** (Álava, Bizkaia, Gipuzkoa, Navarra) for the income tax side. Social security itself is state-wide, but the IRPF figures used for regularisation come from those administrations.
+- **Ceuta.** The extraordinary cessation benefit and other support measures in Real Decreto-ley 22/2026 are outside this Guide.
+- **Whether a late-payment surcharge is deductible in IRPF.** No official page read for this Guide answers it. Keep surcharges and interest out of the deductible expense until an accountant rules on it.
+- **Any request for a combined RETA percentage, an "effective rate", or a cuota without a named base.** Refuse the shortcut and ask for the base.
+- **Pluriactividad planning, special regimes (sea workers, agrarian, domestic employees, artists) and bonus schemes for hiring.** Refer to a reviewer.
 
-## Sources
+## Filing and payment ([Reglamento General de Recaudación](https://www.boe.es/buscar/act.php?id=BOE-A-2004-11836))
 
-- [Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296)
-- [Ley General de la Seguridad Social](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724)
-- [Real Decreto-ley 13/2022](https://www.boe.es/buscar/act.php?id=BOE-A-2022-12482)
-- [Ley 20/2007](https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409)
-- [Bases and rates of contribution](https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores/36537)
-- [Temporary incapacity benefit](https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/PrestacionesPensionesTrabajadores/10952/28362/28365)
-- [TGSS Importass, guide for the self-employed](https://portal.seg-social.gob.es/wps/portal/importass/importass/Colectivos/trabajo+autonomo/guia)
-- [TGSS Importass, base and income service](https://portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Altas,+bajas+y+modificaciones/Bajas+y+modificaciones/BCRendimientos)
-- [Agencia Tributaria, regularisation of RETA cuotas](https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-ayuda-presentacion/irpf-2025/7-cumplimentacion-irpf/7_4-rendimientos-actividades-economicas/7_4_2-regimen-estimacion-directa/7_4_2_3-gastos-fiscalmente-deducibles/cotizaciones-reta.html)
+**Self-employed (RETA)**
 
-## Disclaimer
+- **When.** Cuotas are paid "dentro del mismo mes al que aquéllas correspondan": within the same month they relate to ([Reglamento General de Recaudación, art. 56.1.b](https://www.boe.es/buscar/act.php?id=BOE-A-2004-11836)).
+- **How.** By direct debit through a bank or other collaborating institution, charged on the last working day of the month ([Importass guide](https://portal.seg-social.gob.es/wps/portal/importass/importass/Colectivos/trabajo%2Bautonomo/guia)).
+- **Quarterly option.** The Importass guide describes a quarterly option chosen at registration: January to March is paid in April, April to June in July, July to September in October, and October to December the next January. It appears in the guide's paragraph on self-employed artists. Confirm with the TGSS that it is open to the client's activity before relying on it.
+- **Electronic channel.** RETA workers must deal with the TGSS electronically. They can use the Sistema RED through an authorised representative (for example a gestoría), or the Social Security electronic office (SEDESS) and Importass ([Orden ESS/484/2013, art. 2.2.b](https://www.boe.es/buscar/act.php?id=BOE-A-2013-3362)).
+- **Registration, base changes, reduced fee.** All are done through Importass, including the base and income service.
 
-This Guide and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this Guide. All outputs must be reviewed and signed off by a qualified professional (such as an asesor fiscal, gestor administrativo, or equivalent licensed practitioner in Spain) before filing or acting upon.
+**Employers (Régimen General)**
 
-> Contributed by OpenAccountants.
+- **Sistema RED is compulsory.** Every employer in the Régimen General must join it, "con independencia del número de trabajadores". The exceptions in article 2.3.a are household employers of domestic staff and bullfighting professionals ([Orden ESS/484/2013, art. 2.2.a](https://www.boe.es/buscar/act.php?id=BOE-A-2013-3362)).
+- **Direct settlement.** Contributions are calculated by the TGSS under the direct settlement system (Sistema de Liquidación Directa). The employer or its authorised RED user sends the workers' data and receives the draft and final assessments. The files are exchanged through the TGSS's SILTRA application ([TGSS, direct settlement procedure](https://www.seg-social.es/descarga/es/196843)).
+- **When.** Contributions are paid "dentro del mes siguiente al que corresponda su devengo": for example, April pay is paid by 31 May ([Reglamento General de Recaudación, art. 56.1](https://www.boe.es/buscar/act.php?id=BOE-A-2004-11836)).
+- **How.** By direct debit or bank charge through the collaborating institutions. Late payment brings the article 30 surcharges.
+- **Filing the data on time matters.** Filing within the period and paying late costs 10% or 20%. Not filing on time costs 20% or 35%.
+
+**Booking the RETA regularisation in IRPF (return for 2025, filed in 2026)**
+
+- RETA cuotas for the activity are a deductible expense of the activity.
+- The regularisation is booked in the year it is settled. For the 2025 return, that means the regularisation made in 2025 for 2024:
+  - an amount paid is a higher social security expense (box 0196);
+  - an amount refunded reduces that expense (box 0197);
+  - any refund above the cuotas paid that year is extra income (box 0178).
+- Source: [Agencia Tributaria, IRPF 2025 manual](https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-ayuda-presentacion/irpf-2025/7-cumplimentacion-irpf/7_4-rendimientos-actividades-economicas/7_4_2-regimen-estimacion-directa/7_4_2_3-gastos-fiscalmente-deducibles/cotizaciones-reta.html).
+- Keep principal, surcharges and interest on separate lines.
+
+## Benefits the contributions pay for ([temporary incapacity](https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/PrestacionesPensionesTrabajadores/10952/28362/28365))
+
+**Temporary incapacity (sick leave).** These percentages are from the [Social Security page on temporary incapacity](https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/PrestacionesPensionesTrabajadores/10952/28362/28365), not from the order.
+
+- **Common illness or non-work accident:**
+  - The subsidy is paid at 60% of the regulatory base from day 4 to day 20, then 75% from day 21.
+  - The self-employed person must be registered and up to date with cuotas.
+  - For common illness, the general regime requires 180 days of contributions in the five years before the leave ([LGSS article 172](https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724)). Confirm with the mutua how this applies to the self-employed person; this Guide does not restate the RETA provision.
+  - Article 321 of the LGSS confirms the self-employed subsidy starts on the fourth day of leave, unless the leave comes from a work accident or occupational disease.
+- **Accident at work or occupational disease:** 75% from the day after the sick note, with no minimum contribution period.
+- **Regulatory base:** the common-contingencies base of the month before the leave. A higher base gives a higher benefit.
+- **Cuotas during long leave:** once sixty days have passed from the sick note, the mutua (or the state employment service) pays the cuotas for every contingency ([order 2026, article 37.4](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296)). A base change asked for during the leave takes effect the day after discharge.
+
+**Cessation of activity (cese de actividad).** Under LGSS articles 338 and 339:
+
+- The regulatory base is the average of the bases in the twelve continuous months before the cessation.
+- The benefit is 70% of the regulatory base, or 50% in the partial cases in article 331.1.a.
+- It needs at least twelve months of cessation contributions in the last twenty-four.
+- Duration runs from four months (for twelve to seventeen months contributed) up to twenty-four months (for forty-eight or more).
+- A new award can be claimed only once eighteen months have passed since the last one was recognised (article 338.3).
+- The maximum and minimum amounts are set as percentages of the IPREM (indicador público de rentas de efectos múltiples) in article 339.3, and they depend on dependent children.
+- Giving up the activity voluntarily, where there is no legal cause, does not qualify.
+
+## Reading bank statements
+
+| Pattern on the statement | What it is |
+| --- | --- |
+| TGSS, TESORERIA GENERAL, SEGURIDAD SOCIAL, CUOTA AUTONOMOS, RETA, on the last working day | Monthly RETA cuota. A deductible expense. |
+| TGSS REGULARIZACION, COMPLEMENTO CUOTAS | Regularisation demand. A higher expense in the year paid. |
+| TGSS DEVOLUCION, TGSS REINTEGRO (credit) | Regularisation refund or pluriactividad refund. It reduces the expense; any excess is income. |
+| Small identical monthly TGSS debit | Possibly a reduced fee. Confirm on the award; do not assume the amount. |
+| TGSS REGIMEN GENERAL, TC1/TC2 or RLC references | Employer contributions for staff, not the owner's own RETA. |
+| AEAT, AGENCIA TRIBUTARIA, HACIENDA | Tax (IRPF instalments, VAT), not social security. |
+
+Do not read the band off the debit: a reduced fee, a bonus or a mid-month registration breaks the pattern.
+
+## Completion checklist ([Orden PJC/297/2026](https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296))
+
+- [ ] Class under article 305.2 confirmed (individual, company member, family collaborator).
+- [ ] Net income worked out under article 308.1.c: owner's cuotas added back, 7% or 3% deducted, monthly average found.
+- [ ] Band and table (reduced or general) identified. Base chosen inside it, and not below EUR 1,424.40 for company members and family collaborators.
+- [ ] Each 2026 rate applied as its own line. No combined rate quoted.
+- [ ] Tarifa plana, family bonus or Ceuta and Melilla reduction checked against the TGSS award. No 2026 reduced-fee amount stated from memory.
+- [ ] Registration date and any late registration checked.
+- [ ] Base-change window noted for any change.
+- [ ] Regularisation checked: IRPF return filed, notice read, payment due by the end of the following month or refund expected before 30 April.
+- [ ] Pluriactividad checked against EUR 17,323.68 (2026) or EUR 16,672.66 (2025).
+- [ ] For employers: group, contract type, base between the group minimum and EUR 5,101.20, solidarity on pay above the ceiling, RED filing, and payment within the following month.
+- [ ] Late payments separated into principal, surcharge and interest.
+- [ ] IRPF boxes 0196, 0197 and 0178 used for a regularisation settled in the year.
+
+This Guide is general information on Spanish social security contributions. It is not advice for a particular person. Before a figure is filed or paid, a qualified professional (asesor fiscal, graduado social or gestor administrativo) should check it against the client's TGSS documents.
 
 <!-- openaccountants-cta-block -->
 

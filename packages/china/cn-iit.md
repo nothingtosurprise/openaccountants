@@ -2,348 +2,287 @@
 name: cn-iit
 description: 在处理任何中国个人所得税（IIT）事项之前，必须先阅读本技能。本技能适用于中国税务居民个人和非居民个人的个人所得税申报、计算与审核工作，包括综合所得（工资薪金、劳务报酬、稿酬、特许权使用费）的累计预扣预缴与年度汇算清缴，经营所得的五级累进计税，专项附加扣除（子女教育、继续教育、大病医疗、住房贷款利息、住房租金、赡养老人、3岁以下婴幼儿照护），居民判定（183天规则），境外所得抵免，股权激励与全年一次性奖金单独计税过渡政策，以及通过个税APP、自然人电子税务局、单位代扣代缴等方式完成 3月1日至6月30日 综合所得年度汇算清缴的全过程。
 jurisdiction: CN
-tax_year: 2025
-last_updated: 2026-07-13
+tax_year: 2026
+last_updated: 2026-09-27
+authored_by: OpenAccountants team
 review_status: pending_review
+trust_label: By OpenAccountants
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# CN Iit
+# China individual income tax (个人所得税): residents, non-residents, comprehensive income, business income and the annual reconciliation
 
-## 一、快速参考
+## Scope and who this is for ([IIT Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html); [rate tables](https://guangdong.chinatax.gov.cn/gdsw/fssw_nsrxt_kjxz/2025-10/09/content_b02be06c906e46bca00673beb9e7783a.shtml))
 
-**快速参考表**
+This Guide covers mainland China individual income tax (IIT) for **tax year 2026** (calendar year 1 January to 31 December 2026). It also has a dated section on the **2025 annual reconciliation**, which ran from 1 March to 30 June 2026. It is for individuals, employers that withhold, and advisers who prepare or review IIT.
 
-| 项目 | 内容 |
-| --- | --- |
-| 国家 | 中华人民共和国（People's Republic of China） |
-| 税种 | 个人所得税（Individual Income Tax / IIT） |
-| 币种 | 人民币（CNY / RMB / ¥） |
-| 税务年度 | 公历年度（1月1日 — 12月31日） |
-| 适用年度 | 2025 |
-| 主管机关 | 国家税务总局（State Taxation Administration, STA） |
-| 主要法律 | 《中华人民共和国个人所得税法》（2018年第七次修正） |
-| 实施条例 | 《中华人民共和国个人所得税法实施条例》（国务院令第707号，2018） |
-| 专项附加扣除 | 《个人所得税专项附加扣除暂行办法》（国发〔2018〕41号），2023年8月国务院公告调整三项标准 |
-| 申报渠道 | 个人所得税APP（移动端）、自然人电子税务局（web）、单位代扣代缴、办税服务厅 |
-| 自然人电子税务局 | https://etax.chinatax.gov.cn |
-| 综合所得年度汇算清缴期 | 次年 3月1日 — 6月30日 |
-| 基本减除费用 | 60,000元/年（5,000元/月） |
-| 居民判定 | 一个纳税年度内在中国境内居住累计满183天 |
-| 验证状态 | 待验证 — 需由中国注册会计师（CPA）或注册税务师审核签字 |
-| 技能版本 | 1.0 |
+The legal base is the Individual Income Tax Law of the People's Republic of China (中华人民共和国个人所得税法, seventh amendment of 31 August 2018) and the Ministry of Finance (MOF) and State Taxation Administration (STA) announcements cited below. The law has not been amended since. The rates, the basic deduction and the special additional deduction amounts for 2026 are the same as for 2025.
 
-### 综合所得年度税率表（七级超额累进）
+Currency is CNY. Income in foreign currency is converted at the RMB central parity rate (Law Art. 16).
 
-**综合所得年度税率表（七级超额累进）**
+Out of scope: Hong Kong, Macao and Taiwan; corporate income tax; VAT; social insurance contributions themselves (only their deduction is covered); land appreciation tax on property sales; and the detailed rules for offshore trusts, restricted shares and treaty tie-breakers (see "When to refuse or refer").
 
-| 全年应纳税所得额（元） | 税率 | 速算扣除数（元） |
-| --- | --- | --- |
-| 不超过 36,000 | 3% | 0 |
-| 超过 36,000 至 144,000 部分 | 10% | 2,520 |
-| 超过 144,000 至 300,000 部分 | 20% | 16,920 |
-| 超过 300,000 至 420,000 部分 | 25% | 31,920 |
-| 超过 420,000 至 660,000 部分 | 30% | 52,920 |
-| 超过 660,000 至 960,000 部分 | 35% | 85,920 |
-| 超过 960,000 部分 | 45% | 181,920 |
+## What is new for 2026 ([dividends 2026 No. 27](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202609/t481448.html); [offshore trusts 2026 No. 21](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202607/t481046.html); [STA announcement 2026 No. 12](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202606/t480766.html); [platform workers](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/swzsgl/202507/t476884.html))
 
-适用所得：工资薪金所得、劳务报酬所得、稿酬所得、特许权使用费所得（居民个人按年合并计算）。
+| Change | From | What it does |
+|---|---|---|
+| Foreign individuals' dividends from foreign-invested enterprises | 2026-09-01 | Taxed as dividends at 20%. The 1994 exemption (财税字〔1994〕20号 item 2(8)) is repealed. The enterprise withholds and files within 15 days after the month of payment. If it does not, the individual pays by 30 June of the following year |
+| Offshore trusts (离岸信托) | 2026 No. 21 (issued 2026-07-24) | Putting property into an offshore trust, and income received through one, are taxable income under Law Art. 2. Refer |
+| Scrap sellers invoiced by recycling companies ("reverse invoicing") | 2026-07-01 | Business income prepaid at 0.25% on the first six hundred thousand yuan (60万元) of annual sales, excluding VAT; 0.5% above that |
+| Home replacement refund | 2026-01-01 to 2027-12-31 | A seller who buys a home in the same city within one year after selling their own home can apply for a refund of the IIT paid on the sale (STA announcement 2026 No. 12, item 2) |
+| Platform workers | 2025-10-01 | Internet platform companies withhold on workers' labour remuneration by the cumulative method (see the method, step 5) |
 
-- **应纳税额公式** — 应纳税额 = 应纳税所得额 × 适用税率 − 速算扣除数  _(综合所得年度税率表（七级超额累进）)_
+Reliefs that run to **31 December 2027** and so apply for all of 2026: separate taxation of the annual one-off bonus; separate taxation of listed-company equity incentives; the election for foreign individuals' tax-free allowances; the small-balance exemptions from the annual reconciliation; and the halving of IIT for individual industrial and commercial households. Each is cited where it is used.
 
-### 经营所得年度税率表（五级超额累进）
+## Ask the client first
 
-**经营所得年度税率表（五级超额累进）**
+### Sources for this section ([IIT Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html); [residence days](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201904/t444837.html))
 
-| 全年应纳税所得额（元） | 税率 | 速算扣除数（元） |
-| --- | --- | --- |
-| 不超过 30,000 | 5% | 0 |
-| 超过 30,000 至 90,000 部分 | 10% | 1,500 |
-| 超过 90,000 至 300,000 部分 | 20% | 10,500 |
-| 超过 300,000 至 500,000 部分 | 30% | 40,500 |
-| 超过 500,000 部分 | 35% | 65,500 |
+- **Domicile and days in China.** Does the person have a domicile (住所) in China? If not, how many days were they in China in the tax year, counting only days on which they were present for a full 24 hours? For a foreigner, ask for each of the six previous years (from 2019) whether they reached 183 days and whether any single trip out of China lasted more than 30 days.
+- **Which year.** Is the question about 2026 withholding and planning, or the 2025 reconciliation (filed 1 March to 30 June 2026), or an earlier year?
+- **Every income type received,** by category: wages and salaries, labour remuneration, author's remuneration, royalties, business income, interest/dividends, rent, property transfers, incidental income. Who paid each one, whether tax was withheld, and whether the payer was in China or abroad.
+- **Special additional deductions claimed,** and how they are shared with the spouse or siblings: children (ages, full-time education), continuing education, serious illness costs, first-home loan interest or rent (and in which city), parents or grandparents aged 60 or over, and whether the person is an only child.
+- **Other deductions:** social insurance and housing fund paid by the employee; personal pension contributions; qualifying commercial health insurance; enterprise or occupational annuity; charitable donations with receipts.
+- **Bonus and equity:** any annual one-off bonus and whether it was taxed separately; any stock options, restricted shares or share awards from a listed company.
+- **Foreign income and foreign tax paid,** with the foreign tax receipts and the foreign tax year end.
+- **For foreign nationals:** whether they claim tax-free housing, language or children's education allowances, and whether they received dividends from a foreign-invested enterprise on or after 1 September 2026.
+- **Status of the account:** any open audit, tax notice or penalty.
 
-适用所得：个体工商户的生产经营所得、个人独资企业和合伙企业自然人合伙人的经营所得。
+## The method, step by step
 
-### 其他所得（按次或按月，比例税率 20%）
+### Sources for this section ([IIT Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html); [withholding measures](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201812/t443216.html); [reconciliation measures](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202502/t475327.html); [non-residents 2019 No. 35](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201904/t444839.html))
 
-**其他所得税率表**
+1. **Decide residence for the year.** A person is a resident (居民个人) if they have a domicile in China, or have no domicile but stay in China for a cumulative **183 days or more** ("满183天") in the calendar year. Everyone else is a non-resident. Only days with a full 24 hours in China count; the day of arrival or departure does not count if it is less than 24 hours. Residents are taxed on worldwide income; non-residents only on China-source income (Law Art. 1).
+2. **Apply the six-year rule to a resident without a domicile.** A foreigner who is resident in the year is still exempt on income that is **both** from outside China **and** paid by a foreign entity or individual, unless in **each** of the previous six consecutive years they stayed 183 days or more **and** never left China for more than 30 days in one trip. The six-year count starts with 2019, so the earliest year in which the exemption could be lost was 2025. One year below 183 days, or one trip out of more than 30 days, restarts the count (2019 No. 34).
+3. **Sort each receipt into its category.** Wages and salaries, labour remuneration, author's remuneration and royalties are "comprehensive income" (综合所得). Business income, and the "other categories" (interest, dividends and bonuses; rent; property transfers; incidental income), are taxed separately (Law Art. 2).
+4. **Residents: withhold on wages by the cumulative method.** Each month the employer computes: cumulative income, minus cumulative tax-free income, minus CNY 5,000 for each month employed with that employer in the year, minus cumulative special deductions (social insurance and housing fund), special additional deductions and other deductions. It applies the annual table (withholding table 1) to that cumulative amount, then subtracts tax already withheld. If the result is negative, nothing is refunded during the year; the reconciliation settles it. The employer must give the special additional deductions the employee reports and cannot refuse (Law Art. 11; withholding measures Art. 6–7). **Simplified rule:** if in the previous full year the employee had wages withheld by the same employer every month and those wages were not over sixty thousand yuan, the employer deducts the full sixty thousand yuan from January, so no tax is withheld until cumulative income passes that amount. The employer notes this on the withholding return. The same applies to labour remuneration withheld by the cumulative method ([STA announcement 2020 No. 19](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202012/t456203.html)).
+5. **Residents: withhold on labour remuneration, author's remuneration and royalties per payment.** Income amount = payment minus expenses. Expenses are eight hundred yuan if the payment is four thousand yuan or less, and 20% of the payment if it is more. Author's remuneration is then counted at seventy per cent. Labour remuneration uses withholding table 2 (20% / 30% / 40%); author's remuneration and royalties are withheld at a flat 20%. Internet platform companies instead use the cumulative method for workers' labour remuneration from 1 October 2025: cumulative expenses are 20% of cumulative income, and CNY 5,000 is deducted for each consecutive month of income from that platform (withholding measures Art. 8; platform announcement).
+6. **Residents: compute the annual tax on comprehensive income.** Add the four types: wages in full; labour remuneration and royalties at income amount (payment less 20%); author's remuneration at income amount times seventy per cent. Subtract **CNY 60,000**, special deductions, special additional deductions, other deductions, and qualifying donations. Apply the annual table (3%–45%) and subtract the quick deduction. Subtract any tax reduction and the tax already prepaid. The result is the refund or balance due (reconciliation measures Art. 3).
+7. **Decide whether the annual bonus is taxed separately.** Until 31 December 2027 a resident can tax a qualifying annual one-off bonus separately: divide it by 12, find the rate and quick deduction in the monthly table, and compute bonus × rate − quick deduction. Or they can add it to comprehensive income. Test both.
+8. **Non-residents: tax each month or payment separately.** Wages: monthly income minus CNY 5,000. Labour remuneration, author's remuneration and royalties: payment minus 20% (author's remuneration then at seventy per cent). Apply the monthly table. No special additional deductions, no social insurance deduction, and no annual reconciliation (Law Art. 11; withholding measures Art. 9).
+9. **Business income.** Annual receipts minus costs, expenses and losses, taxed on the 5%–35% table. An owner who has **no comprehensive income** also deducts sixty thousand yuan, special deductions, special additional deductions and other deductions; the special additional deductions are taken at the annual reconciliation. An owner who does have comprehensive income takes these deductions there, not twice ([Implementing Regulations Art. 15](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201812/t443213.html)). Prepay within 15 days after each month or quarter end and reconcile by 31 March of the next year (Law Art. 12). A household's first two million yuan of taxable income gets half its tax relieved until 2027 (see figures).
+10. **Other categories.** Tax each receipt at 20% (Law Art. 3). The payer withholds.
+11. **Foreign income of residents.** Combine foreign comprehensive income with Chinese comprehensive income, and foreign business income with Chinese business income; tax other foreign categories separately. Credit foreign tax country by country, within the limit (see "Foreign income").
+12. **File.** Decide whether the person must do the annual reconciliation, and file between 1 March and 30 June of the next year (see "Filing and payment").
 
-| 所得类别 | 税率 | 备注 |
-| --- | --- | --- |
-| 利息、股息、红利所得 | 20% | 源泉扣缴，单次结算 |
-| 财产租赁所得 | 20% | 每次收入≤4,000元减除800元；>4,000元减除20% |
-| 财产转让所得 | 20% | 收入额 − 财产原值 − 合理费用 |
-| 偶然所得 | 20% | 彩票、奖金等，按次计征 |
+## Figures for tax year 2026
 
-## 二、必备输入与拒绝清单
+### Comprehensive income: annual table for residents, 2025 and 2026 ([IIT Law, table 1](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html); [withholding table 1](https://guangdong.chinatax.gov.cn/gdsw/fssw_nsrxt_kjxz/2025-10/09/content_b02be06c906e46bca00673beb9e7783a.shtml))
 
-### 必备输入
+The same table is used for the annual computation and, on cumulative figures, for monthly wage withholding. Basic deduction: **CNY 60,000** a year (CNY 5,000 a month for withholding).
 
-- **最低可行输入** — 必须确认：(a) 纳税年度内在中国境内居住天数（用于居民/非居民判定）；(b) 所得类别（工资薪金、劳务报酬、稿酬、特许权使用费、经营所得、其他）；(c) 至少一项：(i) 单位发放工资明细或个税APP收入明细，(ii) 经营所得账簿凭证，(iii) 银行流水覆盖完整自然年度。
-- **推荐输入** — 全年专项附加扣除信息表（个税APP导出）、所有代扣代缴凭证、上年度汇算清缴申报表、社保和住房公积金缴费明细、境外所得证明文件（如有）、配偶及子女身份信息（涉及专项附加扣除分摊）。
-- **理想输入** — 完整工资条 12 个月、单位发放的《个人所得税扣缴申报表》、个税APP生成的《个人所得税年度自行纳税申报表（A表）》预填数据、各项专项附加扣除佐证材料（学籍证明、医疗票据汇总、贷款合同、租赁合同、父母身份证及关系证明）、上年度纳税记录、银行账户境外汇款记录。
-- **输入不足时的处理** — 软警告。无居民身份判定 + 无任何凭证 = 硬性停止。有凭证但无所得类别归类 = 硬性停止（无法适用税率表）。所得明确但专项附加扣除证据缺失 = 提示审核员，按零扣除处理并标记复核。
+| Annual taxable income | Rate | Quick deduction |
+|---|---|---|
+| Not over CNY 36,000 | 3% | 0 |
+| Over CNY 36,000 to CNY 144,000 | 10% | CNY 2,520 |
+| Over CNY 144,000 to CNY 300,000 | 20% | CNY 16,920 |
+| Over CNY 300,000 to CNY 420,000 | 25% | CNY 31,920 |
+| Over CNY 420,000 to CNY 660,000 | 30% | CNY 52,920 |
+| Over CNY 660,000 to CNY 960,000 | 35% | CNY 85,920 |
+| Over CNY 960,000 | 45% | CNY 181,920 |
 
-### 拒绝清单（Refusal Catalogue）
+Tax = taxable income × rate − quick deduction.
 
-- **R-CN-IT-1** — 居民身份不明确。本年度在中国境内累计居住天数不明，无法判定居民/非居民身份。居民个人按全球所得纳税并适用综合所得汇算，非居民个人按月或按次单独计税且不参与汇算。请先确认护照出入境记录或居住证明。  _(R-CN-IT-1)_
-- **R-CN-IT-2** — 高收入个人或六年规则触发。无住所个人在境内累计居住满六年（每年≥183天且未单次离境超过30天）的，从第七年起其境外所得也需要在中国纳税。涉及无住所个人六年规则、董事高管特殊条款或税收协定居民判定的，本技能不处理，应转介注册税务师并参照《财政部 税务总局公告2019年第34号》《财政部 税务总局公告2019年第35号》。  _(R-CN-IT-2；《财政部 税务总局公告2019年第34号》《财政部 税务总局公告2019年第35号》)_
-- **R-CN-IT-3** — 企业所得税（CIT）请求。公司、合伙企业法人合伙人、其他法人主体的企业所得税按25%（或小型微利企业优惠税率）单独计征，本技能不涉及。请使用相关 CIT 技能或转介专业税务师。  _(R-CN-IT-3)_
-- **R-CN-IT-4** — 增值税（VAT）请求。本技能仅涉及个人所得税。增值税相关请求请使用 `china-vat`（如有）或转介专业税务师。  _(R-CN-IT-4)_
-- **R-CN-IT-5** — 部分年度居民或双重居民身份。纳税年度内部分时间为居民、部分时间为非居民，或与缔约国构成双重居民身份，需进行税收协定居民判定（tie-breaker）。超出本技能范围，应转介注册税务师并参照 OECD 范本及具体双边协定。  _(R-CN-IT-5)_
-- **R-CN-IT-6** — 上市公司股权激励与限制性股票。境内外上市公司股票期权、限制性股票、股权奖励等股权激励所得的计税规则较为复杂，存在过渡期单独计税政策（《财政部 税务总局公告2018年第164号》《公告2023年第25号》，延续至2027年12月31日）。涉及股权激励的，本技能不直接计算，仅提示适用规则，应转介专业人士。  _(R-CN-IT-6；《财政部 税务总局公告2018年第164号》《公告2023年第25号》)_
-- **R-CN-IT-7** — 已被税务机关稽查、追缴或处罚的情形。存在未结清的税务稽查、补缴通知、行政处罚或行政复议程序的，可能影响汇算结果并涉及滞纳金（《税收征管法》第32条，按日万分之五）。本技能不出具意见，请立即转介注册税务师。  _(R-CN-IT-7；《税收征管法》第32条)_
-- **R-CN-IT-8** — 跨境派遣、外籍员工免税津贴过渡安排。外籍个人住房补贴、子女教育费、语言训练费等八项免税补贴的优惠政策已延续至2027年12月31日（《财政部 税务总局公告2023年第29号》）。涉及外籍员工的，本技能仅提示规则方向，具体申报应转介熟悉外派税务的专业人士。  _(R-CN-IT-8；《财政部 税务总局公告2023年第29号》)_
-- **R-CN-IT-9** — 个体工商户与企业所得税混合。个体工商户、个人独资企业、合伙企业的经营所得，按本技能第三层经营所得规则处理；但如涉及合伙企业法人合伙人或外资合伙企业，应转介企业所得税专业人士。  _(R-CN-IT-9)_
+### Monthly table: non-residents, and the annual bonus ([non-resident table 2](https://guangdong.chinatax.gov.cn/gdsw/fssw_nsrxt_kjxz/2025-10/09/content_b02be06c906e46bca00673beb9e7783a.shtml); [bonus 2023 No. 30](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468460.html))
 
-## 三、第一层规则
+Non-residents apply this table to each month's wages (after CNY 5,000) or to each payment. It is the annual table converted to months. The annual bonus uses the "monthly converted comprehensive income table" attached to 2023 No. 30, which has the same bands.
 
-### 3.1 居民个人 vs 非居民个人
+| Monthly taxable income | Rate | Quick deduction |
+|---|---|---|
+| Not over CNY 3,000 | 3% | 0 |
+| Over CNY 3,000 to CNY 12,000 | 10% | CNY 210 |
+| Over CNY 12,000 to CNY 25,000 | 20% | CNY 1,410 |
+| Over CNY 25,000 to CNY 35,000 | 25% | CNY 2,660 |
+| Over CNY 35,000 to CNY 55,000 | 30% | CNY 4,410 |
+| Over CNY 55,000 to CNY 80,000 | 35% | CNY 7,160 |
+| Over CNY 80,000 | 45% | CNY 15,160 |
 
-- **居民个人** — 在中国境内有住所，或者无住所而一个纳税年度内在中国境内居住累计满183天的个人。按全球所得纳税。  _(3.1 居民个人 vs 非居民个人)_
-- **非居民个人** — 在中国境内无住所又不居住，或者无住所且一个纳税年度内在中国境内居住累计不满183天的个人。仅就来源于中国境内的所得纳税。  _(3.1 居民个人 vs 非居民个人)_
-- **居住天数计算** — 在中国境内停留的当天满 24 小时计入境内居住天数，不足 24 小时不计入。  _(3.1 居民个人 vs 非居民个人)_
+### Labour remuneration withholding for residents (per payment) ([withholding table 2](https://guangdong.chinatax.gov.cn/gdsw/fssw_nsrxt_kjxz/2025-10/09/content_b02be06c906e46bca00673beb9e7783a.shtml))
 
-### 3.2 综合所得计算流程（居民个人）
+| Taxable amount per payment | Withholding rate | Quick deduction |
+|---|---|---|
+| Not over CNY 20,000 | 20% | 0 |
+| Over CNY 20,000 to CNY 50,000 | 30% | CNY 2,000 |
+| Over CNY 50,000 | 40% | CNY 7,000 |
 
-- **综合所得计算流程** — 工资薪金所得（全额） + 劳务报酬所得 × (1 − 20%)            （每次收入≤4,000元减800元） + 稿酬所得 × (1 − 20%) × 70% + 特许权使用费所得 × (1 − 20%) = 收入额合计 − 基本减除费用 60,000元/年 − 专项扣除（基本养老、医疗、失业保险、住房公积金，按实际缴费） − 专项附加扣除（七项，详见第四层） − 依法确定的其他扣除（商业健康险、税延养老险、企业年金/职业年金个人缴费部分等） − 公益慈善捐赠（应纳税所得额 30% 限额内据实扣除；特定公益事业全额扣除） = 全年应纳税所得额 × 综合所得税率（7级） − 速算扣除数 = 全年应纳税额 − 全年累计已预扣预缴税额 = 年度汇算补/退税额  _(3.2 综合所得计算流程（居民个人）)_
+This is only a prepayment. At the reconciliation, labour remuneration goes into comprehensive income and is taxed on the annual table.
 
-### 3.3 经营所得计算流程
+### Business income: annual table ([IIT Law, table 2](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html); [households 2023 No. 12](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468162.html))
 
-- **经营所得计算流程** — 全年生产经营收入 − 成本、费用、税金、损失、其他支出（依据账簿凭证） − 业主本人60,000元/年基本减除费用（若未在其他渠道扣除） − 专项扣除、专项附加扣除、依法确定的其他扣除（仅对未取得综合所得的经营业主） = 全年应纳税所得额 × 经营所得税率（5级） − 速算扣除数 = 应纳税额  _(3.3 经营所得计算流程)_
-- **重要规则** — 经营所得不并入综合所得，单独按经营所得税率表计算。但同一纳税人取得综合所得和经营所得的，60,000元基本减除费用和专项附加扣除原则上在综合所得中扣除，不在经营所得中重复扣除。  _(3.3 经营所得计算流程)_
+| Annual taxable income | Rate on the band |
+|---|---|
+| Not over CNY 30,000 | 5% |
+| Over CNY 30,000 to CNY 90,000 | 10% |
+| Over CNY 90,000 to CNY 300,000 | 20% |
+| Over CNY 300,000 to CNY 500,000 | 30% |
+| Over CNY 500,000 | 35% |
 
-### 3.4 月度累计预扣预缴法（工资薪金）
+Business income means income of individual industrial and commercial households; income that investors in sole proprietorships and individual partners in partnerships registered in China derive from the business; income from licensed education, medical, consulting and other paid services; and income from contracting or leasing an enterprise ([Implementing Regulations Art. 6](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201812/t443213.html)). Taxable income is annual receipts minus costs, expenses and losses; an owner with no comprehensive income also deducts sixty thousand yuan and the personal deductions (Art. 15). The statute prints bands only; this Guide computes band by band rather than quoting unsourced quick deductions. From 1 January 2023 to 31 December 2027, an individual industrial and commercial household (个体工商户) pays **half** the IIT on the part of annual taxable income not over two million yuan (200万元), on top of other reliefs.
 
-- **累计预扣预缴法公式** — 本月应预扣预缴税额 = (累计预扣预缴应纳税所得额 × 预扣率 − 速算扣除数) − 累计减免税额 − 累计已预扣预缴税额 累计预扣预缴应纳税所得额 = 累计收入 − 累计免税收入 − 累计减除费用 − 累计专项扣除 − 累计专项附加扣除 − 累计依法确定的其他扣除  _(3.4 月度累计预扣预缴法（工资薪金）)_
-- **预扣率表说明** — 居民个人取得工资薪金所得，扣缴义务人按月累计预扣预缴。预扣率表与综合所得年度税率表一致（7级），但按累计应纳税所得额套用。  _(3.4 月度累计预扣预缴法（工资薪金）)_
+### Other categories ([IIT Law Art. 3](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html))
 
-### 3.5 劳务报酬预扣预缴（按次）
+Interest, dividends and bonuses; rent; property transfers; incidental income: flat 20%, per receipt or per month. How the taxable amount is worked out (Law Art. 6):
 
-**劳务报酬预扣预缴税率表**
+- **Rent:** per receipt (rent received within one month counts as one receipt, [withholding measures Art. 11](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201812/t443216.html)), deduct eight hundred yuan if the receipt is four thousand yuan or less; otherwise deduct twenty per cent. Tax the rest.
+- **Property transfers:** sale proceeds minus the original value of the property and reasonable costs.
+- **Interest, dividends and incidental income:** the whole receipt is taxable.
 
-| 每次应纳税所得额（元） | 预扣率 | 速算扣除数（元） |
-| --- | --- | --- |
-| 不超过 20,000 | 20% | 0 |
-| 超过 20,000 至 50,000 | 30% | 2,000 |
-| 超过 50,000 | 40% | 7,000 |
+### Special additional deductions (专项附加扣除), 2023 onwards and unchanged for 2026 ([State Council 国发〔2023〕13号](https://fgk.chinatax.gov.cn/zcfgk/c102440/c5213594/content.html); [STA announcement 2023 No. 14](https://fgk.chinatax.gov.cn/zcfgk/c100012/c5213592/content.html); [Interim Measures 国发〔2018〕41号](https://hainan.chinatax.gov.cn/xxgk_6_1/22110230.html); [infant care 国发〔2022〕8号](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202204/t462542.html))
 
-- **注释** — 每次收入≤4,000元减除800元；>4,000元减除20%后为应纳税所得额。年度汇算时并入综合所得重新计算。  _(3.5 劳务报酬预扣预缴（按次）)_
+| Deduction | Amount | Conditions |
+|---|---|---|
+| Infant care (3岁以下婴幼儿照护) | CNY 2,000 per child per month | Child under 3. One parent takes 100%, or each takes 50% |
+| Children's education (子女教育) | CNY 2,000 per child per month | From age 3 (pre-school) through full-time education to doctorate. One parent 100%, or 50% each; the choice is fixed for the year. Keep proof if the child studies abroad |
+| Continuing education, degree (学历继续教育) | CNY 400 a month | Degree education in China; no more than 48 months for the same degree. A bachelor's or lower can be claimed by a parent instead |
+| Continuing education, vocational certificate | CNY 3,600 once | In the year the qualifying certificate is obtained |
+| Serious illness (大病医疗) | Actual cost, up to CNY 80,000 | Self-paid costs within the medical insurance list, after reimbursement, **above** CNY 15,000 in the year. Claimed only at the annual reconciliation. Taxpayer, spouse and minor children each computed separately |
+| Housing loan interest (住房贷款利息) | CNY 1,000 a month | First-home loan for a home in China; at most 240 months; once in a lifetime. Spouses choose one of them. If each spouse bought a first home with a first-home loan before marriage, after marriage they either pick one home and the buyer claims 100%, or each claims 50% on their own home |
+| Housing rent (住房租金) | CNY 1,500 / CNY 1,100 / CNY 800 a month | No owned home (by the taxpayer or spouse) in the main work city. CNY 1,500 in municipalities, provincial capitals, cities with separate planning status and other State Council cities; CNY 1,100 in other cities whose urban districts have more than one million registered residents; CNY 800 elsewhere. Only one spouse if both work in the same city |
+| Elderly support (赡养老人) | Only child: CNY 3,000 a month. Otherwise siblings share CNY 3,000 a month, at most CNY 1,500 each | Parents aged 60 or over, or grandparents aged 60 or over whose children have all died. Sharing equally, by agreement, or as the parent designates; agreed or designated shares need a written agreement |
 
-### 3.6 稿酬与特许权使用费预扣预缴
+Rules that apply to all of them: housing loan interest and housing rent cannot both be claimed by the taxpayer and spouse in the same year. Unused amounts cannot be carried to the next year. Supporting records must be kept for five years. The employee must confirm next year's deductions in December; if they do not, the employer stops deducting from January until they confirm ([operation measures STA announcement 2022 No. 7](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202204/t462550.html), Art. 9). Deductions missed during the year can be claimed at the reconciliation.
 
-- **稿酬与特许权使用费预扣预缴** — 稿酬所得、特许权使用费所得，每次收入减除费用后按 20% 预扣预缴。稿酬所得在并入综合所得时，应纳税所得额按收入额的 70% 计算（即额外 30% 优惠）。  _(3.6 稿酬与特许权使用费预扣预缴)_
+### Other deductions and exemptions ([personal pension 2024 No. 21](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202412/t474540.html); [health insurance](https://guangdong.chinatax.gov.cn/gdsw/zjfg/2017-05/03/content_f7a7387e2ba441a995345e7c0d60e44f.shtml); [donations 2019 No. 99](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202001/t451944.html); [childcare subsidy 2025 No. 6](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202508/t477416.html))
 
-### 3.7 非居民个人计税
+- **Personal pension (个人养老金):** contributions up to CNY 12,000 a year are deducted from comprehensive income or business income, with the platform's deduction certificate. Investment income inside the account is not taxed. Withdrawals are taxed separately at 3%, not added to comprehensive income. Nationwide from 1 January 2024.
+- **Commercial health insurance:** qualifying policies, up to CNY 2,400 a year (CNY 200 a month). Premiums above that are not deductible.
+- **Enterprise or occupational annuity** (employee contributions) is an "other deduction" within a statutory cap. The cap was not confirmed from an official page in this update; check before relying on a figure.
+- **Charitable donations** through qualifying bodies: deductible up to thirty per cent of the taxable income of comprehensive income or business income for the year (some listed causes are fully deductible). Keep the donation receipt.
+- **Childcare subsidies** paid under the national childcare subsidy scheme are exempt from 1 January 2025.
 
-- **非居民个人计税公式** — 应纳税额 = (每月或每次收入额 × 适用税率) − 速算扣除数 工资薪金：减除费用 5,000元/月 劳务报酬：减除 20% 稿酬：减除 20% 后再 × 70% 特许权使用费：减除 20%  _(3.7 非居民个人计税)_
-- **非居民个人计税说明** — 非居民个人取得工资薪金、劳务报酬、稿酬、特许权使用费所得，分别单独按月或按次计算，不并入年度合并。非居民个人按月度税率表计算（年度税率÷12对应的月度税率表）。非居民个人不适用专项附加扣除，也不参与年度汇算清缴。  _(3.7 非居民个人计税)_
+### Relief periods that end on 31 December 2027 ([bonus 2023 No. 30](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468460.html); [equity 2023 No. 25](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468395.html); [foreign allowances 2023 No. 29](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468458.html); [reconciliation exemption 2023 No. 32](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468462.html))
 
-## 四、第二层情形
+- **Annual one-off bonus:** separate taxation (divide by 12, monthly table) or add to comprehensive income, at the resident's choice.
+- **Listed-company equity incentives** (options, stock appreciation rights, restricted shares, share awards) meeting the conditions: not added to comprehensive income; the whole amount is taxed alone on the annual table. Two or more awards in one year are combined.
+- **Foreign individuals' allowances:** a foreigner who is a resident chooses either the special additional deductions or the tax-free treatment of housing, language training and children's education allowances (and the other listed allowances), not both. The choice cannot be changed within the year.
+- **Reconciliation exemptions** for small balances (see "Filing and payment").
 
-### 4.1 专项附加扣除（七项）
+## Residence, non-residents and foreign income ([residence days 2019 No. 34](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201904/t444837.html); [non-residents 2019 No. 35](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201904/t444839.html); [foreign income 2020 No. 3](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202002/t452398.html))
 
-**专项附加扣除（七项）表**
+**Non-residents' wages.** Wages for work in China are China-source, counted by workdays in China (including holidays and training days taken during the China work period). A person with posts inside and outside China, or only outside, counts a day of less than 24 hours in China as half a workday.
 
-| 扣除项目 | 标准 | 适用条件 |
-| --- | --- | --- |
-| 子女教育 | 每个子女 2,000元/月（24,000元/年） | 年满 3 周岁至博士研究生阶段全日制学历教育；可由父母一方扣除全部，或双方各扣 50%；不可重复 |
-| 继续教育（学历） | 400元/月（最长 48 个月，共 19,200元） | 在中国境内接受学历（学位）继续教育 |
-| 继续教育（职业资格） | 3,600元/年（取得证书的当年一次扣除） | 取得国务院人社部门发布的《国家职业资格目录》中的技能人员或专业技术人员职业资格证书 |
-| 大病医疗 | 据实扣除，年度限额 80,000元 | 医保目录范围内个人负担（医保报销后）累计超过 15,000元 的部分；本人或配偶或未成年子女发生 |
-| 住房贷款利息 | 1,000元/月（最长 240 个月） | 本人或配偶购买中国境内首套住房发生的首套住房贷款利息；夫妻双方约定由一方扣除 |
-| 住房租金 | 1,500 / 1,100 / 800 元/月 | 在主要工作城市无自有住房而发生住房租金支出；标准按城市分三档（直辖市、省会城市、计划单列市 1,500；市辖区户籍人口超过 100 万的城市 1,100；其他 800） |
-| 赡养老人 | 独生子女 3,000元/月；非独生子女按约定或均摊（每人≤1,500元/月） | 赡养一位或多位年满 60 周岁的父母及子女均已去世的祖父母、外祖父母 |
-| 3岁以下婴幼儿照护 | 每个婴幼儿 2,000元/月 | 自 2022 年 1 月 1 日起施行；与子女教育扣除可叠加（一个孩子在 3 岁前后跨年度时分别适用） |
+- In China **not more than 90 days** in the year: taxed only on wages for China workdays that are **paid or borne by a Chinese employer**.
+- **More than 90 days but under 183 days:** taxed on all wages for China workdays, whoever pays; wages for work abroad are not taxed.
+- A non-domiciled person first predicts their days in China. If they were treated as resident but end the year short of 183 days, they must report in the period from the date they can no longer meet the condition until 15 days after the year ends, recompute as a non-resident and pay any extra tax, without late-payment surcharge. If they predicted 90 days or fewer but actually exceed 90 days, they must report within 15 days after the end of the month in which the 90th day falls and pay tax on earlier months' wages, also without surcharge.
 
-- **重要规则** — 住房贷款利息与住房租金不可同时享受。子女教育与 3 岁以下婴幼儿照护可叠加（不同孩子或同一孩子不同年龄阶段）。大病医疗 在年度汇算时扣除；其他六项可在月度预扣预缴时扣除（须在个税APP中确认申报）。信息真实性由纳税人负责，资料留存 5 年备查（《个人所得税专项附加扣除操作办法》）。  _(《个人所得税专项附加扣除操作办法》)_
+**Residents' foreign income.**
 
-### 4.2 境外所得抵免（PPh 24 等价 — 中国称"已纳税额抵免"）
+- **Source.** Foreign-source income includes pay for work done abroad, and dividends and interest from foreign payers. One exception: gains on shares in a foreign company are China-source if, at any time in the 36 months before the sale, 50% or more of that company's asset value came directly or indirectly from real estate in China.
+- **Credit limit, country by country.** For comprehensive income, the limit is the total Chinese tax on Chinese and foreign comprehensive income together, multiplied by (that country's comprehensive income ÷ total comprehensive income). Business income works the same way. For other categories, the limit is the Chinese tax on that country's income in the category. The limits for one country are added together.
+- **Credit given.** The lower of the foreign tax actually paid and the limit. Any excess can be carried forward and credited in the next five years against income from the same country. Wrongly paid tax, tax a treaty did not allow, and foreign interest or penalties cannot be credited. Tax sparing under a treaty can count as tax paid.
+- **Evidence.** A foreign tax receipt or record for the tax year is required. Without it no credit is given. If the receipt arrives later, the credit can be claimed back to the year of the income, up to five years.
+- **Foreign tax year.** If the foreign tax year is not the calendar year, the income belongs to the Chinese tax year in which the foreign tax year ends.
+- **Foreign business losses** cannot reduce Chinese income or income from another country. They can be carried forward against later business income from the same country.
+- **Employees posted abroad** by a Chinese employer: if the Chinese employer pays or bears the pay, it withholds as usual. If a foreign entity pays and it is a Chinese-affiliated overseas entity (中方机构), it may withhold and have the posting employer file. If that entity does not withhold, or the foreign payer is not a Chinese-affiliated entity, the Chinese employer must report the posted staff to its tax office by 28 February of the next year.
 
-- **境外所得抵免规则** — 居民个人来源于中国境外的所得，依照所得来源国（地区）税法计算缴纳的所得税税额，准予在该居民个人来源于该国（地区）的境外所得抵免限额内抵免。  _(《财政部 税务总局公告 2020 年第 3 号》《关于境外所得有关个人所得税政策的公告》)_
-- **抵免限额计算** — 某国（地区）抵免限额 = (来源于该国境外所得 × 适用中国税率 − 速算扣除数) × (来源于该国某项所得 ÷ 该国全部境外所得)  _(《财政部 税务总局公告 2020 年第 3 号》《关于境外所得有关个人所得税政策的公告》)_
-- **重要规则** — 抵免限额按"分国（地区）"计算。超过限额部分可在以后 5 个纳税年度内继续抵免。须取得境外税务机关或代扣单位出具的完税凭证。  _(《财政部 税务总局公告 2020 年第 3 号》)_
+## Boundaries and exceptions ([IIT Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html); [Interim Measures](https://hainan.chinatax.gov.cn/xxgk_6_1/22110230.html); [reconciliation exemption](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468462.html); [residence days](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201904/t444837.html))
 
-### 4.3 全年一次性奖金单独计税过渡政策
+| Question | Rule | Watch for |
+|---|---|---|
+| Is 183 days "at least" or "more than"? | Resident if cumulative stay **reaches** 183 days (满183天) | 182 full days = non-resident. Part days under 24 hours do not count |
+| Six-year rule | Worldwide tax on foreign income paid by foreign payers only after six straight years each of 183 days or more with no single trip out of more than 30 days | Count starts with 2019. A trip of exactly 30 days does not break it |
+| Serious illness threshold | Only self-paid costs **above** CNY 15,000 count, up to CNY 80,000 | Claimed only at the reconciliation, not monthly |
+| Loan interest vs rent | Never both in the same year for the taxpayer and spouse | A spouse's owned home in the work city means "has a home" |
+| Elderly support for siblings | Each sibling at most CNY 1,500 a month; total CNY 3,000 | Agreed or designated shares need a written agreement; fixed for the year |
+| Reconciliation exemption | Income **not over** one hundred and twenty thousand yuan (12万元) and tax due, or tax due **not over** CNY 400 | Does not apply if a withholding agent failed to withhold |
+| Non-resident deductions | CNY 5,000 a month on wages only | Social insurance is not deducted; no special additional deductions |
+| Labour remuneration expenses | Eight hundred yuan up to four thousand yuan per payment; 20% above | At reconciliation, income amount is always payment less 20% |
 
-- **计税方式选择** — 居民个人取得全年一次性奖金，在 2027 年 12 月 31 日前，可以选择：单独计税：奖金额 ÷ 12 后查找综合所得月度税率表 → 应纳税额 = 奖金额 × 适用税率 − 速算扣除数；并入当年综合所得计税：取消单独计税，与其他工资薪金合并按年度税率表计算。  _(《财政部 税务总局公告 2023 年第 30 号》)_
-- **临界点陷阱** — 单独计税在 36,000 / 144,000 / 300,000 等税率跳档点附近存在"多发一元、税负多缴上千元"的现象，应在汇算时双向测算后选择更优方案。  _(《财政部 税务总局公告 2023 年第 30 号》)_
+## Worked cases ([rate tables](https://guangdong.chinatax.gov.cn/gdsw/fssw_nsrxt_kjxz/2025-10/09/content_b02be06c906e46bca00673beb9e7783a.shtml); [IIT Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html); [withholding measures](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201812/t443216.html))
 
-### 4.4 股权激励单独计税过渡政策
+All amounts in yuan. These are illustrations; the facts are assumed.
 
-- **股权激励计税公式** — 应纳税额 = 股权激励收入 × 适用税率 − 速算扣除数  _(《财政部 税务总局公告 2018 年第 164 号》《财政部 税务总局公告 2023 年第 25 号》)_
-- **规则说明** — 居民个人取得股票期权、股票增值权、限制性股票、股权奖励等股权激励，在 2027 年 12 月 31 日前，可不并入当年综合所得，全额单独适用综合所得税率表计算。一个纳税年度内取得两次以上（含两次）股权激励的，应合并按上述公式计算。  _(《财政部 税务总局公告 2018 年第 164 号》《财政部 税务总局公告 2023 年第 25 号》)_
+**Case 1: resident employee, 2025 reconciliation (filed in 2026).** Shanghai employee, resident all year. Wages 500,000. One author's fee of 10,000. Employee social insurance and housing fund 60,000. One child aged 10 (taxpayer claims 100%): 24,000. Only child supporting parents aged 65 and 62: 36,000. Renting in Shanghai, no home: 1,500 × 12 = 18,000.
 
-### 4.5 外籍个人津贴免税过渡安排
+| Step | Amount |
+|---|---|
+| Author's fee income amount: 10,000 less 20%, then seventy per cent of that | 5,600 |
+| Income amount of all four types: 500,000 + 5,600 | 505,600 |
+| Less basic deduction, social insurance, 24,000 + 36,000 + 18,000 | 505,600 − 60,000 − 60,000 − 78,000 = 307,600 |
+| Annual tax: 307,600 × 25% − 31,920 | 44,980 |
+| Wage withholding in the year: (500,000 − 60,000 − 60,000 − 78,000) = 302,000; 302,000 × 25% − 31,920 | 43,580 |
+| Author's fee withheld: 5,600 × 20% | 1,120 |
+| Balance due: 44,980 − 43,580 − 1,120 | 280 |
 
-- **外籍个人津贴免税规则** — 外籍个人取得的住房补贴、伙食补贴、搬迁费、洗衣费、出差补贴、探亲费、语言训练费、子女教育费等 8 项补贴，2027 年 12 月 31 日前可以选择按免税津贴方式扣除（凭合理凭证），或选择适用专项附加扣除，二者择一。  _(《财政部 税务总局公告 2023 年第 29 号》)_
+The balance due is not over 400 yuan and tax was properly withheld, so the employee **need not** file the reconciliation (2023 No. 32). They may still file and pay. If the employee had owed 500 instead, they would have to file, because income is above one hundred and twenty thousand yuan and the balance is above 400.
 
-### 4.6 公益慈善捐赠扣除
+**Case 2: non-resident employee.** Foreign engineer, 100 days in China in 2026, monthly wages 30,000 for China workdays paid by the Chinese subsidiary. Because the stay is over 90 days, all wages for China workdays are taxed. Monthly: 30,000 − 5,000 = 25,000; 25,000 × 20% − 1,410 = 3,590. No annual reconciliation.
 
-**公益慈善捐赠扣除限额表**
+**Case 3: labour remuneration.** A resident consultant receives one fee of 30,000 from a company (not a platform). Income amount 30,000 × (1 − 20%) = 24,000. Withheld: 24,000 × 30% − 2,000 = 5,200. At the reconciliation 24,000 goes into comprehensive income and the 5,200 counts as tax prepaid.
 
-| 类型 | 扣除限额 |
-| --- | --- |
-| 一般公益慈善组织 | 应纳税所得额 30% 限额内据实扣除 |
-| 特定公益事业（教育、扶贫、目标脱贫地区等）按国务院公告 | 全额扣除 |
+**Case 4: the bonus cliff.** Bonus of 36,000 taxed separately: 36,000 ÷ 12 = 3,000, rate 3%, tax 36,000 × 3% = 1,080. Bonus of 36,001: 36,001 ÷ 12 is above 3,000, so rate 10% and quick deduction 210; tax 36,001 × 10% − 210 = 3,390.10. One more yuan of bonus costs 2,310.10 more tax. Compare with adding the bonus to comprehensive income before choosing.
 
-- **捐赠凭据** — 公益性社会组织或县级以上政府开具的公益事业捐赠票据。  _(4.6 公益慈善捐赠扣除)_
+**Case 5: household business.** An individual industrial and commercial household has 2026 taxable income of 400,000. Band by band: 30,000 × 5% = 1,500; 60,000 × 10% = 6,000; 210,000 × 20% = 42,000; 100,000 × 30% = 30,000. Tax 79,500. All of the income is below two million yuan, so half is relieved: tax payable 39,750.
 
-### 4.7 商业健康险、税延养老险、企业年金
+**Case 6: six-year rule.** A foreign manager without a domicile was in China 200 or more days in each year 2019 to 2025 and never left for more than 30 days at a time. In 2026 they are resident and also meet the six-year condition, so foreign income paid by the foreign parent is taxable in China for 2026. If they had made one 35-day trip out of China in 2022, the count would restart in 2023 and their 2026 foreign income paid from abroad would be exempt.
 
-- **商业健康保险** — 年限额 2,400元/年（200元/月），凭单证扣除。  _(4.7 商业健康险、税延养老险、企业年金)_
-- **个人税收递延型商业养老保险** — 个人养老金每年缴费 12,000元，可在综合所得或经营所得中据实扣除。  _(《财政部 税务总局公告 2022 年第 34 号》)_
-- **企业年金 / 职业年金个人缴费部分** — 在不超过本人缴费工资计税基数 4% 标准内的部分，从应纳税所得额中扣除。  _(4.7 商业健康险、税延养老险、企业年金)_
+**Case 7: foreign tax credit.** A resident has comprehensive income amounts of 400,000 from China and 100,000 from Country A (total 500,000). Deductions are 60,000 basic and 40,000 social insurance, so taxable income is 400,000 and tax is 400,000 × 25% − 31,920 = 68,080. Country A limit: 68,080 × 100,000 ÷ 500,000 = 13,616. Country A tax paid 20,000. Credit 13,616; the excess 6,384 can be carried forward for up to five years against Country A income.
 
-## 五、计算示例
+## When to refuse or refer
 
-### 案例：上海某软件工程师 2025 年度综合所得汇算
+### Sources for this section ([offshore trusts](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202607/t481046.html); [non-residents 2019 No. 35](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201904/t444839.html); [Tax Collection Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/swzsgl/200609/t284229.html))
 
-张某，居民个人，全年在上海工作。已婚，配偶有独立收入；1 个孩子（10 岁），在上海公办小学就读；与配偶约定子女教育扣除由张某 100% 扣除；父亲 65 岁、母亲 62 岁，张某为独生子女；在上海无自有住房，租房居住（直辖市，标准 1,500元/月）；一份单位工资，年薪总额 500,000元；单位代扣社保公积金合计 60,000元/年；2025 年取得稿酬一次，稿酬收入 10,000元；全年累计预扣预缴税额 65,000元（含工资薪金累计预扣 + 稿酬已预扣）。
+- **Income type unclear.** Categories that are hard to define are decided by the STA (Implementing Regulations Art. 6). Until the category is confirmed, as a working default use the treatment that gives the higher tax and flag it for review; do not use the business income table to lower the tax.
+- **Residence not established.** Without day counts, do not apply the annual table or special deductions. Default to non-resident treatment and ask for entry and exit records.
+- **Treaty residence or tie-breaker questions,** dual residence, or a person resident for part of the year under a treaty. Refer to a Chinese tax adviser with the treaty text.
+- **Directors and senior managers** of Chinese resident companies who are non-domiciled, and the source rules for multi-month bonuses and equity paid to non-domiciled people across periods. Refer.
+- **Offshore trusts** (2026 No. 21 and the STA's matching procedural announcement): transfers into a trust and distributions are now taxable. Refer.
+- **Equity incentives** where the conditions for separate taxation are in doubt, unlisted-company equity, or restricted shares of listed companies being sold. Give the rule direction only and refer.
+- **Anti-avoidance adjustments** (Law Art. 8): related-party pricing, retained profits in a low-tax controlled company, or arrangements without commercial purpose. Refer.
+- **Open audits, tax notices, penalties or appeals.** Do not give a view; refer immediately.
+- **Emigration** that cancels Chinese household registration: the person must settle their tax before cancellation (Law Art. 13). Refer.
 
-**计算过程**
+## Filing and payment ([IIT Law Art. 10–14](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html); [reconciliation measures](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202502/t475327.html); [exemption 2023 No. 32](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202308/t468462.html); [filing guide](https://guangdong.chinatax.gov.cn/gdsw/fssw_nsrxt_kjxz/2025-10/09/content_00a4ed7054fc4d82ac30702f52001a14.shtml))
 
-| 步骤 | 项目 | 金额（元） |
-| --- | --- | --- |
-| 1 | 工资薪金收入 | 500,000 |
-| 2 | 稿酬收入额：10,000 × (1−20%) × 70% | 5,600 |
-| 3 | 收入额合计 | 505,600 |
-| 4 | 基本减除费用 | (60,000) |
-| 5 | 专项扣除（社保 + 公积金） | (60,000) |
-| 6 | 子女教育（2,000 × 12） | (24,000) |
-| 7 | 赡养老人（独生子女 3,000 × 12） | (36,000) |
-| 8 | 住房租金（上海 1,500 × 12） | (18,000) |
-| 9 | **全年应纳税所得额** | **307,600** |
-| 10 | 适用税率与速算扣除数：307,600 落入 300,001–420,000 档，税率 25%，速算扣除数 31,920 |  |
-| 11 | 全年应纳税额 = 307,600 × 25% − 31,920 | 44,980 |
-| 12 | 减：全年累计已预扣预缴税额 | (65,000) |
-| 13 | **年度汇算应退税额** | **20,020（退税）** |
+| Who | What | Deadline |
+|---|---|---|
+| Employer or other payer | Withhold, pay over and file the withholding return for every payee | Within 15 days after the month of withholding |
+| Individual with no withholding agent | File and pay | Within 15 days after the month of receipt |
+| Individual whose payer did not withhold | Pay the tax | By 30 June of the next year, or earlier if the tax office sets a deadline |
+| Resident with comprehensive income who must reconcile | Annual reconciliation | 1 March to 30 June of the next year |
+| Resident with foreign income | Declare foreign income (B form) with foreign tax receipts | 1 March to 30 June of the next year |
+| Non-resident with wages from two or more payers in China | File | Within 15 days after the month of receipt |
+| Business income | Prepay; then annual reconciliation | Within 15 days after each month or quarter end; by 31 March of the next year |
+| Non-domiciled person leaving China before 1 March | May do the reconciliation before leaving | Before departure |
 
-配偶不再就同一子女申报子女教育扣除（避免重复）；父亲、母亲合计赡养扣除独生子女 3,000元/月封顶，不因父母人数增加而上调；住房租金与住房贷款利息互斥，张某无购房贷款，适用租金扣除；稿酬 70% 优惠（30% 减免）已在收入额计算中体现；通过个税APP "综合所得年度汇算" 模块在 2026 年 3月1日 — 6月30日 期间提交，退税申请绑定本人 I 类银行账户。
+**Who must do the comprehensive income reconciliation** (reconciliation measures Art. 6–7; 2023 No. 32):
 
-## 六、申报与缴纳
+- **Must file** if: (a) tax prepaid is more than the tax due and they want the refund; (b) tax prepaid is less than the tax due and no exemption applies; or (c) income was under-declared because it was put in the wrong category, the withholding agent did not withhold, or there was no withholding agent.
+- **Need not file** if tax was properly prepaid and: annual comprehensive income is not over one hundred and twenty thousand yuan (12万元) and tax is due; or the balance due is not over CNY 400 (for 2024 to 2027 income); or prepaid tax equals the tax due; or a refund is due and they choose not to claim it.
+- The small-balance exemptions do **not** apply if a withholding agent failed to withhold.
 
-### 6.1 月度预扣预缴
+**How to file.** Through the Individual Income Tax app (个人所得税APP, "综合所得年度汇算"), the Natural Person Electronic Tax Bureau website, through the employer (集中申报), by a person they appoint (委托申报), or at a tax office. The system pre-fills income and deductions; the taxpayer checks them, chooses the bonus treatment, and submits. Before filing, confirm the phone number and bank account on record (Art. 8). Tax due is paid online; refunds go to the bank account the taxpayer registers.
 
-**月度预扣预缴责任表**
+### 2025 annual reconciliation (filed 1 March to 30 June 2026) ([STA notice 2026 No. 1](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202602/t479400.html); [reconciliation measures](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202502/t475327.html))
 
-| 责任主体 | 操作 | 时间 |
-| --- | --- | --- |
-| 扣缴义务人（单位） | 累计预扣预缴法计算工资薪金 IIT，按月代扣 | 发薪当月 |
-| 扣缴义务人 | 通过自然人电子税务局（扣缴端）申报 | 次月 15 日前 |
-| 个人 | 在个税APP确认全年专项附加扣除信息 | 每年 12 月内确认次年信息；新增/变更随时报送 |
-| 经营所得纳税人 | 按月或按季预缴；年度汇算 | 月度/季度终了后 15 日内预缴；次年 3月31日前汇算 |
+- The window for 2025 income was **1 March to 30 June 2026**. Taxpayers who wanted to file between 1 and 20 March could book through the app from 25 February; from 21 March no booking was needed.
+- The 2025 rules are the same as 2026: the annual table, CNY 60,000 basic deduction, the special additional deduction amounts above, and the exemptions for small balances.
+- The STA's reconciliation measures (Order No. 57, in force from 26 February 2025) set the standing procedure used for the 2025 year.
+- If the window was missed and tax is due, file and pay now: the daily late-payment surcharge runs from the day the tax became overdue (see penalties). For a missed refund, ask the local tax office how to claim it; this Guide does not set out that procedure.
 
-### 6.2 综合所得年度汇算清缴（3月1日 — 6月30日）
+### Penalties ([Tax Collection Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/swzsgl/200609/t284229.html))
 
-- **必须办理汇算的情形（居民个人）** — 1. 已预缴税额 > 应纳税额，且申请退税；2. 综合所得年收入 > 120,000元 且补税金额 > 400元；3. 因申报收入或扣除有误，需要补税。  _(6.2 综合所得年度汇算清缴（3月1日 — 6月30日）)_
-- **无需办理汇算的情形** — 1. 年综合所得 ≤ 120,000元；2. 补税金额 ≤ 400元；3. 已预缴税额与年度应纳税额一致；4. 符合汇算退税条件但纳税人主动放弃。  _(6.2 综合所得年度汇算清缴（3月1日 — 6月30日）)_
-- **办理渠道（按优先级）** — 1. 个人所得税APP（推荐） — 移动端，支持预填、修改、提交、退税申请、补税缴款一站式；2. 自然人电子税务局（web端） — https://etax.chinatax.gov.cn ；3. 办税服务厅 — 现场办理（携带身份证、个税APP申报记录、扣缴凭证）；4. 委托扣缴义务人代办 — 仅适用单一单位工资薪金所得且签署书面委托。  _(6.2 综合所得年度汇算清缴（3月1日 — 6月30日）)_
+- **Late payment:** a daily surcharge of five ten-thousandths (0.05 per cent written as 万分之五) of the unpaid tax, from the day the tax became overdue (Art. 32).
+- **Late filing:** an order to correct and a fine of up to two thousand yuan; up to ten thousand yuan if serious (Art. 62).
+- **Tax evasion** (false books, false returns, or refusing to file after the tax office tells the person to): the tax, the surcharge and a fine of half to five times the unpaid tax; criminal liability if it is a crime (Art. 63).
+- **Not filing and underpaying:** the tax, the surcharge and a fine of half to five times the unpaid tax. No notice from the tax office is needed for this one (Art. 64).
+- **Fabricating a tax basis:** a fine of up to fifty thousand yuan (Art. 64).
+- **Hiding assets to avoid paying arrears:** the tax, the surcharge and a fine of half to five times the arrears (Art. 65).
+- **Tax resistance** (refusing to pay by violence or threats): the tax, the surcharge and criminal liability; if minor and not a crime, a fine of one to five times the tax refused (Art. 67).
 
-1. 实名登录 → "综合所得年度汇算" → 选择年度（2025年汇算在2026年办理）；2. 系统自动预填工资薪金、劳务报酬、稿酬、特许权使用费四类收入；3. 核对收入与扣除项目（专项扣除、专项附加扣除、其他扣除）；4. 选择全年一次性奖金计税方式（单独 / 并入）；5. 系统自动测算应补/退税额；6. 退税：绑定 I 类银行卡 → 提交申请 → 税务机关审核（通常 3–30 个工作日） → 退至账户；7. 补税：生成缴款书 → 通过银联、第三方支付或 APP 内绑定银行卡缴纳。
+## Completion checklist ([IIT Law](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/201809/t441789.html); [operation measures](https://shanghai.chinatax.gov.cn/zcfw/zcfgk/grsds/202204/t462550.html))
 
-### 6.3 经营所得年度汇算（3月31日前）
-
-- **经营所得年度汇算** — 个体工商户、个人独资企业投资人、合伙企业自然人合伙人，应在次年 3月31日前办理经营所得汇算。通过自然人电子税务局或办税服务厅提交《个人所得税经营所得纳税申报表（B表）》。  _(6.3 经营所得年度汇算（3月31日前）)_
-
-### 6.4 滞纳金与处罚
-
-**滞纳金与处罚表**
-
-| 情形 | 处罚标准 | 法律依据 |
-| --- | --- | --- |
-| 未按期申报 | 责令限期改正，可处 2,000元以下罚款；情节严重 2,000–10,000元 | 《税收征管法》第62条 |
-| 未按期缴税 | 滞纳金按日加收万分之五（年化约 18.25%） | 《税收征管法》第32条 |
-| 偷税（虚假申报、不申报） | 追缴税款、滞纳金，并处不缴或少缴税款 50%–5倍 罚款；情节严重移送公安 | 《税收征管法》第63条 |
-| 抗税 | 拒不缴纳税款，依法追究刑事责任 | 《税收征管法》第67条 |
-| 逃避追缴欠税 | 处 5万元以下罚款；构成犯罪移送公安 | 《税收征管法》第65条 |
-
-## 七、保守默认值
-
-**保守默认值表**
-
-| 不确定情形 | 默认处理 | 理由 |
-| --- | --- | --- |
-| 居民身份不明 | 按非居民处理（不适用专项附加扣除，不参与汇算） | 适用更严格规则，避免低估税负 |
-| 所得类别不明 | 归入综合所得最高税率档；标记复核 | 避免误用经营所得 5%–35% 而少缴 |
-| 专项附加扣除证据缺失 | 不予扣除 | 资料留存 5 年备查的法定要求 |
-| 子女教育分摊比例不明 | 默认每方 50% | 避免重复扣除 |
-| 赡养老人非独生子女分摊不明 | 默认人均分摊（不超过 1,500元/月/人） | 法定上限保护 |
-| 全年一次性奖金计税方式选择不明 | 双向测算后选用税负较低方案，并明示 | 减少汇算后争议 |
-| 境外所得抵免凭证缺失 | 不予抵免 | 法定凭证要求 |
-| 稿酬来源（多次合并 vs 单次） | 按单次计税，每次结算 | 与扣缴义务人申报口径一致 |
-| 股权激励行权时点不清 | 按可行权日所属年度归集；标记复核 | 单独计税过渡期内归属年度敏感 |
-| 经营所得与综合所得费用扣除分配不明 | 60,000元 基本减除费用、专项扣除、专项附加扣除在综合所得中扣除 | 避免重复扣除 |
-| 银行账户类型不清（汇算退税） | 仅退至本人 I 类账户 | 国家税务总局退税规定 |
-
-## 八、参考资料
-
-### 法律
-
-《中华人民共和国个人所得税法》（1980年制定，最近一次修正：2018年8月31日全国人大常委会第七次修正，2019年1月1日施行）
-《中华人民共和国个人所得税法实施条例》（国务院令第707号，2018年12月18日公布，2019年1月1日施行）
-《中华人民共和国税收征收管理法》 及其实施细则
-
-### 规范性文件 — 专项附加扣除
-
-《个人所得税专项附加扣除暂行办法》（国发〔2018〕41号）
-国务院关于提高个人所得税有关专项附加扣除标准的通知（国发〔2023〕13号 / 2023年8月公告）— 上调子女教育、3岁以下婴幼儿照护、赡养老人三项标准
-《个人所得税专项附加扣除操作办法（试行）》（国家税务总局公告 2018 年第 60 号，2022 年修订）
-
-### 规范性文件 — 综合所得汇算清缴
-
-《关于办理个人所得税综合所得年度汇算的公告》（国家税务总局每年发布；如 2024 年度汇算适用 2025 年公告）
-《个人所得税扣缴申报管理办法（试行）》（国家税务总局公告 2018 年第 61 号）
-
-### 规范性文件 — 特殊政策
-
-《财政部 税务总局关于延续实施全年一次性奖金等个人所得税优惠政策的公告》（2023 年第 30 号）— 延续至 2027 年 12 月 31 日
-《财政部 税务总局关于延续实施上市公司股权激励有关个人所得税政策的公告》（2023 年第 25 号）— 延续至 2027 年 12 月 31 日
-《财政部 税务总局关于延续实施外籍个人有关津补贴个人所得税政策的公告》（2023 年第 29 号）— 延续至 2027 年 12 月 31 日
-《财政部 税务总局关于个人养老金有关个人所得税政策的公告》（2022 年第 34 号）
-《财政部 税务总局关于境外所得有关个人所得税政策的公告》（2020 年第 3 号）
-《财政部 税务总局关于非居民个人和无住所居民个人有关个人所得税政策的公告》（2019 年第 35 号）
-《财政部 税务总局关于在中国境内无住所的个人居住时间判定标准的公告》（2019 年第 34 号）
-
-### 主管机关与办税平台
-
-国家税务总局 — https://www.chinatax.gov.cn
-个人所得税 APP — iOS App Store / 各大 Android 应用市场（开发者：国家税务总局）
-自然人电子税务局 — https://etax.chinatax.gov.cn
-国家税务总局 12366 纳税服务平台 — https://12366.chinatax.gov.cn
-
-### 本技能包内交叉引用
-
-`foundation.md` — 工作流架构与保守默认值原则
-`intake.md` — 客户入口提问流程
-`references.md` — 来源仓库与核验链接索引
-其他中国相关技能（如 `china-vat`、`china-cit`）— 待补充
-
-## 禁止事项（PROHIBITIONS）
-
-严禁在未确认居民身份（境内居住天数）的情况下适用综合所得年度税率表（R-CN-IT-1）。
-严禁将非居民个人所得并入年度汇算（非居民按月或按次单独计征）。
-严禁在未确认专项附加扣除信息真实性、未要求纳税人留存 5 年资料备查的情况下进行扣除。
-严禁同时扣除住房贷款利息与住房租金（互斥规则）。
-严禁就同一子女由父母双方各 100% 扣除子女教育（重复扣除）。
-严禁在非独生子女情形下让单一子女超过 1,500元/月的赡养老人扣除上限。
-严禁在无境外完税凭证情况下抵免境外已纳税额。
-严禁就经营所得在综合所得已扣除基本减除费用的同时再次扣除。
-严禁就同一笔股权激励既适用单独计税又并入综合所得（择一原则）。
-严禁绕过个人所得税APP或自然人电子税务局自行修改预填数据而无支持文件。
-严禁就含有外籍个人住房补贴等八项免税津贴的情形，在 2027 年 12 月 31 日后继续按免税处理。
-严禁本技能直接代为提交申报 — 仅生成审核底稿，必须由中国注册会计师或注册税务师审核后方可申报。
-
-## 免责声明
-
-本技能及其输出仅用于信息和计算目的，不构成税务、法律或财务建议。OpenAccountants 及其贡献者对因使用本技能产生的任何错误、遗漏或后果不承担任何责任。所有输出必须由中国注册会计师（CPA）、注册税务师（CTA）或同等资质的执业人员审核并签字后方可申报或据此采取行动。
-
-本技能的最新核验版本维护于 [openaccountants.com](https://openaccountants.com)。登录可获取最新版本、申请持证会计师专业复核，并跟踪税法变更。
-
-OpenAccountants — 面向 AI 的开源会计技能库
-This is not tax advice. All outputs must be reviewed by a qualified professional before filing.
+- [ ] Residence decided from full-day counts; six-year history checked for any non-domiciled resident.
+- [ ] Every receipt put in the right category; payer and withholding confirmed.
+- [ ] Special additional deductions checked for eligibility, sharing and no double claims (loan interest vs rent; parents' 100%/50% split; sibling caps).
+- [ ] Records for every deduction kept for five years.
+- [ ] Bonus: separate vs combined tested both ways; equity incentives checked against the conditions.
+- [ ] Foreign income combined by category; credit limited country by country; foreign tax receipts on file.
+- [ ] Reconciliation obligation decided (must file, need not file, or refund to claim); filed between 1 March and 30 June.
+- [ ] Business income prepaid on time and reconciled by 31 March; household halving applied.
+- [ ] Foreign individuals: allowance election made once for the year; dividends from foreign-invested enterprises from 1 September 2026 taxed at 20%.
+- [ ] The result is a working paper. A qualified Chinese tax adviser should review it before filing.
 
 <!-- openaccountants-cta-block -->
 

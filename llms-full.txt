@@ -132,7 +132,7 @@ https://www.openaccountants.com
 
 ========================================================================
 
-## Guide inventory (2019 guides, 245 jurisdictions, 168 accountant-reviewed)
+## Guide inventory (2019 guides, 245 jurisdictions, 161 accountant-reviewed)
 
 - us-1099-k-and-payment-processors | US | tier 2 | reviewed_by -
 - us-education-credits-8863 | US | tier 2 | reviewed_by -
@@ -1193,7 +1193,7 @@ https://www.openaccountants.com
 - malaysia-sst | MY | tier 2 | reviewed_by MUHAMMAD HANIS MAT HUSSIN
 - my-company-formation | MY | tier 2 | reviewed_by MUHAMMAD HANIS MAT HUSSIN
 - my-corporate-income-tax | MY | tier 2 | reviewed_by MUHAMMAD HANIS MAT HUSSIN, CA-53636
-- my-epf-socso | MY | tier 2 | reviewed_by MUHAMMAD HANIS MAT HUSSIN
+- my-epf-socso | MY | tier 2 | reviewed_by -
 - my-income-tax | MY | tier 2 | reviewed_by MUHAMMAD HANIS MAT HUSSIN
 - my-pcb | MY | tier 2 | reviewed_by MUHAMMAD HANIS MAT HUSSIN
 - my-tax-overview | MY | tier 2 | reviewed_by MUHAMMAD HANIS MAT HUSSIN
@@ -1770,7 +1770,7 @@ https://www.openaccountants.com
 - ae-tax-overview | AE | tier 2 | reviewed_by -
 - ae-tax-residency | AE | tier 1 | reviewed_by Mehran Habib
 - general-uae-corporate-tax-guide | AE | tier 2 | reviewed_by -
-- uae-vat | AE | tier 1 | reviewed_by Mehran Habib
+- uae-vat | AE | tier 2 | reviewed_by -
 - ug-company-formation | UG | tier 2 | reviewed_by -
 - ug-corporate-income-tax | UG | tier 2 | reviewed_by -
 - ug-income-tax | UG | tier 2 | reviewed_by -
@@ -1784,16 +1784,16 @@ https://www.openaccountants.com
 - real-estate-and-property | GB | tier 2 | reviewed_by -
 - references | GB | tier 2 | reviewed_by -
 - uk-bookkeeping | GB | tier 2 | reviewed_by -
-- uk-capital-gains-sa108 | GB | tier 1 | reviewed_by James Power
-- uk-crypto-tax | GB | tier 1 | reviewed_by James Power
+- uk-capital-gains-sa108 | GB | tier 2 | reviewed_by -
+- uk-crypto-tax | GB | tier 2 | reviewed_by -
 - uk-dividends | GB | tier 1 | reviewed_by James Power
 - uk-financial-statements | GB | tier 1 | reviewed_by James Power
-- uk-formation | GB | tier 1 | reviewed_by James Power
-- uk-income-tax-sa100 | GB | tier 1 | reviewed_by James Power
-- uk-national-insurance | GB | tier 1 | reviewed_by James Power
+- uk-formation | GB | tier 2 | reviewed_by -
+- uk-income-tax-sa100 | GB | tier 2 | reviewed_by -
+- uk-national-insurance | GB | tier 2 | reviewed_by -
 - uk-non-dom | GB | tier 2 | reviewed_by -
 - uk-payments-on-account | GB | tier 1 | reviewed_by James Power
-- uk-payroll | GB | tier 1 | reviewed_by James Power
+- uk-payroll | GB | tier 2 | reviewed_by -
 - uk-rental-sa105 | GB | tier 2 | reviewed_by -
 - uk-self-employment-sa103 | GB | tier 1 | reviewed_by James Power
 - uk-statutory-residence-test | GB | tier 2 | reviewed_by -

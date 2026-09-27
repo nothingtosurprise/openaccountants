@@ -2,600 +2,411 @@
 name: ie-corporation-tax
 description: "Use this skill whenever asked about Irish Corporation Tax for a resident Irish company or branch of a non-resident company carrying on a trade in Ireland. Trigger on phrases like \"Ireland CT\", \"Ireland corporation tax\", \"12.5% Ireland\", \"Irish trading rate\", \"Pillar Two Ireland\", \"Irish CT1 return\", \"Revenue Online Service CT\", \"ROS CT1\", \"Section 21 TCA\", \"Section 21A passive income\", \"Knowledge Development Box\", \"KDB\", \"R&D tax credit Ireland\", \"Section 766\", \"Section 110 SPV\", \"group relief Ireland\", \"preliminary CT\", \"iXBRL accounts\", \"QDMTT Ireland\", \"IIR Ireland\", or \"UTPR Ireland\". Covers the 12.5% trading rate (Section 21 TCA 1997), the 25% non-trading rate (Section 21A) on passive income, the Pillar Two 15% effective minimum tax for in-scope MNEs implemented via Finance (No. 2) Act 2023 (IIR, QDMTT, UTPR), the R&D tax credit at 30% under Section 766 TCA (as raised by FA 2024) refundable in three instalments, the Knowledge Development Box at 6.25% effective rate, Section 110 securitisation SPV rules, group relief at the 75% threshold, trading loss relief (one-year carry-back, indefinite carry-forward), preliminary tax (90% current year or 100% prior year), and final CT1 filing within 9 months of year-end (by the 23rd of that month for ROS users) with iXBRL-tagged financial statements via Revenue Online Service. Out of scope: personal income tax (use ie-income-tax-form11), USC (use ie-usc), PRSI Class S (use ie-prsi-class-s), VAT (use ireland-vat-return), preliminary income tax (use ie-preliminary-tax), partnerships and unincorporated businesses, foreign branch trading profits taxed under Section 25 attribution rules, banking and insurance sector specific regimes, life assurance Case I/IV computations, REIT (Section 705A) and IREF (Section 739K) specific returns, petroleum and mineral extraction profits, and Irish Collective Asset-management Vehicles (ICAVs). ALWAYS read this skill before touching any Irish Corporation Tax work."
 jurisdiction: IE
-tax_year: 2025
-last_updated: 2026-07-13
+tax_year: 2026
+last_updated: 2026-09-26
+authored_by: OpenAccountants team
 review_status: pending_review
+trust_label: By OpenAccountants
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# IE Corporation Tax
+# Irish Corporation Tax (CT1): 2026 rates, preliminary tax, losses, reliefs and filing
 
-## Ireland — Corporation Tax — Skill v1.0
+## Scope
 
-> **Produced by OpenAccountants (openaccountants.com)**
->
-> This skill is for informational purposes only and does not constitute tax, legal, or financial advice. All outputs must be reviewed and signed off by a qualified Irish tax adviser (Chartered Tax Adviser CTA, ACA, ACCA, or AITI-qualified practitioner) before filing or acting upon. The latest verified version is maintained at [openaccountants.com](https://openaccountants.com).
+This Guide covers Corporation Tax (CT) for an Irish-resident company, or an Irish branch of a non-resident company, that files a Form CT1. Figures are for tax year 2026, meaning accounting periods in 2026: for a calendar-year company, the 12 months to 31 December 2026. A dated section near the end covers the 2025 CT1, which most calendar-year companies had to file by 23 September 2026.
 
-## Section 1 — Quick Reference
+It covers the 12.5% and 25% rates, chargeable gains in CT, the Pillar Two minimum tax (scope only), close-company surcharges, preliminary tax, CT1 filing on ROS, losses and group relief, start-up relief, the R&D corporation tax credit, the Knowledge Development Box, capital allowances, interest limitation, and late filing surcharges and interest.
 
-**Quick Reference table**
+It does not cover: personal income tax, USC or PRSI; VAT; partnerships and sole traders; Section 110 securitisation companies; banks and insurers; REITs and IREFs; petroleum and mineral profits; tonnage tax; ICAVs and funds; the Pillar Two top-up computation itself; transfer pricing documentation; anti-hybrid rules; the outbound payments measures; or foreign currency (functional currency) computations. Those are in "When to refuse or refer".
 
-| Field | Value |
-| --- | --- |
-| Country | Ireland (Éire) |
-| Tax | Corporation Tax (CT) |
-| Currency | EUR (functional currency election available under Section 402 TCA 1997) |
-| Tax authority | Revenue Commissioners (An Coimisiún Ioncaim) |
-| Primary legislation | **Taxes Consolidation Act 1997 (TCA 1997)** as amended by annual Finance Acts |
-| Recent Finance Acts | Finance Act 2023 (Pillar Two introduction); Finance Act 2024 (R&D credit raised to 30%); Finance Act 2025 (annual updates) |
-| **Trading rate** | **12.5%** of trading income — **Section 21 TCA 1997** |
-| **Non-trading rate** | **25%** of passive (non-trading) income — **Section 21A TCA 1997** |
-| **Capital gains rate (companies)** | 33% on chargeable gains (Section 28 TCA) |
-| **Close-company surcharge** | 20% on undistributed investment / rental income; 15% on undistributed professional service income (Sections 440, 441 TCA) |
-| **Pillar Two — IIR / QDMTT** | Effective minimum tax **15%** for MNEs with consolidated revenue **> €750M** for at least 2 of the previous 4 financial years — Part 4A TCA 1997 (inserted by Finance (No. 2) Act 2023); effective for fiscal years beginning on or after 31 December 2023 |
-| **Pillar Two — UTPR** | Undertaxed Profits Rule, effective for fiscal years beginning on or after 31 December 2024 |
-| **R&D Tax Credit** | **30%** of qualifying R&D expenditure (raised from 25% by Finance Act 2024) — Section 766 TCA; refundable in 3 instalments |
-| **Knowledge Development Box (KDB)** | Effective rate **6.25%** (i.e. half the 12.5% rate) on qualifying IP-derived income — Section 769G-R TCA; extended to accounting periods beginning before 1 January 2027 (FA 2024) |
-| **Group relief threshold** | **75%** ownership (effective beneficial); Sections 411–429 TCA |
-| **Loss relief** | Trading losses: 1-year carry-back (Section 396A); indefinite carry-forward against same trade (Section 396) |
-| **Preliminary tax (large companies)** | 50% of current year OR 100% of prior year, in 2 instalments (large company = CT liability > €200,000 in preceding period) |
-| **Preliminary tax (small companies)** | 90% of current year OR 100% of prior year, in 1 instalment |
-| **Preliminary tax due date** | 23rd day of the month preceding the last month of the accounting period (large: also a first instalment in month 6) |
-| **Annual return** | **Form CT1** filed via **Revenue Online Service (ROS)** |
-| **CT1 filing deadline** | 9 months after the end of the accounting period; **must be by the 23rd day of that 9th month** to avoid surcharge (Section 959AA TCA) |
-| **iXBRL accounts** | Financial statements must be filed in iXBRL format alongside CT1 (mandatory for most companies; small-company exclusion limited) |
-| **Late filing surcharge** | 5% of liability (up to €12,695) if filed within 2 months late; 10% (up to €63,485) if more than 2 months late |
-| **Statute of limitations** | 4 years from the end of the accounting period in which the return was filed (Section 959AA(2)); unlimited for fraud / neglect |
-| Skill version | 1.0 |
-| Validated by | Pending — sign-off by Irish Chartered Tax Adviser (CTA / AITI) |
+The law is the Taxes Consolidation Act 1997 (the TCA), as amended each year by a Finance Act. Revenue's guidance is on [revenue.ie](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/index.aspx) and in its Tax and Duty Manuals (TDMs). Acts are on [irishstatutebook.ie](https://www.irishstatutebook.ie/eli/1997/act/39/enacted/en/html).
 
-### 1.1 Conservative Defaults (Snapshot)
+## Ask the client first
 
-**Conservative Defaults (Snapshot) table**
+- What is the accounting period (start and end date)? It cannot be longer than 12 months, so a longer set of accounts must be split into two CT periods.
+- Is the company Irish resident, or is it a non-resident company trading in Ireland through a branch?
+- What does the company do? Is the income trading income, or rent, interest, dividends or other passive income? Does it carry on an "excepted trade" (for example dealing in or developing land, or working minerals or petroleum)?
+- What was the CT liability for the previous accounting period? Was the previous period shorter than 12 months?
+- Is this the company's first accounting period? When did it start to trade? Did it take over a trade from anyone else?
+- Who owns the company? Is it controlled by five or fewer people, or by its directors (a close company)? Does it provide professional services (a service company)? What dividends were paid, and when?
+- Is it in a group? Which companies own three quarters or more of it, and which companies does it own three quarters or more of? Is the wider group's consolidated revenue €750m or more?
+- Any losses brought forward, losses this year, or losses from group companies to claim?
+- Any R&D spending, patents or software income? Has the company claimed the R&D credit in any of its previous three accounting periods?
+- Any assets bought or sold: plant, buildings, vehicles, intangibles, shares, land?
+- Any interest expense? How much net interest (exceeding borrowing costs) in the year?
+- Are the accounts audited, and does the company meet all three iXBRL exemption tests?
+- Is any CT1 or payment outstanding or late?
 
-| Ambiguity | Default |
-| --- | --- |
-| Trading vs non-trading income unclear | Non-trading (25%) |
-| Passive-income source unclear | Section 21A (25%) |
-| Pillar Two scope unclear | Out of scope until consolidated revenue > €750M for 2 of last 4 FYs is confirmed |
-| R&D qualification unclear | No credit until BERD test + Frascati Manual criteria documented |
-| KDB qualification unclear | Do not apply 6.25%; default to 12.5% trading rate |
-| Group relationship unclear | No group relief |
-| Close company status unclear | Treat as close company; surcharge potentially in scope |
-| Accounting period > 12 months | Split into two CT accounting periods (first 12 + remainder) — Section 27 TCA |
+## The method, step by step
 
-## Section 2 — Required Inputs and Refusal Catalogue
+1. **Fix the period and the company's status.** Confirm the accounting period (12 months at most), residence, and whether the company is a close company, a service company, a group member or in Pillar Two scope.
+2. **Start from the accounts profit.** Add back depreciation, business entertainment, capital expenditure and other non-deductible items. Deduct capital allowances instead of depreciation.
+3. **Split the profits.** Trading income is taxed at 12.5%. Rental, investment and other non-trading income, and income of an excepted trade, are taxed at 25%. Chargeable gains (other than development land) are included in CT by grossing up the gain (see below).
+4. **Apply losses and group relief** in the order the law allows: current-period and prior-period set-off, value basis, carry forward, group surrenders.
+5. **Apply credits and reliefs:** start-up relief (s.486C), double tax relief, and the Knowledge Development Box deduction if claimed. Compute the R&D credit separately: it is paid in instalments, not deducted from the tax charge.
+6. **Add close-company surcharges** that fall due with this period's CT (they relate to the previous period's undistributed income).
+7. **Check preliminary tax.** Work out whether the company is small or large, what was due, and whether it was paid on time. The balance is due with the CT1.
+8. **File the CT1 with iXBRL financial statements (if required) on ROS** and pay the balance by the return date.
+9. **Check for exposure:** late filing surcharge, restriction of reliefs, and daily interest on late tax.
 
-### 2.1 Required Inputs
+## Rates and key figures for 2026 accounting periods ([Revenue: basis of charge](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/basis-of-charge.aspx))
 
-- **Minimum viable inputs** — Signed statutory financial statements (Companies Act 2014 format) for the accounting period; prior-year Form CT1; confirmation of (i) trading vs non-trading income split, (ii) close-company status, (iii) group structure, (iv) any Pillar Two scope flag.
-- **Recommended inputs** — General ledger trial balance; fixed-asset register with capital allowance schedule (Section 284 wear-and-tear, Section 291A intangibles); R&D expenditure schedule with Section 766 categorisation; KDB tracking-and-tracing computation if claimed; preliminary tax payment confirmations; CRO B1 annual return confirmation (separate from CT but reviewer should cross-check).
-- **Ideal inputs** — Audited statements with audit report and iXBRL-tagged file; transfer pricing local file (Section 835G TCA); CbCR (Section 891H TCA) if part of a group with consolidated revenue > €750M; Pillar Two GIR (Globe Information Return) workings; intercompany agreements; Revenue eBrief alerts subscription log; prior-year Revenue audit / intervention correspondence.
-- **Hard stop** — HARD STOP if minimum is missing. Without statutory accounts and the prior-year CT1, no CT computation may be produced.
-
-### 2.2 Refusal Catalogue
-
-- **R-IE-CT-1** — Non-resident company with no Irish branch. Section 23A residence test required first. Non-resident companies with no Irish PE / branch are outside Irish CT scope. Escalate to a cross-border specialist (see `_cross-border`).  _(Section 23A TCA)_
-- **R-IE-CT-2** — Sector-specific regimes. Banking and IFSC funds (Sections 110, 246), life assurance (Part 26 TCA), REITs (Section 705A et seq.), IREFs (Section 739K et seq.), petroleum (Part 24), mining (Part 24), Islamic finance (Part 8A) — out of scope.  _(Sections 110, 246, Part 26, Section 705A, Section 739K, Part 24, Part 8A TCA)_
-- **R-IE-CT-3** — Section 110 SPV bespoke computations. Flagged at Tier 2 (see Section 5.3) but bespoke profit-participating loan structures, qualifying asset definitions, and Section 110(5A) restrictions require specialist sign-off. Do not produce a Section 110 computation without explicit reviewer engagement.  _(Section 110(5A) TCA)_
-- **R-IE-CT-4** — Pillar Two GIR preparation. Skill flags scope and routes data; the GloBE Information Return (GIR) and the QDMTT return itself require specialist co-pilot software (e.g., OECD GIR XML schema). Out of scope for unaided generation.
-- **R-IE-CT-5** — Aggressive structuring. Will not advise on debt-push-down, IP migration timing for KDB capture, residence migration to/from Ireland, hybrid mismatch structuring (anti-hybrid rules Sections 835AG–835AY), or principal-purpose-test (PPT) avoidance positions. Section 811C general anti-avoidance rule and protective notification regime under Section 811D applies — escalate.  _(Sections 835AG–835AY, 811C, 811D TCA)_
-- **R-IE-CT-6** — Revenue intervention or audit. Active audit, profile interview, level 1/2/3 intervention, or qualifying disclosure under Section 1077E TCA — do not draft positions without engaged CTA representation.  _(Section 1077E TCA)_
-- **R-IE-CT-7** — Cross-skill scope. Personal tax → `ie-income-tax-form11`; USC → `ie-usc`; PRSI → `ie-prsi-class-s`; VAT → `ireland-vat-return`; preliminary income tax (individuals) → `ie-preliminary-tax`.
-- **R-IE-CT-8** — Functional currency election. Section 402 TCA functional currency cases require a separate computation discipline and reviewer sign-off — do not auto-elect.  _(Section 402 TCA)_
-
-## Section 3 — Tier 1 Rules (Standard Computation)
-
-### 3.1 The 12.5% Trading Rate — Section 21 TCA 1997
-
-- **Trading rate** — 12.5% percent (Case I and Case II trading income)  _(Section 21(1) TCA 1997)_
-- **CT (trading) formula** — CT (trading) = 12.5% × Trading profits adjusted for tax  _(Section 21(1) TCA 1997)_
-- **'Trading' defined** — Section 3 TCA — a trade is "every trade, manufacture, adventure or concern in the nature of trade". The case law (Birmingham & District Cattle By-Products v IRC; CIR v Livingston) emphasises the badges of trade. Investment-holding income is not trading.  _(Section 3 TCA)_
-- **Manufacturing / IP / services** — All bona-fide trading activity qualifies at 12.5% — there is no longer a separate manufacturing relief (abolished from 31 December 2010). Mere passive holding of assets does not qualify.
-
-### 3.2 The 25% Non-Trading Rate — Section 21A TCA 1997
-
-- **Non-trading rate** — 25% percent  _(Section 21A TCA 1997)_
-
-**Section 21A categories table**  _(Section 21A TCA 1997)_
-
-| Category | Schedule D Case | Examples |
+| Item | 2026 figure | Notes |
 | --- | --- | --- |
-| Investment income (interest, dividends from non-Irish sources) | Case III | Foreign interest, foreign dividends (subject to exemption tests under Sections 21B / 626B) |
-| Rental income from Irish or foreign property | Case V (Irish) / Case III (foreign) | Net rental profits |
-| Royalties (where not part of a trade) | Case III / IV | Passive licensing receipts |
-| Mining, petroleum, dealing in land | Case I (specified trades) | Petroleum (Part 24); dealing in land (Section 21A(2)) |
-| Other Case IV / Case V income | Various | Miscellaneous untaxed income |
+| Trading income | 12.5% | Case I and II trading profits (s.21 TCA) |
+| Non-trading income and excepted trades | 25% | Rent, interest, foreign dividends taxed under Case III, other passive income; excepted trades such as land dealing (s.21A TCA) |
+| Chargeable gains (not development land) | CGT rate of 33%, collected through CT | Gain grossed up so that CT at 12.5% equals CGT at 33% |
+| Pillar Two minimum rate | 15% | Groups with consolidated revenue of €750m or more in two of the four preceding fiscal years |
+| Small company (preliminary tax) | CT of the previous period not above €200,000 | Above €200,000 = large company |
+| Close-company surcharge on estate and investment income | 20% | After a 7.5% reduction for trading companies; exempt if the excess is €2,000 or less |
+| Service-company surcharge | 15% on half of undistributed trading income, plus 20% on estate and investment income | s.441 TCA |
+| R&D corporation tax credit | 35% for periods ending 31 December 2026 or later; 30% for periods commencing on or after 1 January 2024 that end earlier | See the R&D section |
+| Knowledge Development Box | Deduction of 20% of qualifying profits, an effective rate of 10% | From 1 October 2023; periods commencing before 1 January 2027 |
+| Plant and machinery | 12.5% a year over eight years | Wear and tear |
+| Late payment interest | 0.0219% per day | Cannot be appealed or reduced |
+| Late filing surcharge | 5% (maximum €12,695) or 10% (maximum €63,485) | Two-month dividing line |
 
-- **CT (non-trading) formula** — CT (non-trading) = 25% × Non-trading profits  _(Section 21A TCA 1997)_
-- **Total CT liability formula** — Total CT liability = (12.5% × Case I/II trading profits) + (25% × Case III/IV/V non-trading profits) + (33% × chargeable gains, with adjustment via Section 78 to gross up to 33% effective).  _(Section 78 TCA)_
+**The accounting period.** CT is charged on the profits of an accounting period, which cannot be longer than 12 months. If the rate changes during a period, profits are apportioned on a time basis. No rate change has been made for 2026: the 12.5% and 25% rates apply to the whole of 2026 and 2025.
 
-### 3.3 Capital Gains — Section 28 TCA
+**Trading or not.** The 12.5% rate needs a real trade. Holding investments, letting property and earning deposit interest are not trading, even inside a trading company; that income is taxed at 25%. When the split is unclear, do not default to 12.5%: gather the facts and refer borderline cases (see Revenue's TDM Part 02-02-06 on classifying activities as trading).
 
-- **Effective CGT rate for companies** — 33% percent  _(Section 28 TCA)_
-- **Section 78 gross-up formula** — Section 78 grosses up the gain by the formula `Gain × (33/12.5)` if computed at the 12.5% rate, or `Gain × (33/25)` at the 25% rate, so the effective tax is 33%.  _(Section 78 TCA)_
-- **Substantial shareholding exemption** — Disposal of shares in a qualifying subsidiary (≥ 5% held for ≥ 12 months in the past 5 years, trading subsidiary, EU/treaty country) is exempt from CT on the gain.  _(Section 626B TCA)_
+## Chargeable gains inside CT ([Revenue: capital gains for companies](https://www.revenue.ie/en/companies-and-charities/capital-gains-for-companies/index.aspx))
 
-### 3.4 Pillar Two — 15% Effective Minimum Tax
+A company's gains on assets other than development land are taxed at the CGT rate of 33%, but the tax is collected through CT at 12.5%. So the gain is adjusted: work out the CGT at 33%, then divide that tax by 12.5%. Report the adjusted gain in the capital gains section of the CT1.
 
-- **Legislation** — Part 4A TCA 1997 (inserted by Finance (No. 2) Act 2023, implementing Council Directive (EU) 2022/2523 of 14 December 2022).  _(Part 4A TCA 1997)_
-- **Scope** — Multinational and large domestic groups with consolidated revenue > €750M in at least 2 of the 4 preceding financial years. Excluded entities: government, international organisations, non-profits, pension funds, ultimate parent investment funds, real estate investment vehicles.  _(Part 4A TCA 1997)_
-- **Three rules — sequential application** — 1. QDMTT (Qualified Domestic Minimum Top-up Tax) — Ireland's domestic top-up applied first. Effective for fiscal years beginning on or after 31 December 2023. Calculated under Irish QDMTT computation rules aligned with the GloBE rules. Has QDMTT-safe-harbour status. 2. IIR (Income Inclusion Rule) — Parent-level top-up where a low-taxed constituent entity sits below an Irish-resident parent. Effective for fiscal years beginning on or after 31 December 2023. 3. UTPR (Undertaxed Profits Rule) — Backstop allocation rule for low-taxed entities not captured by IIR. Effective for fiscal years beginning on or after 31 December 2024.  _(Part 4A TCA 1997)_
-- **ETR computation** — ETR = Adjusted Covered Taxes / GloBE Income Top-up Tax % = max(0, 15% − ETR) Top-up Tax = Top-up Tax % × Excess Profit where Excess Profit = GloBE Income − Substance-Based Income Exclusion (SBIE) SBIE (transitional) = 9.8% payroll carve-out + 7.8% tangible-asset carve-out (2024), declining to 5% + 5% by 2033  _(Part 4A TCA 1997)_
-- **Filing** — Pillar Two top-up tax return ("Top-up Tax Information Return" / Irish equivalent) and the GloBE Information Return (GIR) filed via Revenue's Pillar Two portal. First GIR filings deadline: 30 June 2026 for FY 2024 (i.e., 18 months after FY-end for transition year; 15 months thereafter).
-- **Transitional CbCR safe harbour** — For FYs starting before 31 December 2026, jurisdictions passing the de minimis, simplified ETR, or routine profits test under qualified CbCR may avoid full GIR computation.
-- **Conservative default** — Pillar Two out of scope unless the in-scope test (€750M consolidated revenue, 2 of 4 years) is confirmed in writing with consolidated group accounts. Refuse to compute IIR / QDMTT / UTPR without specialist co-pilot software and a CTA in the loop (R-IE-CT-4).
+Revenue's example: a gain of €150,000 gives CGT of €49,500 (33%), and an adjusted gain of €396,000 (€49,500 divided by 12.5%). CT at 12.5% on €396,000 is €49,500.
 
-### 3.5 Close-Company Surcharges — Sections 440, 441 TCA
+Gains on development land stay outside CT profits. They are taxed under CGT rules, reported in the Capital Gains (Development Land) section of the CT1, and follow the CGT pay and file dates. Development land losses can be set against all gains; other losses only against gains on non-development land assets.
 
-- **Close company definition** — A "close company" is one under the control of 5 or fewer participators (or any number of director-participators).  _(Section 430 TCA)_
-- **Section 440 surcharge** — 20% surcharge on undistributed investment and rental income (non-trading) that is not distributed within 18 months of the accounting period end. percent  _(Section 440 TCA)_
-- **Section 441 surcharge** — 15% surcharge on 50% of undistributed professional service income for close service companies (e.g., dentists, solicitors operating through a company). percent  _(Section 441 TCA)_
-- **De minimis relief** — Surcharge does not apply if total undistributed income is less than €2,000 (Section 440) or a small threshold (Section 441). EUR  _(Section 434 TCA)_
-- **Conservative default** — Assume close-company status applies to any owner-managed company and check the dividend strategy against Section 440/441 exposure.
+Disposals of shares in trading subsidiaries may be exempt under s.626B (the substantial shareholding exemption). The conditions are technical; check them against TDM Part 20-01-14 before relying on the exemption.
 
-### 3.6 Capital Allowances — Section 284 et seq. TCA
+## Pillar Two: the 15% minimum tax ([Revenue: what is Pillar Two](https://www.revenue.ie/en/companies-and-charities/pillar-two/what-is/index.aspx))
 
-**Capital allowances table**
+Pillar Two (Part 4A of the Taxes Consolidation Act 1997) makes multinational and large domestic groups pay at least 15% on their profits in each jurisdiction. A group is in scope if its consolidated annual revenue is €750m or more in two of the four preceding fiscal years. The test is "or more": a group at exactly €750m is in scope.
 
-| Asset class | Wear-and-tear rate | Reference |
+Ireland has three top-up taxes:
+
+- **Domestic top-up tax (Ireland's qualified domestic top-up tax, QDTT).** Collects top-up tax on Irish entities before any other country can apply its IIR or UTPR. In effect for fiscal years commencing on or after 31 December 2023 ([domestic top-up tax](https://www.revenue.ie/en/companies-and-charities/pillar-two/what-is/domestic-top-up-tax.aspx)).
+- **IIR top-up tax.** Charged on a parent entity for low-taxed group entities. In effect for fiscal years commencing on or after 31 December 2023 ([IIR](https://www.revenue.ie/en/companies-and-charities/pillar-two/what-is/iir-top-up-tax.aspx)).
+- **UTPR top-up tax.** The backstop where the ultimate parent is in a country that has not implemented Pillar Two. In effect for fiscal years commencing on or after 31 December 2024, with limited cases earlier ([UTPR](https://www.revenue.ie/en/companies-and-charities/pillar-two/what-is/uptr-top-up-tax.aspx)).
+
+**Compliance** ([Revenue: key dates](https://www.revenue.ie/en/companies-and-charities/pillar-two/dates/index.aspx); [TIR](https://www.revenue.ie/en/companies-and-charities/pillar-two/top-up/index.aspx)):
+
+- Registration on ROS within 12 months after the end of the first fiscal year in scope. Entities whose first fiscal year ended in 2024 had until 28 February 2026 (after an extension).
+- Every in-scope entity must file a Top-up Tax Information Return (TIR) no later than 15 months after the end of each fiscal year, or 18 months for the first fiscal year in scope. The first TIR and the first pay and file date were 30 June 2026.
+- Revenue has announced relief from local filing for some centrally filed returns, and the OECD's January 2026 "Side-by-Side" package changes some rules. Check Revenue's key dates page before advising.
+
+This Guide only screens for scope. The top-up computation needs the full GloBE rules, deferred tax adjustments and safe-harbour tests: refer it.
+
+## Close companies and the surcharges ([Revenue: surcharge on undistributed income](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/close-companies/surcharge.aspx))
+
+A close company is an Irish-resident company controlled by five or fewer participators, or by any number of participators who are directors ([Revenue: close companies](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/close-companies.aspx)). Most owner-managed companies are close companies.
+
+**Estate and investment income (s.440).** A surcharge of 20% applies to the undistributed after-tax estate and investment income (rent, interest, dividends). The steps:
+
+1. Take the estate and investment income and deduct the CT on it.
+2. If the company is a trading company, deduct a further 7.5%. The result is the distributable estate and investment income.
+3. Deduct distributions made for the period within 18 months after the end of the period.
+4. If the excess is €2,000 or less, there is no surcharge. Otherwise the surcharge is 20% of the excess.
+
+The surcharge is not part of the same period's CT. It is collected as part of the CT of the next accounting period and must be reported on that CT1. Two close companies can jointly elect to disregard a distribution between them; both must include the election on their CT1.
+
+Irish dividends received by a close company are exempt from CT but still count. Revenue's example: €50,000 of Irish dividends, nothing paid out, gives a surcharge of €10,000.
+
+**Service companies (s.441).** A close company whose main income comes from a profession, professional services or holding an office or employment (for example a doctor, dentist, architect, solicitor, accountant, actuary, actor, computer programmer or engineer) pays a surcharge of 15% on half of its undistributed trading income, and 20% on undistributed estate and investment income ([TDM Part 13-02-06](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-13/13-02-06.pdf)). Service-company rules have their own marginal relief: refer any case near the limits.
+
+**Returns without the surcharge are incomplete.** A CT1 that leaves out a surcharge due under s.440 or s.441 is treated as an incorrect return, and can bring interest and a late filing surcharge ([TDM Part 47-06-04](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-47/47-06-04.pdf)).
+
+## Deductions and capital allowances ([Revenue: capital allowances and deductions](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/capital-allowances-and-deductions.aspx))
+
+**Deductions.** Expenses are deductible only if they are revenue (not capital) in nature and incurred wholly and exclusively for the trade. Business entertainment and capital expenditure are not deductible. Depreciation in the accounts is added back; capital allowances are claimed instead. Other points:
+
+- Pre-trading expenses incurred in the three years before trading starts can be deducted.
+- Interest, royalties and other annual payments can be deducted, subject to the interest limitation rule below.
+- A donation to a Revenue-approved charity can reduce CT if it is at least €250 in a 12-month period (apportioned for a shorter period).
+- CT itself, fines and penalties, and interest on late tax are not deductible.
+
+**Capital allowances** are generally given on the net cost of the asset, as a trading expense:
+
+| Asset | Allowance |
+| --- | --- |
+| Plant and machinery (wear and tear) | 12.5% a year over eight years, if the asset is in use in the trade at the end of the period |
+| Most industrial buildings | 4% a year over 25 years |
+| Energy-efficient equipment (including electric and alternative fuel vehicles), gas vehicles and refuelling equipment, and a creche or gym for employees | Accelerated capital allowance of 100% in the first year the asset is used |
+| Building used as an employee creche or gym | 15% a year over seven years |
+| Specified intangible assets (s.291A): patents, copyrights, trademarks, know-how | Amortisation and impairment charged in the accounts, or an election for 7% a year over 15 years with 2% in the final year ([Revenue: intangibles](https://www.revenue.ie/en/companies-and-charities/reliefs-and-exemptions/capital-allowances-for-intangible-assets/index.aspx)) |
+
+The wear and tear allowance is reduced if the accounting period is shorter than 12 months or the asset is also used for non-trade purposes. Revenue's example: a machine costing €25,000 gives an allowance of €3,125 a year.
+
+Intangible asset allowances are ring-fenced to the "relevant trade" that uses the assets. For expenditure on or after 11 October 2017, the allowances (with related interest) cannot exceed 80% of that trade's income for the period; the excess carries forward. Finance Act 2025 extends the ring-fence and the 80% cap to balancing allowances on balancing events on or after 8 October 2025.
+
+Cars are restricted by reference to CO2 emissions and cost: the cost limit is currently €24,000, and it also applies to lease payments ([TDM Part 11-00-01](https://www.revenue.ie/en/tax-professionals/tdm-wm/income-tax-capital-gains-tax-corporation-tax/part-11/11-00-01.pdf)). Check the emissions category before claiming.
+
+## Losses ([Revenue: trading losses](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/trading-losses.aspx); [Notes for guidance, Part 12](https://www.revenue.ie/en/tax-professionals/documents/notes-for-guidance/tca/part12.pdf))
+
+**Trading losses from a 12.5% trade (ss.396A and 396B):**
+
+1. **Same period and the period before (s.396A).** Set the loss against other 12.5% trading income of the same accounting period, then against trading income of the immediately preceding accounting period. It is a euro-for-euro offset. It cannot be set against rent, interest or gains this way.
+2. **Value basis (s.396B).** Any unused loss can reduce the CT on non-trading income and chargeable gains of the same or preceding period, but only at 12.5% of the loss. A loss of €100,000 therefore saves €12,500 of tax, however that other income is taxed.
+3. **Carry forward (s.396(1)).** Unused losses carry forward without time limit against trading income of the same trade. They must be used against the first available profits of that trade.
+
+**Losses of an excepted (25%) trade** can be set against total profits of the same period and of the immediately preceding accounting period (s.396(2)), then carried forward against the same trade.
+
+**The preceding period rule.** Relief against the previous period only applies if the company carried on the trade in that period. It is limited to profits of the preceding period of the same length as the loss period, with apportionment where periods differ.
+
+**Terminal loss (s.397).** A loss in the last 12 months of a trade that cannot be relieved otherwise can be carried back against income of the same trade in the three preceding years, later years first.
+
+**Change of ownership.** Losses carried forward can be lost where there is a change in ownership combined with a major change in the activities of the trade, or where the trade is near dormant at the time of the change (s.401, aimed at "loss-buying"). Refer any such case.
+
+**Late filing cuts loss relief.** If the CT1 is late, loss claims under ss.396(2), 396A(3) and 396B(2) are restricted (see "Filing and payment").
+
+## Group relief ([Revenue: group relief](https://www.revenue.ie/en/companies-and-charities/reliefs-and-exemptions/group-relief/index.aspx))
+
+Two companies are in a group for group relief if one is a 75% subsidiary of the other, or both are 75% subsidiaries of a third company. The parent must hold at least 75% of the ordinary share capital, and be entitled to at least 75% of distributable profits and of assets on a winding up.
+
+- **What can be surrendered:** current-year trading losses, excess charges on income, excess management expenses of investment companies, Case V excess capital allowances.
+- **How it is used:** against the claimant's trading income of the corresponding period, on a value basis against its CT, or against total profits for an excepted trade.
+- **Who:** generally Irish-resident companies and Irish branches of foreign companies. An Irish parent can claim, in limited cases, the losses of a 75% subsidiary resident in an EU or EEA state that has a tax treaty with Ireland.
+- **Time limit and consent:** the claim must be made within two years from the end of the surrendering company's accounting period, and the surrendering company must consent in writing.
+- **Consortium relief (s.412):** a separate relief for companies owned by a consortium. Refer it.
+- **Restrictions:** relief is time-apportioned where accounting periods do not match or a company joins or leaves the group. It is also restricted if either company's return is filed late.
+
+## Interest limitation ([TDM Part 35D-01-01](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-35d/35D-01-01.pdf))
+
+The interest limitation rule (ILR, Part 35D TCA) applies to accounting periods commencing on or after 1 January 2022. It limits a company's exceeding borrowing costs (net interest expense) to 30% of its tax-adjusted EBITDA. A higher group ratio can be elected.
+
+- **De minimis.** The ILR applies only where the exceeding borrowing costs exceed €3,000,000 for a 12-month period. The amount is reduced proportionally for a shorter period. For an interest group, the €3,000,000 applies once to the whole group.
+- **Standalone entities** are outside the ILR. A standalone entity is not part of a worldwide group, has no associated enterprises and has no permanent establishment outside Ireland. A company wholly owned by one individual is **not** a standalone entity: the individual is an associated enterprise.
+- **Equity ratio exemption and legacy debt** (loans agreed before 17 June 2016) can also apply. Refer these.
+- **Carry forward.** A disallowed amount is carried forward as "deemed borrowing cost" to later periods with spare capacity.
+
+For most owner-managed companies, the practical test is the de minimis: confirm that net interest does not exceed €3,000,000.
+
+## Start-up relief (s.486C) ([Revenue: can you claim](https://www.revenue.ie/en/starting-a-business/initiatives-startup-businesses-smes/tax-relief-for-new-startup-companies/can-you-claim-for-tax-relief-for-your-start-up-company.aspx); [how the relief is calculated](https://www.revenue.ie/en/starting-a-business/initiatives-startup-businesses-smes/tax-relief-for-new-startup-companies/how-is-the-relief-calculated.aspx))
+
+**Who qualifies.** A company qualifies if it was incorporated on or after 14 October 2008, and it set up and began a qualifying trade between 1 January 2009 and 31 December 2026. A company that begins trading in 2027 does not qualify unless the end date is extended. Check before advising.
+
+**Excluded trades:** a trade taken over from another person, land development, petroleum or mineral extraction, s.441 service company activities, certain primary agricultural and fishery production, and activities that would form part of an associated company's trade.
+
+**How long.** Where the trade started on or after 1 January 2018, relief applies for five years from the date it started ([TDM Part 15-03-03](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-15/15-03-03.pdf)).
+
+**How much.** Two separate limits apply:
+
+1. **The CT band.** The company's total CT for the period, on all income and gains, decides whether relief is available:
+   - €40,000 or less: full relief, up to the PRSI limit below.
+   - More than €40,000 and less than €60,000: marginal relief.
+   - €60,000 or more in a 12-month period: no relief.
+2. **The PRSI limit.** Relief can never exceed the qualifying PRSI:
+   - employer's PRSI paid, capped at €5,000 per employee;
+   - from 2025, Class S PRSI paid by certain directors through PAYE on emoluments from the company, capped at €1,000 per individual;
+   - an overall limit of €40,000 for all of it.
+
+Only the CT on profits of the qualifying trade, and on gains on assets used in it, is reduced. CT on rent or investment income is not.
+
+**Marginal relief.** The CT on the qualifying trade is reduced to the greater of two amounts:
+- the marginal relief formula: 3 x (T - M) x ((A + B) / T);
+- the CT on the qualifying trade less the qualifying PRSI.
+
+In the formula, T is the total CT, M is €40,000, A is the CT on income of the qualifying trade, and B is the CT on gains of the qualifying trade.
+
+**Unused relief.** Relief not used in the first five years, for example because of losses, can be carried forward. In a later year it is limited to the PRSI paid in that year.
+
+**How to claim.** Claim the relief on the CT1 through ROS.
+
+## The R&D corporation tax credit ([Revenue: R&D credit](https://www.revenue.ie/en/companies-and-charities/reliefs-and-exemptions/research-and-development-rd-tax-credit/index.aspx); [TDM Part 29-02-03](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-29/29-02-03.pdf))
+
+**The rate depends on the period:**
+
+| Accounting period | Credit rate | First instalment is the greater of |
 | --- | --- | --- |
-| Plant and machinery | 12.5% straight-line over 8 years | Section 284 TCA |
-| Motor vehicles (CO2 categories A–C ≤ 155 g/km) | 12.5% on lower of cost / specified amount (€24,000 cap) | Section 380K |
-| Motor vehicles (CO2 D–F) | Restricted / nil | Section 380K |
-| Industrial buildings | 4% straight-line over 25 years (most categories) | Section 271–273 |
-| Intangible assets (Section 291A specified intangibles) | Aligned with accounting amortisation OR 7% (15-year life) elected; capped at 80% of trading income (re-introduced from FA 2017) | Section 291A |
-| Energy-efficient equipment | 100% accelerated allowance (Section 285A) — note: scheme ended for new claims after 31 December 2025 unless extended by FA |  |
+| Commencing on or after 1 January 2024 and ending before 31 December 2026 (for example calendar 2025) | 30% | €75,000 (or the whole credit if lower) and 50% of the credit, for periods commencing on or after 1 January 2025 |
+| Specified return date on or after 23 September 2027 (in general, periods ending 31 December 2026 or later) | 35% | €87,500 (or the whole credit if lower) and 50% of the credit |
 
-- **Section 291A cap** — Capital allowances and related interest on specified intangibles cannot reduce trading income by more than 80% in any accounting period. Excess carries forward. percent  _(Section 291A TCA)_
+**Instalments.** The credit is paid in three annual instalments:
+1. The first instalment is the amount shown in the table.
+2. The second is three fifths of the balance.
+3. The third is whatever remains.
 
-### 3.7 Trading Losses — Sections 396, 396A, 396B TCA
+The credit is not set against the CT for the period. For each instalment, the company elects either to treat it as an overpayment of tax, for offset against its liabilities, or to have it repaid. The first instalment is specified on the CT1 for the period in which the expenditure was incurred. The second is specified on the CT1 for the following period.
 
-**Trading losses relief table**
+**Qualifying activity.** The R&D must be carried out in Ireland, the EEA or the UK, by a company within the charge to Irish CT, on spending not deductible abroad. It must be systematic, investigative or experimental work in science or technology that seeks an advance by resolving scientific or technological uncertainty ([qualifying criteria](https://www.revenue.ie/en/companies-and-charities/reliefs-and-exemptions/research-and-development-rd-tax-credit/qualifying-criteria.aspx)). Outsourcing limits apply to subcontractors and agency staff.
 
-| Relief | Mechanism | Reference |
+**Deadlines:**
+- **The claim:** within 12 months from the end of the accounting period in which the expenditure was incurred. For a calendar 2026 period, that means by 31 December 2027.
+- **Pre-filing notification:** a company claiming for the first time, or one that has not claimed in any of its previous three accounting periods, must notify Revenue at least 90 days before making the claim.
+
+## Knowledge Development Box ([Revenue: KDB](https://www.revenue.ie/en/companies-and-charities/reliefs-and-exemptions/knowledge-development-box-kdb/index.aspx))
+
+From 1 October 2023, a qualifying company can deduct 20% of its qualifying profits. That gives an effective rate of 10%. Up to 30 September 2023 the deduction was 50%, an effective rate of 6.25%; do not use 6.25% for 2026. The KDB is available for accounting periods commencing before 1 January 2027.
+
+The profits must come from a qualifying asset created by qualifying R&D:
+- a computer programme;
+- an invention protected by a qualifying patent;
+- for small companies, IP that the Controller of Patents certifies as patentable but that is not patented.
+
+The claim is made on the CT1. The qualifying profit is restricted by the OECD nexus fraction and needs tracking and tracing of R&D spend (TDM Part 29-03-01). Refer any KDB claim.
+
+## Foreign dividends: participation exemption ([Revenue: participation exemption](https://www.revenue.ie/en/companies-and-charities/reliefs-and-exemptions/exemption-foreign-distributions/index.aspx))
+
+For distributions on or after 1 January 2025, an Irish parent can claim exemption from CT on dividends from a foreign subsidiary, instead of a credit for foreign tax. The conditions are:
+
+- **Holding:** the parent holds at least 5% of the subsidiary's ordinary share capital for a continuous 12 months that include the date of the distribution.
+- **The subsidiary:** for distributions from 1 January 2026, it must have been resident throughout the preceding three years in an EU or EEA state or a treaty country (for 2025 distributions, the look-back was five years). It must not be on the EU list of non-cooperative jurisdictions, and must not be generally exempt from tax.
+- **Non-treaty countries:** from 2026 these also qualify if they apply withholding tax to the distribution, paid in full and not refunded.
+- **The distribution:** it must be taxable as income under Case III, not as trading income, and must not be deductible abroad.
+
+The election is all or nothing. If it is claimed, every relevant distribution from every relevant subsidiary is exempt for that period; it cannot be made dividend by dividend. The claim is made on the CT1 (see TDM Part 35-02-11).
+
+## Boundary and exception table ([Revenue: preliminary CT](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax-payment-and-filing/preliminary-ct.aspx))
+
+| Situation | Rule | Source |
 | --- | --- | --- |
-| Current-year offset | Trading loss offset against other Case I / total profits of the same period | Section 396(1) |
-| 1-year carry-back | Trading loss carried back 12 months against trading income of the prior period | Section 396A |
-| Indefinite carry-forward | Trading loss carried forward against future trading income of the **same trade** | Section 396(1) |
-| Value-basis offset | Trading losses surrendered on a "value basis" against tax on non-trading income (Section 396B) — converted at 12.5% / 25% ratio | Section 396B |
-| Terminal loss relief | Final 12 months' trading loss against trading income of preceding 3 years | Section 397 |
+| Previous period's CT exactly €200,000 | Small company: the test is "not above €200,000", excluding surcharges and s.239 income tax | [Preliminary CT](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax-payment-and-filing/preliminary-ct.aspx) |
+| Previous period shorter than 12 months | Annualise its CT to test small or large, and when using the 100% prior-year basis | Same |
+| First accounting period of a new company | No preliminary tax if the CT is less than €200,000 (excluding surcharge, including s.239 income tax); pay in full with the CT1. If the CT is €200,000 or more, preliminary tax is due | Same |
+| Large company, accounting period of less than seven months | One instalment of 90%, not two (two instalments are for periods longer than seven months; for a period of exactly seven months, check TDM Part 41A-07-02) | [When is preliminary CT due](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax-payment-and-filing/when-is-preliminary-ct-due.aspx) |
+| Group consolidated revenue of exactly €750m in two of the four preceding years | In Pillar Two scope ("€750m or more") | [What is Pillar Two](https://www.revenue.ie/en/companies-and-charities/pillar-two/what-is/index.aspx) |
+| Close company: excess distributable income of exactly €2,000 | No s.440 surcharge ("€2,000 or less") | [Surcharge](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/close-companies/surcharge.aspx) |
+| Start-up with total CT of exactly €40,000 | Full relief band ("does not exceed €40,000") | [TDM Part 15-03-03](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-15/15-03-03.pdf) |
+| Start-up with total CT of exactly €60,000 | No relief ("€60,000 or more") | Same |
+| Exceeding borrowing costs of exactly €3,000,000 | Does not exceed the de minimis, so the ILR does not apply (it applies only where they exceed €3,000,000) | [TDM Part 35D-01-01](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-35d/35D-01-01.pdf) |
+| Accounting period ends on the 21st of a month or later | CT1 due on the 21st of the ninth month after the period ends; 23rd if filed and paid on ROS | [TDM Part 47-06-08](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-47/47-06-08.pdf) |
+| Accounting period ends before the 21st of a month (for example 5 December) | CT1 due on the same day of the ninth month (for example 5 September); the ROS extension to the 23rd only replaces a 21st due date | Same |
+| CT1 filed exactly two months late | Within two months: 5% surcharge (maximum €12,695) | Same |
+| iXBRL: company fails one of the three small tests | iXBRL required; the exclusion needs all three (assets under €4.4 million, turnover under €8.8 million, 50 or fewer employees) | [Who must submit iXBRL](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/submitting-financial-statements/who-submit.aspx) |
+| R&D expenditure in a period ending 30 November 2026 | Its return date falls in August 2027, before 23 September 2027, so the 30% rate applies (Revenue: the 35% rate applies "in general" to periods ending 31 December 2026 or later) | [TDM Part 29-02-03](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-29/29-02-03.pdf) |
+| Owner-managed company with interest expense | Not a standalone entity if owned by an individual; rely on the €3,000,000 de minimis | [TDM Part 35D-01-01](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-35d/35D-01-01.pdf) |
+
+## Worked cases ([Revenue: when is preliminary CT due](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax-payment-and-filing/when-is-preliminary-ct-due.aspx))
+
+**Case 1: small trading company with rent, calendar 2026.** Hill Ltd is a close trading company. In 2026 it has a trading profit of €400,000 and a net rental profit of €40,000. Its CT for 2025 was €48,000.
 
-- **Restriction (Section 396C)** — Pre-trading losses are restricted to the trade that gave rise to them. Same-trade continuity is required for carry-forward; cessation extinguishes the loss.  _(Section 396C TCA)_
-
-### 3.8 Group Relief — Sections 411–429 TCA
-
-- **Group definition** — Two companies are in a 75% group where one is the 75% beneficial-ownership subsidiary of the other, or both are 75% subsidiaries of a third company. The parent must be EU- or EEA-resident or treaty-jurisdiction-resident for surrender of losses (post-Marks & Spencer ECJ and Section 420C extensions).  _(Section 411 TCA)_
-- **What can be surrendered** — Current-year trading losses, excess capital allowances, excess management expenses, excess Case V losses, certain charges on income.
-- **Mechanism** — Loss-maker surrenders to claimant within the same group; claimant offsets against profits of the corresponding accounting period (or a corresponding portion if periods do not align). Payment for group relief can be made up to the surrendered amount and is tax-neutral.
-- **Consortium relief** — Available where a company is owned 75%+ collectively by a consortium and each member holds 5%–75%.  _(Section 412 TCA)_
-
-### 3.9 Computation Template
-
-**Computation Template table**
-
-| Step | Item |
-| --- | --- |
-| 1 | Profit per accounts (statutory accounts under Companies Act 2014 / IFRS / FRS 102) |
-| 2 | Add back: non-deductible expenses (entertainment, fines, depreciation, accounting amortisation outside Section 291A) |
-| 3 | Less: tax-deductible amounts not in accounts (capital allowances under Section 284, R&D under Section 766) |
-| 4 | Separate income into Case I (trading), Case III (foreign investment), Case IV (other), Case V (Irish rents) |
-| 5 | Apply 12.5% to Case I/II; apply 25% to Case III/IV/V; compute chargeable gains at 33% effective |
-| 6 | Apply credits: R&D tax credit (Section 766), foreign tax credit (Schedule 24), KDB relief (Section 769I if elected) |
-| 7 | Compute close-company surcharge (Sections 440/441) on undistributed income |
-| 8 | Determine preliminary tax obligation and balance due on CT1 |
-
-## Section 4 — Deductible and Non-Deductible Expenses
-
-### 4.1 General Deductibility — Section 81 TCA (Schedule D Case I/II)
-
-- **Wholly and exclusively test** — An expense is deductible only if "wholly and exclusively" incurred for the purposes of the trade or profession (Section 81(2)(a)). The deduction also requires the expense to be of a revenue (not capital) nature (Section 81(2)(f)).  _(Section 81 TCA)_
-- **Common deductible items** — - Cost of goods sold, raw materials, sub-contractor labour (subject to RCT compliance — Section 530 TCA). - Employee wages, employer's PRSI, pension contributions to Revenue-approved schemes. - Rent, rates, utilities, insurance (except life insurance on employees outside Revenue-approved scheme). - Repairs and maintenance (capital improvements are not deductible — they go to the capital allowances pool). - Bad debts (specific, not general provision). - Professional fees (audit, legal — but capital legal fees on acquisitions are not deductible). - Travel and subsistence (per Revenue civil-service rates for employees; reasonable trade-purpose justification).  _(Section 530 TCA)_
-
-### 4.2 Non-Deductible Items
-
-**Non-deductible items table**
-
-| Item | Reference |
-| --- | --- |
-| Entertainment of customers / clients | Section 840 TCA |
-| Penalties, fines (criminal or regulatory) | Case law; not "wholly and exclusively" |
-| Depreciation per accounts | Replaced by Section 284 capital allowances |
-| Goodwill amortisation per accounts | Replaced by Section 291A specified intangibles regime |
-| Capital expenditure | Section 81(2)(f) — relief via capital allowances |
-| Dividends / distributions | Not a deductible expense; subject to dividend withholding tax (DWT) under Section 172A |
-| Corporation tax itself | Not deductible |
-| General provisions for doubtful debts | Only specific bad-debt write-offs allowed |
-| Pre-trading expenditure (other than Section 82) | Section 82 allows 3-year pre-trading expenses on first day of trading |
-| Excessive director remuneration | "Wholly and exclusively" test plus Section 130 distribution recharacterisation risk |
-| Interest on late-paid taxes | Section 1080 interest is not deductible |
-
-### 4.3 Anti-Hybrid Rules — Sections 835AG–835AY TCA
-
-- **ATAD II hybrid mismatch rules** — ATAD II hybrid mismatch rules deny deductions or include income where a hybrid mismatch creates a deduction-without-inclusion (D/NI), double-deduction (DD), or imported mismatch. Applies for accounting periods beginning on or after 1 January 2020. Conservative default: Flag any cross-border interest, royalty, or service deduction to a related party as a hybrid-mismatch screening question.  _(Sections 835AG–835AY TCA)_
-
-### 4.4 Interest Limitation Rule — Section 835AY TCA
-
-- **Interest limitation rule** — ATAD I ILR effective from 1 January 2022. Net interest expense deduction capped at 30% of tax-EBITDA unless the de minimis threshold (€3 million) applies or the equity escape / group ratio rule provides relief. Disallowed interest carries forward. percent  _(Section 835AY TCA)_
-
-## Section 5 — Tier 2 Catalogue (Reviewer Judgement Required)
-
-### 5.1 R&D Tax Credit — Section 766 TCA
-
-- **R&D credit rate (FA 2024 onwards)** — 30% of qualifying R&D expenditure (raised from 25%). Applies to accounting periods commencing on or after 1 January 2024. percent  _(Section 766 TCA)_
-- **Qualifying expenditure** — - Salaries of R&D staff (apportioned to qualifying time). - Consumables used in R&D. - Plant and machinery used wholly and exclusively for R&D (capital allowances accelerated where used in R&D). - Subcontracted R&D (Section 766(1)(b)(vii)) capped at 15% of in-house R&D spend or €100,000 (whichever greater). - Outsourced to a third-level institution capped at 5% of in-house spend.  _(Section 766(1)(b)(vii) TCA)_
-- **Qualifying activity** — Must satisfy the Frascati Manual definition (systematic, investigative, creative, novel, uncertain). Must be in a "field of science or technology" (Section 766(1)(a)). Software development qualifies where it meets the technological-uncertainty test (Revenue R&D Guidelines).  _(Section 766(1)(a) TCA)_
-- **Refundability — Section 766C** — The credit can be (i) offset against CT of the claim period, (ii) carried forward, or (iii) paid as a cash refund in 3 instalments over 33 months: - Instalment 1: Greater of €75,000 (FA 2024 raised threshold) or 50% of the credit — payable on filing. - Instalment 2: 60% of the remaining balance — 12 months later. - Instalment 3: Final balance — 24 months later.  _(Section 766C TCA)_
-- **Filing** — Form CT1 R&D section; supporting "R&D Tax Credit Claim" documentation (Section 766(7B)) must accompany the claim. Revenue has 4 years to challenge.  _(Section 766(7B) TCA)_
-- **Conservative default** — Do not claim R&D credit until a contemporaneous technical report meeting the Frascati Manual criteria is on file. Engage a specialist for borderline software / process improvement claims.
-
-### 5.2 Knowledge Development Box — Sections 769G–769R TCA
-
-- **KDB effective rate** — 6.25% on qualifying profits from qualifying intellectual property (patents, copyrighted software, IP equivalent to a patentable invention for small companies). percent  _(Sections 769G–769R TCA)_
-- **OECD modified nexus approach** — Qualifying profits are restricted by the nexus fraction = (qualifying R&D expenditure × 1.3) / total expenditure on the IP asset. The 30% uplift is the OECD-permitted "up-lift" for outsourcing or acquisition costs.
-- **Mechanism** — Election made in the CT1; profits from qualifying IP are computed using a tracking-and-tracing methodology; the qualifying profit is taxed at the standard 12.5%, with a deduction equal to 50% of the qualifying profit giving an effective 6.25% rate.
-- **Extension** — FA 2024 extended KDB to accounting periods beginning before 1 January 2027.
-- **Conservative default** — Do not elect KDB without a documented IP asset, nexus computation, and tracking-and-tracing system in place. The compliance burden is material; benefit only arises for material qualifying IP profits.
-
-### 5.3 Section 110 Securitisation SPVs
-
-- **Legislation** — Section 110 TCA grants a special tax regime to "qualifying companies" holding qualifying assets (financial assets, plant and machinery, commodities). Profits are computed under Case III with deductions for profit-participating notes (PPN) interest, effectively allowing tax-neutral cash flow-through to noteholders, provided strict conditions are met: - Section 110(1): Qualifying company definition (Irish-resident, ≥ €10 million qualifying assets at inception, notification to Revenue within 8 weeks). - Section 110(4): Treats PPN interest as deductible even if profit-dependent (subject to Section 110(5A) anti-avoidance from FA 2016 onwards excluding certain Irish real estate income). - Section 110(5A): Carves out Irish land-derived income — Section 110 deduction restricted for "specified property business" profits.  _(Section 110 TCA)_
-- **Common uses** — CLO / CDO structures, aircraft leasing, securitisation, structured finance.
-- **Conservative default** — Section 110 deals require specialist structuring counsel. Do not compute or opine on Section 110 positions without explicit reviewer engagement (R-IE-CT-3).
-
-### 5.4 Transfer Pricing — Part 35A TCA (Sections 835A–835HB)
-
-- **Scope** — Irish TP rules align with the OECD Transfer Pricing Guidelines 2022 (Section 835D). Apply to associated-enterprise transactions (≥ 50% common ownership, control test).  _(Section 835D TCA)_
-- **Master File threshold** — Required if consolidated group revenue ≥ €250 million. EUR  _(Section 835G TCA)_
-- **Local File threshold** — Required if consolidated group revenue ≥ €50 million. EUR  _(Section 835G TCA)_
-- **Documentation timing** — Documentation must be in place by the CT1 filing date; produced within 30 days of Revenue request.
-- **CbCR threshold** — CbCR required for groups with consolidated revenue ≥ €750 million. EUR  _(Section 891H TCA)_
-- **SME exemption** — SMEs (≤ 250 employees AND turnover ≤ €50m OR balance sheet ≤ €43m) are largely exempt from formal TP documentation but the arm's-length principle still applies.  _(Section 835E TCA)_
-- **Penalties** — No documentation = restricted access to the protective notification regime; potential tax-geared penalties under Section 1077E.  _(Section 1077E TCA)_
-
-### 5.5 Foreign Tax Credit — Schedule 24 TCA
-
-- **Foreign tax credit mechanism** — Double-tax relief on foreign-sourced income (dividends, interest, royalties) via credit (Schedule 24) or deduction. Credit limited to the Irish tax on the same income. Pooling rules permit excess credits on dividends from EU/treaty subsidiaries to be carried back 1 year or forward indefinitely (Schedule 24 para 9I).  _(Schedule 24 TCA)_
-
-### 5.6 Participation Exemption on Foreign Dividends (NEW — FA 2024)
-
-- **Legislation** — Section 831B TCA (inserted by Finance Act 2024), effective for distributions received on or after 1 January 2025.  _(Section 831B TCA)_
-- **Mechanism** — Election-based participation exemption for foreign dividends from EU/EEA/tax-treaty subsidiaries where the receiving company holds ≥ 5% of the share capital for ≥ 12 months and certain anti-abuse conditions are met. Removes the prior "tax-and-credit" double-tax relief mechanism for opted-in dividends, replacing it with full exemption.  _(Section 831B TCA)_
-- **Conservative default** — Do not elect Section 831B exemption without checking subsidiary jurisdiction listing and the 5%/12-month holding test.
-
-### 5.7 Outbound Payments Defensive Measure — Section 817U TCA (FA 2023)
-
-- **Outbound payments defensive measure** — Effective 1 April 2024. Withholding tax / additional CT charge on outbound interest, royalty, and dividend payments to associated entities in zero-tax or EU non-cooperative jurisdictions. Applies to payments where the recipient is not subject to a minimum 9% headline rate (or is in a Annex I non-cooperative jurisdiction). Reviewer must screen all outbound related-party payment streams.  _(Section 817U TCA)_
-
-### 5.8 Start-Up Relief — Section 486C TCA
-
-- **Start-up relief** — Relief from CT for new trading companies in the first 5 accounting periods. Tax liability up to €40,000 fully relieved; partial relief between €40,000 and €60,000. Linked to employer's PRSI contributions (Section 486C(7) — up to €5,000 per employee, capped at the lesser of the PRSI paid and the relief). Extended to qualifying companies commencing trade up to 31 December 2026 (FA 2024).  _(Section 486C TCA)_
-
-### 5.9 Three-Year Tax Holiday for Certain Start-Ups (Section 486C interaction)
-
-Note: Section 486C is the principal start-up relief. There is no separate "tax holiday" regime equivalent to Indonesia's. Reviewer should not confuse the two.
-
-## Section 6 — Worked Examples
-
-### 6.1 Start-Up Trading Company — All Trading Income
-
-**Facts:** TechCo Ltd, Irish-resident, accounting period 1 January 2025 – 31 December 2025.
-- Trading profit (Case I) per accounts: €500,000.
-- Depreciation (added back): €20,000.
-- Capital allowances on plant: €25,000.
-- R&D qualifying expenditure: €100,000 (claimed at 30%).
-- No non-trading income.
-- Prior-year CT liability: €0 (first year of trading) — qualifies for Section 486C start-up relief.
-
-**Computation:**
-
-```
-Case I trading profit per accounts             500,000
-Add: depreciation                               20,000
-                                               -------
-Adjusted profit                                520,000
-Less: capital allowances (Section 284)         (25,000)
-                                               -------
-Taxable trading profit                         495,000
-
-CT @ 12.5%                                      61,875
-Less: R&D tax credit (Section 766)             
-       30% × €100,000                          (30,000)
-                                               -------
-CT before start-up relief                       31,875
-
-Section 486C start-up relief
-(liability < €40,000 — fully relieved,
-subject to employer's PRSI cap)               (31,875)
-                                               -------
-CT payable                                           0
-
-R&D credit excess / payable                     
-(if credit > tax liability, refundable
-in 3 instalments per Section 766C — N/A here
-because credit was fully used)                       0
-```
-
-**Preliminary tax (small company):** Because TechCo is a "small company" (CT liability ≤ €200,000), it may use the prior-year (zero) test — no preliminary tax due. The 2026 preliminary tax will be 90% of 2026 estimate or 100% of 2025 (€0), whichever is lower-risk.
-
-**Filing:** Form CT1 via ROS by 23 September 2026 (9 months after FY-end, 23rd of that month) with iXBRL accounts.
-
-### 6.2 Mid-Size MNE — Pillar Two In Scope
-
-**Facts:** GlobalCo Ireland Ltd, Irish-resident, fiscal year 1 January 2025 – 31 December 2025. Wholly owned by US-headquartered group with consolidated revenue €1.2 billion for FY 2024 and FY 2023 (in scope of Pillar Two from FY 2025 since €750M threshold met for 2 of last 4 FYs).
-
-- Trading profit (Case I): €40,000,000.
-- Foreign branch dividend income (Case III, qualifying for Section 626B exemption on capital portion; passive dividend portion): €3,000,000.
-- Substance: 80 Irish employees with payroll cost €8,000,000; tangible assets net book value €15,000,000.
-
-**Computation — Ireland CT layer:**
-
-```
-Case I trading profit                        40,000,000
-CT @ 12.5%                                    5,000,000
-
-Case III foreign dividend (passive)           3,000,000
-CT @ 25%                                        750,000
-Less: foreign tax credit (Schedule 24)        (450,000)  [assume 15% foreign WHT]
-                                              ---------
-Net CT on Case III                              300,000
-
-Total Irish CT before Pillar Two              5,300,000
-```
-
-**Pillar Two ETR test (Irish jurisdiction):**
-
-```
-GloBE Income (simplified) =                  43,000,000
-Adjusted Covered Taxes =                      5,300,000
-ETR = 5,300,000 / 43,000,000 =                    12.33%
-
-Required minimum =                                15.00%
-Shortfall =                                         2.67%
-
-Substance-Based Income Exclusion (SBIE) — 2025 rates:
-  9.8% × payroll  9.8% × 8,000,000 =          784,000
-  7.8% × tangible 7.8% × 15,000,000 =       1,170,000
-                                            ---------
-  SBIE total                                1,954,000
-
-Excess profit = 43,000,000 − 1,954,000 =   41,046,000
-Top-up tax = 2.67% × 41,046,000 =           1,095,928
-```
-
-**QDMTT collects this €1,095,928 in Ireland (rather than via the parent IIR).** The QDMTT is paid alongside CT but reported via the Pillar Two return / GIR.
-
-**Conservative default applied:** Figures illustrative only — actual QDMTT computation requires the full GloBE rules, deferred-tax adjustments, transitional safe-harbour testing, and specialist software. This skill flags the in-scope position and routes to a Pillar Two specialist (R-IE-CT-4).
-
-### 6.3 Mixed Trading and Rental Company
-
-**Facts:** PropTradeCo Ltd, accounting period FY 2025.
-- Case I trading profit: €200,000.
-- Case V Irish rental profit (net): €80,000.
-- Close company; undistributed Case V income at 18-month mark.
-
-```
-CT on Case I @ 12.5% × 200,000               25,000
-CT on Case V @ 25%  ×  80,000                20,000
-                                             ------
-Total CT                                     45,000
-
-Close-company surcharge — Section 440
-20% × undistributed Case V = 20% × 60,000*   12,000
-
-* 80,000 net Case V less 25% CT (20,000) =
-  60,000 distributable, assumed not
-  distributed within 18 months
-                                             ------
-Total liability                              57,000
-```
-
-**Conservative default:** Discuss dividend strategy with reviewer to mitigate Section 440 surcharge.
-
-## Section 7 — Filing and Payment Mechanics
-
-### 7.1 Form CT1 via Revenue Online Service (ROS)
-
-**CT1 panels table**
-
-| Panel | Content |
-| --- | --- |
-| Company details | Name, CRO number, tax reference, residence status |
-| Trading profits | Case I / Case II — including adjustments from accounts |
-| Other income | Cases III, IV, V; chargeable gains |
-| Capital allowances | Wear and tear, accelerated, Section 291A intangibles |
-| Losses and reliefs | Section 396 / 396A / 396B / 397 / group relief Section 411 |
-| R&D credit | Section 766 claim — qualifying expenditure, category breakdown |
-| Knowledge Development Box | Section 769I election and computation |
-| Foreign tax credit | Schedule 24 |
-| Close company | Section 440 / 441 surcharge computation |
-| Transfer pricing | Section 835G certification |
-| Pillar Two | Scope confirmation (separate Pillar Two return for in-scope groups) |
-| iXBRL upload | Statutory accounts in iXBRL format |
-
-- **CT1 filing method** — The Form CT1 is the sole CT return. Filed electronically via ROS (Revenue Online Service) using ROS Digital Cert.
-
-### 7.2 iXBRL Filing — Section 884 TCA
-
-**iXBRL requirement table**  _(Section 884 TCA)_
-
-| Category | Requirement |
-| --- | --- |
-| Large Cases Division companies | iXBRL mandatory from 1 October 2013 |
-| All other CT-paying companies | iXBRL mandatory from 1 October 2014 |
-| Exclusion | Very small "iXBRL-exempt" companies (turnover < €8.8m, balance sheet < €4.4m, < 50 employees — 2 of 3 tests) **may** be exempt but Revenue strongly recommends iXBRL filing |
-
-- **Tags and upload** — Mandatory iXBRL for most companies. Tags follow the Irish FRS 101 / FRS 102 / IFRS taxonomy published by Revenue. Upload via ROS within 3 months of CT1 due date if not concurrent.  _(Section 884 TCA)_
-
-### 7.3 Preliminary Tax (Sections 958–959 TCA)
-
-- **Small company definition** — CT liability ≤ €200,000 in prior accounting period. EUR  _(Sections 958–959 TCA)_
-- **Small company preliminary tax** — Single instalment = lower of (a) 90% of current-year CT or (b) 100% of prior-year CT. Due: 23rd day of the month preceding the last month of the accounting period (i.e., for a 31 December year-end → 23 November).  _(Sections 958–959 TCA)_
-- **Large company preliminary tax** — First instalment = 50% of prior-year CT (or 45% of current-year CT) — due in month 6 (i.e., 23rd day of the 6th month of the accounting period; 23 June for a calendar-year company). Second instalment = top-up to bring total to lower of 90% of current-year or 100% of prior-year — due in month 11 (23rd day of month 11; 23 November).  _(Sections 958–959 TCA)_
-- **Final balance** — Due on filing of the CT1 within 9 months of the accounting period end (23rd day of that 9th month for ROS users).  _(Sections 958–959 TCA)_
-
-### 7.4 Filing Deadlines
-
-**Filing deadlines table**
-
-| Item | Deadline |
-| --- | --- |
-| Form CT1 | 9 months after accounting period end, **by the 23rd day of that month** (Section 959AA) |
-| iXBRL accounts | Concurrent with CT1 (some categories within 3 months thereafter) |
-| Preliminary tax — small company (single payment) | 23rd day of month preceding last month of AP |
-| Preliminary tax — large company (instalment 1) | 23rd day of month 6 of AP |
-| Preliminary tax — large company (instalment 2) | 23rd day of month 11 of AP |
-| R&D credit refund instalments | Per Section 766C 3-instalment schedule |
-| Pillar Two GIR (first year transitional) | 30 June 2026 for FY 2024; 18 months after FY-end |
-| Pillar Two GIR (subsequent years) | 15 months after FY-end |
-
-### 7.5 Surcharges and Penalties
-
-**Surcharges and penalties table**
-
-| Infraction | Penalty |
-| --- | --- |
-| Late filing of CT1 (≤ 2 months late) | 5% surcharge on CT liability, capped at €12,695 |
-| Late filing of CT1 (> 2 months late) | 10% surcharge on CT liability, capped at €63,485 |
-| Restriction of reliefs on late filing | Section 959AC TCA — losses, group relief, R&D credit restricted by 50% (capped at €158,715 / €31,740) |
-| Late payment of CT | Interest at **0.0219% per day** (~8% per annum) — Section 1080 TCA |
-| Failure to file iXBRL | Tax-geared penalty up to €4,000 (Section 884) plus restriction of CT1 receipt |
-| Negligent return | Up to 100% of tax shortfall; reduced via qualifying disclosure under Code of Practice for Revenue Audit |
-| Deliberate default | Up to 100%, publication on tax defaulters list (Section 1086) |
-| Pillar Two non-compliance | Tax-geared penalties under Part 4A and §1086 publication risk |
-
-### 7.6 Statute of Limitations — Section 959AA TCA
-
-- **Statute of limitations** — Standard: 4 years from the end of the chargeable period in which the return was filed. Unlimited in cases of fraud or neglect (Section 956 / 1077E).  _(Section 959AA TCA)_
-
-## Section 8 — Conservative Defaults Summary
-
-**Conservative defaults summary table**
-
-| Item | Default |
-| --- | --- |
-| Trading vs non-trading split unclear | Treat as non-trading (25%) |
-| Pillar Two scope | Out of scope unless €750M revenue confirmed for 2/4 FYs |
-| R&D credit | Do not claim without Frascati Manual contemporaneous record |
-| KDB | Do not elect without tracking-and-tracing and nexus computation |
-| Section 110 | Do not opine without specialist sign-off |
-| Close-company status | Assume yes for owner-managed; flag Section 440/441 |
-| Group relief | None without 75% beneficial-ownership documentation |
-| TP documentation | Required if consolidated group revenue ≥ €50M (local file) or ≥ €250M (master file) |
-| Functional currency | EUR unless Section 402 election documented |
-| Foreign dividend exemption (Section 831B) | Do not elect without 5%/12-month confirmation |
-| Outbound payments | Screen for Section 817U defensive-measure WHT |
-| Preliminary tax | Pay on the safer of 100% prior-year / 90% current-year |
-| Loss carry-back | Verify same-trade continuity before applying Section 396A |
-| iXBRL exemption | Do not assume; default to mandatory filing |
-| Late filing | Never strategise around 5%/10% surcharge — file by 23rd |
-
-## Section 9 — Cross-References
-
-**Cross-references table**
-
-| Topic | Skill |
-| --- | --- |
-| Personal income tax / Form 11 (sole trader) | `ie-income-tax-form11` |
-| Universal Social Charge | `ie-usc` |
-| PRSI Class S (self-employed) | `ie-prsi-class-s` |
-| VAT (VAT3 / annual RTD) | `ireland-vat-return` |
-| Preliminary income tax (individuals) | `ie-preliminary-tax` |
-| Foundation principles | `foundation` |
-| EU VAT Directive cross-border | `eu-vat-directive` |
-| Intake checklist | `intake` |
-
-## Section 10 — Sources
-
-**Taxes Consolidation Act 1997 (TCA 1997)** — consolidating Act for all Irish direct taxes.
-  - Section 21 — 12.5% trading rate.
-  - Section 21A — 25% non-trading rate.
-  - Section 23A — corporate residence test.
-  - Section 27 — accounting periods.
-  - Section 28 — chargeable gains and Section 78 gross-up.
-  - Sections 76–87 — general computational rules (Case I/II Schedule D).
-  - Sections 81, 82 — wholly-and-exclusively test; pre-trading expenditure.
-  - Sections 110, 110(5A) — securitisation companies.
-  - Section 130 — distributions recharacterisation.
-  - Section 172A — dividend withholding tax.
-  - Sections 284–321 — capital allowances (plant, industrial buildings, motor vehicles).
-  - Section 291A — specified intangibles.
-  - Sections 396, 396A, 396B, 396C, 397 — trading losses and terminal loss.
-  - Sections 411–429 — group relief.
-  - Section 430 et seq. — close companies; Sections 440, 441 surcharges.
-  - Section 486C — start-up relief.
-  - Section 626B — substantial shareholding exemption.
-  - Section 766 — R&D tax credit (30% from FA 2024).
-  - Section 766C — refundable R&D credit instalments.
-  - Sections 769G–769R — Knowledge Development Box.
-  - Section 811C, 811D — general anti-avoidance rule and protective notification.
-  - Section 817U — outbound payments defensive measure (FA 2023).
-  - Section 831B — participation exemption on foreign dividends (FA 2024, effective 1 January 2025).
-  - Part 35A (Sections 835A–835HB) — transfer pricing.
-  - Sections 835AG–835AY — ATAD II anti-hybrid rules.
-  - Section 835AY — ATAD I interest limitation rule.
-  - Sections 884 — iXBRL filing.
-  - Section 891H — CbCR.
-  - Sections 958–959 — preliminary tax.
-  - Sections 959AA–959AC — return filing, surcharges, restriction of reliefs.
-  - Section 1077E — tax-geared penalties; qualifying disclosure.
-  - Section 1080 — interest on overdue tax.
-  - Section 1086 — publication of tax defaulters.
-  - **Part 4A TCA 1997** — Pillar Two (inserted by Finance (No. 2) Act 2023).
-- **Schedule 24 TCA 1997** — double taxation relief / foreign tax credit pooling.
-
-- **Finance (No. 2) Act 2023** — introduction of Part 4A Pillar Two (IIR, QDMTT, transitional safe harbours).
-- **Finance Act 2024** — UTPR effective 31 December 2024; R&D credit raised to 30%; KDB extended to 31 December 2026; Section 831B participation exemption; Section 486C start-up relief extension.
-- **Finance Act 2025** — annual updates (subject to confirmation at signing).
-
-- **Council Directive (EU) 2022/2523** of 14 December 2022 — Pillar Two minimum tax directive.
-- **OECD GloBE Model Rules** (December 2021), Commentary, Administrative Guidance (multiple releases 2023–2025).
-- **OECD Transfer Pricing Guidelines for Multinational Enterprises and Tax Administrations 2022**.
-- **OECD Frascati Manual 2015** — definition of R&D for Section 766 purposes.
-
-- **Tax and Duty Manual (TDM) Part 04** — Cases of Schedule D and Schedule F.
-- **TDM Part 04-09** — Section 110 companies.
-- **TDM Part 04-06** — KDB.
-- **TDM Part 29** — R&D Tax Credit Guidelines.
-- **TDM Part 35A** — Transfer Pricing.
-- **TDM Part 4A** — Pillar Two compliance.
-- **Code of Practice for Revenue Audit and other Compliance Interventions** (2024 edition).
-- **Revenue eBriefs** — periodic updates; subscribe via Revenue.ie.
-- **ROS / Revenue Online Service** — filing portal: revenue.ie/en/online-services/ros/.
-
-- **Companies Act 2014** — statutory accounts framework.
-- **FRS 102 / FRS 101 / IFRS** — applicable accounting standards.
-- **CRO** — Companies Registration Office (Form B1 annual return — separate from CT, but cross-referenced for compliance).
-
-## PROHIBITIONS
-
-- NEVER apply the 12.5% trading rate to passive income — Section 21A imposes 25%.
-- NEVER apply the Knowledge Development Box without a documented nexus computation and tracking-and-tracing system.
-- NEVER claim the R&D tax credit without a Frascati Manual-compliant technical record.
-- NEVER assume Pillar Two is out of scope — verify the €750M consolidated revenue 2-of-4-FY test.
-- NEVER compute QDMTT / IIR / UTPR without specialist GIR software and CTA engagement (R-IE-CT-4).
-- NEVER ignore the close-company surcharges (Sections 440, 441) for owner-managed companies.
-- NEVER deduct depreciation per accounts — use Section 284 capital allowances.
-- NEVER deduct entertainment expenses (Section 840).
-- NEVER deduct corporation tax itself or penalty interest under Section 1080.
-- NEVER carry forward trading losses outside the same-trade continuity rule (Section 396).
-- NEVER claim group relief without 75% beneficial ownership and EU/EEA/treaty residence (Section 411 / 420C).
-- NEVER ignore the Section 291A 80% trading-income cap on specified intangibles.
-- NEVER assume iXBRL exemption — default to filing.
-- NEVER file the CT1 after the 23rd day of the 9th month — surcharge is automatic (Section 959AA).
-- NEVER advise late preliminary tax — Section 1080 interest is daily and material.
-- NEVER apply Section 110 without specialist counsel — Section 110(5A) Irish-property carve-out is technical.
-- NEVER assume same-period correspondence in group relief — periods must overlap for the relevant portion.
-- NEVER skip transfer pricing documentation for groups ≥ €50M consolidated revenue (Section 835G).
-- NEVER bypass anti-hybrid (Sections 835AG–835AY) screening on cross-border related-party flows.
-- NEVER stack R&D credit and KDB on the same expenditure without confirming nexus exclusion.
-- NEVER apply the Section 831B participation exemption without 5% / 12-month holding evidence.
-- NEVER present figures as definitive — always label as estimates pending CTA reviewer sign-off.
-
-## Disclaimer
-
-This skill and its outputs are for informational and computational purposes only and do not constitute tax, legal, or financial advice. All outputs must be reviewed and signed off by a qualified Irish tax adviser (CTA, AITI, ACA or ACCA holding tax qualification, or solicitor / barrister authorised in tax) before filing or acting upon. Pillar Two computations specifically require specialist GIR software and credentialed Pillar Two practitioner sign-off. The latest verified version of this skill is maintained at [openaccountants.com](https://openaccountants.com).
+- CT for 2026: €400,000 at 12.5% = €50,000, plus €40,000 at 25% = €10,000. Total €60,000.
+- Hill Ltd is a small company because its 2025 CT of €48,000 is not above €200,000. By 23 November 2026 it must pay at least the lower of 100% of the 2025 CT (€48,000) and 90% of the 2026 CT (€54,000). It can pay €48,000 and still be on time.
+- The balance of €12,000 is due with the CT1 by 23 September 2027 (ROS).
+- Surcharge on the 2026 rent: €40,000 less CT of €10,000 = €30,000. Less the 7.5% trading company reduction (€2,250) = €27,750. It pays dividends of €20,000 within 18 months of 31 December 2026, leaving an excess of €7,750. That is more than €2,000, so the surcharge is 20% x €7,750 = €1,550. It is collected with the CT for 2027, not 2026.
+
+**Case 2: large company preliminary tax, calendar 2026.** Coast Ltd's CT for 2025 was €900,000. It expects €1,200,000 for 2026.
+
+- First instalment by 23 June 2026: either 50% of the 2025 CT (€450,000) or 45% of the 2026 CT (€540,000). Paying €450,000 meets the rule.
+- Second instalment by 23 November 2026: the total must reach 90% of the 2026 CT, which is €1,080,000. The second payment is therefore €630,000.
+- The balance of €120,000 is due by 23 September 2027 with the CT1.
+- If the 2026 CT turns out higher than expected, the 90% test is measured against the final figure. An underpayment carries interest at 0.0219% a day.
+
+**Case 3: trading loss against a gain, value basis.** This is Revenue's example on its [trading losses page](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/trading-losses.aspx). A company has a trading loss of €100,000 and a chargeable gain of €100,000. The tax on the gain is €33,000. The loss is worth €100,000 x 12.5% = €12,500 on a value basis, so the tax due is €20,500. Value-basis relief is not a choice: it applies only to losses left unused after the euro-for-euro offset against trading income of the same and preceding periods.
+
+**Case 4: R&D credit, calendar 2026 compared with calendar 2025.** Lab Ltd spends €400,000 of qualifying R&D expenditure in each year.
+
+- **2026 (35%):** credit €140,000. The first instalment is the greater of €87,500 and 50% of the credit (€70,000), so €87,500. The balance is €52,500. The second instalment is three fifths of that, €31,500, and the third is €21,000. The claim must be made by 31 December 2027.
+- **2025 (30%):** credit €120,000. The first instalment is the greater of €75,000 and €60,000, so €75,000. The balance is €45,000. The second instalment is €27,000 and the third is €18,000.
+
+**Case 5: start-up relief limited by PRSI (2025).** This is Revenue's example on its [start-up relief page](https://www.revenue.ie/en/starting-a-business/initiatives-startup-businesses-smes/tax-relief-for-new-startup-companies/how-is-the-relief-calculated.aspx). A company's CT for the year to 31 December 2025 is €25,000, which is below €40,000, so it is in the full relief band.
+
+- Qualifying PRSI: employer's PRSI of €9,000, plus Class S PRSI of €1,500 (one director's €1,200 is capped at €1,000). Total €10,500.
+- Relief is €10,500, not €25,000.
+- The CT payable on the qualifying trade is €14,500.
+
+**Case 6: late 2025 CT1.** Brook Ltd has a 31 December 2025 year end and CT for 2025 of €150,000. The CT1 was due by 23 September 2026 on ROS.
+
+- If it files on 20 October 2026 (within two months): surcharge of 5% x €150,000 = €7,500, below the €12,695 cap. Any loss relief or group relief claim is cut by 25%, up to €31,740.
+- If it files on 15 December 2026 (more than two months late): surcharge of 10% = €15,000, below the €63,485 cap. The relief restriction is 50%, up to €158,715.
+- Unpaid tax also carries interest at 0.0219% a day. The surcharge itself counts as tax for interest.
+
+**Case 7: Pillar Two scope for fiscal year 2026.** A group's consolidated revenue was €700m in 2022, €760m in 2023, €720m in 2024 and €800m in 2025. Revenue reached €750m or more in two of the four preceding fiscal years (2023 and 2025), so the group is in scope for 2026. Refer the computation.
+
+## When to refuse or refer
+
+Refer to a Chartered Tax Adviser or other qualified Irish tax practitioner, and do not produce a final figure, when:
+
+- **Residence is uncertain,** or a non-resident company may be trading in Ireland without a branch. The residence and permanent establishment tests come first.
+- **Special regimes apply:** Section 110 securitisation companies, banks and insurers, REITs and IREFs, funds and ICAVs, tonnage tax, petroleum or mineral profits, or development land gains beyond reporting.
+- **The group is in Pillar Two scope.** The QDTT, IIR, UTPR and TIR computations need the GloBE rules, specialist software and current OECD guidance, including the January 2026 Side-by-Side package.
+- **Cross-border related-party flows need screening:** transfer pricing documentation, anti-hybrid rules, the outbound payments measures, or the equity ratio or legacy debt points under the interest limitation rule.
+- **The claim is technical:** KDB (nexus and tracking), R&D claims with subcontracting, grants or borderline science, intangible asset elections, or foreign currency (s.402) computations.
+- **Structuring advice is sought:** loss-buying (s.401), moving IP or residence, or any arrangement that may fall within the general anti-avoidance rule (s.811C) or the mandatory disclosure regime.
+- **Revenue is involved:** an audit, a compliance intervention, a qualifying disclosure, or penalties for a careless or deliberate return.
+- **Close-company items go beyond the surcharge:** loans to participators, benefits for participators, or service-company marginal relief.
+- **Records are missing:** there are no signed accounts, no prior-period CT figure, or no evidence of preliminary tax payments.
+- **The trading or non-trading split is doubtful:** do not apply 12.5% until the facts support a trade.
+
+## Filing and payment ([Revenue: payment and filing](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax-payment-and-filing/payment-and-filing.aspx))
+
+**Mandatory e-filing.** A company must file its return and pay its tax on the Revenue Online Service (ROS). Each period it must:
+1. pay preliminary tax by the due date;
+2. file a CT1 and a Form 46G (Company) by the return filing date;
+3. pay any balance of tax by the return filing date.
+
+**The return date.** The CT1 is due nine months after the end of the accounting period ([TDM Part 47-06-08](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-47/47-06-08.pdf)):
+- Period ending on or after the 21st of a month: due by the 21st of the ninth month. Filed and paid through ROS, it is due by the 23rd. For a 31 December 2026 year end that means 23 September 2027.
+- Period ending before the 21st of a month: due on the same day of the ninth month. Revenue's example: a period ending 5 December 2024 was due by 5 September 2025.
+
+**Preliminary tax, 2026 periods** ([when is preliminary CT due](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax-payment-and-filing/when-is-preliminary-ct-due.aspx)):
+
+| Company | Amount | Due (calendar 2026 period) |
+| --- | --- | --- |
+| Small (previous period's CT not above €200,000) | At least the lower of 100% of the previous period's CT and 90% of this period's CT, in one instalment; a top-up is possible | 31 days before the period ends, by the 23rd of that month: 23 November 2026 |
+| Large, period longer than seven months | Instalment 1: 50% of the previous period's CT or 45% of this period's CT | 23rd of the sixth month: 23 June 2026 |
+| | Instalment 2: brings the total to 90% of this period's CT | 23rd of the eleventh month: 23 November 2026 |
+| Large, period of less than seven months | 90% in one instalment | Revenue's page does not state this date; check TDM Part 41A-07-02 |
+| New company, first period, CT less than €200,000 | None | Pay the whole CT with the CT1 |
+
+Groups can allocate preliminary tax between members (notional allocation) to reduce interest. This requires an application to Revenue's Debt Management Task Force and full payment of the CT by the return date.
+
+**iXBRL financial statements** ([Revenue: iXBRL](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/submitting-financial-statements/index.aspx)):
+- **Who must file:** companies managed by Large Corporates Division or High Wealth and Financial Services Division, Section 110 companies, and every other CT filer unless it meets all three small tests: total assets under €4.4 million, turnover under €8.8 million, and 50 or fewer employees on average.
+- **How:** iXBRL statements are filed with the CT1 through ROS. Companies that file them skip the CT1 "Extracts from Accounts" panel, but must tag certain mandatory items.
+- **More detail:** see TDM Part 41A-03-01.
+
+**Interest on late tax.** Late or short payments carry interest at 0.0219% a day. It is charged on the amount underpaid for the number of days late. It cannot be appealed to the Tax Appeals Commission or reduced.
+
+**Late filing surcharge (s.1084)** ([TDM Part 47-06-08](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-47/47-06-08.pdf)):
+- **Rates:** 5% of the tax, up to €12,695, if the CT1 is filed within two months of the due date; 10%, up to €63,485, if later.
+- **Paid on time is not enough:** the surcharge applies even if the tax was paid in full and on time.
+- **Incorrect returns:** a careless or deliberate incorrect return is treated as late, unless it is corrected before the due date.
+- **Interest:** the surcharge itself carries interest.
+
+**Restriction of reliefs (s.1085)** ([TDM Part 47-06-04](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-47/47-06-04.pdf)). A late CT1 also cuts these claims:
+- excess capital allowances;
+- loss relief under ss.396(2), 396A(3), 396B(2) and 399(2);
+- group relief claims and surrenders.
+
+| Filed late by | Restriction | Maximum restriction |
+| --- | --- | --- |
+| Less than two months | 25% | €31,740 |
+| Two months or more | 50% | €158,715 |
+
+**Time limit for Revenue enquiries (s.959AA)** ([TDM Part 41A-05-04](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-41a/41A-05-04.pdf)). Where the company has made a full and true disclosure of all material facts, Revenue cannot make or amend an assessment later than four years after the end of the chargeable period to which the return relates. The limit does not protect a return without full and true disclosure. There is no time limit in cases of fraud or neglect, or where no return was filed.
+
+## 2025 accounting periods: the CT1 being filed now ([TDM Part 47-06-08](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-47/47-06-08.pdf); [TDM Part 29-02-03](https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-29/29-02-03.pdf))
+
+- **Due date.** For a 31 December 2025 year end, the CT1 and balance of tax were due by 23 September 2026 on ROS. A return filed after that date is late.
+  - Filed before 23 November 2026 (less than two months late): 5% surcharge and a 25% relief restriction.
+  - Filed on 23 November 2026: still within two months for the surcharge (5%), but two months late for the relief restriction (50%).
+  - Filed after 23 November 2026: 10% surcharge and a 50% restriction.
+- **Rates.** 12.5% and 25%, as in 2026.
+- **R&D.** The credit is 30% for 2025 periods. For periods commencing on or after 1 January 2025, the first instalment is the greater of €75,000 (or the credit if lower) and 50% of the credit. Claim it within 12 months of the period end: by 31 December 2026 for a calendar 2025 period.
+- **KDB.** 10% effective rate.
+- **Start-up relief.** 2025 is the first year Class S PRSI of up to €1,000 per director counts, within the €40,000 overall limit.
+- **Participation exemption.** For 2025 distributions, the subsidiary look-back is five years, not three.
+- **Pillar Two.** For a group whose first year in scope is 2025, the first TIR is due 18 months after that fiscal year ends. For a calendar 2025 year, that is 30 June 2027.
+
+## Completion checklist ([Revenue: payment and filing](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax-payment-and-filing/payment-and-filing.aspx))
+
+- [ ] Accounting period confirmed and no longer than 12 months; residence confirmed.
+- [ ] Income split into trading (12.5%), non-trading and excepted trade (25%) and chargeable gains; development land kept out of CT.
+- [ ] Depreciation, entertainment and capital items added back; capital allowances computed (intangibles cap checked).
+- [ ] Losses applied in the right order (s.396A, s.396B, carry forward); group relief consents and the two-year limit checked.
+- [ ] Interest limitation: exceeding borrowing costs compared with the €3,000,000 de minimis; standalone status tested properly.
+- [ ] Start-up relief limited to qualifying PRSI and the CT bands; the trade start date is within 2009 to 2026.
+- [ ] R&D credit at the right rate (30% or 35%), claimed within 12 months, pre-filing notification checked, and the instalment election made.
+- [ ] Close company: the previous period's s.440 or s.441 surcharge included on this CT1; this period's dividend plan reviewed.
+- [ ] Pillar Two scope tested (€750m or more in two of four years); referred if in scope.
+- [ ] Preliminary tax: small or large status, amounts and dates checked; any shortfall and interest noted.
+- [ ] iXBRL requirement tested against all three conditions.
+- [ ] CT1 and Form 46G filed on ROS and the balance paid by the 23rd of the ninth month (or the earlier date for periods ending before the 21st).
+- [ ] Any late filing: surcharge and relief restrictions computed and explained to the client.
 
 <!-- openaccountants-cta-block -->
 

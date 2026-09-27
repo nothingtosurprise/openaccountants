@@ -4,451 +4,325 @@ description: ALWAYS USE THIS SKILL when a user asks for help preparing their UK 
 version: 0.1
 jurisdiction: GB
 tax_year: 2026
-last_updated: 2026-09-22
+last_updated: 2026-09-27
+authored_by: OpenAccountants team
 review_status: pending_review
-drafted_by: OpenAccountants
-approved_by: pending
+trust_label: By OpenAccountants
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# UK sole trader tax intake (Self Assessment)
+# UK freelancer tax intake: the questions to ask and where each answer goes (2026/27)
 
-The intake an assistant runs before any UK Self Assessment work for a self-employed person: the scope questions, the document checklist, what to read out of each document, the gap questions, and the hand-off to the other UK Guides. It is for sole traders who were UK resident for the whole tax year. This Guide computes no tax. The few figures it carries are limits that decide a route: whether a return is needed, which VAT regime applies, whether Making Tax Digital for Income Tax has started, and which expense method the client is on. Figures are for tax year 2026. In the UK that means 6 April 2026 to 5 April 2027, which HMRC writes "2026 to 2027" and this Guide writes 2026-27. The Making Tax Digital table tests earlier years, and each row names its year. For an earlier return the workflow is the same, but read the year beside each number on the linked page: several figures changed on 6 April 2026.
+## Scope
 
-## What this file is
+This is the first Guide to run when someone in the UK says they freelance, work for themselves, contract, sell on the side or have "a bit of self-employed income". It does not compute tax. It asks the questions that decide which rules apply, records the answers, and sends each answer to the specialist Guide that holds the detail:
 
-The intake orchestrator for UK-resident sole traders. Every downstream UK Guide (`uk-vat-return`, `uk-self-employment-sa103`, `uk-income-tax-sa100`, `uk-national-insurance`, `uk-student-loan-repayment`, `uk-payments-on-account`) and the assembly orchestrator (`uk-return-assembly`) depends on this Guide running first. It collects the facts, parses the documents, confirms them with the user, and hands a clean package to `uk-return-assembly`.
+- **uk-income-tax-sa100**: whether a return is needed, Income Tax, payments on account, deadlines and penalties.
+- **uk-national-insurance**: Class 2 and Class 4 for the self-employed, and voluntary contributions.
+- **uk-vat-return**: VAT registration, schemes and returns.
+- **uk-bookkeeping**: records, cash basis or traditional accounting, simplified expenses, and Making Tax Digital for Income Tax (MTD) record-keeping.
+- **uk-statutory-residence-test**: whether the person is UK resident for the year.
+- **uk-non-dom**: foreign income and gains, including the 4-year FIG regime that replaced the remittance basis.
+- **uk-capital-gains-sa108**: disposals of shares, crypto, property and business assets.
+- **uk-payroll**: anyone who employs staff, or whose own company runs a payroll.
+- **uk-rental-sa105**: UK property income.
 
-## Design principles
+**Tax year.** The primary year is 2026/27, which runs from 6 April 2026 to 5 April 2027. HMRC writes it "2026 to 2027". Returns being filed now are for 2025/26 (6 April 2025 to 5 April 2026); a dated section near the end covers them.
 
-v0.1 follows the upload-first, inference-then-confirm pattern of `mt-freelance-intake` v0.1:
+**Who this is for.** Individuals who work for themselves as sole traders, or who contract through an umbrella company or their own limited company, and who want to know what they must do about tax. The intake records residence, employment status and whether an activity is a trade. It does not decide any of them. Those are questions of fact that HMRC, and in the end a tribunal, can decide differently.
 
-1. **Compact refusal sweep** using `ask_user_input_v0`: 3 to 5 questions, about 30 seconds.
-2. **Upload-first**: after the refusal check, the user dumps everything they have.
-3. **Inference pass**: parse every document and extract what you can.
-4. **Gap-filling only**: ask ONLY about what is missing, ambiguous, or needs confirming.
-5. **Single confirmation pass**: show the picture, let the user correct it, hand off.
-
-Target: about 10 minutes for a prepared user, 15 to 25 for one who has to fetch documents.
-
-## Critical operating principles
-
-- **Do not narrate the workflow.** No "Phase 1" or "Now I'll ask about deductions." Just do the work.
-- **Do not ask what has been answered**, and do not ask about what the documents show. If the bank statement shows quarterly VAT payments to HMRC, confirm registration rather than asking for it.
-- **Use `ask_user_input_v0` for any multiple-choice question.** With no such tool, ask the same questions as one numbered list in one message, 3 at a time.
-- **Be terse but complete.** No hedging, no "let me know if you have questions."
-- **Blocking decisions stand alone.** If one question decides scope, ask it by itself.
-- **Do not decide what only HMRC or a tribunal can decide.** Employment status, trade or hobby, and residence are recorded as stated, tested against Section 2, and flagged. Never settled silently.
-
-## Section 1: The opening
-
-One message: a one-line greeting, a one-line summary of the flow (scope check, upload, gaps, hand-off), a one-line reviewer reminder, and the tax year being prepared. Then call `ask_user_input_v0` with the refusal questions.
-
-Let's get your UK Self Assessment return ready. Which tax year are you preparing? The UK tax year runs 6 April to 5 April, so "2026-27" means 6 April 2026 to 5 April 2027. Quick scope check, then you upload, then I fill the gaps. Target: 10 minutes.
-
-Reminder: everything I produce must be reviewed and signed off by a chartered accountant or licensed tax adviser before you file anything with HMRC. I'm not a substitute for professional review.
-
-**Do NOT** write a welcome paragraph, explain the phases, ask "are you ready to start", list documents in advance, or add any disclaimer beyond the one reviewer line.
-
-## Section 2: Refusal sweep (compact)
-
-One `ask_user_input_v0` call with 4 single-select questions.
-
-| Question | Options |
-| --- | --- |
-| Q1: "UK resident for the whole tax year you are preparing?" | ["Full year UK resident", "Part year: I arrived or left", "Non-resident", "Not sure"] |
-| Q2: "Business structure?" | ["Sole trader", "Limited company (Ltd)", "LLP or partnership", "Not sure"] |
-| Q3: "VAT registered?" | ["Yes, standard", "Yes, Flat Rate Scheme", "Not registered", "Not sure"] |
-| Q4: "Employees?" | ["No employees", "1 to 5 employees", "More than 5 employees"] |
-
-**Evaluation logic.**
-
-- Q1. Full year: continue. Part year or non-resident: stop (refusal below). Not sure: walk through the residence tests below, record the answer as stated, set `classification.residence_tested` to `false` and flag it.
-- Q2. Sole trader: continue. Ltd, LLP or partnership: stop. Not sure: "Invoice in your own name and report the income on your personal return? Sole trader. Registered at Companies House? Ltd. Sharing profits with partners? Partnership." A partner running a separate sole trade stays in scope for it, with a flag: the partnership files its own return.
-- Q3. Standard: continue. Flat Rate Scheme: continue with a flag; the sector rate and goods costs are needed for the limited cost test below. Not registered: continue with a flag, and test turnover against the registration limit once documents are in. Not sure: "Invoices show VAT and a VAT number?" If unsettled, set `taxpayer.vat_status` to `unsettled`, ask for turnover in Section 6, and flag it.
-- Q4. None: continue. 1 to 5: continue with a flag; PAYE is out of scope, route payroll to `uk-payroll`. More than 5: stop.
-
-**Refusals.**
-
-- **Part year or non-resident.** I'm set up for full-year UK residents only. Part-year and non-residents have split-year treatment or different sourcing rules. You need a chartered accountant who handles non-resident returns.
-- **Limited company.** I don't cover corporate returns. Limited companies file CT600 returns with separate rules for directors' salaries and dividends. You need a chartered accountant.
-- **LLP or partnership.** Partnerships file SA800 returns with profit-sharing arrangements. You need a chartered accountant familiar with partnership returns.
-- **More than 5 employees.** I'm set up for sole operators. Above 5 employees the PAYE and employment law work needs a dedicated accountant.
-
-### Residence is recorded, then tested
-
-Residence follows the statutory residence test, not where the client feels they live. A person is UK resident if they meet one or more of the automatic UK tests or the sufficient ties test, and none of the automatic overseas tests. The automatic UK tests include 183 or more days in the UK in the tax year; an only home in the UK for 91 days or more in a row, visited or stayed in for at least 30 days of the tax year; and full-time work in the UK for any period of 365 days where at least one day of that period falls in the tax year being checked. The overseas tests include fewer than 16 days in the UK, or 46 days if not UK resident for the 3 previous tax years: https://www.gov.uk/tax-foreign-income/residence. Route real doubt to `uk-statutory-residence-test`. Someone who moved in or out is usually split into a non-resident part and a resident part. That is out of scope.
-
-### Employee or self-employed: what HMRC looks at
-
-HMRC may regard someone as self-employed for tax even if employment law says otherwise, so ask about the work, not the job title. Someone is probably self-employed if most of these are true: they bid or quote for work; they are not under direct supervision; they invoice for work done; they pay their own National Insurance and tax; they get no holiday or sick pay; and their contract uses terms like self-employed, consultant or independent contractor. Someone can be employed and self-employed at the same time: https://www.gov.uk/employment-status/selfemployed-contractor. If the answers point the other way (one client, set hours, supervised work, equipment supplied, holiday pay), record it, set `classification.employment_status_tested` to `false` and flag it. Do not reclassify the income. Construction work may fall inside the Construction Industry Scheme: see Section 4.
-
-### Trade or hobby: the badges of trade
-
-An activity that may not be a trade is tested against the badges of trade: profit-seeking motive; number of transactions; nature of the asset; existence of similar trading transactions or interests; changes to the asset; the way the sale was carried out; source of finance; interval of time between purchase and sale; and method of acquisition. The courts decide "on the basis of the overall impression gained from a review of all the badges": https://www.gov.uk/hmrc-internal-manuals/business-income-manual/bim20205. Record the client's description, which badges point which way, and a flag. Do not rule on it here.
-
-### Does the client need a Self Assessment return at all
-
-| Test | Amount | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return |
-| Sole trader income above which a return must be sent, before expenses | GBP 1,000 | "you were self-employed as a ‘sole trader’ and earned more than £1,000" |
-
-A client who has never sent a return, or registered before but did not need to send one, must tell HMRC by 5 October after the end of the tax year (same page).
-
-| Allowance | Amount | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income |
-| Trading allowance: gross trading income that can be received tax free, each tax year | GBP 1,000 | "You can get up to £1,000 each tax year in tax-free allowances" |
-| Property allowance, separate from the trading allowance | GBP 1,000 | "If you have both types of income, you’ll get a £1,000 allowance for each." |
-
-The trading allowance is an allowance, not a cliff. Above it, the allowance may be deducted INSTEAD of actual expenses, never as well, so record gross income and actual expenses both and let `uk-self-employment-sa103` choose. Route property income to `uk-rental-sa105`. Neither allowance can be used in a tax year if the client has any trade or property income from a company they or a connected person owns or controls, from a partnership where they or a connected person are partners, or from their own employer or the employer of their spouse or civil partner. The trading allowance also does not apply to trading income from a partnership: https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income.
-
-### VAT: which regime, and the limits that decide it
-
-| Limit | Amount | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.gov.uk/how-vat-works/vat-thresholds |
-| Registration: taxable turnover above this makes registration compulsory | GBP 90,000 | "Total taxable turnover More than £90,000 Register for VAT" |
-| Deregistration: a registered business may cancel below this | GBP 88,000 | "Less than £88,000 Cancel VAT registration" |
-| Flat Rate Scheme: turnover at or below this to join | GBP 150,000 | "Flat Rate Scheme £150,000 or less" |
-| Flat Rate Scheme: above this the business must leave | GBP 230,000 | "£150,000 or less More than £230,000" |
-
-Registration is compulsory if EITHER test is met: taxable turnover for the last 12 months goes over the limit, or the client expects taxable turnover to go over it in the next 30 days on its own. The 12 month test is rolling, not the tax year: https://www.gov.uk/register-for-vat. The Flat Rate Scheme joining and leaving limits differ, so a business above the joining limit can still be in the scheme. They are also measured differently: the joining limit is turnover excluding VAT, the leaving limit is total business income including VAT. Deregistration is optional. The intake records turnover and dates; `uk-vat-return` decides the return.
-
-A Flat Rate Scheme "limited cost business" pays one fixed rate whatever its trade.
-
-| Test | Amount | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.gov.uk/vat-flat-rate-scheme/how-much-you-pay |
-| Flat rate for a limited cost business, whatever the sector | 16.5% | "This means you pay a higher rate of 16.5%." |
-| Limited cost test: goods cost less than this share of turnover | 2% | "if your goods cost less than either: 2% of your turnover" |
-| Limited cost test: or goods cost less than this in a year | GBP 1,000 | "£1,000 a year (if your costs are more than 2%)" |
-| Reduction of the sector rate in the first year of VAT registration | 1% | "You get a 1% discount if you’re in your first year" |
-
-The page joins the two tests with "either", so meeting one is enough. Goods are counted including VAT and must be used exclusively for the business. They do not include capital goods of any value, vehicle costs including fuel outside the transport sector, food or drink for the client or their staff, or goods bought for resale where that is not the main activity. For a return period shorter than a year the yearly limb is the matching proportion: VAT Notice 733 paragraph 4.4, https://www.gov.uk/government/publications/vat-notice-733-flat-rate-scheme-for-small-businesses/vat-notice-733-flat-rate-scheme-for-small-businesses. Ask a Flat Rate Scheme client for the cost of goods (not services) in the period and the date of first VAT registration.
-
-### Making Tax Digital for Income Tax: who must join, and when
-
-Settle this at intake, because it changes what the client must keep. Qualifying income is total self-employment and property income before expenses (turnover), based on the return submitted in the previous tax year. Employment income, a partnership profit share, dividends, the State Pension and private pensions do not count: https://www.gov.uk/guidance/work-out-your-qualifying-income-for-making-tax-digital-for-income-tax.
-
-| Qualifying income over, in the year tested | Amount | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax |
-| 2024 to 2025: should have started from 6 April 2026 | GBP 50,000 | "£50,000 for the 2024 to 2025 tax year, you should’ve started" |
-| 2025 to 2026: start 6 April 2027 | GBP 30,000 | "£30,000 for the 2025 to 2026 tax year, you will need to use it from 6 April 2027" |
-| 2026 to 2027: start 6 April 2028 | GBP 20,000 | "£20,000 for the 2026 to 2027 tax year, you will need to use it from 6 April 2028" |
-
-Each row is tested on an EARLIER tax year than the one it starts in. The test is on gross income, so a client with a small profit can be caught. For a sole trader who traded for only part of the tested year HMRC annualises the figure, so a first part year of trading can carry a client over: https://www.gov.uk/guidance/work-out-your-qualifying-income-for-making-tax-digital-for-income-tax. It applies to a sole trader or landlord registered for Self Assessment; partnerships will join later, on a timeline not yet set. Inside it, the client keeps digital records and sends quarterly updates through software: https://www.gov.uk/guidance/using-making-tax-digital-for-income-tax. A Self Assessment return is still due for the tax year before the client starts, and inside the regime the yearly return is completed and submitted through the same software: https://www.gov.uk/guidance/using-making-tax-digital-for-income-tax. Some people are exempt, for example if digitally excluded. HMRC writes to those above the threshold; test it from the return anyway.
-
-## Section 3: The dump
-
-Once the sweep passes, ask for the documents. Single message. No preamble.
-
-Scope is good. Now upload everything you have for the tax year you are preparing (6 April to the following 5 April). Drop it all in at once:
-
-- Business bank statements for the full tax year (CSV or PDF)
-- Sales invoices issued in the tax year
-- Purchase invoices and receipts for business expenses
-- Prior year SA302 (tax calculation) or the prior year return
-- P60 or payslips (if you also have employment income)
-- Student loan statement (if applicable)
-- VAT returns filed during the tax year (if VAT registered)
-- HMRC letters and payment statements, including any Making Tax Digital letter
-- Receipts for equipment, computers and vehicles
-- Anything else tax-related
-
-Don't worry about labels. I'll work out what each file is.
-
-Then wait. Ask nothing else. If the user says "that's what I have", move to inference and ask for specific missing items during gap-filling. If the user says "I don't know what I have", point them to: the business bank; email (search "invoice", "HMRC", "tax return", "P60", "student loan"); their HMRC online account; last year's accountant; cloud folders of saved invoices; and the Student Loans Company portal.
-
-### Records the client must keep
-
-A sole trader keeps records of business income and expenses, and of personal income too: https://www.gov.uk/self-employed-records. From the 2024 to 2025 tax year cash basis is the default, and traditional accounting needs an opt-out (same page).
-
-Records are kept for at least 5 years after the 31 January submission deadline of the relevant tax year: https://www.gov.uk/self-employed-records/how-long-to-keep-your-records. If records were lost, stolen or destroyed, the client must still give figures and tell HMRC on the return which are estimated or provisional. Flag it.
-
-| Item | Amount | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.legislation.gov.uk/ukpga/1970/9/section/12B |
-| Maximum penalty for failing to keep or preserve the required records. A maximum, not a fixed charge | GBP 3,000 | "shall be liable to a penalty not exceeding £3,000." |
-
-## Section 4: The inference pass
-
-Parse each document, extract the facts, and build an internal inference object. Do not show it raw. Turn it into the Section 5 summary.
-
-- **Bank statements**: total deposits (candidate gross turnover); recurring inflows by client; HMRC payments for Self Assessment and VAT, dated; supplier outflows by category; equipment purchases; drawings; rent; software; memberships; insurance; telephone/broadband; motor costs.
-- **Sales invoices**: client names and amounts; VAT charged or not; turnover reconciled to deposits; non-UK clients (reverse charge or outside UK VAT scope); Construction Industry Scheme deductions, already-suffered tax that goes into the return.
-- **Purchase invoices and receipts**: category (revenue, capital, disallowable); VAT on each; capital items; disallowable items such as entertainment.
-- **Prior year SA302 or return**: total liability; net self-employment income; GROSS self-employment and property income for the MTD test; capital allowances schedule; payments on account made; balancing payment or refund; tax collected outside Self Assessment.
-- **P60 and payslips**: gross pay; PAYE tax; Class 1 NI; tax code; student loan deductions.
-- **Student loan statement**: plan type (Plan 1, 2, 4, 5 or Postgraduate); balance; PAYE repayments. Thresholds belong to `uk-student-loan-repayment`.
-- **VAT returns**: turnover and output tax per period; input tax claimed; flat rate percentage used; amount owed or refunded.
-
-### Payments on account: the two tests that switch them off
-
-| Test | Amount | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.gov.uk/understand-self-assessment-bill/payments-on-account |
-| None due if last year's tax owed was below this. A cliff | GBP 1,000 | "the amount of tax you owed last year was less than £1,000" |
-| None due if more than this share of last year's tax was paid outside Self Assessment, for example through a tax code | 80% | "you paid more than 80% of the tax you owed outside of Self Assessment" |
-| Size of each instalment | half of the previous year's tax | "Each payment is half of the tax you owed last year." |
-
-Either test switches the instalments off. They are due by 31 January and 31 July. Read both inputs from the prior year documents; `uk-payments-on-account` does the calculation.
-
-## Section 5: The confirmation
-
-Present one compact summary and invite corrections. Fill every line from the documents. Write "not found" where no document carried it. Never invent a figure, and never copy an amount from this Guide into a client summary.
-
-Here's what I pulled from your documents. Skim and tell me what's wrong.
-
-- **Identity:** name, marital status; residence as stated and whether tested; the trade; VAT regime and number.
-- **Turnover:** gross turnover excluding VAT; one line per client; VAT collected; non-UK income separately; Construction Industry Scheme deductions suffered.
-- **Expenses:** one line per category; each mixed item marked "need business use share"; each capital item with date and cost; input VAT.
-- **Employment income (P60):** gross pay, PAYE tax, Class 1 National Insurance.
-- **Student loan:** plan type and the amount repaid through PAYE.
-- **Payments on account:** each instalment with its date, and the total.
-- **Prior year (SA302):** total liability, net profit, and gross self-employment and property income.
-- **VAT returns:** periods filed and periods outstanding.
-- **Making Tax Digital:** already in, must join (from when), or below the test.
-
-**Flags I already see:** numbered. Typical: a mixed cost with no business share; a vehicle with no chosen method; a capital item; an outstanding VAT period; employment income needing the employment pages; a classification recorded but not settled.
-
-**Is any of this wrong? Reply "looks good" or tell me what to fix.**
-
-## Section 6: Gap filling
-
-After the user confirms, ask only what the documents cannot show, with `ask_user_input_v0` where possible: Scottish taxpayer status; simplified expenses for vehicles, home or premises; accounting basis; student loan plan type; capital allowances brought forward; Marriage Allowance; pension contributions; and the earlier year's gross income for Making Tax Digital if the prior return is missing.
-
-**Scottish taxpayer.** Q: "Scottish taxpayer?" Options: ["Yes, I live in Scotland", "No, England, Wales or Northern Ireland", "Not sure"]. Scottish Income Tax applies to wages, pension and most other taxable income; dividends and savings interest are taxed as in the rest of the UK: https://www.gov.uk/scottish-income-tax. You pay it if you live in Scotland; a mover, someone with homes in and outside Scotland, or with no home, needs https://www.gov.uk/scottish-income-tax/who-pays. Record the answer; `uk-income-tax-sa100` applies the rates.
-
-**Motor vehicle method.** Q: "Motor vehicle expenses method?" Options: ["Simplified expenses, a flat rate per mile", "Actual costs, with a business use share", "No vehicle used for business"]. Simplified: ask vehicle type and business miles. Actual: ask total miles, business miles and total costs, and record the share the client states.
-
-| Vehicle | Flat rate per mile | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.gov.uk/simpler-income-tax-simplified-expenses/vehicles |
-| Cars and goods vehicles, first 10,000 business miles | 55p per mile | "first 10,000 miles 55p" |
-| Cars and goods vehicles, after 10,000 miles | 25p per mile | "after 10,000 miles 25p" |
-| Motorcycles | 24p per mile | "Motorcycles 24p" |
-
-The first rate ROSE for 2026-27; the page shows the lower rate for before 6 April 2026. Once the flat rate is used for a vehicle it must be used for as long as that vehicle is used in the business. These are the self-employed rates. Simplified expenses cover cars, goods vehicles such as vans, and motorcycles, but not a car designed for commercial use such as a black cab, a hackney carriage or a dual control driving instructor's car, and not a vehicle already claimed as capital allowances or already put through as an expense. The mileage allowance an employer pays an employee is a different rule with the same numbers; do not mix them.
-
-**Use of home.** Q: "Use of home for business?" Options: ["Simplified flat rate by hours worked at home", "Actual costs apportionment", "Separate business premises", "No home office claim"]. Simplified: ask average hours a month. Actual: ask household costs and the share the client states.
-
-| Hours of business use per month | Flat rate | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.gov.uk/simpler-income-tax-simplified-expenses/working-from-home |
-| 25 to 50 | GBP 10 a month | "25 to 50 £10" |
-| 51 to 100 | GBP 18 a month | "51 to 100 £18" |
-| 101 and more | GBP 26 a month | "101 and more £26" |
-
-Below 25 hours a month the flat rate cannot be used. Telephone and internet are not included; claim the business share of those on actual cost.
-
-**Accounting basis.** Q: "Accounting basis?" Options: ["Cash basis: income when received, expenses when paid", "Traditional accounting: income when invoiced, expenses when billed"]. Cash basis is the standard way for a sole trader or a partnership without corporate partners. A limited company, a limited liability partnership and a partnership with one or more corporate partners cannot use it. Nor can a Lloyd's underwriter, a farming business with a current herd basis election, a farming or creative business with a fluctuating profit averaging claim, a business that has claimed business premises renovation allowance within the previous 7 years, a business carrying on a mineral extraction trade, or a business that has ever claimed research and development allowance: https://www.gov.uk/simpler-income-tax-cash-basis/who-can-use-cash-basis. Ask about the averaging claim and the research and development allowance, because a client will not volunteer them. The page sets no turnover limit, so do not apply one.
-
-**Marriage Allowance.** Ask whether the client is married or in a civil partnership, and whether either partner has applied.
-
-| Item | Amount | Note (verbatim) |
-| --- | --- | --- |
-| Source | all figures below | https://www.gov.uk/marriage-allowance |
-| Slice of Personal Allowance transferable to a spouse or civil partner | GBP 1,260 | "Marriage Allowance lets you transfer £1,260 of your Personal Allowance" |
-
-**Private-use shares.** Flag every private-use share the client states. The reviewer confirms it is reasonable and documented. The intake records the client's figure and never chooses one.
-
-## Section 7: The final handoff
-
-Produce the handoff message, then invoke `uk-return-assembly` with the package.
-
-Intake complete. I'm now going to run the full UK return preparation:
-1. VAT return for any outstanding period, if you are registered
-2. Self-employment pages for the trading income
-3. The main return and the tax computation
-4. Class 4 National Insurance, and voluntary Class 2 if your profits are low and you choose to pay it
-5. Student loan repayment, if applicable
-6. Payments on account for the following year
-
-You'll get back a working paper, a reviewer brief with positions, citations and flags for your accountant, and a filing calendar.
-
-Deadlines for the calendar, from https://www.gov.uk/self-assessment-tax-returns/deadlines: tell HMRC by 5 October if the client has never sent a return; a paper return by 31 October after the year end; an online return and the balancing payment by 31 January after the year end; the second payment on account by the following 31 July; and an online return by 30 December after the year end to have the balance collected through a tax code. The page prints calendar dates for the return that is open now, which is the year ended 5 April 2026, so read the year beside each date before copying it into a 2026-27 calendar. Class 2 is voluntary below the small profits threshold on https://www.gov.uk/self-employed-national-insurance-rates.
-
-## Section 8: Structured intake package (internal format)
-
-`uk-return-assembly` consumes this JSON. It is internal and not shown unless asked. `tax_year` is written as the two years it spans.
-
-**`null` means NOT YET KNOWN and zero means a real zero.** Zero says the assistant looked and found nothing; `null` says nobody has looked or the client did not answer. `false` is an answer, `null` is not. `scottish_taxpayer`, `accounting_basis`, `vat_status`, `plan_type`, every `_pct` field and everything in `classification` stay `null` until the client or a document settles them. A pipe list such as `"cash | accruals | null"` is the set of allowed values: replace it with one.
-
-~~~json
-{
-  "jurisdiction": "UK",
-  "tax_year": "2026-27",
-  "taxpayer": {
-    "name": null, "birth_year": null,
-    "marital_status": "single | married | civil_partner",
-    "residency": "full_year", "scottish_taxpayer": null,
-    "utr": null, "ni_number": null, "vat_number": null,
-    "vat_status": "standard | flat_rate_scheme | unregistered | unsettled",
-    "flat_rate_pct": null, "entity_type": "sole_trader", "industry": null,
-    "accounting_basis": "cash | accruals | null"
-  },
-  "classification": {
-    "residence_as_stated": "full_year | part_year | non_resident | unsure",
-    "residence_tested": null,
-    "employment_status_as_stated": "self_employed | employed | both | unsure",
-    "employment_status_tested": null,
-    "trade_or_hobby_as_stated": "trade | hobby | unsure",
-    "badges_pointing_to_trade": [], "badges_pointing_away": [], "unsettled": []
-  },
-  "income": {
-    "gross_turnover_ex_vat": null, "vat_collected": null, "outside_scope_income": null,
-    "cis_deductions_suffered": null, "employment_income": null, "paye_tax_deducted": null,
-    "class1_nic_deducted": null, "other_income": null, "client_breakdown": []
-  },
-  "expenses": { "fully_deductible": [], "mixed_use": [], "disallowable": [], "capital_items": [] },
-  "vat": {
-    "quarterly_returns_filed": [], "input_vat_reclaimable": null, "flat_rate_scheme": null,
-    "flat_rate_pct": null, "limited_cost_goods_cost": null, "first_registered_date": null,
-    "rolling_12m_taxable_turnover": null, "expects_to_exceed_in_next_30_days": null
-  },
-  "mtd_itsa": { "qualifying_income_prior_year": null, "already_using": null, "must_start_from": null, "exempt": null },
-  "student_loan": {
-    "has_loan": null,
-    "plan_type": "plan_1 | plan_2 | plan_4 | plan_5 | postgraduate | null",
-    "repaid_via_paye": null, "outstanding_balance": null
-  },
-  "payments_on_account": {
-    "prior_year_sa_liability": null, "prior_year_tax_paid_outside_sa": null,
-    "first_poa_paid": null, "second_poa_paid": null, "total_paid": null
-  },
-  "prior_year": {
-    "total_sa_liability": null, "net_self_employment_profit": null,
-    "gross_self_employment_and_property_income": null, "capital_allowances_pool": null
-  },
-  "home_office": {
-    "method": "simplified | actual | none | null",
-    "hours_per_month": null, "actual_costs": null, "business_pct": null, "annual_amount": null
-  },
-  "private_use": {
-    "motor_vehicle_method": "simplified | actual | none | null",
-    "vehicle_type": "car_or_goods_vehicle | motorcycle | null",
-    "business_miles": null, "motor_vehicle_business_pct": null,
-    "phone_business_pct": null, "broadband_business_pct": null
-  },
-  "pension": { "personal_contributions": null, "relief_method": "relief_at_source | net_pay | null" },
-  "marriage_allowance": { "transfer_to_spouse": null, "transfer_from_spouse": null },
-  "open_flags": [], "refusals_triggered": [], "documents_received": []
-}
-~~~
-
-## Section 9: Refusal handling
-
-Refusals fire from the sweep (Section 2) or during inference, e.g. a limited company found in the documents. When one fires: stop; state the reason in one sentence; name the practitioner to see; offer partial help only if the out-of-scope item is cleanly separable, which is rare. Do not apologise at length, work around the refusal, hint a different answer would fit, or continue silently.
-
-Stop. You have a registered limited company. I'm set up for sole traders only. Limited companies file CT600 returns with separate rules for corporation tax, directors' pay and dividends. You need a chartered accountant familiar with Ltd returns. I can't help with this one.
-
-## Section 10: Self-checks
-
-- **IN1**: No one-question-at-a-time prose in the sweep; `ask_user_input_v0` or one batched list was used.
-- **IN2**: Upload-first honoured: documents were asked for before any content question, and parsed before gap questions.
-- **IN3**: Gap-filling asked only what the documents do not show.
-- **IN4**: Anything ambiguous or risky is in `open_flags`.
-- **IN5**: The handoff was explicit and `uk-return-assembly` was invoked with the package.
-- **IN6**: The reviewer step was stated upfront and again before handoff.
-- **IN7**: Refusals were clean. Stop means stop. No meta-commentary about phases.
-- **IN8**: 8 turns or fewer for a prepared user; more than 12 is a failure.
-- **IN9**: VAT status was set before inference; for a Flat Rate Scheme client, goods cost and first registration date were asked.
-- **IN10**: Scottish status was set, or recorded as unsettled and flagged.
-- **IN11**: Making Tax Digital was settled in `mtd_itsa` on GROSS income, not profit.
-- **IN12**: Residence, employment status and trade or hobby each appear in `classification` with what the client said, whether tested, and a flag where unsettled.
-- **IN13**: No figure from this Guide was copied into a client summary as the client's own.
-
-## Section 11: Performance targets
-
-- **Prepared user**: sweep 30 seconds (1 to 2 turns); upload 2 minutes (1 turn); inference and confirmation 1 turn; gap filling 2 to 3 turns; handoff immediate. About 10 minutes.
-- **Unprepared user**: document discovery 10 to 20 minutes offline, the rest the same. 15 to 25 minutes.
-
-## Section 12: Cross-Guide references
-
-Inputs: user documents and answers. Output: the intake package for `uk-return-assembly`, which triggers `uk-vat-return` (if registered), `uk-self-employment-sa103`, `uk-income-tax-sa100`, `uk-national-insurance` (Class 4, voluntary Class 2), `uk-student-loan-repayment` (if applicable) and `uk-payments-on-account`.
-
-Routed straight from the intake when documents show them: `uk-rental-sa105`, `uk-dividends`, `uk-capital-gains-sa108`, `uk-crypto-tax`, `uk-payroll` where there are employees, `uk-bookkeeping` where records will not support a return, `uk-statutory-residence-test` or `uk-non-dom` where residence or domicile is in doubt.
-
-### Change log
-
-- **v0.1 (April 2026):** Initial draft, modelled on `mt-freelance-intake` v0.1.
-- **Refresh (September 2026):** Figures re-read on the official pages for tax year 2026 and moved into sourced tables. Making Tax Digital added. Residence, employment status and trade or hobby turned into recorded-and-tested questions. Cash basis turnover limit removed, mileage rate corrected, Class 2 marked voluntary, unknowns changed to `null`.
-
-## The method, step by step
-
-1. Fix the tax year and test residence: https://www.gov.uk/tax-foreign-income/residence
-2. Settle the structure. Sole trader stays; Ltd, LLP or partnership is referred (Sections 2, 9).
-3. Test whether a return is needed, against the filing trigger and trading allowance: https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return, https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income
-4. Settle the VAT regime first, since it decides whether amounts are read net or gross: https://www.gov.uk/how-vat-works/vat-thresholds
-5. Settle Making Tax Digital on the earlier year's GROSS self-employment and property income: https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax
-6. Record and test employment status and trade or hobby (Section 2). Settle neither.
-7. Collect and parse the documents (Sections 3, 4); check the records rule: https://www.gov.uk/self-employed-records/how-long-to-keep-your-records
-8. Read the prior year calculation for both payments on account tests: https://www.gov.uk/understand-self-assessment-bill/payments-on-account
-9. Confirm the summary and fill the gaps, choosing expense methods with the client (Section 6).
-10. Write every unsettled point into `open_flags` and hand the package to `uk-return-assembly`, with the deadlines from https://www.gov.uk/self-assessment-tax-returns/deadlines
+**What the figures here are for.** The few amounts in this Guide are the switches that decide a route: the £1,000 trading allowance and return trigger, the 5 October registration date, the £90,000 VAT threshold, the MTD thresholds, the Class 2 and Class 4 limits, and the payments on account tests. Each one is stated as the specialist Guide states it, from the same gov.uk page. For anything beyond the switch, go to the specialist Guide. ([who must send a return](https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return))
 
 ## Ask the client first
 
-- Tax year; full-year UK resident, or arrived/left during it?
-- Invoice in your own name or through a company? Share profits with anyone?
-- 12 month turnover, VAT on invoices, and on the Flat Rate Scheme, cost of goods (not services) and first registration date?
-- GROSS earlier-year self-employment and property takings? Any HMRC letter about Making Tax Digital?
-- Live in Scotland? Vehicle or home room used for the business, flat rate used before?
-- Other income: job, rent, dividends, savings, crypto, a disposal, a partnership share? Student loan plan?
+Ask these in order. Several are blocking: the answer to one changes which of the rest matter. Where the person uploads documents (bank statements, invoices, last year's SA302 tax calculation, P60s, HMRC letters), read them first and ask only about the gaps.
+
+**A. The year and where they live**
+
+- Which tax year is this about? The UK tax year runs 6 April to 5 April.
+- Were you in the UK for the whole of that year? Did you arrive, leave, or spend long periods abroad?
+- Do you have income or gains from outside the UK? Did you move to the UK in the last few years?
+- Do you live in Scotland? Scottish taxpayers pay different Income Tax rates on earnings.
+
+**B. How the work is set up**
+
+- Do you invoice clients in your own name, through your own limited company, through an umbrella company, or are you paid through an agency's payroll?
+- Do you share profits with anyone as a partner?
+- For each client: who is it, is it in the public sector, and roughly how big is it? Has any of them given you a "status determination statement"?
+- Do you also have a job where tax is taken off through PAYE?
+
+**C. How much, and since when**
+
+- When did you start working for yourself? Have you told HMRC, and do you have a Unique Taxpayer Reference (UTR)?
+- What were your total takings, before expenses, from self-employment in the year? And from UK property, if any?
+- What were your total taxable sales over the last 12 months, month by month? Do you expect any single 30-day period ahead to bring in more than £90,000 on its own? ([register for VAT](https://www.gov.uk/register-for-vat))
+- Are you VAT registered? From what date, and on which scheme?
+
+**D. Other income and disposals**
+
+- Did you have rental income, dividends, savings interest, foreign income, or a disposal of shares, crypto, a second property or business assets?
+- Are you repaying a student or postgraduate loan? Does anyone in your household get Child Benefit?
+
+**E. Records and past returns**
+
+- What records do you keep: accounting software, spreadsheets, a separate business bank account?
+- What did last year's SA302 say you owed, and how much of it was already paid through PAYE or taken off at source? Did you make payments on account on 31 January and 31 July?
+- Has HMRC written to you about Making Tax Digital for Income Tax?
+
+**F. People**
+
+- Do you employ anyone, or pay anyone through a payroll?
+
+## The method, step by step
+
+Work through the steps in order. Each step ends with a route. Record every answer and every doubt; do not settle a doubt by assuming.
+
+1. **Fix the tax year.** Everything below is tested year by year, 6 April to 5 April. The MTD test looks at an earlier year than the one it starts in, and payments on account look at the previous year's bill. Write down which year each document belongs to.
+
+2. **Residence.** A person is UK resident only if both apply: they meet one or more of the automatic UK tests or the sufficient ties test, and they do not meet any of the automatic overseas tests ([tax on foreign income: residence](https://www.gov.uk/tax-foreign-income/residence)).
+
+- Whole year in the UK, no foreign income: continue.
+- Arrived, left, or long periods abroad: route to **uk-statutory-residence-test** before anything else. A split year and non-resident returns need an adviser.
+- Foreign income or gains, or moved to the UK recently: route to **uk-non-dom**. Residents normally pay UK tax on all their income, whether it is from the UK or abroad ([residence](https://www.gov.uk/tax-foreign-income/residence)); the 4-year FIG regime for qualifying new residents, and what happened to the remittance basis, are in that Guide.
+- Lives in Scotland: note it for **uk-income-tax-sa100**, which refers Scottish rates.
+
+3. **How the work is set up.** This decides which tax system the income sits in.
+
+- **Sole trader** (invoices in own name, no company): self-employment income on the Self Assessment return. Continue to step 4.
+- **Also employed**: someone can be employed and self-employed at the same time, for example working for an employer during the day and running their own business in the evenings ([employment status](https://www.gov.uk/employment-status/selfemployed-contractor)). The job stays in PAYE; the business goes on the return.
+- **Partner in a partnership**: a partner must file a personal return ([who must send a return](https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return)), and the trading allowance does not apply to partnership income. The partnership return itself is out of scope here; refer.
+- **Own limited company (personal service company)** or **umbrella company**: go to the IR35 section below. The company's own tax (Corporation Tax, accounts, payroll) is not a sole trader matter; route payroll to **uk-payroll** and refer the company accounts.
+- **Paid through an agency's payroll**: that is employment income taxed through PAYE, not self-employment. Record it and route to **uk-income-tax-sa100** if a return is needed for another reason.
+
+4. **Is the activity a trade, and is the person self-employed?**
+
+- Self-employed or not is a question about the work, not the job title. A person is probably self-employed if most of these are true: they put in bids or give quotes to get work; they are not under direct supervision; they submit invoices; they pay their own tax and National Insurance; they get no holiday or sick pay; and their contract uses terms like "self-employed", "consultant" or "independent contractor" ([employment status](https://www.gov.uk/employment-status/selfemployed-contractor)). If the facts point the other way (one client, set hours, supervised, equipment supplied, holiday pay), record it and flag it. Do not reclassify the income yourself.
+- Trade or hobby: where selling may not be a trade, HMRC looks at the badges of trade, such as profit-seeking motive, number of transactions, nature of the asset and how the sale was carried out, and decides on the overall impression ([BIM20205](https://www.gov.uk/hmrc-internal-manuals/business-income-manual/bim20205)). Record which badges point which way and flag it.
+- Construction work: the Construction Industry Scheme may apply. Record any deductions shown on statements; they are tax already paid.
+
+5. **Does the person need a return, and must they register?**
+
+- A sole trader must send a return if they "earned more than £1,000 (before taking off anything you can claim tax relief on)" in the tax year ([who must send a return](https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return)). The test is on gross takings, not profit.
+- Other triggers on the same page: a partner in a partnership; Capital Gains Tax to pay; the High Income Child Benefit Charge not collected through PAYE; and an off-payroll worker repaying a student or postgraduate loan.
+- Registration: the person must tell HMRC by 5 October if they need to complete a return for the previous year and have not sent one before, or registered before but did not need to send one for 2024/25 ([who must send a return](https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return)). For 2025/26 that date is 5 October 2026 ([register for Self Assessment](https://www.gov.uk/register-for-self-assessment)).
+- Route the return itself to **uk-income-tax-sa100**.
+
+6. **The trading allowance.** If annual gross trading income is £1,000 or less, the person may not have to tell HMRC, though other circumstances can still require a return, and they must keep records ("full relief"). Above £1,000 the person may deduct the £1,000 allowance instead of actual expenses, but not both ("partial relief") ([trading and property allowances](https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income)). The allowance cannot be used in a tax year on trade or property income from a company the person or someone connected owns or controls, a partnership where they or someone connected are partners, or their employer or their spouse's or civil partner's employer (same page). Record gross income and actual expenses both, and let **uk-bookkeeping** and **uk-income-tax-sa100** make the choice.
+
+7. **VAT.** Registration is compulsory if either: total taxable turnover for the last 12 months goes over £90,000, or the person expects taxable turnover to go over £90,000 in the next 30 days ([register for VAT](https://www.gov.uk/register-for-vat)). The 12 months are rolling, checked at every month end, not the tax year. Taxable turnover is everything sold that is not exempt or outside the scope of VAT, and includes zero-rated sales (same page).
+
+- Over the threshold on the 12-month test: registration is due within 30 days of the end of the month when turnover went over, and the effective date is the first day of the second month after it went over (same page). Flag it at once; late registration means VAT is owed on past sales.
+- Below the threshold: registration is voluntary. A registered business may cancel if taxable turnover falls below £88,000, which is optional ([VAT thresholds](https://www.gov.uk/how-vat-works/vat-thresholds)).
+- Already registered: record the effective date, return periods and scheme. The Flat Rate Scheme can be joined at £150,000 or less and must be left above £230,000 (same page).
+- Route everything past the threshold question to **uk-vat-return**.
+
+8. **Making Tax Digital for Income Tax.** MTD applies to a sole trader or landlord registered for Self Assessment whose qualifying income is over the threshold for the year tested ([MTD: who needs it](https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax)):
+
+| Qualifying income over | In tax year | Must use MTD from |
+| --- | --- | --- |
+| £50,000 | 2024 to 2025 | 6 April 2026 |
+| £30,000 | 2025 to 2026 | 6 April 2027 |
+| £20,000 | 2026 to 2027 | 6 April 2028 |
+
+- Qualifying income is total self-employment and property income before expenses (turnover), based on the return submitted in the previous tax year. Employment income, a partnership profit share, dividends (including from the person's own company), the State Pension and private pensions do not count ([qualifying income](https://www.gov.uk/guidance/work-out-your-qualifying-income-for-making-tax-digital-for-income-tax)). HMRC's example: £25,000 rental income plus £27,000 self-employment income gives qualifying income of £52,000 (same page). For a sole trader whose accounting period is longer or shorter than 12 months, HMRC annualises the figure where it has the information: 6 months of trading in the first year is doubled (same page). A part year can therefore carry someone over the threshold.
+- For 2026/27, a sole trader whose 2024/25 qualifying income was over £50,000 should already be using MTD. The person must still submit a Self Assessment return for the tax year before they start. To sign up they must be registered for Self Assessment and have submitted a return in the last 2 years ([MTD: who needs it](https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax)).
+- Partnerships will join later, on a timeline HMRC has not yet set. Some people are exempt, for example if digitally excluded (same page).
+- HMRC writes to people over the threshold, but a person who gets no letter must still check (qualifying income page).
+- Route the software, quarterly updates and record-keeping to **uk-bookkeeping**.
+
+9. **National Insurance.** For 2026/27 ([self-employed NI rates](https://www.gov.uk/self-employed-national-insurance-rates)):
+
+- Profits of £7,105 or more a year: Class 2 is treated as paid, which protects the NI record. Nothing to pay.
+- Profits less than £7,105: nothing to pay, but the person can choose to pay voluntary Class 2 at £3.65 a week.
+- Profits more than £12,570: Class 4 at 6% on profits over £12,570 up to £50,270, and 2% on profits over £50,270.
+- Most people pay Class 2 and Class 4 through Self Assessment (same page). Examiners, landlords, ministers of religion and investors have special rules.
+- Route the calculation, State Pension age and voluntary contributions to **uk-national-insurance**. Record profit, date of birth and any other employment.
+
+10. **Payments on account.** Read last year's SA302. Payments on account are payments towards the next tax bill, including Class 4 NI for the self-employed. Each is half of the tax owed last year, due by midnight on 31 January and 31 July. They are not due if either: the tax owed last year was less than £1,000, or more than 80% of it was paid outside Self Assessment, for example through a tax code ([payments on account](https://www.gov.uk/understand-self-assessment-bill/payments-on-account)). A first-year filer pays the full bill plus the first payment on account towards the next year on the same 31 January (same page). Record last year's liability and the tax paid at source; route the calculation to **uk-income-tax-sa100**.
+
+11. **Records.** A sole trader must keep records of business income and expenses, for at least 5 years after the 31 January submission deadline of the tax year ([how long to keep records](https://www.gov.uk/self-employed-records/how-long-to-keep-your-records)). If the records will not support a return, or the person must join MTD and has no digital records, route to **uk-bookkeeping** before anything else.
+
+12. **Other income and disposals.** Route each item and record it:
+
+- UK rental income: **uk-rental-sa105**.
+- Foreign income or gains: **uk-non-dom**.
+- Disposals of shares, crypto, a second home or business assets: **uk-capital-gains-sa108**. Capital Gains Tax to pay is itself a reason to file.
+- Staff, or the person's own company payroll: **uk-payroll**.
+- Dividends, savings interest, Child Benefit charge, student loan: **uk-income-tax-sa100**, or refer where it has no coverage.
+
+13. **Hand back.** Summarise what was found, list every open flag, and name the next Guide for each item. Give the filing dates from the filing section below.
+
+## IR35 and off-payroll working: the method and when to refer
+
+**What the rules do.** The off-payroll working rules make sure that a worker who provides services to a client through their own intermediary pays broadly the same Income Tax and National Insurance as an employee would. They apply if the worker would have been an employee had they provided the services directly to that client. The rules are sometimes called "IR35" ([understanding off-payroll working](https://www.gov.uk/guidance/understanding-off-payroll-working-ir35)).
+
+**When they can apply.** Only where there is an intermediary: usually the worker's own limited company (a personal service company, or PSC), but also a partnership or another individual (same page).
+
+- A sole trader contracting directly with the client has no intermediary, so the off-payroll rules do not apply. The question is ordinary employment status (step 4). If the client should be treating the person as an employee, that is the client's PAYE problem and a status dispute; flag it and refer.
+- Someone employed by an umbrella company: the rules are unlikely to apply (same page). The umbrella pays them through PAYE. Their umbrella pay is employment income, not self-employment.
+- Paid through an agency's payroll: employment income under PAYE.
+
+**Who decides status.** It depends on the client, not the worker:
+
+1. **Public sector client**: the client decides. The rules apply to all public authorities, including government departments, local authorities, schools, universities and parts of the NHS ([off-payroll working for clients](https://www.gov.uk/guidance/off-payroll-working-for-clients)).
+2. **Medium or large private or voluntary sector client**: the client decides. HMRC's guidance says a client is medium or large if it meets 2 or more of: annual turnover of more than £10.2 million, balance sheet total of more than £5.1 million, more than 50 employees (same page). The law ties "small" to the Companies Act small companies regime (ITEPA 2003 [section 60A](https://www.legislation.gov.uk/ukpga/2003/1/section/60A)), whose limits in [Companies Act 2006 section 382](https://www.legislation.gov.uk/ukpga/2006/46/section/382) now read not more than £15 million turnover and £7.5 million balance sheet, with not more than 50 employees. The gov.uk page and the statute text differ. Do not work out the client's size yourself: ask the client.
+3. **Small private sector client**: the worker's own company decides status, and if the rules apply it works out a "deemed employment payment" and pays the tax and Class 1 NI on it ([small clients](https://www.gov.uk/guidance/off-payroll-working-for-intermediaries-and-contractors-providing-services-to-small-clients-in-the-private-sector)).
+
+**What the worker should get.** From a public sector or medium or large client, a status determination statement (SDS) with the reasons. A worker who gets none can ask the client to confirm its size, and the client has 45 days to reply ([public sector or medium and large clients](https://www.gov.uk/guidance/off-payroll-working-for-intermediaries-and-contractors-providing-services-to-the-public-sector-or-medium-and-large-clients-in-the-private-sector)).
+
+**Contract by contract.** The rules apply engagement by engagement. A worker may have some contracts inside and some outside. A change in terms or working practices can mean a new determination ([understanding off-payroll working](https://www.gov.uk/guidance/understanding-off-payroll-working-ir35)).
+
+**If the client says "inside".** The deemed employer (the client, or the agency paying the worker's company) deducts Income Tax and employee NI from the fees paid to the worker's company, and pays employer NI (same page). The company can then pay those fees on to the worker as salary without deducting tax or NI again, or as dividends that do not need to go on the worker's Self Assessment return ([public sector or medium and large clients](https://www.gov.uk/guidance/off-payroll-working-for-intermediaries-and-contractors-providing-services-to-the-public-sector-or-medium-and-large-clients-in-the-private-sector)).
+
+**Student loans.** Deemed employers do not deduct student or postgraduate loan repayments from off-payroll fees. The worker must register for Self Assessment and file a return to pay them ([understanding off-payroll working](https://www.gov.uk/guidance/understanding-off-payroll-working-ir35)).
+
+**The status check.** HMRC's Check Employment Status for Tax (CEST) tool gives HMRC's view of status and whether the off-payroll rules apply to an engagement. HMRC will stand by the result as long as the information given is accurate and in line with its guidance, and the result can be used as a valid SDS ([CEST](https://www.gov.uk/guidance/check-employment-status-for-tax)). There must be a contract in place or expected; it can be written, verbal or implied (same page).
+
+**The intake method for a contractor.**
+
+1. Record the structure: own company, umbrella, agency payroll, or direct as a sole trader.
+2. For each engagement record the client's name, sector, whether the client has confirmed its size, and whether there is an SDS and what it says.
+3. Ask for the contract and a description of the working practice: who decides what, when, where and how; whether the person can send a substitute; how they are paid.
+4. Route: sole trader, direct: steps 4 to 12. Umbrella or agency payroll: **uk-income-tax-sa100** for the personal return if one is needed. Own company: the personal return goes to **uk-income-tax-sa100**, company payroll to **uk-payroll**, company accounts and Corporation Tax are referred.
+
+**Refer to an adviser when:**
+
+- the worker disagrees with a client's SDS. A disagreement can be raised until the last payment for the services, and the client has 45 days to respond; during that time the deemed employer keeps applying the rules as determined ([public sector or medium and large clients](https://www.gov.uk/guidance/off-payroll-working-for-intermediaries-and-contractors-providing-services-to-the-public-sector-or-medium-and-large-clients-in-the-private-sector));
+- the worker's own company must decide status for a small client, or has to work out a deemed employment payment;
+- the client's size is unclear or disputed;
+- HMRC has opened an enquiry, or past years were treated as outside without a determination;
+- someone is offering a scheme that claims to get around the rules. HMRC warns that such schemes exist ([understanding off-payroll working](https://www.gov.uk/guidance/understanding-off-payroll-working-ir35)).
+
+## Figures that decide a route, with years
+
+Every figure below is 2026/27 unless the row says otherwise. The specialist Guide named in the last column holds the detail.
+
+| Switch | Figure | Year | Source | Detail in |
+| --- | --- | --- | --- | --- |
+| Sole trader return trigger: gross takings more than | £1,000 | each year | [who must send a return](https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return) | uk-income-tax-sa100 |
+| Trading allowance (instead of expenses, not as well) | £1,000 | each year | [trading and property allowances](https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income) | uk-bookkeeping, uk-income-tax-sa100 |
+| Property allowance, separate from the trading allowance | £1,000 | each year | same page | uk-rental-sa105 |
+| Tell HMRC you need a return (first return, or none needed for 2024/25) | by 5 October 2026 | for 2025/26 | [register for Self Assessment](https://www.gov.uk/register-for-self-assessment) | uk-income-tax-sa100 |
+| VAT registration: taxable turnover more than, rolling 12 months or next 30 days alone | £90,000 | current | [register for VAT](https://www.gov.uk/register-for-vat) | uk-vat-return |
+| VAT deregistration (optional): taxable turnover less than | £88,000 | current | [VAT thresholds](https://www.gov.uk/how-vat-works/vat-thresholds) | uk-vat-return |
+| Flat Rate Scheme: join at or below / must leave above | £150,000 / £230,000 | current | same page | uk-vat-return |
+| MTD: qualifying income over £50,000 in 2024/25 | from 6 April 2026 | 2026/27 | [MTD: who needs it](https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax) | uk-bookkeeping |
+| MTD: over £30,000 in 2025/26 | from 6 April 2027 | 2027/28 | same page | uk-bookkeeping |
+| MTD: over £20,000 in 2026/27 | from 6 April 2028 | 2028/29 | same page | uk-bookkeeping |
+| Class 2 treated as paid: profits of or above | £7,105 | 2026/27 | [self-employed NI rates](https://www.gov.uk/self-employed-national-insurance-rates) | uk-national-insurance |
+| Voluntary Class 2 (profits less than £7,105) | £3.65 a week | 2026/27 | same page | uk-national-insurance |
+| Class 4 main rate on profits over £12,570 up to £50,270 | 6% | 2026/27 | same page | uk-national-insurance |
+| Class 4 rate on profits over £50,270 | 2% | 2026/27 | same page | uk-national-insurance |
+| No payments on account if last year's tax owed was less than | £1,000 | each year | [payments on account](https://www.gov.uk/understand-self-assessment-bill/payments-on-account) | uk-income-tax-sa100 |
+| No payments on account if tax paid outside Self Assessment was more than | 80% | each year | same page | uk-income-tax-sa100 |
+| Payments on account due | 31 January and 31 July | each year | same page | uk-income-tax-sa100 |
+| Records kept at least | 5 years after the 31 January deadline | each year | [how long to keep records](https://www.gov.uk/self-employed-records/how-long-to-keep-your-records) | uk-bookkeeping |
+| Off-payroll: medium or large client if 2 or more of turnover, balance sheet, employees above | £10.2 million / £5.1 million / 50 (gov.uk guidance; see the IR35 section on the statute) | current | [off-payroll working for clients](https://www.gov.uk/guidance/off-payroll-working-for-clients) | refer |
+
+## Boundaries and exceptions
+
+| Situation | What follows | Source |
+| --- | --- | --- |
+| Gross takings exactly £1,000 | Not "more than £1,000", so the sole trader trigger is not met; full relief. Another trigger can still require a return | [who must send a return](https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return); [allowances](https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income) |
+| Gross takings over £1,000 but small profit | Return needed: the test is before expenses. Choose allowance or actual expenses, not both | same pages |
+| Trading income from a company the person or a connected person controls, or from their own or their spouse's employer | No trading allowance for that tax year | [allowances](https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income) |
+| Taxable turnover exactly £90,000 on the 12-month test | Not "over £90,000"; not yet compulsory. Keep checking every month end | [register for VAT](https://www.gov.uk/register-for-vat) |
+| One big contract expected to bring more than £90,000 within 30 days | Register by the end of that 30-day period; effective from the date the person realised | same page |
+| Qualifying income for MTD exactly £50,000 in 2024/25 | Not "over £50,000"; not in from 6 April 2026 on that test | [MTD: who needs it](https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax) |
+| Large salary plus small self-employment | Salary does not count for MTD; only self-employment and property turnover | [qualifying income](https://www.gov.uk/guidance/work-out-your-qualifying-income-for-making-tax-digital-for-income-tax) |
+| Profits exactly £7,105 | "£7,105 or more": Class 2 treated as paid | [self-employed NI rates](https://www.gov.uk/self-employed-national-insurance-rates) |
+| Profits exactly £12,570 | Class 4 is due only on profits "more than £12,570": none | same page |
+| Exactly 80% of last year's tax paid outside Self Assessment | The exemption needs "more than 80%": payments on account still due | [payments on account](https://www.gov.uk/understand-self-assessment-bill/payments-on-account) |
+| Last year's tax owed exactly £1,000 | The exemption needs "less than £1,000": payments on account due unless the 80% test is met | same page |
+| Employed by an umbrella company | Off-payroll rules unlikely to apply; PAYE employment income | [understanding off-payroll working](https://www.gov.uk/guidance/understanding-off-payroll-working-ir35) |
+| Sole trader contracting directly, no company | No intermediary, so no off-payroll rules; ordinary employment status question | same page |
+| Own company working for a small private sector client | The worker's own company decides status | [small clients](https://www.gov.uk/guidance/off-payroll-working-for-intermediaries-and-contractors-providing-services-to-small-clients-in-the-private-sector) |
+| Registered for Self Assessment after 5 October 2026 for 2025/26 | Return due 3 months from the date on HMRC's letter or email, but the tax is still due by 31 January 2027 | [deadlines](https://www.gov.uk/self-assessment-tax-returns/deadlines) |
+
+## Worked cases
+
+**Case 1. Side sales under the allowance.** An employee sells handmade goods online. Gross takings in 2025/26: £800. No other untaxed income. ([who must send a return](https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return))
+- £800 is not more than £1,000, so the sole trader return trigger is not met, and the income is covered by full relief. They may not need to tell HMRC but must keep records ([allowances](https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income)).
+- Record the badges of trade in case the activity grows. Route: none needed now. Re-check each year.
+
+**Case 2. New sole trader, first return.** A web designer started in June 2025 and has never filed. Gross takings in 2025/26: £34,000; profit £30,000. ([who must send a return](https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return))
+- Takings are more than £1,000: a return is needed, and they must tell HMRC by 5 October 2026 ([register for Self Assessment](https://www.gov.uk/register-for-self-assessment)). Online return and payment by 31 January 2027 ([deadlines](https://www.gov.uk/self-assessment-tax-returns/deadlines)).
+- NI for 2025/26: profit is £6,845 or more, so Class 2 is treated as paid; Class 4 = (£30,000 − £12,570) × 6% = £17,430 × 6% = £1,045.80 ([NI rates and allowances](https://www.gov.uk/government/publications/rates-and-allowances-national-insurance-contributions/rates-and-allowances-national-insurance-contributions); the 6% rate and £12,570 limit are the same in 2025/26 and 2026/27).
+- Payments on account: first year, so on 31 January 2027 they pay the whole 2025/26 bill plus the first payment on account for 2026/27, then the second on 31 July 2027, unless the bill is less than £1,000 ([payments on account](https://www.gov.uk/understand-self-assessment-bill/payments-on-account)).
+- MTD: the 2025/26 qualifying income is £34,000 before any annualising for the part year, already over £30,000, so MTD applies from 6 April 2027 ([MTD: who needs it](https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax); [qualifying income](https://www.gov.uk/guidance/work-out-your-qualifying-income-for-making-tax-digital-for-income-tax)).
+- Routes: uk-income-tax-sa100, uk-national-insurance, uk-bookkeeping.
+
+**Case 3. Consultant already in MTD and crossing the VAT threshold.** Gross takings in 2024/25: £55,000. Not VAT registered. At the end of August 2026 taxable turnover for the last 12 months goes over £90,000 for the first time. ([register for VAT](https://www.gov.uk/register-for-vat))
+- MTD: £55,000 is over £50,000 in 2024/25, so they should have been using MTD from 6 April 2026. If not signed up, they can still sign up (same MTD page). Route to uk-bookkeeping. ([MTD: who needs it](https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax))
+- VAT: they must register within 30 days of the end of August, so by 30 September 2026, with an effective date of 1 October 2026, the first day of the second month after going over ([register for VAT](https://www.gov.uk/register-for-vat)). Route to uk-vat-return now; this is urgent.
+
+**Case 4. Employee with a sideline: payments on account switched off.** Last year's total tax was £2,400, of which £2,100 was paid through PAYE. ([payments on account](https://www.gov.uk/understand-self-assessment-bill/payments-on-account))
+- £2,100 ÷ £2,400 = 87.5%, which is more than 80%, so no payments on account are due ([payments on account](https://www.gov.uk/understand-self-assessment-bill/payments-on-account)).
+- Had PAYE covered exactly £1,920 (80%), the test would fail and payments on account would be due, because the exemption needs more than 80%. ([payments on account](https://www.gov.uk/understand-self-assessment-bill/payments-on-account))
+
+**Case 5. Contractor through their own company, large client.** An IT contractor works through their own limited company for a large bank. The bank's SDS says the engagement is inside the rules. They are repaying a student loan.
+- The client decides status for a large private sector client. The deemed employer deducts Income Tax and employee NI from the fees and pays employer NI ([understanding off-payroll working](https://www.gov.uk/guidance/understanding-off-payroll-working-ir35)).
+- The student loan is not deducted, so they must register for Self Assessment and file to repay it (same page).
+- Routes: personal return to uk-income-tax-sa100; company payroll to uk-payroll; company accounts referred. If they disagree with the SDS, refer.
+
+**Case 6. Contractor, small client.** The same contractor also works for a five-person design studio.
+- A small private sector client does not decide status; the contractor's own company does, and if the rules apply it works out a deemed employment payment ([small clients](https://www.gov.uk/guidance/off-payroll-working-for-intermediaries-and-contractors-providing-services-to-small-clients-in-the-private-sector)). Refer.
+
+**Case 7. Recent arrival.** A freelancer moved to the UK in October 2025 and still has clients abroad.
+- Residence for 2025/26 may be a split year: route to uk-statutory-residence-test first. Foreign income and the 4-year FIG regime: route to uk-non-dom. Do not start the return until both are settled.
 
 ## When to refuse or refer
 
-- Part-year residents, non-residents, split-year treatment: refer to an accountant handling non-resident returns; read `uk-statutory-residence-test` first if unclear.
-- Limited companies, LLPs and partnerships as the business itself. A partner with a separate sole trade stays in scope, with a flag.
-- More than 5 employees. Payroll at any size routes to `uk-payroll`.
-- Employment status the facts contradict (one client, set hours, supervised, no invoices): record, flag, say HMRC can reclassify. Do not decide it.
-- An activity that may not be a trade: record the badges both ways and flag it.
-- Records that will not support a return: route to `uk-bookkeeping` first.
-- Domicile, remittances, foreign income and gains: route to `uk-non-dom`.
-- Over the VAT registration limit and not registered: route to `uk-vat-return`, registration is compulsory.
-- Inside Making Tax Digital with no digital records: a records problem first.
+Stop and refer to a qualified adviser, saying why in one sentence, when:
 
-## Sources
+- **Residence is in doubt**: arrival or departure in the year, split-year treatment, or non-resident with UK income. Read uk-statutory-residence-test first; a split-year or non-resident return needs an adviser.
+- **Foreign income or gains**, or a claim under the 4-year FIG regime or for remittance-basis history: route to uk-non-dom; refer anything it marks out of scope.
+- **Employment status is contested**: the facts point to employment but the person is invoicing, or HMRC or a client has challenged it. Record it; HMRC can reclassify. Do not decide it.
+- **Any IR35 point listed in the IR35 section**: SDS disagreement, a small-client determination by the worker's own company, a deemed employment payment, an enquiry, or an avoidance scheme.
+- **A partnership return** or a **limited company's** own accounts and Corporation Tax. The individual's personal return stays in scope via uk-income-tax-sa100.
+- **Scottish taxpayer**: uk-income-tax-sa100 refers Scottish rates.
+- **Over the VAT threshold and not registered**: route to uk-vat-return at once; registration is compulsory and late registration is costly.
+- **In MTD without digital records**, or records that will not support a return: route to uk-bookkeeping first.
+- **Trade or hobby in doubt** with material sums: record the badges both ways and refer.
+- **Past years never reported**: refer. Disclosure of earlier years is outside this Guide.
 
-- https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return
-- https://www.gov.uk/self-assessment-tax-returns/deadlines
-- https://www.gov.uk/guidance/tax-free-allowances-on-property-and-trading-income
-- https://www.gov.uk/understand-self-assessment-bill/payments-on-account
-- https://www.gov.uk/how-vat-works/vat-thresholds
-- https://www.gov.uk/register-for-vat
-- https://www.gov.uk/vat-flat-rate-scheme/how-much-you-pay
-- https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax
-- https://www.gov.uk/guidance/work-out-your-qualifying-income-for-making-tax-digital-for-income-tax
-- https://www.gov.uk/guidance/using-making-tax-digital-for-income-tax
-- https://www.gov.uk/self-employed-records
-- https://www.gov.uk/self-employed-records/how-long-to-keep-your-records
-- https://www.gov.uk/simpler-income-tax-cash-basis
-- https://www.gov.uk/simpler-income-tax-cash-basis/who-can-use-cash-basis
-- https://www.gov.uk/government/publications/vat-notice-733-flat-rate-scheme-for-small-businesses/vat-notice-733-flat-rate-scheme-for-small-businesses
-- https://www.legislation.gov.uk/ukpga/1970/9/section/12B
-- https://www.gov.uk/simpler-income-tax-simplified-expenses/vehicles
-- https://www.gov.uk/simpler-income-tax-simplified-expenses/working-from-home
-- https://www.gov.uk/marriage-allowance
-- https://www.gov.uk/scottish-income-tax
-- https://www.gov.uk/scottish-income-tax/who-pays
-- https://www.gov.uk/self-employed-national-insurance-rates
-- https://www.gov.uk/tax-foreign-income/residence
-- https://www.gov.uk/employment-status/selfemployed-contractor
-- https://www.gov.uk/hmrc-internal-manuals/business-income-manual/bim20205
+Refuse to: file anything for the person; tell them their employment status or residence as a settled fact; or suggest a way to avoid registering for VAT, MTD or Self Assessment.
 
-## End of Intake Guide v0.1
+## Filing and payment
 
-End of the intake Guide, version 0.1, refreshed for tax year 2026.
+**Returns being filed now: 2025/26 (6 April 2025 to 5 April 2026)** ([deadlines](https://www.gov.uk/self-assessment-tax-returns/deadlines)):
 
-## Disclaimer
+| What | Deadline |
+| --- | --- |
+| Tell HMRC a return is needed (first return, or none needed for 2024/25) | 5 October 2026 |
+| Paper return | 11:59pm on 31 October 2026 |
+| Online return, to have a balance collected through the tax code | 11:59pm on 30 December 2026 |
+| Online return | 11:59pm on 31 January 2027 |
+| Pay the balance for 2025/26 and the first payment on account for 2026/27 | 11:59pm on 31 January 2027 |
+| Second payment on account for 2026/27 | 31 July 2027 |
 
-This Guide and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this Guide. All outputs must be reviewed and signed off by a qualified professional (such as a chartered accountant, ACCA member, or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
+- If the person registers after 5 October 2026, HMRC sets a return deadline 3 months from the date on its letter or email, but the tax is still due by 31 January 2027 (same page). Telling HMRC late can bring a penalty ([register for Self Assessment](https://www.gov.uk/register-for-self-assessment)).
+- NI on the 2025/26 return: Class 2 treated as paid on profits of £6,845 or more; voluntary Class 2 is £3.50 a week; Class 4 is 6% between £12,570 and £50,270 and 2% above ([NI rates and allowances](https://www.gov.uk/government/publications/rates-and-allowances-national-insurance-contributions/rates-and-allowances-national-insurance-contributions)). Route to uk-national-insurance.
 
-> Contributed by OpenAccountants.
+**The current year: 2026/27.** The same pattern moves on one year: registration by 5 October after the year ends, paper return by 31 October, online return and payment by 31 January, second payment on account by 31 July. Anyone who must use MTD from 6 April 2026 keeps digital records and sends quarterly updates for 2026/27 through software; route that to uk-bookkeeping. Penalties and interest are in uk-income-tax-sa100.
+
+## Completion checklist
+
+- [ ] Tax year fixed, and every document tagged with its year.
+- [ ] Residence recorded; any doubt routed to uk-statutory-residence-test; foreign income routed to uk-non-dom.
+- [ ] Structure recorded: sole trader, partner, own company, umbrella or agency payroll.
+- [ ] Employment status and trade-or-hobby recorded with the facts both ways, and flagged if unsettled.
+- [ ] For each contracting engagement: client, sector, size confirmed or not, SDS held or not.
+- [ ] Gross takings recorded; return trigger (more than £1,000) and 5 October registration checked. ([who must send a return](https://www.gov.uk/self-assessment-tax-returns/who-must-send-a-tax-return))
+- [ ] Trading allowance or actual expenses left open for the specialist Guide, with both figures recorded.
+- [ ] Rolling 12-month taxable turnover checked against £90,000; the next 30 days checked. ([register for VAT](https://www.gov.uk/register-for-vat))
+- [ ] MTD status set from the earlier year's gross self-employment and property income.
+- [ ] Profit recorded for Class 2 and Class 4.
+- [ ] Last year's tax and tax paid at source recorded for the payments on account tests.
+- [ ] Records adequate, or routed to uk-bookkeeping.
+- [ ] Rental, gains, payroll, dividends, student loan and Child Benefit each routed.
+- [ ] Every open flag listed, with the Guide or adviser that closes it, and the filing dates given.
 
 <!-- openaccountants-cta-block -->
 

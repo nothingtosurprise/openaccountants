@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-09-26T08:46:52+00:00",
+ "generated_at": "2026-09-27T09:51:01+00:00",
  "counts": {
   "guides": 2019,
   "jurisdictions": 245,
-  "accountant_reviewed": 168
+  "accountant_reviewed": 161
  },
  "guides": [
   {
@@ -5535,8 +5535,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "ca-tax-residency",
@@ -5547,8 +5547,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "canada-bookkeeping",
@@ -6231,8 +6231,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "cn-fapiao-einvoice",
@@ -6279,8 +6279,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "cn-return-assembly",
@@ -6327,8 +6327,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "cn-withholding",
@@ -7492,7 +7492,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-07-13"
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "eg-corporate-tax",
@@ -8764,7 +8764,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-19"
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "de-crypto-tax",
@@ -8776,7 +8776,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-19"
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "de-einkommensteuer-freelancer",
@@ -9939,8 +9939,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "in-tds-freelance",
@@ -10407,8 +10407,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "ie-formation",
@@ -10527,8 +10527,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "ireland-vat-return",
@@ -10540,7 +10540,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-25"
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "isle-of-man-vat",
@@ -12722,9 +12722,9 @@
    "category": "international",
    "tier": 2,
    "verified_by": null,
-   "reviewed_by": "MUHAMMAD HANIS MAT HUSSIN",
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "my-income-tax",
@@ -12951,8 +12951,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "malta-formation",
@@ -13095,8 +13095,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "mt-property-transfer-tax-the-sale-immovable",
@@ -13156,7 +13156,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-21"
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "selling-a-company-in-malta",
@@ -14391,8 +14391,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "nl-30-percent-ruling",
@@ -14475,8 +14475,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "nl-zzp-deductions",
@@ -14560,7 +14560,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-22"
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "nz-income-tax-ir3",
@@ -14572,7 +14572,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-22"
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "nz-motor-vehicle-expenses-logbook-business-use",
@@ -14584,7 +14584,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-03"
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "nz-provisional-tax",
@@ -14620,7 +14620,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-03"
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "references",
@@ -15435,8 +15435,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "panama-itbms",
@@ -17211,8 +17211,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "sg-income-tax",
@@ -18028,7 +18028,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-22"
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "es-irpf-deductions",
@@ -18088,7 +18088,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-23"
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "es-vat-return",
@@ -18711,8 +18711,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "switzerland-vat",
@@ -19644,11 +19644,11 @@
    "name": "uae-vat",
    "jurisdiction": "AE",
    "category": null,
-   "tier": 1,
+   "tier": 2,
    "verified_by": null,
-   "reviewed_by": "Mehran Habib",
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "ug-company-formation",
@@ -19812,11 +19812,11 @@
    "name": "uk-capital-gains-sa108",
    "jurisdiction": "GB",
    "category": "international",
-   "tier": 1,
+   "tier": 2,
    "verified_by": null,
-   "reviewed_by": "James Power",
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "uk-crypto-tax",
@@ -19824,11 +19824,11 @@
    "name": "uk-crypto-tax",
    "jurisdiction": "GB",
    "category": "crypto",
-   "tier": 1,
+   "tier": 2,
    "verified_by": null,
-   "reviewed_by": "James Power",
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "uk-dividends",
@@ -19860,11 +19860,11 @@
    "name": "uk-formation",
    "jurisdiction": "GB",
    "category": "formation",
-   "tier": 1,
+   "tier": 2,
    "verified_by": null,
-   "reviewed_by": "James Power",
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "uk-income-tax-sa100",
@@ -19872,11 +19872,11 @@
    "name": "uk-income-tax-sa100",
    "jurisdiction": "GB",
    "category": "international",
-   "tier": 1,
+   "tier": 2,
    "verified_by": null,
-   "reviewed_by": "James Power",
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "uk-national-insurance",
@@ -19884,11 +19884,11 @@
    "name": "uk-national-insurance",
    "jurisdiction": "GB",
    "category": "international",
-   "tier": 1,
+   "tier": 2,
    "verified_by": null,
-   "reviewed_by": "James Power",
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "uk-non-dom",
@@ -19900,7 +19900,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-22"
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "uk-payments-on-account",
@@ -19920,11 +19920,11 @@
    "name": "uk-payroll",
    "jurisdiction": "GB",
    "category": "payroll",
-   "tier": 1,
+   "tier": 2,
    "verified_by": null,
-   "reviewed_by": "James Power",
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "reviewed_by": null,
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "uk-rental-sa105",
@@ -19960,7 +19960,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-22"
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "uk-student-loan-repayment",
@@ -20055,8 +20055,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-19"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "ua-bookkeeping",
@@ -20235,8 +20235,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-26"
   },
   {
    "slug": "uruguay-income-tax",
@@ -20980,7 +20980,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-19"
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "de-return-assembly",
@@ -21087,8 +21087,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "in-return-assembly",
@@ -21412,7 +21412,7 @@
    "verified_by": null,
    "reviewed_by": null,
    "tax_year": "2026",
-   "last_updated": "2026-09-22"
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "uk-return-assembly",
@@ -22467,8 +22467,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": "2025",
-   "last_updated": "2026-07-13"
+   "tax_year": "2026",
+   "last_updated": "2026-09-27"
   },
   {
    "slug": "in-payroll",
