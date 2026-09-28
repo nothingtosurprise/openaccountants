@@ -4,383 +4,166 @@ description: Final orchestrator skill that assembles the complete Netherlands fi
 version: 1.0
 jurisdiction: NL
 tax_year: 2025
-last_updated: 2026-07-13
+last_updated: 2026-09-28
+authored_by: OpenAccountants team
 review_status: pending_review
+trust_label: By OpenAccountants
 category: orchestrator
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# NL Return Assembly
+# Netherlands annual return assembly for a sole proprietor
 
-## Netherlands Return Assembly Skill v1.0
+## Scope and year
 
-## CRITICAL EXECUTION DIRECTIVE -- READ FIRST
+Use this method to assemble a reviewable Dutch annual filing package for a full-year Netherlands-resident individual with a sole proprietorship. The annual income-tax calculation is for **2025**, filed in the following year; any **2026** forecast is a separate calculation. VAT returns retain their own periods. Research checked on 28 September 2026.
 
-When this skill is invoked, you have already passed through intake. The user has consented to the full workflow. Execute all steps without pausing for permission.
+This Guide connects bookkeeping, business deductions, personal income tax, Zvw and VAT. It does not authorize submission or payment, establish a person's entrepreneur status, or turn an incomplete calculation into a filing-ready return. Part-year residence, foreign social insurance, treaty relief, a deceased taxpayer, substantial-interest transactions, business transfers and disputed employment status need the relevant specialist calculation before the affected part is signed off. Preserve the rest of the work while that issue is resolved. Benefits and allowances (toeslagen) are outside this package; do not present them as calculated or applied for.
 
-Specifically:
+## Ask the client first
 
-- Do NOT ask the user "how deep do you want me to go" or "do you want the full package" or any variant. The user asked for their tax returns. They want their tax returns. Produce them.
-- Do NOT announce how many tokens or tool calls this will take. Execute.
-- Do NOT ask which deliverables to prioritise. Produce all deliverables listed in Section 4. If you run out of context mid-execution, finish the computation work first (numbers, positions, flags) then produce whatever formatted outputs you can, and at the very end state clearly which deliverables were not produced and why.
-- Do NOT re-validate scope that intake already validated. If `nl-freelance-intake` produced an intake package, trust it. You can cross-check specific numbers during reconciliation but do not re-interrogate the user about residency, business structure, or anything else intake already captured.
-- Do NOT pause between content skills to check in. Run them in dependency order (Section 2) without prose status updates between each one. A single status message at the end is fine.
-- Self-checks are targets, not blockers. If a self-check fails, note it in the reviewer brief's open flags section and continue. Do NOT halt the entire workflow because one self-check had an ambiguous answer.
-- Primary source citations go in the final reviewer brief, not in intermediate computation steps.
+Start with `nl-freelance-intake`, `netherlands-bookkeeping`, `nl-zzp-deductions`, `nl-deductions`, `nl-income-tax` and one of `nl-vat-return` or `netherlands-vat-return`, where relevant. Inspect each retrieved Guide's year, source dates, scope and actual contents. A matching title does not prove that its calculations are compatible. If a referenced Guide is unavailable or stale, obtain the official year-specific method and record the substitution. Do not invent a missing Guide or assume that an old `nl-btw-return` or `nl-zvw` reference resolved.
 
-The user has already been told (by the intake skill) that the final package requires belastingadviseur signoff before filing. State it once in the final output and move on.
+Create an input register containing the taxpayer, tax year, residence and insurance periods, fiscal-partner status, business identity, accounting period, source document, amount, currency, conversion method, owner and open question for every material item. Distinguish supplied evidence, confirmed facts, calculations and assumptions. Redact personal identifiers from any public or shared example.
 
-Failure mode to avoid: The skill halts mid-execution and asks the user a meta-question about workflow pacing. If you feel the urge to ask "how should I proceed," the correct action is to pick the most defensible path and proceed, flagging the decision in the reviewer brief so the reviewer can challenge it.
+Collect the following before marking the annual package complete:
 
-## What this file is
+- Opening and closing trial balances; prior submitted accounts and return; invoices, bank reconciliations, debtors, creditors, accruals, stock, work in progress and financing records.
+- The complete asset register, including opening assets, disposal proceeds, private use, depreciation and investment deductions; opening fiscal reserves and carryforward decisions.
+- Evidence for entrepreneur classification, hours and any starter claim; partner work; mixed and private expenditure; pension/annuity and disability-insurance records.
+- Salary and pension annual statements, benefits, withholding, home and mortgage documents, applicable personal deductions, asset/debt statements and substantial-interest information.
+- Every VAT return, correction, ICP/OSS report where applicable, assessment, payment and refund; KOR participation dates; income-tax and Zvw provisional assessments and their payment histories.
+- Filing invitations, extensions and actual portal deadlines. The income-tax invitation controls the submission deadline; it is often before 1 May, but the date in the letter governs. ([Filing deadline](https://www.belastingdienst.nl/wps/wcm/connect/nl/belastingaangifte/content/wanneer-moet-ik-aangifte-doen))
 
-The final capstone skill for Netherlands self-employed returns. Every Netherlands content skill feeds into this one. The output is the complete reviewer package that a belastingadviseur can review, sign off on, and deliver to the client along with filing instructions.
+## The method, step by step
 
-This skill coordinates execution of the content skills, verifies cross-skill consistency, and assembles the final deliverable.
+1. Confirm the year, scope, evidence and compatible dependency methods.
+2. Close the books and reconcile commercial accounts to fiscal profit.
+3. Apply evidenced business deductions, then assemble the personal tax boxes and credits.
+4. Calculate Zvw separately and reconcile the actual VAT periods and payments.
+5. Resolve material conflicts, assemble the reviewer package, and distinguish approval from submission.
+6. Prepare any later-year forecast separately from the historical return.
 
-## Section 1 -- Scope
+### Workflow and unresolved facts
 
-Produces the complete Netherlands filing package for:
-- Full-year Netherlands residents
-- Self-employed individuals and sole proprietors (ZZP/eenmanszaak)
-- Tax year 2025
-- Filing BTW-aangifte (quarterly/monthly or KOR annual), aangifte inkomstenbelasting (IB -- Box 1, Box 2 if applicable, Box 3), ZVW bijdrage reconciliation, voorlopige aanslag 2026 recommendation
+Maintain a status for each schedule: ready for review, evidence missing, calculation conflict, out of scope, reviewed, or submitted with receipt. An unresolved material amount or eligibility condition prevents approval of the affected return. Continue independent schedules, identify the exact missing evidence and show how it affects the conclusion. Do not replace missing opening balances with zero or treat an unexplained difference as harmless because it is small.
 
-## Section 2 -- Execution order and dependency chain
+When two sources disagree, identify the year, taxpayer category, publication edition and applicable rule before choosing a value. Record the resolution. A number appearing on an official page is not sufficient if its worked example concerns another year. Keep a source register linking every material rule to its applicable period and to the worksheet that uses it.
 
-0. **BTW-aangifte** — BTW-aangifte (quarterly/monthly for regular registration, annual KOR declaration). Runs first because BTW turnover figures feed into the IB-aangifte. For regular BTW: prepare Q4 2025 BTW-aangifte if not yet filed; verify Q1-Q3 figures; check ICP opgave completeness. For KOR: verify turnover remains under EUR 20,000; prepare annual KOR declaration if required. Output: BTW-aangifte box values (rubrieken 1a through 5e), voorbelasting recovered/blocked, omzet (ex-BTW), ICP opgave data.
-0. **Aangifte inkomstenbelasting** — Depends on BTW output: omzet (rubriek 1a) must use ex-BTW turnover for regular BTW clients. Depends on BTW output: blocked voorbelasting becomes a deductible bedrijfskost. Computes winst uit onderneming, ondernemersaftrek (zelfstandigenaftrek + startersaftrek), MKB-winstvrijstelling. Computes eigen woning (eigenwoningforfait minus hypotheekrenteaftrek) in Box 1. Computes Box 3 vermogensrendementsheffing. Applies heffingskortingen (algemene heffingskorting, arbeidskorting). Output: IB-aangifte values, belastbaar inkomen per box, verschuldigde inkomstenbelasting, heffingskortingen, te betalen/terug te ontvangen.
-0. **Zorgverzekeringswet bijdrage** — Depends on IB: bijdrage-inkomen is based on Box 1 inkomen (winst uit onderneming + employment income). ZVW bijdrage for self-employed: 5.32% of bijdrage-inkomen up to EUR 71,628 (2025 maximum bijdrage-inkomen). Output: annual ZVW bijdrage, voorlopige aanslag ZVW paid, shortfall/overpayment.
-0. **Voorlopige aanslag 2026 recommendation (forward-looking)** — Based on 2025 final IB + ZVW liability. Recommendation to request/adjust voorlopige aanslag via MijnBelastingdienst. Output: recommended voorlopige aanslag amounts for IB and ZVW. If any upstream content skill fails to produce validated output, the assembly skill notes the failure in the reviewer brief and continues with available data rather than halting entirely.
+## Close the books and prove fiscal profit
 
-## Section 3 -- Cross-skill reconciliation
+Prepare commercial accounts, then a separate bridge to fiscal profit. Dutch profit determination applies fiscal valuation and year-allocation rules to the profit-and-loss account and balance sheet. Review depreciation, asset classification, private use, mixed costs, reserves, investment deductions and disinvestment additions individually. ([Profit determination](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/inkomstenbelasting_voor_ondernemers/winst_uit_onderneming))
 
-### Cross-check 1: BTW omzet matches IB winst uit onderneming gross income
+Reconcile opening balances to the preceding closing records, then document adjustments. Tie cash and bank to statements, reconcile invoices to debtors and creditors, and identify owner transfers and tax payments. Owner drawings are not business expenses and private capital introduced is not trading revenue. ([Owner transfers](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/inkomstenbelasting_voor_ondernemers/privestortingen_en_priveonttrekkingen))
 
-**Cross-check 1: BTW omzet matches IB winst uit onderneming gross income**  _(Section 3)_
+Prepare a movement schedule for each material asset, debt and reserve. As an accounting control, reconcile closing equity less opening equity, plus owner drawings, less capital introduced, to the profit represented by those balances. Align valuation and other equity adjustments before comparing it with the fiscal-profit worksheet. Investigate differences instead of inserting a balancing private withdrawal.
 
-| BTW Output | IB Input | Rule |
-| --- | --- | --- |
-| BTW-aangifte rubriek 1a (leveringen/diensten belast met hoog tarief) + 1b (laag tarief) + 1e (leveringen/diensten belast met 0% of niet bij u belast) | IB omzet (gross receipts for winst uit onderneming) | Must match within EUR 1 |
-| Regular BTW: sum of rubrieken 1a + 1b + 1c + 1d + 1e | IB omzet | Turnover is ex-BTW |
-| KOR: declared turnover on annual declaration | IB omzet | Turnover is gross (no BTW separation) |
+If an opening asset register is absent, reconstruct it from prior accounts and evidence or leave depreciation unresolved. Looking only at purchases made during the current year omits continuing assets. For each cost, show gross invoice, recoverable VAT, remaining business cost or asset basis, private element and tax adjustment. Non-recoverable VAT does not by itself make a private or restricted cost fully deductible.
 
-- **If mismatch** — Flag for reviewer. Common causes: timing differences (factuurstelsel vs kasstelsel), ICP diensten (rubriek 3b) not appearing in rubriek 1a, bad debt write-offs, foreign income not subject to Dutch BTW.  _(Section 3)_
+There are no new FOR additions from **2023** onward. Preserve an existing reserve and evaluate any required release separately; an existing balance does not justify a new annual deduction. ([Oudedagsreserve](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/inkomstenbelasting_voor_ondernemers/fiscale_reserves/oudedagsreserve))
 
-### Cross-check 2: ZVW bijdrage-inkomen matches IB Box 1 income
+## Business deductions and taxable profit
 
-**Cross-check 2: ZVW bijdrage-inkomen matches IB Box 1 income**  _(Section 3)_
+Carry across the approved fiscal-profit schedule before ondernemersaftrek. Show investment deductions, private-use additions and reserve movements in their proper stages, then each eligible ondernemersaftrek component and any permitted prior-year carryforward. Require evidence for eligibility and maintain loss/carryforward schedules. Avoid treating a deduction unavailable this year as a current-year expense.
 
-| ZVW Input | Source | Rule |
-| --- | --- | --- |
-| Bijdrage-inkomen | IB Box 1 verzamelinkomen (winst + employment income, before persoonsgebonden aftrek) | ZVW is based on Box 1 income |
-| Voorlopige aanslag ZVW paid | Bank statement / Belastingdienst beschikking | Reconcile against final ZVW liability |
+For a qualifying entrepreneur below AOW age at the start of **2025**, the ordinary zelfstandigenaftrek is **€2,470**, subject to the hours condition and profit limitation; starter cases and older taxpayers need their applicable rules. ([2025 zelfstandigenaftrek](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/verandering_inkomstenbelasting_vorige_jaren/veranderingen-inkomstenbelasting-2025/ondernemersaftrek-2025/zelfstandigenaftrek-2025)) The MKB exemption for **2025 and 2026** is **12.7%** of profit after ondernemersaftrek. It also reduces an eligible loss. The tax benefit is subject to the applicable rate limitation, so subtracting the exemption from the base is not the entire high-income tax calculation. ([MKB exemption](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/inkomstenbelasting_voor_ondernemers/mkb_winstvrijstelling))
 
-- **If mismatch** — Verify the bijdrage-inkomen definition. Note that eigen woning aftrek (negative Box 1 component) reduces bijdrage-inkomen.  _(Section 3)_
+Output both profit before personal business deductions and taxable business profit. They serve different downstream calculations. Record the approved deduction schedule rather than recalculating its figures from a previous Guide's defaults.
 
-### Cross-check 3: Voorlopige aanslag reconciliation
+## Assemble income tax by box
 
-**Cross-check 3: Voorlopige aanslag reconciliation**  _(Section 3)_
+### Box 1
 
-| Voorlopige Aanslag | Source | Rule |
-| --- | --- | --- |
-| Voorlopige aanslag IB 2025 paid | Bank statement / beschikking | Enters IB-aangifte as voorheffing |
-| Voorlopige aanslag ZVW 2025 paid | Bank statement / beschikking | Enters ZVW reconciliation |
-| Final IB + ZVW liability | Computed by nl-income-tax + nl-zvw | Difference = te betalen or terug te ontvangen |
-
-- **If mismatch** — Common cause is first year of self-employment (no voorlopige aanslag), or Belastingdienst adjusted the voorlopige aanslag mid-year.  _(Section 3)_
-
-### Cross-check 4: BTW voorbelasting and income tax deductions consistency
-
-**Cross-check 4: BTW voorbelasting and income tax deductions consistency**  _(Section 3)_
-
-| Item | BTW Treatment | Income Tax Treatment |
-| --- | --- | --- |
-| Reclaimable voorbelasting (regular BTW) | Claimed in BTW-aangifte rubriek 5b | NOT a deduction in IB (netto bedrag only) |
-| Blocked voorbelasting (regular BTW) | Not claimed | IS a deduction in IB (added to cost) |
-| All BTW paid (KOR) | No recovery | IS a deduction in IB (bruto bedrag is cost) |
-| Representatiekosten BTW | 100% BTW reclaimable | Only 80% of net cost deductible for IB (Art. 3.15 Wet IB 2001) |
-| Privégebruik auto (BUA) | BTW correction via BUA (besluit uitsluiting aftrek) on BTW-aangifte | Separate private-use correction for IB |
-
-- **If inconsistency** — An expense claimed net of BTW on the IB while also not claimed on the BTW-aangifte means the BTW is lost. Flag for reviewer.  _(Section 3)_
-
-### Cross-check 5: Ondernemersaftrek computation chain
-
-**Cross-check 5: Ondernemersaftrek computation chain**  _(Section 3)_
-
-| Step | Computation | Rule |
-| --- | --- | --- |
-| Winst uit onderneming (before ondernemersaftrek) | Omzet minus bedrijfskosten minus afschrijvingen | Starting point |
-| Zelfstandigenaftrek | EUR 2,470 (2025) if urencriterium met | Art. 3.76 Wet IB 2001 |
-| Startersaftrek | EUR 2,123 (2025) if eligible | Art. 3.76a Wet IB 2001 |
-| Winst after zelfstandigenaftrek | Winst minus zelfstandigenaftrek minus startersaftrek | Intermediate |
-| MKB-winstvrijstelling | 13.31% of winst after zelfstandigenaftrek | Art. 3.79a Wet IB 2001 |
-| Belastbare winst | Winst after zelfstandigenaftrek minus MKB-winstvrijstelling | To Box 1 |
-
-- **If computation error** — Verify order of operations. MKB-winstvrijstelling applies AFTER zelfstandigenaftrek, not before.  _(Section 3)_
-
-## Section 4 -- Final reviewer package contents
-
-### Documents
-
-1. Executive summary -- one-page overview: filing status, winst uit onderneming, belastbaar inkomen per box, totaal verschuldigde belasting, BTW position, ZVW bijdrage, terug te ontvangen/te betalen
-2. BTW-aangifte worksheet -- rubriek-by-rubriek with formulas (Q4 2025 or KOR annual)
-3. IB-aangifte worksheet -- Box 1 (winst, eigen woning, employment), Box 2 (if applicable), Box 3 (vermogen), heffingskortingen, verschuldigde belasting
-4. Capital allowances schedule (afschrijvingsstaat) -- asset register with aanschafwaarde, datum, afschrijvingspercentage, jaarlijkse afschrijving, boekwaarde
-5. ZVW reconciliation -- bijdrage-inkomen, percentage, maximum, voorlopige aanslag paid, shortfall/overpayment
-6. Voorlopige aanslag 2026 recommendation -- recommended IB and ZVW amounts
-7. Cross-skill reconciliation summary -- all five cross-checks with pass/fail and notes
-8. Reviewer brief -- comprehensive narrative with positions, citations, flags, self-check results
-9. Client action list -- what the client needs to do, with dates and amounts
-
-### Reviewer brief contents
-
-```markdown
-# Complete Return Package: [Client Name] -- Tax Year 2025
-
-## Executive Summary
-- Filing status: [Single / Fiscal partner]
-- Residence: Netherlands (full-year)
-- Business: ZZP / eenmanszaak (KvK [number])
-- BTW registration: Regular / KOR
-- BTW-aangifte position (Q4 or annual): EUR X te betalen / EUR X terug
-- Winst uit onderneming (before aftrekken): EUR X
-- Zelfstandigenaftrek: EUR X
-- Startersaftrek: EUR X
-- MKB-winstvrijstelling: EUR X
-- Belastbare winst uit onderneming: EUR X
-- Eigen woning aftrek: EUR X
-- Belastbaar inkomen Box 1: EUR X
-- Belastbaar inkomen Box 3: EUR X
-- Verschuldigde inkomstenbelasting: EUR X
-- Heffingskortingen: EUR X
-- Voorlopige aanslag IB paid: EUR X
-- Te betalen / terug te ontvangen IB: EUR X
-- ZVW bijdrage: EUR X
-- Voorlopige aanslag ZVW paid: EUR X
-- Te betalen / terug te ontvangen ZVW: EUR X
-- Total te betalen / terug te ontvangen: EUR X
-
-## BTW-aangifte
-[Content from nl-btw-return output]
-- Registration type and period
-- Rubriek 1a: Leveringen/diensten belast met hoog tarief (21%)
-- Rubriek 1b: Leveringen/diensten belast met laag tarief (9%)
-- Rubriek 1c: Leveringen/diensten belast met overige tarieven
-- Rubriek 1d: Privégebruik
-- Rubriek 1e: Leveringen/diensten belast met 0% of niet bij u belast
-- Rubriek 2a: Verleggingsregelingen
-- Rubriek 3a/3b: Prestaties naar/in het buitenland (ICP)
-- Rubriek 4a/4b: Prestaties vanuit het buitenland
-- Rubriek 5a: Verschuldigde omzetbelasting
-- Rubriek 5b: Voorbelasting
-- Rubriek 5c/5d/5e: Subtotaal, vermindering, totaal
-- BUA correctie (besluit uitsluiting aftrek voorbelasting)
-- ICP opgave reconciliation
-
-## Aangifte Inkomstenbelasting
-
-### Box 1 -- Inkomen uit werk en woning
-[Content from nl-income-tax output]
-- Winst uit onderneming:
-  - Omzet: EUR X
-  - Bedrijfskosten: EUR X
-  - Afschrijvingen: EUR X
-  - Winst vóór ondernemersaftrek: EUR X
-  - Zelfstandigenaftrek: EUR X
-  - Startersaftrek: EUR X
-  - MKB-winstvrijstelling: EUR X
-  - Belastbare winst: EUR X
-  - FOR dotatie: EUR X (if applicable)
-- Inkomsten uit dienstbetrekking: EUR X (if applicable)
-- Eigen woning:
-  - WOZ-waarde: EUR X
-  - Eigenwoningforfait: EUR X
-  - Hypotheekrente aftrek: EUR X
-  - Eigen woning saldo: EUR X
-- Inkomen Box 1: EUR X
-
-### Box 2 -- Inkomen uit aanmerkelijk belang
-- Not applicable for eenmanszaak (flag if any AB income discovered)
-
-### Box 3 -- Inkomen uit sparen en beleggen
-- Peildatum 1 januari 2025:
-  - Banktegoeden: EUR X
-  - Beleggingen: EUR X
-  - Overige bezittingen: EUR X
-  - Schulden: EUR X
-  - Rendementsgrondslag: EUR X
-- Peildatum 1 januari 2026: [same structure]
-- Heffingsvrij vermogen: EUR X (EUR 57,000 single / EUR 114,000 fiscal partners -- 2025)
-- Voordeel uit sparen en beleggen: EUR X
-- Verschuldigde belasting Box 3: EUR X (36% in 2025)
-
-### Heffingskortingen
-- Algemene heffingskorting: EUR X (income-dependent phase-out)
-- Arbeidskorting: EUR X (income-dependent, for winst uit onderneming)
-- Total heffingskortingen: EUR X
-
-### Verschuldigde belasting
-- Box 1 belasting (schijventarief): EUR X
-  - Schijf 1 (EUR 0 - 38,441): 36.97%
-  - Schijf 2 (EUR 38,441 - 75,624): 49.50%
-- Box 3 belasting: EUR X
-- Totaal verschuldigde belasting: EUR X
-- Minus heffingskortingen: EUR X
-- Minus voorlopige aanslag IB: EUR X
-- Te betalen / terug te ontvangen: EUR X
-
-## Zorgverzekeringswet (ZVW)
-[Content from nl-zvw output]
-- Bijdrage-inkomen: EUR X
-- ZVW percentage: 5.32%
-- Maximum bijdrage-inkomen: EUR 71,628 (2025)
-- ZVW bijdrage: EUR X
-- Voorlopige aanslag ZVW paid: EUR X
-- Te betalen / terug te ontvangen: EUR X
-
-## Voorlopige Aanslag 2026
-- Based on 2025 final IB + ZVW liability
-- Recommended voorlopige aanslag IB 2026: EUR X
-- Recommended voorlopige aanslag ZVW 2026: EUR X
-- Action: request via MijnBelastingdienst or wait for Belastingdienst to issue
-
-## Cross-skill Reconciliation
-- BTW omzet vs IB winst omzet: [pass/fail]
-- ZVW bijdrage-inkomen vs IB Box 1: [pass/fail]
-- Voorlopige aanslag reconciliation: [pass/fail]
-- BTW voorbelasting vs IB deductions: [pass/fail]
-- Ondernemersaftrek computation chain: [pass/fail]
-
-## Reviewer Attention Flags
-[Aggregated from all upstream skills]
-- T2 items requiring belastingadviseur confirmation
-- Mixed-use expense percentages (auto, telefoon, internet)
-- Werkruimte deduction (if claimed)
-- Urencriterium confirmation
-- Startersaftrek eligibility
-- Any turnover approaching EUR 20,000 KOR threshold
-- Any income approaching schijf boundary (EUR 38,441)
-- FOR dotatie appropriateness
-- Box 3 vermogen composition and categorisation (sparen vs beleggen vs overig)
-
-## Positions Taken
-[List with legislation citations]
-- e.g., "Zelfstandigenaftrek claimed: EUR 2,470 -- Art. 3.76 Wet IB 2001, urencriterium confirmed by client"
-- e.g., "Auto zakelijk gebruik 75% -- client-stated, kilometeradministratie available -- Art. 3.16 Wet IB 2001"
-- e.g., "Laptop capitalised and depreciated at 20% p.a. over 5 years -- Art. 3.30 Wet IB 2001"
-- e.g., "MKB-winstvrijstelling 13.31% applied -- Art. 3.79a Wet IB 2001"
-- e.g., "Representatiekosten 80% limitation applied -- Art. 3.15 Wet IB 2001"
-
-## Planning Notes for 2026
-- Voorlopige aanslag recommendation (IB + ZVW)
-- KOR threshold monitoring (if approaching EUR 20,000)
-- Capital allowances continuing into 2026 (boekwaarde schedule)
-- FOR stand and conversion planning (lijfrente aankoop)
-- Any legislative changes affecting 2026 (Belastingplan 2026 measures, schijventarief changes)
-- Urencriterium documentation reminder
-
-## Client Action List
-
-### Immediate (before 1 May 2026 -- IB filing deadline):
-1. Review this return package with your belastingadviseur
-2. File aangifte inkomstenbelasting via MijnBelastingdienst
-3. Pay any te betalen amount for IB and ZVW
-4. File Q4 2025 BTW-aangifte (if not yet filed) -- deadline was 31 January 2026
-5. Request/adjust voorlopige aanslag 2026 via MijnBelastingdienst
-
-### BTW filing calendar (quarterly):
-- Q1 2026 (Jan-Mar): file by 30 April 2026
-- Q2 2026 (Apr-Jun): file by 31 July 2026
-- Q3 2026 (Jul-Sep): file by 31 October 2026
-- Q4 2026 (Oct-Dec): file by 31 January 2027
-
-### ICP opgave (if applicable):
-- Monthly or quarterly (aligned with BTW filing frequency)
-- Due same date as BTW-aangifte
-
-### Ongoing:
-1. Issue BTW-compliant facturen for all sales (Art. 35a Wet OB 1968)
-2. Retain all purchase invoices and receipts (7-year bewaarplicht -- Art. 52 AWR)
-3. Maintain kilometeradministratie if claiming auto expenses
-4. Maintain urenadministratie for urencriterium
-5. Monitor turnover for KOR threshold (EUR 20,000)
-6. Track capital assets in the afschrijvingsstaat
-7. Monitor FOR stand and plan lijfrente conversion before AOW-leeftijd
-```
-
-## Section 5 -- Refusals
-
-- **R-NL-1** — Upstream skill did not run. Name the specific skill. Note: this is a warning, not a hard stop. Continue with available data and flag the gap.  _(Section 5)_
-- **R-NL-2** — Upstream self-check failed. Name the specific check and note it in the reviewer brief. Continue.  _(Section 5)_
-- **R-NL-3** — Cross-skill reconciliation failed. Name the specific reconciliation and describe the discrepancy. Flag for reviewer but continue.  _(Section 5)_
-- **R-NL-4** — Intake incomplete. Specific missing intake items prevent computation. List what is missing and ask the user for the specific data point.  _(Section 5)_
-- **R-NL-5** — Out-of-scope item discovered during assembly. E.g., Box 2 aanmerkelijk belang income, foreign source income requiring voorkoming dubbele belasting, or partnership income. Flag and exclude from computation.  _(Section 5)_
-
-## Section 6 -- Self-checks
-
-- **Check NL1 -- All upstream skills executed** — nl-btw-return, nl-income-tax, nl-zvw all produced output.  _(Section 6)_
-- **Check NL2 -- BTW omzet matches IB winst omzet** — Within EUR 1 tolerance.  _(Section 6)_
-- **Check NL3 -- ZVW uses correct bijdrage-inkomen** — Box 1 verzamelinkomen matches the figure used for ZVW computation.  _(Section 6)_
-- **Check NL4 -- Ondernemersaftrek computation order correct** — Zelfstandigenaftrek applied before MKB-winstvrijstelling. MKB-winstvrijstelling percentage applied to winst AFTER zelfstandigenaftrek.  _(Section 6)_
-- **Check NL5 -- Regular BTW treatment correct** — Output BTW excluded from omzet; reclaimable voorbelasting excluded from bedrijfskosten; blocked voorbelasting included in bedrijfskosten.  _(Section 6)_
-- **Check NL6 -- KOR treatment correct** — No output BTW charged; all input BTW included in bedrijfskosten (bruto = cost).  _(Section 6)_
-- **Check NL7 -- Box 3 vermogensrendementsheffing computed correctly** — Heffingsvrij vermogen applied. Correct categorisation of banktegoeden, beleggingen, overige bezittingen. 2025 forfaitaire rendementen applied per category.  _(Section 6)_
-- **Check NL8 -- Heffingskortingen correctly computed** — Algemene heffingskorting phased out based on income. Arbeidskorting computed on winst uit onderneming + employment income. Inkomensafhankelijke combinatiekorting if applicable.  _(Section 6)_
-- **Check NL9 -- Schijventarief correctly applied** — 2025 rates: 36.97% up to EUR 38,441; 49.50% above EUR 38,441.  _(Section 6)_
-- **Check NL10 -- Filing calendar is complete** — All deadlines for BTW, IB, ICP, and voorlopige aanslag are listed with specific dates.  _(Section 6)_
-- **Check NL11 -- No form numbers in user-facing messages** — Internal notes can reference rubrieken and artikelen; user-facing messages use plain Dutch/English where possible.  _(Section 6)_
-- **Check NL12 -- Reviewer brief contains legislation citations** — Every position taken references the specific article of the relevant Wet (Wet IB 2001, Wet OB 1968, ZVW, AWR).  _(Section 6)_
-
-## Section 7 -- Output files
-
-The final output is three files:
-
-1. `[client_slug]_2025_nl_master.xlsx` -- Single master workbook containing every worksheet. Sheets include: Cover, BTW-aangifte (Q4 or Annual), IB-aangifte (Box 1/2/3), Afschrijvingsstaat, Bedrijfskosten Detail, ZVW Reconciliation, Voorlopige Aanslag 2026, Ondernemersaftrek Berekening, Cross-Check Summary. Use live formulas where possible -- e.g., IB omzet references the BTW turnover cell; ondernemersaftrek chain is formula-driven; Box 3 references peildatum amounts. Verify no `#REF!` errors. Verify computed values match the Python/computation model within EUR 1 before shipping.
-
-2. `reviewer_brief.md` -- Single markdown file covering all sections from Section 4 above: executive summary, BTW, IB (all boxes), ZVW, voorlopige aanslag, cross-skill reconciliation, flags, positions, planning notes.
-
-3. `client_action_list.md` -- Single markdown file with step-by-step actions: immediate filings and payments, quarterly BTW calendar for 2026, ongoing compliance reminders.
-
-If execution runs out of context mid-build: produce whatever is complete, then state at the end which of the three files were not produced or are partial.
-
-All files are placed in `/mnt/user-data/outputs/` and presented to the user via the `present_files` tool at the end.
-
-## Section 8 -- Cross-skill references
-
-Inputs:
-- `nl-freelance-intake` -- structured intake package (JSON)
-- `nl-btw-return` -- BTW-aangifte rubriek values and classification output
-- `nl-income-tax` -- IB-aangifte values and computation output (Box 1/2/3)
-- `nl-zvw` -- ZVW bijdrage reconciliation output
-
-Outputs: The final reviewer package. No downstream skill.
-
-## Section 9 -- Known gaps
-
-1. PDF form filling is not automated. The reviewer uses the worksheets to fill the official aangifte on MijnBelastingdienst.
-2. E-filing is handled by the reviewer via MijnBelastingdienst portal, not by this skill.
-3. Payment execution is the client's responsibility; the skill only provides instructions and amounts.
-4. VOF (vennootschap onder firma) returns are not supported -- only eenmanszaak.
-5. Box 2 (aanmerkelijk belang) is out of scope for eenmanszaak; flagged if discovered.
-6. Multi-year capital allowance tracking assumes the prior year afschrijvingsstaat is provided. If not, only current-year acquisitions are depreciated.
-7. Voorkoming dubbele belasting (double taxation relief) is out of scope.
-8. Toeslagen (zorgtoeslag, huurtoeslag, kindgebonden budget) are not computed -- these are separate applications via Belastingdienst/Toeslagen.
-9. The package is complete only for the 2025 tax year; 2026 appears only as prospective planning.
-10. Box 3 vermogensrendementsheffing uses the 2025 forfaitaire rendementen; actual rendementen may differ under the Wet rechtsherstel box 3 if applicable.
-
-### Change log
-
-v1.0 (May 2026): Initial draft. Modelled on mt-return-assembly v0.1 adapted for Netherlands jurisdiction with three content skills (BTW-aangifte, IB-aangifte, ZVW).
-
-## End of skill
-
-## Disclaimer
-
-This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional (such as a CPA, EA, tax attorney, or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
-
-The most up-to-date, verified version of this skill is maintained at [openaccountants.com](https://openaccountants.com). Log in to access the latest version, request a professional review from a licensed accountant, and track updates as tax law changes.
+Combine taxable business profit with the taxpayer's other relevant income and deductions, including the properly calculated home balance. Keep business costs, personal deductions, entrepreneur deductions and tax credits distinct. A private mortgage deduction must not be booked as a sole-trader operating expense. ([Box 1](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/inkomstenbelasting/heffingskortingen_boxen_tarieven/boxen_en_tarieven/box_1/))
+
+For **2025**, a person below AOW age throughout the year and within the ordinary full-year combined tax/national-insurance regime uses **35.82%** up to **€38,441**, **37.48%** above that through **€76,817**, and **49.50%** above that. Use the age-specific and insurance-specific calculation where those assumptions do not hold. Do not apply a single rate to all income. ([Year and age tables](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/inkomstenbelasting/heffingskortingen_boxen_tarieven/boxen_en_tarieven/box_1/))
+
+Import the actual deduction-rate adjustment and eligible tax credits from the checked personal-tax calculation. The **2025** general tax credit depends on aggregate income, while the labour credit uses its own employment-income definition. Do not automatically use taxable business profit as the labour-credit base. Apply the person's age, insurance period and credit limits. Reconcile wage withholding as a prepayment, without deducting it from income or subtracting payroll credits a second time. ([Tax credits](https://www.belastingdienst.nl/wps/wcm/connect/fisin/fisin2025/heffingskortingen))
+
+### Box 2 and Box 3
+
+If substantial-interest income is present, import a separately checked Box 2 calculation and any eligible dividend withholding. An owner of a sole proprietorship can also hold shares privately; do not assume Box 2 is absent from the business's legal form. If none applies, record the factual basis for that conclusion.
+
+For Box 3, reconcile the relevant assets and debts to the applicable valuation date and classification. The **2025** standard method has a **€57,684** exemption per person, **€115,368** for fiscal partners where applicable, and a **36%** tax rate on the calculated taxable return, not on the asset balance. Do not carry an earlier year's exemption into this return. ([2025 calculation](https://www.belastingdienst.nl/wps/wcm/connect/nl/box-3/content/berekening-box-3-inkomen-2025))
+
+The **2025** income-tax return permits the taxpayer to supply actual-return information; the Belastingdienst compares the standard and actual-return calculations and uses the favourable outcome. Collect the complete required income and value-change evidence before treating an actual-return comparison as complete. Earlier-year reporting uses a different route. ([Actual return](https://www.belastingdienst.nl/wps/wcm/connect/nl/box-3/content/werkelijk-rendement-belastingaangifte)) Keep the detailed Box 3 worksheet and assumptions in the reviewer package; do not replace the comparison with interest received alone.
+
+### Fiscal partners
+
+Confirm the partnership period and any full-year election before allocating eligible common items. Reconcile each allocated item's combined total and preserve each person's separate assessment estimate. Wages and business profit cannot be shifted to a partner. Eligible home balances, common Box 3 amounts and other permitted items have their own allocation rules; dividend withholding can be allocated where the rules permit, while wage withholding cannot. ([Fiscal partnership, section 1.5](https://www.belastingdienst.nl/wps/wcm/connect/fisin/fisin2025/fiscaal_partnerschap)) Compare the complete calculations, including credits, rather than choosing an allocation from marginal rates alone.
+
+## Calculate Zvw separately
+
+Build a separate contribution-income schedule. For **2025**, the assessment contribution is **5.26%** and the maximum contribution income is **€75,864**. Include the covered income categories and account for income already subject to employer levy or contribution withholding. An employer's Zvw levy is not an additional amount of the employee's taxable pay. ([2025 Zvw](https://www.belastingdienst.nl/wps/wcm/connect/fisin/fisin2025/inkomensafhankelijke_bijdrage_zorgverzekeringswet))
+
+For ordinary taxable business profit, use the legally defined contribution-income base; the Zvw Act links this to taxable business profit, not the complete Box 1 total. A home deduction or unrelated personal deduction therefore must not automatically reduce the Zvw base. Identify any release of an existing FOR for a qualifying annuity conversion: the Act expressly excludes that qualifying release from contribution income. Check the statutory conditions and reconcile the adjustment with the profit and annuity schedules; do not apply the exclusion to every reserve release. Use the applicable cap and ordering for mixed income, and refer foreign insurance, part-year coverage, exceptional pensions or a negative contribution-income case for the appropriate calculation. ([Zvw Act, contribution income](https://wetten.overheid.nl/BWBR0018450/2025-01-01))
+
+Keep the estimated Zvw assessment and provisional Zvw payments separate from income-tax payments. Show gross assessed liability, existing assessments, amounts paid or refunded and the estimated remaining settlement, with no duplicate deduction for the same prepayment.
+
+## Reconcile VAT without inventing an annual return
+
+Use the business's actual assigned periods and KOR status. A KOR participant ordinarily does not submit normal VAT returns or recover input VAT; KOR is not an annual-return election. Check exceptional or incidental obligations separately. ([KOR](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/hoe_werkt_de_btw/kleineondernemersregeling/kleineondernemersregeling)) Retain all required returns and corrections in the annual review package even though they are different filings from income tax.
+
+Map the VAT schedule to the **2025** official form and its Dutch-established-business instructions. Do not carry legacy KOR reduction or estimation boxes into a modern return. Keep output VAT, reverse-charge VAT, deductible input VAT and adjustments distinct. Hospitality food/drink and private or exempt-use purchases require particular attention to input-tax restrictions. ([2025 VAT notes](https://download.belastingdienst.nl/belastingdienst/docs/toelichting_bij_btw_aangifte_ob0731t53fd.pdf))
+
+As a review control, reconcile ledger revenue to the reported sales bases through an explicit bridge. Explain differences caused by period timing, exempt sales, non-Dutch supplies, asset disposals, private-use adjustments and other classifications. Reverse-charge purchase bases are not turnover from sales. The bridge must reconcile after these identified differences; raw VAT totals and income-tax revenue need not be identical.
+
+Maintain an independent VAT-control-account reconciliation: opening payable/receivable, period liabilities or refunds, annual adjustments and corrections, payments, refunds received, and closing balance. Do not net a VAT refund against an income-tax payment instruction without an actual authorised set-off. ICP periods and reporting status need their own check rather than automatic copying of the VAT filing frequency.
+
+Keep cents in supporting calculations and show the return's prescribed rounding separately. Retain each submitted return and receipt, and distinguish drafted corrections from accepted submissions. The filing/payment dates and payment reference come from the official invitation or portal for that period. Payment timing is based on receipt by the authority. ([2025 VAT notes](https://download.belastingdienst.nl/belastingdienst/docs/toelichting_bij_btw_aangifte_ob0731t53fd.pdf))
+
+## Worked and decision checks
+
+These are assembly controls, not complete personal tax assessments.
+
+**MKB sequence, 2025.** Suppose the approved business schedule has fiscal profit of **€40,000**, the person qualifies for ordinary zelfstandigenaftrek of **€2,470**, and there are no other adjustments or deductions. Profit after that deduction is **€37,530**. At **12.7%**, the exemption is **€4,766.31**, leaving **€32,763.69** taxable business profit before return-entry rounding. This is not final income tax or necessarily the labour-credit base. ([Deduction](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/verandering_inkomstenbelasting_vorige_jaren/veranderingen-inkomstenbelasting-2025/ondernemersaftrek-2025/zelfstandigenaftrek-2025), [MKB](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/inkomstenbelasting_voor_ondernemers/mkb_winstvrijstelling))
+
+**Mixed-income Zvw, 2025.** The annual statement shows **€40,000** already subject to employer Zvw levy and the checked additional contribution-income schedule shows **€50,000**. The remaining cap is **€35,864**. At **5.26%**, the assessment contribution on that remainder is **€1,886.4464** before assessment rounding. Do not charge the full additional income or deduct a home balance from this cap calculation. ([Official mixed-income example](https://www.belastingdienst.nl/wps/wcm/connect/fisin/fisin2025/inkomensafhankelijke_bijdrage_zorgverzekeringswet))
+
+**KOR.** A client supplies proof of full-period KOR participation and no ordinary VAT return obligation, but a foreign purchase appears. Do not invent an annual KOR return or silently ignore the purchase. Resolve whether an incidental obligation arises; keep that item open until the transaction-specific VAT method is checked. ([KOR](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/hoe_werkt_de_btw/kleineondernemersregeling/kleineondernemersregeling), [incidental returns in VAT notes](https://download.belastingdienst.nl/belastingdienst/docs/toelichting_bij_btw_aangifte_ob0731t53fd.pdf))
+
+**Missing opening assets.** Current purchase invoices are complete but the preceding asset register is missing. The current purchases can be classified; annual depreciation and fiscal profit remain unresolved. Request the opening records instead of treating every existing asset as fully depreciated. ([Profit determination](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/inkomstenbelasting_voor_ondernemers/winst_uit_onderneming))
+
+**Year conflict.** A dependency uses **13.31%** MKB for **2025**. Reject that input: the official annual distinction is **13.31%** for **2024**, and **12.7%** for **2025**. Recompute affected downstream schedules before approval. ([MKB](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/inkomstenbelasting_voor_ondernemers/mkb_winstvrijstelling))
+
+**Payment versus filing.** Completing the return does not create a single immediate income-tax/Zvw/VAT payment. Read each actual notice and reconcile prior assessments. A prior-year provisional assessment has a different payment timetable from a current-year instalment arrangement. ([Provisional-assessment payments](https://www.belastingdienst.nl/wps/wcm/connect/nl/voorlopige-aanslag/content/voorlopige-aanslag-aangevraagd-hoe-gaat-het-met-betalen))
+
+## Reviewer package and action list
+
+Deliver an editable master workbook, a reviewer brief and a client action list. Use separate workbook schedules for VAT, each tax box, assets/depreciation, business costs and deductions, Zvw, reconciliations and the later-year forecast. Keep live formulas where practical, check formula errors and independently reconcile calculated totals. If the environment cannot produce a workbook, supply usable editable tables and state the limitation. Deliver files through the available workspace mechanism; do not assume a particular filesystem path or attachment tool. The package should include:
+
+- Scope, year, taxpayer and partner facts; document index; decisions and unresolved matters.
+- Accounts, balance movements, fiscal-profit bridge, asset/depreciation schedule, investment and entrepreneur deductions, carryforwards, and private-use adjustments.
+- Separate Box 1, Box 2 and Box 3 calculations; partner allocation comparison; deductions, credits, withholding and provisional-assessment reconciliation.
+- Separate Zvw schedule; VAT period summaries, correction register, ICP/OSS status where relevant, and VAT control-account reconciliation.
+- Official source register with applicable years and retrieval dates; cross-check results; reviewer changes and final approval status.
+- Per-return action list: owner, form/portal, period, outstanding evidence, filing deadline, payment deadline, official payment reference source, amount status and submission/payment receipt.
+
+Do not label a spreadsheet as an official filed form. Obtain the taxpayer's authorisation for an actual submission or payment and retain the resulting receipt. Use official notice/portal payment details; never generate a bank account or payment reference from an example. If a deadline has passed, flag the actual position and route the required late filing or correction instead of presenting an old calendar as a future plan.
+
+## Separate 2026 forecast
+
+Start a new forecast with **2026** income, cost, deduction and personal-fact assumptions. Re-evaluate the year-specific rules rather than increasing the **2025** result by a percentage. Reconcile the forecast with the existing provisional income-tax and Zvw assessments and document whether an amendment is recommended. Changes in expected business profit are a reason to review the provisional assessment. ([Provisional-assessment review](https://www.belastingdienst.nl/wps/wcm/connect/nl/voorlopige-aanslag/content/in-welke-situaties-moet-ik-mijn-voorlopige-aanslag-wijzigen))
+
+Record cash already paid separately from tax expense and show the expected remaining reserve. Mark proposals for later years as proposals until effective legislation is checked. The forecast must not alter the completed historical return.
+
+## When to refuse or refer
+
+- Refer migration, foreign insurance, treaty, death, business-transfer and substantial-interest questions to the relevant specialist method before approving the affected calculation.
+- Hold an affected return when material facts, opening balances, dependency rules or eligibility remain unsupported; continue independent schedules.
+- Do not submit, pay or claim accountant attestation from the existence of this assembled package.
+
+## Self-checks before approval
+
+- Every schedule names its taxpayer, period and applicable rule year; all dependency conflicts are resolved.
+- Opening records, asset movements, owner transfers, fiscal profit and the balance sheet reconcile without invented entries.
+- VAT eligibility and income-tax deductibility were assessed separately, with a complete VAT-to-revenue bridge.
+- Deduction eligibility, MKB order, loss handling, credit bases and partner allocations have evidence.
+- Zvw uses its own statutory base and cap, with prior employer-levied income and assessments accounted for.
+- Amounts in the summary trace to schedules; rounding differences are explicit; no prepayment is counted twice.
+- Every unresolved material issue prevents approval of the affected return; unaffected work is retained.
+- Filing, payment and proposed corrections each have an owner and evidence-backed deadline. No submission is claimed without its receipt.
 
 <!-- openaccountants-cta-block -->
 
