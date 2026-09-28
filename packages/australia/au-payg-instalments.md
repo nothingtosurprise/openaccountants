@@ -73,9 +73,9 @@ license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 
 ### Refusal catalogue
 
-- **R-AU-PI-1 -- Companies/trusts/partnerships** — Trigger: client is not a sole trader. Message: "This skill covers sole trader PAYG instalments only."
-- **R-AU-PI-2 -- PAYG withholding** — Trigger: client asks about PAYG withholding (W labels). Message: "PAYG withholding is a separate obligation. See au-gst-bas."
-- **R-AU-PI-3 -- GST computation** — Trigger: client asks about GST. Message: "GST computation is handled by the GST skill. This skill covers PAYG instalments only."
+- **R-AU-PI-1 -- Companies/trusts/partnerships** — Trigger: client is not a sole trader. Message: "This skill covers sole trader PAYG instalments only."  _(Refusal catalogue)_
+- **R-AU-PI-2 -- PAYG withholding** — Trigger: client asks about PAYG withholding (W labels). Message: "PAYG withholding is a separate obligation. See au-gst-bas."  _(Refusal catalogue)_
+- **R-AU-PI-3 -- GST computation** — Trigger: client asks about GST. Message: "GST computation is handled by the GST skill. This skill covers PAYG instalments only."  _(Refusal catalogue)_
 
 ## Section 3 -- Payment pattern library
 
@@ -175,13 +175,11 @@ Classification: Combined BAS payment (GST + PAYG). PAYG instalment component = T
 
 ### 5.3 Instalment amount method (T7)
 
-- **Instalment amount method formula** — T7 = notional tax x (1 + GDP adjustment factor) / 4
-
-No income calculation needed. ATO pre-fills the amount.
+- **Instalment amount method formula** — T7 = notional tax x (1 + GDP adjustment factor) / 4 No income calculation needed. ATO pre-fills the amount.
 
 ### 5.4 GDP adjustment factor
 
-- **GDP adjustment factor 2026-27** — 5%, applied to the instalment amount (T7) for quarters starting on or after 1 April 2026; it was 6% in 2024-25. The factor is set each year from ABS data or by legislation and does not affect the rate method or annual payers.  _([ATO, How we calculate your PAYG instalment amount or rate](https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/calculate-your-payg-instalments/how-we-calculate-your-payg-instalment-amount-or-rate))_
+- **GDP adjustment factor 2026-27** — 5%, applied to the instalment amount (T7) for quarters starting on or after 1 April 2026; it was 6% in 2024-25. The factor is set each year from ABS data or by legislation and does not affect the rate method or annual payers. %  _([ATO, How we calculate your PAYG instalment amount or rate](https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/calculate-your-payg-instalments/how-we-calculate-your-payg-instalment-amount-or-rate))_
 
 ### 5.5 Variation
 
@@ -204,7 +202,7 @@ No income calculation needed. ATO pre-fills the amount.
 
 ### 6.2 Late BAS lodgement penalty
 
-- **Late BAS lodgement penalty** — One penalty unit for each 28-day period or part, up to 5 periods: $364 a unit from 1 July 2026 ($1,820 maximum for a small withholder) and $330 from 7 November 2024 to 30 June 2026. Medium withholders pay double and large withholders five times.  _([ATO, Penalty units](https://www.ato.gov.au/individuals-and-families/paying-the-ato/interest-and-penalties/penalties/penalty-units); [ATO, Failure to lodge on time penalty](https://www.ato.gov.au/individuals-and-families/paying-the-ato/interest-and-penalties/penalties/failure-to-lodge-on-time-penalty))_
+- **Late BAS lodgement penalty** — One penalty unit for each 28-day period or part, up to 5 periods: $364 a unit from 1 July 2026 ($1,820 maximum for a small withholder) and $330 from 7 November 2024 to 30 June 2026. Medium withholders pay double and large withholders five times.  _([ATO, Penalty units; ATO, Failure to lodge on time penalty](https://www.ato.gov.au/individuals-and-families/paying-the-ato/interest-and-penalties/penalties/penalty-units))_
 
 ### 6.3 Safe harbour
 
@@ -217,17 +215,7 @@ No income calculation needed. ATO pre-fills the amount.
 
 ## Section 8 -- Edge cases
 
-Not entered into PAYG system until after first assessment. No instalments in Year 1. Tax shock in Year 2. Flag for reviewer.
-
-Instalment rate method auto-adjusts. If using amount method, consider variation in low-income quarters.
-
-Instalment income = total across all activities. Single rate applies to aggregate.
-
-Interest, dividends, rent are instalment income. Employees with significant investment income may enter PAYG system.
-
-ATO-notified rate already includes Medicare levy (2%) and any surcharge. No separate adjustment needed.
-
-The ATO removes an individual automatically when notional tax drops below $500, instalment income falls below $4,000, the tax debt on assessment is under $1,000 or the rate is 0.0%; a taxpayer who has stopped earning business or investment income can also ask to exit.  _([ATO, Stopping PAYG instalments](https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/stopping-payg-instalments))_
+- **Edge cases** — Not entered into PAYG system until after first assessment. No instalments in Year 1. Tax shock in Year 2. Flag for reviewer. Instalment rate method auto-adjusts. If using amount method, consider variation in low-income quarters. Instalment income = total across all activities. Single rate applies to aggregate. Interest, dividends, rent are instalment income. Employees with significant investment income may enter PAYG system. ATO-notified rate already includes Medicare levy (2%) and any surcharge. No separate adjustment needed. The ATO removes an individual automatically when notional tax drops below $500, instalment income falls below $4,000, the tax debt on assessment is under $1,000 or the rate is 0.0%; a taxpayer who has stopped earning business or investment income can also ask to exit.  _([ATO, Stopping PAYG instalments](https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/payg-instalments/stopping-payg-instalments))_
 
 ## Section 9 -- Self-checks
 
@@ -288,6 +276,8 @@ Expected: $3,000 overpayment refunded or offset.
 This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional (such as a CPA, EA, tax attorney, or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
 
 The most up-to-date, verified version of this skill is maintained at [openaccountants.com](https://openaccountants.com). Log in to access the latest version, request a professional review from a licensed accountant, and track updates as tax law changes.
+
+> Contributed by Ryan Duguid.
 
 <!-- openaccountants-cta-block -->
 

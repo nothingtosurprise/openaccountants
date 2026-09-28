@@ -3,9 +3,11 @@ name: pt-nhr-ifici
 description: "Utilizar este skill sempre que questões envolvam o regime do Residente Não Habitual (RNH) em Portugal ou o seu sucessor, o Incentivo Fiscal à Investigação Científica e Inovação (IFICI). Acionar perante expressões como \"RNH\", \"Residente Não Habitual\", \"IFICI\", \"Incentivo Fiscal à Investigação Científica e Inovação\", \"20% taxa fixa\", \"nómadas digitais Portugal\", \"isenção rendimentos estrangeiros\", \"Modelo 3 anexo L\", \"Atividades de Elevado Valor Acrescentado\", \"AEVA\", \"Portaria 187/2024\", \"EBF artigo 58.º-A\", \"Despacho 230/2019\", \"pensões estrangeiras Portugal\", \"convenções dupla tributação Portugal\". Também acionar em pedidos formulados em inglês: \"Portugal NHR regime\", \"Portugal digital nomad tax\", \"non-habitual resident Portugal\", \"IFICI scheme Portugal\", \"20% flat rate Portugal\", \"foreign income exemption Portugal\", \"Portugal pension tax 10%\", \"Portugal tax residency\", \"NHR replacement Portugal\". Cobre o RNH legado criado pelo DL 249/2009 (fechado a novos pedidos desde 1 jan 2024 pela Lei 82/2023), o IFICI introduzido pela Portaria n.º 187/2024/1 ao abrigo do art.º 58.º-A do EBF, a taxa fixa de 20% sobre rendimentos das categorias A e B em Atividades de Elevado Valor Acrescentado, a matriz de isenção de rendimentos de fonte estrangeira por tipo de rendimento e país, o tratamento das pensões estrangeiras (incluindo a tributação a 10% introduzida pelo OE 2020), mais-valias e dividendos estrangeiros, convenções de dupla tributação aplicáveis (~80 acordos), processo de candidatura no Portal das Finanças até 31 de março do ano seguinte ao da residência, perda de estatuto por interrupção da residência, e preenchimento do Anexo L do Modelo 3. LER SEMPRE este skill antes de tratar fiscalidade RNH/IFICI em Portugal."
 version: 1.0
 jurisdiction: PT
-tax_year: 2025
-last_updated: 2026-07-13
+tax_year: 2026
+last_updated: 2026-09-27
+authored_by: OpenAccountants team
 review_status: pending_review
+trust_label: By OpenAccountants
 depends_on:
   - pt-income-tax
 category: international
@@ -13,505 +15,244 @@ tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# PT Nhr Ifici
+# Portugal: the old NHR regime and its successor IFICI, for 2026
 
-## Secção 1 — Referência Rápida
+## Scope and status in 2026 ([EBF art. 58-A](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/bf_rep/Pages/ebf58a.aspx); [NHR FAQ](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00309.aspx))
 
-**Referência Rápida**
+This Guide covers two Portuguese personal income tax (IRS) regimes for people who move to Portugal:
 
-| Campo | Valor |
+- **NHR (residente não habitual, "RNH")**, created by Decree-Law 249/2009 and set out in the old wording of CIRS art. 16(8) to (12), 72(10) and (12) and 81(4) to (8). It was **revoked from 1 January 2024** by the 2024 Budget Law (Lei 82/2023). It still runs for people already registered and for a closed transitional group (art. 236 Lei 82/2023).
+- **IFICI (incentivo fiscal à investigação científica e inovação, often described as the successor to NHR)**, in art. 58-A of the Tax Benefits Statute (EBF), added by Lei 82/2023. It applies to people who become tax resident **from 1 January 2024**. The procedure and the lists of professions and business codes are in **Portaria 352/2024/1 of 23 December 2024**.
+
+Primary year: **tax year 2026** (Portugal's tax year is the calendar year). The rules below are the ones in force on 25 September 2026. A short dated section covers the 2025 returns (filed in 2026) and the 2024 and 2025 arrivals.
+
+**What applies to 2026, in one table**
+
+| Person | Regime available for 2026 |
 | --- | --- |
-| País | República Portuguesa |
-| Regime(s) cobertos | RNH (legado, DL 249/2009) e IFICI (sucessor, EBF art.º 58.º-A) |
-| Moeda | EUR (Euro) |
-| Ano fiscal | Ano civil (1 de janeiro a 31 de dezembro) |
-| Legislação RNH | Decreto-Lei n.º 249/2009, de 23 de setembro (criação); CIRS art.º 16.º n.º 8 a 12 |
-| Legislação IFICI | Estatuto dos Benefícios Fiscais (EBF), art.º 58.º-A; Portaria n.º 187/2024/1 |
-| Lei de encerramento do RNH | Lei n.º 82/2023, de 29 de dezembro (Orçamento do Estado para 2024) |
-| Autoridade fiscal | Autoridade Tributária e Aduaneira (AT) |
-| Portal | Portal das Finanças (https://www.portaldasfinancas.gov.pt) |
-| Prazo de candidatura | Até 31 de março do ano seguinte ao da inscrição como residente fiscal |
-| Duração do estatuto | 10 anos consecutivos (não renovável, não recuperável após interrupção) |
-| Declaração anual | Modelo 3 do IRS, Anexo L (residentes não habituais) |
-| Prazo Modelo 3 | 1 de abril a 30 de junho do ano seguinte (regime geral IRS) |
-| Validado por | Pendente — requer validação por Contabilista Certificado (CC) inscrito na OCC ou advogado em Portugal |
-| Data de validação | Pendente |
-| Versão do skill | 1.0 |
+| Registered as NHR on 1 January 2024 | NHR keeps running until its 10-year period ends ([NHR FAQ 5149](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00309.aspx)) |
+| Met the residence conditions on 31 December 2023 but registered as NHR afterwards (art. 236(3)(b)) | NHR, if registered by 31 March 2024 (the old CIRS art. 16(10) deadline for 2023 residents); runs to the end of the 10th year counted from the year of residence |
+| Became resident in 2024 and meets an art. 236(3)(c) condition | NHR, but only if registered. A registration filed after 31 March 2025 still works, but only from the year it is filed until the end of the 10th year counted from 2024 (FAQ 6010) |
+| Became resident in 2025 or 2026 | NHR is **not** available (FAQ 5153). IFICI if the activity qualifies; otherwise the general rules |
+| Became resident in 2024 or later with a qualifying activity | IFICI (EBF art. 58-A) |
 
-### Quadro comparativo — RNH vs IFICI vs Regime geral IRS
+Not covered: Regressar (CIRS art. 12-A), IRS Jovem (art. 12-B), visas, trusts, the Azores and Madeira regional rules, and disputes against a refusal.
 
-**Quadro comparativo — RNH vs IFICI vs Regime geral IRS**  _(CIRS (todo))_
+## Ask the client first
 
-| Característica | RNH (legado, até 31 dez 2023) | IFICI (a partir de 1 jan 2024) | Regime geral IRS |
+- **When did you become tax resident in Portugal?** Get the first day of presence and the year. Residence follows CIRS art. 16(1): more than 183 days, consecutive or not, in any 12-month period starting or ending in the year, **or** fewer days but a home on any day of that period that suggests an intention to keep and occupy it as a habitual residence. A day of presence is any day, full or partial, that includes an overnight stay ([CIRS art. 16](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs16.aspx)).
+- **Were you tax resident in Portugal at any time in the five years before that year?** If yes, neither NHR nor IFICI is available. Nationality does not matter.
+- **Have you ever been registered as NHR, used IFICI before, or opted for the Regressar regime (art. 12-A)?** Any of these blocks IFICI (EBF art. 58-A(10) and (12)).
+- **What exactly is your work in Portugal, and under what contract?** Employment contract, company-board seat, research grant, or self-employed services. For most IFICI routes a "posto de trabalho" means an employment contract.
+- **Who is the employer or client, and what do they do?** Higher-education or research body, technology and innovation centre, startup certified under Lei 21/2023, company with contractual investment benefits, company using RFAI, exporter with an eligible business code, or a company recognised by AICEP or IAPMEI.
+- **Your qualifications and experience.** Some routes need a doctorate, or a degree or master's plus three years of professional experience.
+- **Registration status.** For NHR: registration year shown on the Portal das Finanças. For IFICI: the date the request was filed and the status the AT shows.
+- **Foreign income, by type and country.** Employment, self-employment, dividends, interest, rent, gains, pensions. Note which paying countries are on Portugal's list of privileged tax regimes.
+- **For NHR pensioners: were you already tax resident in Portugal on 31 March 2020?** This decides whether a foreign pension is exempt or taxed at the NHR pension rate.
+- **For 2024 NHR transitional cases:** which of the art. 236(3)(c) documents do you hold, and on what date was it signed or completed?
+
+## The method, step by step
+
+1. **Confirm residence and the five-year look-back.** Apply CIRS art. 16(1) and (2) for the arrival year. A person meeting the 183-day or habitual-home test becomes resident from the first day of presence, unless they were resident on any day of the previous year ([CIRS art. 16(3)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs16.aspx)). Both regimes require that the person was **not resident in any of the five previous years** ([EBF art. 58-A(1)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/bf_rep/Pages/ebf58a.aspx); old [CIRS art. 16(8)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/ra/Pages/irs16bra_202312.aspx)).
+
+2. **Sort the person into a regime by arrival year**, using the table under "Scope". Resident by 31 December 2023: NHR if registered (art. 236(3)(a) and (b) Lei 82/2023). 2024 arrival: NHR only under art. 236(3)(c) or (d). 2025 or later: IFICI or the general rules. A past NHR beneficiary cannot switch to IFICI or renounce NHR ([NHR FAQ 6011](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00309.aspx); EBF art. 58-A(10)(a)).
+
+3. **For the 2024 NHR transitional group, test art. 236(3)(c) exactly.** The person must become resident by 31 December 2024 **and** declare one of these ([text reproduced under CIRS art. 81](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs81.aspx)):
+
+| Document | Cut-off date |
+| --- | --- |
+| Employment contract or promise, or secondment agreement or promise, for work to be done in Portugal | concluded by 31 December 2023 |
+| Lease or other contract giving use or possession of a property in Portugal | concluded by 10 October 2023 |
+| Reservation contract or promissory contract to acquire a real right over a property in Portugal | concluded by 10 October 2023 |
+| Enrolment of dependants in a school in Portugal | completed by 10 October 2023 |
+| Residence visa or residence permit | valid by 31 December 2023 |
+| Visa or residence-permit procedure (including a request for, or a booked, appointment) | started by 31 December 2023 |
+
+Family-household members of a qualifying person also qualify (art. 236(3)(d)). The lease, property and school dates are **10 October 2023**, not 31 December 2023.
+
+4. **For IFICI, match the activity to one letter of EBF art. 58-A(1)** and to the conditions in Portaria 352/2024/1 (see the activity table below). Check three things: the person's role (employment, board member, research grant, or listed profession), the entity (what it is and who recognises it), and the person's qualifications. A "posto de trabalho" (job) needs an employment contract; see the boundary table for contractors, lecturers and shareholders.
+
+5. **Check the exclusions.** No IFICI after NHR, after an art. 12-A election, or a second time; none for pay for jobs counted under CFI art. 22(2)(c) (EBF art. 58-A(10) to (12)). From 2025, IFICI users cannot use IRS Jovem ([IFICI leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/incentivos_investigacao.pdf)).
+
+6. **Check registration and the deadline.**
+
+- Prerequisite for both: a Portuguese tax number (NIF) and a Portuguese tax address, so that the AT register shows the person as resident for the year. Portaria 352/2024/1 art. 2(1) addresses IFICI requests to "sujeitos passivos registados como residentes". While the register still shows the person as non-resident, the Portal will not accept an NHR request; with a retroactive address change pending, raise it through e-balcão by the 31 March deadline ([NHR FAQ 6007](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00309.aspx)).
+- IFICI: file on the Portal das Finanças (Cidadãos > Serviços > Benefícios Fiscais > Inscrição no IFICI) **by 15 January of the year after the year the person becomes resident** ([Portaria 352/2024/1, art. 2(1)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/legislacao/diplomas_legislativos/Documents/Portaria_352_2024_1.pdf)). If filed late, IFICI applies from the year of filing for the rest of the 10 years (EBF art. 58-A(7)).
+- NHR (2024 transitional group): request on the Portal das Finanças by 31 March 2025. A late request, if granted, applies from the year it is filed until the end of the 10th year counted from 2024 (art. 236(5); [NHR FAQ 6008 and 6010](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00309.aspx)).
+
+7. **Tax Portuguese-source work income.** Under IFICI, net category A (employment) and B (self-employment) income from the qualifying activity may be taxed at the special flat rate; under NHR, the same applies to net A and B income from a listed high-value activity (old CIRS art. 72(10)). Everything else is taxed under the general rules. The person may instead opt to aggregate (englobamento).
+
+8. **Treat foreign income** using the matrix under "Foreign income" below.
+
+9. **Test each year of the 10-year period.** The person must be resident at some point in the year and, for IFICI, must still earn income from a qualifying activity. A new qualifying activity keeps the benefit if it starts within six months after the old one ends (EBF art. 58-A(3) and (4)). Years lost to non-residence are not added on at the end; the person resumes only for the years left (art. 58-A(5); old CIRS art. 16(12)).
+
+10. **File** Modelo 3 with Annexes L and J (see "Filing and payment").
+
+## Rates, deadlines and figures by year
+
+### Rates ([EBF art. 58-A(2)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/bf_rep/Pages/ebf58a.aspx); [CIRS art. 72, wording to December 2023](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/ra/Pages/irs72ra_202312.aspx); [IFICI FAQ 5495](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/pages/faqs-01018.aspx))
+
+| Item | Figure | Years |
+| --- | --- | --- |
+| IFICI special rate on net category A and B income from the qualifying activity | 20% | 2024 onward, for 10 consecutive years from the year of registration as resident; aggregation (englobamento) can be chosen instead |
+| IFICI withholding on qualifying category A or B pay, once the payer is shown proof the request was filed | 20% | 2025 onward. Withholding is only a payment on account; if IFICI is refused, the general rates apply on assessment ([IFICI leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/incentivos_investigacao.pdf)) |
+| IFICI: foreign income of any category paid by an entity in a listed privileged-tax jurisdiction | 35% | 2024 onward (CIRS art. 81(5)); final withholding or autonomous taxation depending on who pays |
+| NHR special rate on net category A and B income from a listed high-value activity | 20% | Whole NHR period (old CIRS art. 72(10), kept by art. 236(3)) |
+| NHR rate on net foreign pensions (category H and the listed similar income) that are not Portuguese-source | 10% | People who became resident after 31 March 2020, and earlier NHRs who opted in (old CIRS art. 72(12); Lei 2/2020 art. 329) |
+| General IRS rates, 2026 table | 12.50% up to 48% | 2026 ([CIRS art. 68](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs68.aspx), wording of Lei 73-A/2025) |
+| Additional solidarity rate on taxable income over EUR 80,000 | 2.5% up to EUR 250,000; 5% above | Unchanged ([CIRS art. 68-A](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs68a.aspx)) |
+| Special rate on capital income and on the net balance of listed gains (general rules, not NHR/IFICI) | 28% | 2026 ([CIRS art. 72(1)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs72.aspx)) |
+
+The 2026 bracket table (CIRS art. 68, 2026 wording) is needed for any comparison with the general rules:
+
+| Taxable income (EUR) | Marginal rate | Average rate on the whole band |
+| --- | --- | --- |
+| up to 8,342 | 12.50% | 12.500% |
+| over 8,342 to 12,587 | 15.70% | 13.579% |
+| over 12,587 to 17,838 | 21.20% | 15.823% |
+| over 17,838 to 23,089 | 24.10% | 17.705% |
+| over 23,089 to 29,397 | 31.10% | 20.579% |
+| over 29,397 to 43,090 | 34.90% | 25.130% |
+| over 43,090 to 46,566 | 43.10% | 26.472% |
+| over 46,566 to 86,634 | 44.60% | 34.856% |
+| over 86,634 | 48.00% | n/a |
+
+Method (art. 68(2)): the part of income up to the top of the highest full band is taxed at that band's average rate; the excess is taxed at the next band's marginal rate.
+
+### Deadlines by arrival year ([IFICI leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/incentivos_investigacao.pdf); [IFICI FAQ 5858](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/pages/faqs-01018.aspx); [NHR FAQ](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00309.aspx))
+
+| Became resident in | Regime | File the request by | Entities report to the AT and companies confirm by | AT shows status by |
+| --- | --- | --- | --- | --- |
+| 2023 or earlier | NHR | 31 March of the following year (old CIRS art. 16(10)) | n/a | n/a |
+| 2024 | NHR (art. 236 group) | 31 March 2025; later requests start from the year filed | n/a | n/a |
+| 2024 | IFICI (special dates, Despacho 24/2025-XXIV) | 31 March 2025 | 30 April 2025 | 15 May 2025 |
+| 2025 | IFICI | 15 January 2026 | 15 February 2026 | 31 March 2026 |
+| 2026 | IFICI | 15 January 2027 | 15 February 2027 (entities); 15 March 2027 (company confirmation for letter (c)) | 31 March 2027 |
+
+For letter (c), the company confirms the conditions on its Portal area by 15 March (Portaria art. 4(2)). The 2026-arrival row applies the general rules (Portaria art. 2(1), 4(2), 6(1), 6(3)); the AT's FAQ gave 15 February 2026 for both steps for 2025 arrivals, so **check** the Portal for the 2027 dates.
+
+A person who became resident in 2024 and applied for IFICI **before** the Portaria was published (23 December 2024) keeps the Portaria 12/2010 list of high-value activities for their whole IFICI period, as long as they keep doing that activity (IFICI FAQ 5859; EBF art. 58-A(8)).
+
+### IFICI activities: EBF art. 58-A(1) and Portaria 352/2024/1 ([IFICI leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/incentivos_investigacao.pdf); [IFICI FAQ 5498 to 5512](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/pages/faqs-01018.aspx))
+
+| Letter | Who qualifies | Entity where the work is done | Reviews the activity |
 | --- | --- | --- | --- |
-| Base legal | DL 249/2009; CIRS art.º 16.º n.º 8-12 | EBF art.º 58.º-A; Portaria 187/2024/1 | CIRS (todo) |
-| Aberto a novos pedidos? | **Não — fechado desde 1 jan 2024** (Lei 82/2023). Pedidos transitórios admitidos durante 2024 sob condições específicas. | Sim, para pedidos a partir de 1 jan 2024 | Sempre aplicável por defeito |
-| Duração | 10 anos | 10 anos | Sem limite |
-| Taxa sobre rendimentos das categorias A e B em AEVA exercidas em Portugal | 20% taxa fixa | 20% taxa fixa | Tabela progressiva 13% — 48% (escalões IRS 2025) + sobretaxa de solidariedade 2,5% / 5% |
-| Lista de Atividades de Elevado Valor Acrescentado (AEVA) | Despacho n.º 230/2019, de 4 de julho (lista ampla — engenheiros, médicos, gestores, profissionais TIC, etc.) | Portaria n.º 187/2024/1 (lista restrita — investigação científica, ensino superior, indústrias de elevada qualificação) | Não aplicável |
-| Isenção de rendimentos de fonte estrangeira (cat. E, F, G, H) | Ampla — isenção se sujeitos a tributação no Estado da fonte ao abrigo de CDT ou Modelo OCDE | Mais restrita — isenção para certos tipos (categoria B AEVA, E, F, G) se sujeitos a tributação no Estado da fonte; pensões e algumas mais-valias **excluídas** | Tributação mundial — englobamento ou taxa especial (28% capital), com crédito por dupla tributação internacional (art.º 81.º CIRS) |
-| Pensões estrangeiras (categoria H) | **Isentas até 31 mar 2020**; tributadas a **10% taxa fixa** para pedidos a partir de 1 abr 2020 (alteração do OE 2020) | **Não cobertas** — pensões estrangeiras tributadas pelo regime geral (englobamento progressivo) | Englobamento, tabela progressiva IRS |
-| Profissão / atividade requerida | Não obrigatório exercer AEVA (taxa 20% só se aplicava a quem exercesse; isenção de rendimentos estrangeiros independente) | **Obrigatório** — o requerente tem de exercer efetivamente uma atividade qualificada constante da Portaria | Não aplicável |
-| Aplicação | Portal das Finanças, até 31 mar do ano N+1 | Portal das Finanças + entidades certificadoras (FCT, AICEP, IAPMEI, ANI, conforme atividade) | Inscrição como residente fiscal apenas |
-| Declaração anual | Modelo 3 + Anexo L | Modelo 3 + Anexo L (com indicação do regime IFICI) | Modelo 3, anexos consoante rendimentos |
+| (a) | Higher-education teaching and scientific research, including scientific employment; jobs directly involved in research or innovation; board members | Higher-education institutions and bodies in the national science and technology system; technology and innovation centres (DL 126-B/2021) | FCT |
+| (b) | Qualified jobs (at least EQF/ISCED level 5) and board members | Entities with contractual investment benefits (CFI chapter II) | AICEP |
+| (c)(i) | Highly qualified professions in Portaria Annex I, held by someone with a doctorate, or a degree or master's plus three years' proven experience; also directors, managers and general managers | Companies with relevant investment that benefit, or benefited in the start year or the five prior years, from RFAI (CFI chapter III) | AT |
+| (c)(ii) | Same professions and qualifications | Industrial and service companies whose main business code (CAE) is in Portaria Annex II and that export at least 50% of turnover in the start year or either of the two prior years (EU sales count, FAQ 5512) | AT |
+| (d) | Qualified jobs listed in IAPMEI Notice 4812/2025/2 and AICEP Notice 5309/2025/2 (at least level 5), and board members | Companies in economic activities those agencies recognise as relevant to the economy | AICEP if the company's consolidated annual turnover in the prior year was EUR 75 million or more, or the project is PIN or PII; otherwise IAPMEI (FAQ 5525) |
+| (e) | R&D staff whose costs qualify for SIFIDE (CFI art. 37(1)(b)), at least national qualifications level 4, directly involved in R&D | Companies using SIFIDE | ANI |
+| (f) | Jobs directly involved in research or innovation, and board members | Startups certified under Lei 21/2023 | Startup Portugal |
+| (g) | Jobs or other activities of residents of the Azores and Madeira | To be defined by regional decree | Regional governments |
 
-### Defaults conservadores — instantâneo
+Annex I professions (CPP codes): 112 general and executive directors; 12 administrative and commercial directors; 13 production and specialised-services directors (except 1349); 21 physical, mathematical and engineering specialists (except 216); 2163.1 industrial product or equipment designer; 221 doctors; 231 university and higher-education teachers; 25 ICT specialists (FAQ 5504). This list is narrower than the NHR list: dentists, authors and journalists, performing artists, and intermediate-level technicians are **not** in Annex I. The letter (d) list is wider in places: it adds 14 hospitality, retail and other services directors, 241 finance and accounting specialists (except 2411), 2654 film, stage, TV and radio directors and producers, and 31 intermediate science and engineering technicians. It applies only to employees or board members of a recognised company (FAQ 5508).
 
-**Defaults conservadores — instantâneo**
+The AT reviews residence and the other legal conditions for every letter (Portaria art. 3(1)(b)).
 
-| Ambiguidade | Default |
-| --- | --- |
-| RNH ou IFICI aplicável? | Verificar data de inscrição como residente: ≤ 31 dez 2023 (com pedido até 31 mar 2024) → RNH; ≥ 1 jan 2024 → IFICI ou regime geral |
-| Atividade qualificada como AEVA — dúvida na classificação CAE / código de profissão | Não aplicar taxa de 20% sem confirmação documental; tributar no regime geral e sinalizar para revisão |
-| Pensão estrangeira sob RNH com pedido entre 1 abr 2020 e 31 dez 2023 | Tributar a 10% taxa fixa (não isenta) |
-| Pensão estrangeira sob IFICI | Não isenta — englobar no regime geral |
-| Isenção de dividendo / juro / royalty estrangeiro sob RNH/IFICI | Verificar CDT aplicável; se a CDT atribui poder de tributação ao Estado da fonte (mesmo que tributação efetiva seja nula), aplicar isenção; sem CDT, verificar Modelo OCDE |
-| Estatuto interrompido por perda de residência fiscal | Anos perdidos **não** se recuperam ao reentrar |
-| Pedido apresentado após 31 mar do ano N+1 | A AT pode indeferir; o contribuinte pode reclamar mas o default é regime geral |
-| Atividade em IFICI sem certificação da entidade competente (FCT/AICEP/IAPMEI/ANI) | Indeferir o benefício de 20%; tributar no regime geral |
+### NHR high-value activities ([NHR leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/IRS_RNH_PT.pdf))
 
-## Secção 2 — Entradas Obrigatórias e Catálogo de Recusas
+For activities carried on up to 31 December 2019, the list is the original table in Portaria 12/2010 (codes 101 to 802, for example architects, engineers, doctors, dentists, university teachers, IT programmers and senior company executives). For activities carried on from 1 January 2020, it is the CPP-based table in Portaria 12/2010 as amended by **Portaria 230/2019 of 23 July** (the legacy text called this "Despacho 230/2019 of 4 July", which is wrong). The 2020 table covers codes 112, 12, 13, 14, 21, 221, 2261, 231, 25, 264, 265, 31, 35, 61, 62, 7 and 8, plus investors, directors and managers of companies with CFI investment contracts. The workers need at least EQF level 4 (or the ISCED equivalent) or five years of proven professional experience. People already registered, or with a request pending, on 1 January 2020, and people who applied by 31 March 2020 for 2019, keep the old table but may choose the new one (Portaria 230/2019, art. 5).
 
-### Entradas obrigatórias
+## Foreign income ([CIRS art. 81, current](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs81.aspx); [CIRS art. 81, wording to December 2023](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/ra/Pages/irs81ra_202312.aspx))
 
-**Mínimo viável** — confirmação de (a) residência fiscal em Portugal no ano em causa (permanência > 183 dias ou centro de interesses vitais nos termos do art.º 16.º n.º 1 do CIRS), (b) inexistência de residência fiscal em Portugal nos 5 anos anteriores (requisito tanto do RNH como do IFICI), (c) data de inscrição como residente fiscal junto da AT, (d) NIF português, (e) morada fiscal portuguesa válida, e (f) inscrição como RNH ou IFICI já efetuada (ou a efetuar) no Portal das Finanças.
+First decide whether the income is foreign at all. Employment income is Portuguese-source if the work is **done in Portugal**, or if the pay is owed by an entity resident in Portugal or by a Portuguese permanent establishment ([CIRS art. 18(1)(a)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs18.aspx)). A remote worker living in Lisbon and paid by a US employer therefore has Portuguese-source employment income. It is not exempt as foreign income under either regime. It gets the flat rate only if the job itself qualifies.
 
-**Recomendado** — passaporte / documento de identificação, comprovativo da residência anterior (certificado de residência fiscal do país de saída), contrato de arrendamento ou escritura de aquisição de imóvel em Portugal, contrato de trabalho ou comprovativo da atividade independente, certificado da atividade qualificada (para IFICI: emitido por FCT, AICEP, IAPMEI ou ANI consoante a tipologia), inscrição em ordem profissional quando aplicável (Ordem dos Médicos, Ordem dos Engenheiros, etc.), comprovativos dos rendimentos de fonte estrangeira (declarações fiscais do país da fonte, certificados de retenção, dividendos pagos, pensões), CDT aplicável ao país da fonte, e Modelo 3 do ano anterior (se já residente).
-
-### Catálogo de recusas
-
-- **R-PT-NHR-1** — Pedido de RNH com data de inscrição como residente posterior a 31 dez 2023 (fora das condições transitórias da Lei 82/2023)  _(RNH fechado a novos pedidos pela Lei 82/2023; encaminhar para IFICI ou regime geral)_
-- **R-PT-NHR-2** — Contribuinte com residência fiscal em Portugal em qualquer dos 5 anos anteriores  _(Requisito de não-residência prévia falha — nem RNH nem IFICI aplicáveis)_
-- **R-PT-NHR-3** — Recuperação do estatuto após interrupção (saída e regresso)  _(RNH/IFICI não permite "recomeço" — anos perdidos não se recuperam)_
-- **R-PT-NHR-4** — Atividade qualificada como AEVA sob IFICI sem certificação da entidade competente  _(Sem certificação da FCT/AICEP/IAPMEI/ANI o benefício de 20% é indeferido)_
-- **R-PT-NHR-5** — Pedido de RNH apresentado após o prazo legal (31 mar do ano N+1) sem reclamação tempestiva  _(Caducidade do direito ao pedido)_
-- **R-PT-NHR-6** — Pensão estrangeira sob RNH com inscrição a partir de 1 abr 2020 a ser tratada como isenta  _(OE 2020 alterou para 10% taxa fixa — não isenta)_
-- **R-PT-NHR-7** — Aplicação simultânea de RNH e IFICI  _(Regimes mutuamente exclusivos)_
-- **R-PT-NHR-8** — Pedido de classificação como AEVA para atividade não constante das listas oficiais (Despacho 230/2019 ou Portaria 187/2024)  _(Não enquadrável; tributar no regime geral)_
-- **R-PT-NHR-9** — Tributação no Estado da fonte invocada para isenção sem documento de suporte (declaração fiscal estrangeira, certificado de retenção)  _(Sem prova, presumir não tributação no estrangeiro e indeferir isenção)_
-- **R-PT-NHR-10** — Mais-valias de criptoativos detidos < 365 dias sob RNH/IFICI  _(Regime cripto (Lei 24-D/2022) tributa a 28% — RNH/IFICI não alteram esta regra para detenções curtas)_
-- **R-PT-NHR-11** — Contribuinte de nacionalidade portuguesa que regressa a Portugal e pede RNH/IFICI sem cumprir o requisito dos 5 anos  _(Nacionalidade portuguesa não isenta do requisito de não-residência prévia; verificar registo histórico na AT)_
-- **R-PT-NHR-12** — Pedido de aplicação retroativa a anos anteriores ao da inscrição como residente  _(Não permitido — o regime aplica-se a partir do ano da inscrição como residente fiscal)_
-
-### Recusas fora de âmbito
-
-Este skill **não cobre**: regime fiscal das stock options para trabalhadores qualificados (CIRS art.º 43.º-C e regimes especiais), regime do Programa Regressar (Lei 71/2018), Golden Visa / Autorização de Residência para Investimento (matéria de imigração, não fiscal), tributação de trusts estrangeiros sob RNH/IFICI (matéria complexa que requer parecer específico), pedidos de informação vinculativa à AT, contencioso fiscal sobre indeferimento de RNH/IFICI, e fiscalidade dos Açores e Madeira (regiões autónomas com taxas próprias — coordenar com skill regional).
-
-## Secção 3 — RNH (Regime Antigo) — Fechado a Novos Pedidos Desde 1 jan 2024
-
-### 3.1 Base legal e história
-
-- **Criação do RNH** — O regime do Residente Não Habitual (RNH) foi criado pelo Decreto-Lei n.º 249/2009, de 23 de setembro, no contexto do Programa de Apoio à Internacionalização da Economia Portuguesa. As regras de fundo foram integradas no Código do IRS (CIRS) nos n.os 8 a 12 do art.º 16.º.  _(Decreto-Lei n.º 249/2009, de 23 de setembro; CIRS art.º 16.º n.º 8-12)_
-- **Alteração — Lei 2/2020** — Lei n.º 2/2020, de 31 de março (OE 2020) — introduziu a taxa de 10% sobre pensões estrangeiras (substituindo a isenção total), com efeitos para inscrições a partir de 1 de abril de 2020.  _(Lei n.º 2/2020, de 31 de março)_
-- **Alteração — Lei 82/2023** — Lei n.º 82/2023, de 29 de dezembro (OE 2024) — encerrou o regime a novos pedidos com efeitos a 1 de janeiro de 2024, mantendo o regime transitório (art.º 236.º da Lei 82/2023) para quem (i) já fosse residente em 2023 ou (ii) tivesse manifestado intenção de mudança antes de 31 de dezembro de 2023 com documentação comprovativa (contrato de trabalho, contrato de arrendamento, matrícula em estabelecimento de ensino, visto de residência).  _(Lei n.º 82/2023, de 29 de dezembro, art.º 236.º)_
-
-### 3.2 Requisitos de elegibilidade
-
-- **Requisito 1 — Residência fiscal** — Tornar-se residente fiscal em Portugal no ano de inscrição — preencher um dos critérios do art.º 16.º n.º 1 do CIRS: (a) permanência em território português por mais de 183 dias, seguidos ou interpolados, em qualquer período de 12 meses com início ou termo no ano em causa, ou (b) ter em Portugal, num qualquer dia do período mencionado, habitação em condições que façam supor a intenção atual de a manter e ocupar como residência habitual.  _(CIRS art.º 16.º n.º 1)_
-- **Requisito 2 — Não residência anterior** — Não ter sido residente fiscal em Portugal nos 5 anos anteriores — verificado por cruzamento com o cadastro histórico da AT.
-- **Requisito 3 — Prazo do pedido** — Apresentar o pedido até 31 de março do ano seguinte ao da inscrição como residente — através do Portal das Finanças.
-
-### 3.3 Duração e perda
-
-- **Duração** — Duração: 10 anos consecutivos, contados a partir do ano da inscrição como residente fiscal, não renovável.
-- **Perda do estatuto** — Perda do estatuto ocorre se o contribuinte deixar de ser residente fiscal em Portugal em qualquer ano dos 10. Os anos perdidos não se recuperam — se reentrar como residente, retoma apenas o tempo remanescente do período original (caso ainda não tenha decorrido), ou nada (se já decorridos 10 anos desde a inscrição original).
-
-### 3.4 Benefícios fiscais (resumo)
-
-- **Categorias A e B em Portugal em AEVA** — 20% percent (Taxa especial; opção pelo englobamento permitida (art.º 72.º n.º 13), normalmente desvantajosa para rendimentos altos)  _(art.º 72.º n.º 10 do CIRS)_
-- **Lista AEVA aplicável ao RNH** — Despacho n.º 230/2019, de 4 de julho (substituiu a Portaria 12/2010), com lista ampla de profissões (~50 códigos), incluindo arquitetos, engenheiros, médicos, dentistas, professores universitários, profissionais de TIC, gestores e administradores, investidores, etc.  _(Despacho n.º 230/2019, de 4 de julho)_
-- **Categoria A estrangeiro** — Isentos em Portugal se (i) tributados no Estado da fonte ao abrigo de CDT, ou (ii) na ausência de CDT, tributados no Estado da fonte e não considerados obtidos em Portugal.  _(art.º 81.º n.º 4 do CIRS)_
-- **Categoria B estrangeiro em AEVA** — Isentos se sujeitos a tributação no Estado da fonte ao abrigo de CDT ou Modelo OCDE, e desde que não provenientes de territórios de tributação privilegiada (lista da Portaria 150/2004 e alterações).  _(Portaria 150/2004)_
-- **Categorias E, F e G estrangeiro** — Isentos se puderem ser tributados no Estado da fonte ao abrigo de CDT, ou na ausência de CDT, ao abrigo do Modelo OCDE, e não provierem de paraíso fiscal.
-- **Pensões estrangeiras (categoria H) — inscrição até 31 mar 2020** — Isenção percent (sujeito a verificação dos requisitos de tributação no Estado da fonte ou de não-residência da fonte em Portugal)
-- **Pensões estrangeiras (categoria H) — inscrição a partir de 1 abr 2020** — 10% percent (taxa fixa)  _(art.º 72.º n.º 12 do CIRS, redação da Lei 2/2020)_
-
-### 3.5 Regime transitório da Lei 82/2023
-
-- **Critérios do regime transitório** — O art.º 236.º da Lei 82/2023 manteve a possibilidade de pedido de RNH em 2024 para pessoas que, à data de 31 de dezembro de 2023, já cumpriam um dos seguintes critérios (não exaustivo, verificar texto legal): Contrato de trabalho ou contrato de prestação de serviços em vigor com entidade portuguesa, ou contrato em vigor cujas funções se realizem em território nacional; Contrato de arrendamento ou outro contrato relativo ao uso ou posse de imóvel em Portugal; Reserva ou contrato-promessa de aquisição de direito real sobre imóvel em Portugal; Matrícula ou inscrição para dependentes em estabelecimento de ensino domiciliado em território português; Visto de residência ou autorização de residência válidos; Procedimento iniciado até 31 de dezembro de 2023 de concessão de visto ou autorização de residência. Para estes casos, o pedido de RNH podia ser apresentado até 31 de março de 2025 (ano seguinte ao da inscrição como residente, presumindo inscrição em 2024). **TBC — verificar prazos exatos no texto do art.º 236.º conforme alterações posteriores.**  _(art.º 236.º da Lei 82/2023)_
-
-## Secção 4 — IFICI (Incentivo Fiscal à Investigação Científica e Inovação) — Substituto
-
-### 4.1 Base legal
-
-- **Base legal IFICI** — Estatuto dos Benefícios Fiscais (EBF), art.º 58.º-A — aditado pela Lei n.º 82/2023, de 29 de dezembro. Portaria n.º 187/2024/1, de 30 de julho — define a lista de atividades qualificadas, as entidades certificadoras e os procedimentos de candidatura. Em vigor para pedidos de inscrição como residente a partir de 1 de janeiro de 2024.  _(EBF art.º 58.º-A; Portaria n.º 187/2024/1, de 30 de julho)_
-
-### 4.2 Requisitos de elegibilidade
-
-- **Requisitos IFICI** — 1. Tornar-se residente fiscal em Portugal (mesmo critério do art.º 16.º n.º 1 CIRS). 2. Não ter sido residente fiscal em Portugal nos 5 anos anteriores. 3. Exercer efetivamente uma das atividades qualificadas constantes da Portaria n.º 187/2024, mediante certificação por uma das entidades competentes. 4. Não ter beneficiado anteriormente do RNH nem do regime do art.º 12.º-A do CIRS (regime do "ex-residente" — Programa Regressar).  _(CIRS art.º 16.º n.º 1; Portaria n.º 187/2024)_
-
-### 4.3 Atividades qualificadas (Portaria 187/2024)
-
-**Atividades qualificadas (Portaria 187/2024)**  _(Portaria n.º 187/2024)_
-
-| Categoria | Atividade | Entidade certificadora |
+| Income obtained abroad | IFICI (CIRS art. 81(4) and (5)) | NHR (old art. 81(4), (5) and (7); old art. 72(12)) |
 | --- | --- | --- |
-| 1 | Docência no ensino superior e investigação científica (instituições do SCTN — Sistema Científico e Tecnológico Nacional) | Fundação para a Ciência e a Tecnologia (FCT) |
-| 2 | Postos de trabalho e membros de órgãos sociais em entidades certificadas como centros de tecnologia e inovação | Agência Nacional de Inovação (ANI) |
-| 3 | Profissões qualificadas e membros de órgãos sociais em entidades beneficiárias do regime fiscal de apoio ao investimento (RFAI) ou consideradas relevantes para a economia nacional | AICEP — Agência para o Investimento e Comércio Externo de Portugal, ou IAPMEI — Agência para a Competitividade e Inovação |
-| 4 | Investigação e desenvolvimento de pessoal cujos custos sejam elegíveis para efeitos do SIFIDE (Sistema de Incentivos Fiscais em Investigação e Desenvolvimento Empresarial) | ANI |
-| 5 | Postos de trabalho e membros de órgãos sociais em entidades certificadas como startups nos termos da Lei n.º 21/2023, de 25 de maio | Startup Portugal (mediante IAPMEI) |
+| A: employment | Exempt, with progression | Exempt if **taxed** in the other state under a treaty, or, with no treaty, taxed there and not Portuguese-source under art. 18(1) |
+| B: self-employment | Exempt, with progression | Exempt only for high-value services of a scientific, artistic or technical nature, intellectual or industrial property, or know-how, if it **may be taxed** in the other state under a treaty (or, with no treaty, under the OECD Model, if the state is not blacklisted and the income is not Portuguese-source under art. 18) |
+| E: dividends, interest, other capital income | Exempt, with progression | Exempt if it **may be taxed** in the other state under the treaty; with no treaty, under the OECD Model as read with Portugal's reservations, if the state is not blacklisted and the income is not Portuguese-source |
+| F: rental income | Exempt, with progression | Same test as E |
+| G: gains | Exempt, with progression | Same test as E |
+| H: pensions | **Not exempt**. General rules (aggregation, treaty credit) | Kept the pre-2020 rules under Lei 2/2020 art. 329(2) (registered as NHR, or with a request pending, when that law took effect, or resident then and applied by 31 March 2020 for 2019 or 31 March 2021 for 2020; see the note below): exempt under the pre-2020 wording, unless the person opted into the 10% rate. Everyone else, including people resident after 31 March 2020: 10% on the net pension, if not Portuguese-source and only on the part that did not create a deduction under art. 25(2). Aggregation can be chosen instead (old art. 72(13)) |
+| Any category paid by an entity in a listed privileged-tax jurisdiction | 35% (art. 81(5); IFICI FAQ 5500 gives UAE dividends as an example) | Not exempt under the no-treaty OECD Model route (old art. 81(5)(b)) for B, E, F and G. Where Portugal has a treaty with that state, the treaty route in old art. 81(5)(a) applies and has **no** blacklist condition, so the income can still be exempt if the treaty lets that state tax it |
 
-A lista é claramente mais restrita do que a do Despacho 230/2019 — exclui profissões liberais genéricas (médicos, dentistas em clínica privada, arquitetos a título individual), administradores não vinculados às categorias acima, e gestores de fundos não-elegíveis.
+Notes on the matrix:
 
-### 4.4 Benefícios fiscais (IFICI)
+- **The blacklist.** CIRS art. 81(5) points to the list of privileged-tax jurisdictions approved by portaria of the Finance Minister. That list is Portaria 150/2004 as amended; **check** the current version before relying on it, because the AT pages used here do not reproduce it.
 
-- **Categorias A e B em Portugal em AEVA** — 20% percent (Taxa especial; opção pelo englobamento permitida (art.º 72.º n.º 13), normalmente desvantajosa para rendimentos altos)  _(art.º 72.º n.º 10 do CIRS)_
-- **Rendimentos de fonte estrangeira IFICI** — Categorias A, B (na atividade qualificada), E, F e G: isenção se puderem ser tributados no Estado da fonte ao abrigo de CDT, ou na ausência de CDT, ao abrigo do Modelo OCDE, e não provierem de paraíso fiscal. Pensões estrangeiras (categoria H): NÃO isentas — tributação pelo regime geral (englobamento progressivo). Mais-valias mobiliárias de paraísos fiscais: não cobertas pela isenção.
+- **"Exempt with progression"** means the exempt income is added in only to find the rate on the person's other aggregated income (art. 81(4) current; old art. 81(7)). The flat-rate and special-rate items that old art. 81(7) lists are left out of that rate calculation.
+- **NHR credit option.** An NHR may choose the foreign tax credit method instead of exemption. The income is then aggregated and taxed, except items that keep their special rates ([NHR leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/IRS_RNH_PT.pdf); old art. 81(8)).
+- **"May be taxed" versus "taxed".** For NHR category A the test is actual taxation in the other state. For B, E, F and G, it is enough that the treaty allows that state to tax. Where a treaty gives the residence state sole taxing rights (commonly gains on shares, and royalties under the OECD Model), the NHR exemption is not met; the income is taxed in Portugal under the general rules (for example 28% on the net balance of listed gains). Read the actual treaty; do not assume the OECD Model. ([CIRS art. 72](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs72.aspx))
+- **Pre-2020 pension exemption** ([art. 81 wording to March 2020](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/ra/Pages/irs81ra_202003.aspx)): a foreign pension was exempt, as far as it had not created a deduction under art. 25(2), if it was taxed in the other state under a treaty, or if it was not Portuguese-source under art. 18(1). Lei 2/2020 art. 329 keeps this for people registered as NHR, or with a request pending, when that law came into force, and for people resident then who applied by 31 March 2020 (for 2019) or 31 March 2021 (for 2020). They could opt into the 10% rate in their 2020 return ([Lei 2/2020 art. 329](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/artigo329_oe2020.aspx)).
+- **Crypto.** Gains on crypto assets held for 365 days or more are excluded from IRS under the general rules ([CIRS art. 10](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs10.aspx)); neither regime changes this. For shorter holdings, decide the source before applying any exemption.
+- **Foreign tax credit (general rules).** The credit is the lower of the foreign tax paid and the share of Portuguese tax on that income. With a treaty it cannot exceed the tax the treaty allows. Unused credit can be carried forward five years (CIRS art. 81(1) to (3)).
 
-### 4.5 Duração
+## Boundary and exception table
 
-- **Duração IFICI** — 10 anos consecutivos, contados a partir do ano da inscrição como residente fiscal. Não renovável; perda por interrupção da residência segue as regras do RNH legado.
-
-### 4.6 Procedimento de candidatura ao IFICI
-
-- **Procedimento de candidatura ao IFICI** — 1. Inscrição como residente fiscal em Portugal no Portal das Finanças (obtenção do NIF + alteração de morada). 2. Obtenção da certificação da atividade qualificada junto da entidade competente (FCT, ANI, AICEP, IAPMEI, ou Startup Portugal). Esta certificação deve ser obtida até 15 de janeiro do ano seguinte ao da inscrição como residente. 3. Submissão do pedido de inscrição como beneficiário do IFICI no Portal das Finanças — até 15 de janeiro do ano seguinte ao da inscrição como residente (prazo da Portaria 187/2024). **TBC — confirmar se o prazo se mantém em 31 de março após alterações regulamentares.** 4. A entidade certificadora comunica a certificação à AT até 15 de fevereiro do ano seguinte. 5. A AT confirma a inscrição e o estatuto produz efeitos no ano da inscrição como residente.  _(Portaria n.º 187/2024)_
-
-## Secção 5 — Taxa Fixa 20% — Atividades de Elevado Valor Acrescentado (AEVA)
-
-### 5.1 Princípio
-
-- **Taxa especial AEVA** — 20% percent (Aplicável a rendimentos das categorias A e B auferidos em Portugal no exercício de uma AEVA, em vez da tabela progressiva de IRS (que para 2025 atinge 48% no escalão mais alto))
-
-### 5.2 Lista AEVA aplicável ao RNH — Despacho n.º 230/2019
-
-**Lista AEVA aplicável ao RNH — Despacho n.º 230/2019**  _(Despacho n.º 230/2019, de 4 de julho)_
-
-| Grupo CPP | Exemplos de profissões |
-| --- | --- |
-| 112 | Diretores gerais e gestores executivos |
-| 12 | Diretores de serviços administrativos e comerciais |
-| 13 | Diretores de produção e de serviços especializados |
-| 21 | Especialistas em ciências físicas, matemáticas, engenharias e técnicas afins (engenheiros civis, mecânicos, eletrotécnicos, químicos, etc.) |
-| 221 | Médicos |
-| 2261 | Dentistas e estomatologistas |
-| 231 | Professores do ensino universitário |
-| 25 | Especialistas em tecnologias da informação e comunicação (programadores, analistas de sistemas, web designers, administradores de bases de dados, etc.) |
-| 264 | Autores, jornalistas e linguistas |
-| 265 | Artistas criativos e das artes do espetáculo (com restrições) |
-| 31 | Técnicos e profissões de nível intermédio das ciências e engenharia |
-
-A lista completa contém ~50 códigos. Profissões fora da lista (assistentes administrativos, vendedores, condutores, etc.) não beneficiam da taxa de 20%.
-
-### 5.3 Lista AEVA aplicável ao IFICI — Portaria n.º 187/2024
-
-- **Exclusões relevantes face ao RNH** — Mais restrita — apenas as 5 categorias listadas na Secção 4.3. Exemplos de exclusões relevantes face ao RNH: Médico em clínica privada por conta própria (sem vínculo a entidade certificada): excluído do IFICI. Dentista em consultório próprio: excluído. Arquiteto a título individual sem vínculo a entidade certificada: excluído. Programador freelancer sem vínculo a startup certificada ou entidade RFAI: excluído do IFICI mas pode ter beneficiado do RNH.  _(Portaria n.º 187/2024)_
-
-### 5.4 Operacionalização
-
-- **Operacionalização** — O contribuinte declara o rendimento no Anexo L do Modelo 3, indicando o código CPP da atividade. A AT cruza com a inscrição do contribuinte como RNH/IFICI e aplica a taxa de 20%. Caso a atividade declarada não conste da lista AEVA aplicável, o rendimento é tributado às taxas progressivas gerais. A taxa de 20% não inclui sobretaxa de solidariedade (art.º 68.º-A CIRS, que se aplica apenas ao englobamento).  _(art.º 68.º-A CIRS)_
-
-### 5.5 Quadro de receção (não recepção — ortografia post-1990)
-
-O termo correto em português europeu é "receção" (não "recepção"), conforme Acordo Ortográfico de 1990. Da mesma forma, "facto" (não "fato"), "atividade" (não "actividade"), "ótimo" (não "óptimo"), "adoção" (não "adopção").
-
-## Secção 6 — Isenção de Rendimentos de Fonte Estrangeira — Matriz por Tipo + País
-
-### 6.1 Princípio geral
-
-- **Princípio geral da isenção** — Tanto o RNH legado como o IFICI atribuem isenção (ou tributação reduzida) a certos rendimentos de fonte estrangeira, desde que estes possam ser tributados no Estado da fonte ao abrigo da Convenção para Evitar a Dupla Tributação (CDT) aplicável, ou na ausência de CDT, ao abrigo do Modelo de Convenção Fiscal da OCDE, e desde que o Estado da fonte não conste da lista de paraísos fiscais (Portaria n.º 150/2004 e alterações). Note-se que o critério é "poder ser tributado" e não "ser efetivamente tributado" — basta que a CDT atribua o poder de tributação ao Estado da fonte (mesmo que a taxa efetiva nesse Estado seja zero por isenção interna). Esta interpretação tem sido confirmada pela jurisprudência arbitral (CAAD) em diversos processos.  _(Portaria n.º 150/2004)_
-
-### 6.2 Matriz por tipo de rendimento — RNH (legado)
-
-**Matriz por tipo de rendimento — RNH (legado)**
-
-| Categoria | Tipo de rendimento | Tratamento sob RNH |
+| Situation | Rule | Source |
 | --- | --- | --- |
-| A | Salários estrangeiros | Isentos se tributados no Estado da fonte (CDT) ou se não considerados obtidos em Portugal |
-| B | Honorários profissionais estrangeiros em AEVA | Isentos se sujeitos a tributação no Estado da fonte (CDT/OCDE) e não de paraíso fiscal |
-| E | Dividendos estrangeiros | Isentos se a CDT atribuir poder de tributação ao Estado da fonte e este não for paraíso fiscal |
-| E | Juros estrangeiros | Isentos sob condições análogas aos dividendos |
-| E | Royalties estrangeiros | Isentos sob condições análogas |
-| F | Rendimentos prediais estrangeiros | Isentos se tributáveis no Estado da fonte (regra geral CDT/OCDE — Estado da localização do imóvel tem poder de tributação) |
-| G | Mais-valias mobiliárias estrangeiras | Isentas em geral, **exceto** mais-valias de partes de capital de sociedades em paraíso fiscal e algumas exceções específicas |
-| G | Mais-valias imobiliárias estrangeiras | Isentas (regra CDT — Estado da localização tem poder de tributação) |
-| H | Pensões estrangeiras (inscrição ≤ 31 mar 2020) | Isentas se tributadas no Estado da fonte ou se não consideradas obtidas em Portugal |
-| H | Pensões estrangeiras (inscrição ≥ 1 abr 2020) | **10% taxa fixa** (não isentas) |
-
-### 6.3 Matriz por tipo de rendimento — IFICI
-
-**Matriz por tipo de rendimento — IFICI**
-
-| Categoria | Tipo de rendimento | Tratamento sob IFICI |
-| --- | --- | --- |
-| A | Salários estrangeiros (na atividade qualificada) | Isentos sob condições análogas ao RNH |
-| B | Honorários estrangeiros (na atividade qualificada) | Isentos sob condições análogas |
-| E | Dividendos, juros, royalties estrangeiros | Isentos se tributáveis no Estado da fonte (CDT/OCDE) e não de paraíso fiscal |
-| F | Rendimentos prediais estrangeiros | Isentos |
-| G | Mais-valias mobiliárias estrangeiras | Isentas, com as mesmas exceções do RNH |
-| G | Mais-valias imobiliárias estrangeiras | Isentas |
-| H | **Pensões estrangeiras** | **NÃO isentas — tributação pelo regime geral (englobamento progressivo IRS)** |
-
-### 6.4 Países críticos — observações sobre CDT
-
-**Países críticos — observações sobre CDT**  _(Portugal tem cerca de 80 CDT em vigor)_
-
-| País | Observação |
-| --- | --- |
-| Estados Unidos | CDT em vigor (1994). Pensões privadas (401(k), IRA) — tributação partilhada com regra residual; sob RNH legado normalmente isentas (pré 2020) ou tributadas a 10% (pós-abr 2020). Social Security tributada apenas no Estado pagador (EUA) sob a CDT. |
-| Reino Unido | CDT em vigor. Pensões privadas (SIPP) abrangidas pelo art.º 17 da CDT. Pós-Brexit a aplicação manteve-se. |
-| França | CDT em vigor. **Particularmente sensível** — França criticou publicamente o regime RNH e a CDT teve interpretação restritiva sobre certas pensões públicas. |
-| Suécia | **CDT denunciada unilateralmente pela Suécia em junho 2021, com efeitos a partir de 1 de janeiro de 2022.** Sem CDT em vigor desde então, as pensões suecas pagas a residentes em Portugal passaram a ser tributadas integralmente na Suécia e o tratamento de isenção sob RNH ficou comprometido. |
-| Finlândia | Tensão semelhante à Sueca; CDT renegociada com protocolo que reduziu o atrativo do RNH para pensionistas finlandeses. |
-| Holanda | CDT em vigor. Pensões — regime misto consoante natureza (pública vs privada). |
-| Brasil | CDT em vigor. **Atenção à interpretação do art.º 17 (pensões)** — tem suscitado discussão entre AT e Receita Federal do Brasil sobre a tributação de pensões de funcionários públicos. |
-| Paraísos fiscais (Portaria 150/2004): Andorra, Bahrein, Belize, Bermudas, Catar, etc. | **Não beneficiam de isenção** sob RNH/IFICI mesmo que existam acordos de troca de informação. |
-
-### 6.5 Categoria H — Pensões estrangeiras (RNH legado): regra dos 10%
-
-- **Regra dos 10% pensões RNH** — A taxa de 10% incide sobre o valor bruto da pensão, sem deduções específicas, sem englobamento, sem aplicação de sobretaxa de solidariedade. Crédito por dupla tributação internacional: o art.º 81.º n.º 5 do CIRS permite a dedução do imposto pago no Estado da fonte, até ao limite do imposto português devido sobre essa pensão (10% do valor bruto). Se o Estado da fonte tributar a pensão acima de 10%, o excesso não é recuperável em Portugal. A regra dos 10% aplica-se durante os 10 anos do estatuto. Após o termo, a pensão é englobada às taxas gerais IRS.  _(art.º 81.º n.º 5 do CIRS)_
-
-## Secção 7 — Tratamento de Pensões Estrangeiras (RNH Legado vs IFICI)
-
-### 7.1 Quadro consolidado
-
-**Quadro consolidado**
-
-| Cenário | Tratamento |
-| --- | --- |
-| RNH com inscrição como residente até 31 mar 2020 (com pedido até 31 mar 2021) | Isenção (sujeito a requisitos de tributação no Estado da fonte ou de não-obtenção em Portugal) |
-| RNH com inscrição como residente a partir de 1 abr 2020 até 31 dez 2023 | **10% taxa fixa** sobre o valor bruto da pensão |
-| RNH ao abrigo do regime transitório da Lei 82/2023 (inscrição em 2024) | **10% taxa fixa** (não isenção, regime pós-2020) |
-| IFICI (inscrição em 2024 ou posterior) | **Englobamento ao regime geral IRS** — tabela progressiva 13% a 48% + sobretaxa de solidariedade (se aplicável) |
-| Regime geral sem RNH/IFICI | Englobamento ao regime geral IRS |
-
-### 7.2 Crédito por dupla tributação internacional
-
-- **Crédito por dupla tributação** — Em todos os cenários, o art.º 81.º do CIRS permite crédito pelo imposto pago no Estado da fonte, limitado ao imposto português efetivamente devido sobre essa pensão. O crédito é declarado no Anexo J do Modelo 3 (rendimentos obtidos no estrangeiro).  _(art.º 81.º do CIRS)_
-
-### 7.3 Pensões públicas vs privadas
-
-- **Pensões públicas vs privadas** — As CDT distinguem entre: Pensões públicas (art.º 19 do Modelo OCDE): pagas pelo Estado ou por subdivisão política a antigos funcionários públicos. Tributação exclusiva no Estado pagador na maioria das CDT — fora do escopo da isenção RNH/IFICI (a CDT atribui poder exclusivo ao Estado da fonte, e Portugal não pode tributar). Pensões privadas (art.º 18 do Modelo OCDE): regra geral, tributação exclusiva no Estado da residência (Portugal). Aqui é que o RNH/IFICI opera — Portugal teria poder de tributar, mas RNH legado isenta ou tributa a 10%. A leitura de cada CDT é determinante. Algumas CDT (ex.: Holanda, art.º 18) permitem ao Estado da fonte tributar pensões privadas acima de certos limites — caso em que o critério "poder ser tributado no Estado da fonte" se verifica e a isenção sob RNH aplica-se.  _(Modelo OCDE art.º 18 e 19)_
-
-## Secção 8 — Mais-Valias e Dividendos Estrangeiros
-
-### 8.1 Mais-valias mobiliárias estrangeiras
-
-- **Mais-valias mobiliárias estrangeiras** — Sob RNH e IFICI: Mais-valias da alienação de ações, obrigações, unidades de participação em fundos, etc., obtidas no estrangeiro são isentas se a CDT permitir a tributação no Estado da fonte, ou (na ausência de CDT) ao abrigo do Modelo OCDE. Atenção: a maioria das CDT segue o Modelo OCDE no art.º 13.º n.º 5, atribuindo tributação exclusiva ao Estado da residência (Portugal). Nestes casos, o critério "poder ser tributado no Estado da fonte" não se verifica e a isenção não se aplica — a mais-valia é tributada em Portugal à taxa de 28%. Exceções: mais-valias de partes de capital de sociedades com ativo essencialmente imobiliário (substantial holding rules) — algumas CDT permitem tributação no Estado da fonte; nesses casos, isenção sob RNH/IFICI aplica-se.  _(art.º 72.º n.º 1 al. c) CIRS; Modelo OCDE art.º 13.º n.º 5)_
-
-### 8.2 Mais-valias imobiliárias estrangeiras
-
-- **Mais-valias imobiliárias estrangeiras** — Sob CDT (art.º 13.º n.º 1 do Modelo OCDE), o Estado da localização do imóvel tem poder de tributação. Portanto, mais-valias imobiliárias estrangeiras são tipicamente isentas sob RNH/IFICI em Portugal (sujeito a documentação da tributação no Estado da fonte).  _(Modelo OCDE art.º 13.º n.º 1)_
-
-### 8.3 Mais-valias de criptoativos
-
-- **Mais-valias de criptoativos** — Lei n.º 24-D/2022 (OE 2023) introduziu o regime fiscal de criptoativos no CIRS. Detenções < 365 dias: tributação a 28% taxa especial (ou englobamento opcional). RNH/IFICI não isentam estas mais-valias de curto prazo. Detenções ≥ 365 dias: isenção (regime geral, não depende de RNH/IFICI). Mais-valias de criptoativos com origem em paraísos fiscais: tributação a 35%.  _(Lei n.º 24-D/2022; art.º 72.º n.º 17 CIRS)_
-
-### 8.4 Dividendos estrangeiros
-
-- **Dividendos estrangeiros** — Sob RNH e IFICI: Isentos se a CDT atribuir poder de tributação ao Estado da fonte. A maioria das CDT segue o Modelo OCDE (art.º 10.º) — tributação partilhada entre Estado da fonte (taxa limitada, tipicamente 15% para dividendos de carteira) e Estado da residência. Como o Estado da fonte tem poder de tributação (mesmo que limitado), o critério da isenção sob RNH/IFICI verifica-se e a isenção aplica-se em Portugal. Sem CDT: aplica-se o Modelo OCDE — mesma análise. Exceção: dividendos de sociedades em paraísos fiscais — não isentos.  _(Modelo OCDE art.º 10.º)_
-
-### 8.5 Juros estrangeiros
-
-- **Juros estrangeiros** — Análise análoga aos dividendos. CDT modelo OCDE (art.º 11.º) prevê tributação partilhada — Estado da fonte com taxa limitada (tipicamente 10%) e Estado da residência. Critério verifica-se e isenção aplica-se sob RNH/IFICI (exceto paraísos fiscais).  _(Modelo OCDE art.º 11.º)_
-
-### 8.6 Royalties estrangeiros
-
-- **Royalties estrangeiros** — CDT modelo OCDE (art.º 12.º) atribui tributação exclusiva ao Estado da residência. Portanto, sob o Modelo, o Estado da fonte não pode tributar — critério da isenção sob RNH/IFICI não se verifica e os royalties são tributados em Portugal. Mas: muitas CDT bilaterais (incluindo a maioria das celebradas por Portugal) desviam-se do Modelo OCDE e permitem tributação partilhada de royalties — caso em que a isenção sob RNH/IFICI aplica-se. Análise CDT por CDT é indispensável.  _(Modelo OCDE art.º 12.º)_
-
-## Secção 9 — Processo de Candidatura à AT (Portal das Finanças)
-
-### 9.1 Pré-requisitos (comum a RNH e IFICI)
-
-- **Pré-requisitos** — 1. NIF português — obtido junto da AT, presencialmente ou via representante fiscal (se ainda não residente). Cidadãos da UE/EEE não necessitam de representante fiscal; cidadãos de países terceiros, sim. 2. Inscrição como residente fiscal em Portugal — alteração de morada fiscal no Portal das Finanças para uma morada portuguesa (própria, arrendada ou cedida). 3. Não residência fiscal em Portugal nos 5 anos anteriores — verificável no cadastro da AT.
-
-### 9.2 Procedimento RNH (apenas para regime transitório Lei 82/2023, encerrado em 2024)
-
-- **Procedimento RNH transitório** — 1. Aceder ao Portal das Finanças (https://www.portaldasfinancas.gov.pt) com NIF + senha (ou Cartão de Cidadão / Chave Móvel Digital). 2. Menu: Cidadãos → Serviços → Outros Serviços → Inscrição Residente Não Habitual. 3. Preencher formulário declarando: (a) data de inscrição como residente, (b) declaração sob compromisso de não ter sido residente nos 5 anos anteriores, (c) atividade exercida e código CPP. 4. Submeter até 31 de março do ano seguinte ao da inscrição como residente. 5. A AT analisa o pedido e emite decisão (deferimento ou indeferimento) — prazo legal de 30 dias, mas frequentemente excedido na prática. 6. Em caso de indeferimento, possibilidade de reclamação graciosa (30 dias) e impugnação judicial / pedido CAAD (90 dias).
-
-### 9.3 Procedimento IFICI
-
-- **Procedimento IFICI** — 1. Inscrição como residente fiscal no Portal das Finanças. 2. Obtenção da certificação da atividade qualificada junto da entidade competente: FCT — investigação científica e docência ensino superior. ANI — centros tecnológicos, SIFIDE, startups (em articulação com IAPMEI). AICEP / IAPMEI — RFAI, atividades relevantes para a economia nacional. Startup Portugal / IAPMEI — startups certificadas Lei 21/2023. A certificação é solicitada à entidade competente com documentação da atividade, contrato de trabalho / contrato de prestação de serviços, CV, etc. Cada entidade tem o seu próprio procedimento e prazos. 3. Submissão do pedido de inscrição como beneficiário IFICI no Portal das Finanças — até 15 de janeiro do ano seguinte ao da inscrição como residente (prazo da Portaria 187/2024). 4. A entidade certificadora comunica diretamente à AT a certificação, até 15 de fevereiro do ano seguinte. 5. A AT confirma a inscrição ou indefere; comunica decisão via Portal das Finanças.  _(Portaria n.º 187/2024)_
-
-### 9.4 Declaração anual — Modelo 3 + Anexo L
-
-**Anexos do Modelo 3**
-
-| Anexo | Conteúdo |
-| --- | --- |
-| Rosto | Identificação, agregado familiar, opções de tributação |
-| A | Rendimentos da categoria A (trabalho dependente) |
-| B | Rendimentos da categoria B (trabalho independente) |
-| E | Rendimentos da categoria E (capitais) |
-| F | Rendimentos da categoria F (prediais) |
-| G | Mais-valias |
-| H | Benefícios fiscais e deduções à coleta |
-| J | Rendimentos obtidos no estrangeiro |
-| L | **Residentes não habituais — específico** |
-| SS | Anexo da Segurança Social (categoria B) |
-
-Independentemente de estar inscrito como RNH ou IFICI, o contribuinte tem de apresentar a declaração anual de IRS (Modelo 3) entre 1 de abril e 30 de junho do ano seguinte ao do rendimento.
-
-O Anexo L inclui: Indicação do regime aplicável (RNH ou IFICI). Identificação da atividade exercida e código CPP (RNH) ou referência à certificação (IFICI). Rendimentos tributados à taxa fixa de 20%. Rendimentos isentos de fonte estrangeira (cruzamento com Anexo J). Pensões estrangeiras tributadas a 10% (RNH pós-2020). Opção pelo englobamento (se aplicável).
-
-### 9.5 Documentação a manter (arquivo do contribuinte)
-
-- **Documentação e período de conservação** — Comprovativo da inscrição como residente fiscal. Comprovativo da inscrição como RNH/IFICI (extrato do Portal das Finanças). Certificação da atividade (IFICI) — original e cópias. Contratos de trabalho / contratos de prestação de serviços. Declarações fiscais do(s) Estado(s) da fonte para rendimentos estrangeiros. Certificados de retenção na fonte estrangeiros. CDT aplicável (texto consolidado). Modelo 3 e anexos de cada ano. Período de conservação: 4 anos (regra geral RGIT) ou 10 anos para documentos relacionados com investimentos imobiliários e mais-valias diferidas. Recomendação prática: manter por toda a duração do estatuto (10 anos) mais 4 anos adicionais.  _(RGIT)_
-
-## Secção 10 — Exemplos Práticos
-
-### Exemplo 10.1 — Nómada digital americano em Lisboa (IFICI, 2025)
-
-**Perfil**: Jane Smith, 34 anos, programadora full-stack norte-americana, mudou-se para Lisboa em março de 2025 com visto D8 (nómada digital). Trabalha remotamente para uma sociedade de software dos EUA (W-2 employee) e adicionalmente presta serviços de consultoria a uma startup portuguesa certificada nos termos da Lei 21/2023. Sem residência fiscal em Portugal nos 5 anos anteriores.
-
-**Rendimentos 2025**:
-- Salário americano (W-2): USD 145.000 (≈ EUR 134.000).
-- Honorários de consultoria à startup portuguesa: EUR 36.000.
-- Dividendos de carteira de ações americanas (broker EUA): USD 4.200 (≈ EUR 3.900) — retenção na fonte de 30% reduzida a 15% via Form W-8BEN ao abrigo da CDT EUA-Portugal.
-- Juros de conta-poupança americana: USD 800 (≈ EUR 740).
-
-**Análise**:
-1. **Residência fiscal**: Jane permanece > 183 dias em Portugal em 2025 → residente fiscal em Portugal pelo ano completo (com aplicação do art.º 16.º n.º 2 sobre residência parcial verificar — mas para este exemplo simplifica-se).
-2. **Elegibilidade IFICI**: cumpre o requisito de não-residência anterior. A atividade de consultoria à startup certificada qualifica-se na categoria 5 da Portaria 187/2024 (postos de trabalho / membros de órgãos sociais em startups certificadas). Obtém certificação via Startup Portugal/IAPMEI. **Importante**: o salário americano (W-2) não está abrangido pela atividade qualificada IFICI — apenas a consultoria à startup PT.
-3. **Tributação dos honorários portugueses (EUR 36.000)** — categoria B, atividade qualificada IFICI: **taxa fixa de 20%** = EUR 7.200.
-4. **Tributação do salário americano (EUR 134.000)** — categoria A, rendimento estrangeiro:
-   - Sob CDT EUA-Portugal (art.º 15), salários de trabalho dependente exercido fisicamente nos EUA são tributáveis nos EUA. **Mas**: Jane trabalha **a partir de Lisboa** (remotamente) — sob a CDT, o trabalho é considerado exercido em Portugal. Portugal tem poder de tributação. Os EUA tributam pela cidadania (saving clause).
-   - Sob IFICI: a isenção de categoria A estrangeira aplica-se apenas se o rendimento for de **atividade qualificada**. O W-2 não está vinculado à atividade qualificada IFICI → **englobado ao regime geral** = ~EUR 47.500 de IRS.
-   - Crédito por imposto pago nos EUA: limitado ao IRS proporcional sobre esse rendimento.
-   - **Conservador**: tratar como englobado, com crédito CDT até ao limite.
-5. **Dividendos americanos (EUR 3.900)** — categoria E. CDT EUA-Portugal (art.º 10) atribui poder partilhado → critério verifica-se → **isenção sob IFICI**. Reporta no Anexo J + Anexo L.
-6. **Juros americanos (EUR 740)** — categoria E. Análise análoga → **isenção sob IFICI**.
-
-**Resumo IRS 2025**:
-- Categoria B (IFICI 20%): EUR 7.200.
-- Categoria A (englobamento geral): ~EUR 47.500 (com crédito CDT).
-- Categoria E (isenta IFICI): EUR 0 em Portugal.
-- **Total IRS aproximado**: EUR 54.700 (TBC com cálculo exato + sobretaxa solidariedade se aplicável).
-
-**Alertas**: a estrutura é subóptima — Jane beneficiaria mais se renegociasse o salário americano como contrato de prestação de serviços vinculado à startup PT, enquadrando-o na atividade qualificada IFICI a 20%. Encaminhar para parecer fiscal específico.
-
-### Exemplo 10.2 — Pensionista francês no Algarve (RNH regime transitório, inscrição 2024)
-
-**Perfil**: Jean-Pierre Dupont, 67 anos, francês, reformado da segurança social francesa e de fundo de pensão complementar privado. Mudou-se para Albufeira em outubro de 2024 ao abrigo do regime transitório da Lei 82/2023 (tinha contrato-promessa de compra de apartamento assinado em outubro de 2023). Apresentou pedido de RNH em janeiro de 2025.
-
-**Rendimentos 2025**:
-- Pensão pública francesa (CNAV — Caisse Nationale d'Assurance Vieillesse): EUR 28.000.
-- Pensão privada complementar (AGIRC-ARRCO): EUR 12.000.
-- Juros de obrigações francesas: EUR 1.800.
-
-**Análise**:
-1. **RNH transitório aplicável**: inscrição como residente em outubro de 2024 → pedido apresentado até 31 mar 2025 → admitido.
-2. **Pensão pública francesa (CNAV)**: pensão pública sob art.º 19 da CDT Portugal-França (1971) → tributação **exclusiva** em França. Portugal não pode tributar. **Não entra em IRS português** (declarada no Anexo J apenas para informação).
-3. **Pensão privada (AGIRC-ARRCO)**: pensão privada sob art.º 18 da CDT → tributação **partilhada** com regra residual de tributação no Estado da residência. Em Portugal, sob RNH com inscrição pós-2020: **taxa fixa de 10%** = EUR 1.200.
-4. **Juros franceses (EUR 1.800)**: categoria E. CDT (art.º 11) — tributação partilhada → critério verifica-se → **isenção sob RNH**.
-
-**Resumo IRS 2025**:
-- Pensão pública (não tributada PT): EUR 0.
-- Pensão privada (10% RNH): EUR 1.200.
-- Juros (isentos RNH): EUR 0.
-- **Total IRS**: EUR 1.200 + sobretaxa de solidariedade (não se aplica a taxas especiais).
-
-**Alertas**: confirmar (a) que a CNAV é classificada como pensão pública (alguns elementos da CNAV podem ser híbridos) e (b) o tratamento sob CDT Portugal-França para a AGIRC-ARRCO em sede de retenção francesa. Encaminhar para confirmação CDT.
-
-### Exemplo 10.3 — Investigador IFICI no Porto (2025)
-
-**Perfil**: Dr. Ana Rodríguez Pérez, 41 anos, cidadã espanhola, contratada como investigadora principal num projeto de IA da Universidade do Porto a partir de janeiro de 2025. Veio diretamente de uma universidade nos Países Baixos (Delft) onde residiu de 2020 a 2024. Nunca foi residente fiscal em Portugal.
-
-**Rendimentos 2025**:
-- Salário Universidade do Porto (categoria A): EUR 58.000.
-- Royalties de patentes registadas em Espanha (categoria B/E híbrida — assumir categoria E): EUR 7.500, retenção na fonte espanhola de 19% (CDT Portugal-Espanha permite tributação partilhada de royalties).
-- Dividendos de fundos de investimento holandeses: EUR 2.300.
-
-**Análise**:
-1. **Elegibilidade IFICI**: cumpre o requisito de não-residência anterior. A atividade de investigação na Universidade do Porto qualifica-se na **categoria 1 da Portaria 187/2024** (docência no ensino superior e investigação científica). Obtém certificação via FCT.
-2. **Salário Universidade do Porto (EUR 58.000)** — categoria A, atividade qualificada IFICI: **taxa fixa de 20%** = EUR 11.600.
-3. **Royalties espanholas (EUR 7.500)**: CDT Portugal-Espanha (art.º 12) atribui tributação partilhada (taxa máxima de 5% no Estado da fonte) → critério verifica-se → **isenção sob IFICI** em Portugal. A retenção espanhola de 19% pode estar acima da taxa CDT (5%) — recomendar pedido de reembolso ao Estado espanhol.
-4. **Dividendos holandeses (EUR 2.300)**: CDT Portugal-Países Baixos (art.º 10) — tributação partilhada → **isenção sob IFICI**.
-
-**Resumo IRS 2025**:
-- Categoria A (IFICI 20%): EUR 11.600.
-- Royalties (isentas IFICI): EUR 0 em Portugal.
-- Dividendos (isentos IFICI): EUR 0 em Portugal.
-- **Total IRS**: EUR 11.600.
-
-Comparação com regime geral: o IRS sobre EUR 58.000 às taxas progressivas 2025 rondaria EUR 17.500 + sobretaxa de solidariedade. **Poupança IFICI ≈ EUR 5.900/ano**, multiplicada por 10 anos = ~EUR 59.000 de poupança ao longo do estatuto (sem considerar os rendimentos estrangeiros).
-
-## Secção 11 — Defaults Conservadores
-
-**Defaults Conservadores**
-
-| Decisão | Default conservador | Justificação |
-| --- | --- | --- |
-| Classificação da atividade como AEVA (lista RNH) | Não aplicar 20% sem confirmação documental do código CPP e enquadramento na lista do Despacho 230/2019 | Risco de indeferimento da AT com regularização retroativa |
-| Classificação da atividade como qualificada IFICI | Exigir certificação **prévia** da entidade competente antes de aplicar 20% | A AT só aceita IFICI mediante certificação formal |
-| Pensão estrangeira com inscrição RNH em 2020 — data exata desconhecida (mar ou abr 2020) | Aplicar **10% taxa fixa** (mais conservador para a AT) e reverter para isenção apenas se documentação prove inscrição até 31 mar 2020 | A regra da Lei 2/2020 é clara — data-corte de 1 abr 2020 |
-| Isenção de rendimento estrangeiro sem documentação clara da CDT aplicável e do tratamento no Estado da fonte | Não aplicar isenção; tributar em Portugal | Inversão do ónus da prova favorece a AT |
-| Royalty estrangeira sob RNH/IFICI | Verificar a CDT específica (não presumir tratamento Modelo OCDE) | A maioria das CDT de Portugal **desvia-se** do Modelo OCDE no art.º 12 |
-| Mais-valia estrangeira mobiliária | Default — **tributar a 28% em Portugal** (Modelo OCDE atribui poder exclusivo ao Estado da residência); isenção só se CDT específica atribuir poder de tributação ao Estado da fonte | Maioria dos casos não cumpre o critério de isenção |
-| Mais-valia de criptoativos sob RNH/IFICI (detenção < 365 dias) | Tributar a 28% (regime cripto não se sobrepõe ao RNH/IFICI) | Lei 24-D/2022 prevalece sobre RNH/IFICI |
-| Contribuinte chega após 31 mar do ano N+1 com pedido de RNH transitório | Indeferir; aconselhar pedido tempestivo em ano fiscal seguinte ou regime geral | Caducidade do direito |
-| IFICI — atividade certificada mas com vínculo laboral em entidade não-certificada | Não aplicar IFICI; o vínculo tem de ser com entidade certificada (não basta a atividade ser do tipo qualificado) | Portaria 187/2024 exige certificação da entidade empregadora / contratante |
-| Suécia — pensões pós-2022 sob RNH | Tributar a 10% em Portugal (RNH pós-2020) **mais** atender que a denúncia da CDT pode mudar o tratamento. Recomendar parecer específico. | Denúncia da CDT alterou o equilíbrio |
-| Sobretaxa de solidariedade IRS sobre rendimentos a 20% IFICI/RNH | Não aplicar — a sobretaxa só incide sobre englobamento | Art.º 68.º-A CIRS limita ao englobamento |
-| Cumulação RNH + Programa Regressar | Não permitida — apenas um regime aplicável | Lei 71/2018 estabelece exclusão |
-
-## Secção 12 — Fontes
-
-### Legislação primária
-
-- **Decreto-Lei n.º 249/2009, de 23 de setembro** — criação do regime RNH.
-- **Código do IRS (CIRS)**, em particular:
-  - Art.º 16.º n.os 8 a 12 — definição de residente não habitual.
-  - Art.º 72.º n.os 10, 12 e 13 — taxas especiais RNH (20% e 10%).
-  - Art.º 81.º — eliminação da dupla tributação internacional.
-- **Estatuto dos Benefícios Fiscais (EBF), art.º 58.º-A** — IFICI, aditado pela Lei n.º 82/2023, de 29 de dezembro.
-- **Lei n.º 82/2023, de 29 de dezembro (OE 2024)** — encerramento do RNH e criação do IFICI; regime transitório no art.º 236.º.
-- **Lei n.º 2/2020, de 31 de março (OE 2020)** — introdução da taxa de 10% sobre pensões estrangeiras.
-- **Lei n.º 24-D/2022, de 30 de dezembro (OE 2023)** — regime fiscal dos criptoativos.
-
-### Legislação complementar (portarias, despachos)
-
-- **Despacho n.º 230/2019, de 4 de julho** — lista de Atividades de Elevado Valor Acrescentado (AEVA) para efeitos do RNH.
-- **Portaria n.º 187/2024/1, de 30 de julho** — regulamentação do IFICI: atividades qualificadas, entidades certificadoras, procedimentos.
-- **Portaria n.º 12/2010, de 7 de janeiro** — lista AEVA original (revogada pelo Despacho 230/2019).
-- **Portaria n.º 150/2004, de 13 de fevereiro** — lista de países, territórios e regiões com regimes de tributação privilegiada (paraísos fiscais), e suas alterações posteriores.
-
-### Convenções de Dupla Tributação relevantes
-
-- CDT Portugal-EUA (Resolução AR 39/95, em vigor desde 1996).
-- CDT Portugal-França (Decreto-Lei 105/71, em vigor desde 1972).
-- CDT Portugal-Reino Unido (em vigor desde 1969, com Protocolo).
-- CDT Portugal-Espanha (Decreto 14/95).
-- CDT Portugal-Países Baixos (Decreto 28/2000).
-- CDT Portugal-Brasil (Resolução AR 33/2001).
-- **CDT Portugal-Suécia** — **denunciada unilateralmente pela Suécia em junho 2021, com efeitos a partir de 1 jan 2022.**
-
-Lista completa das ~80 CDT em vigor: Portal das Finanças → Acordos Internacionais.
-
-### Modelos e instruções
-
-- **Modelo 3 do IRS** e respetivas instruções de preenchimento (atualizadas anualmente pelo Despacho do Diretor-Geral da AT).
-- **Anexo L do Modelo 3** — residentes não habituais.
-- **Anexo J do Modelo 3** — rendimentos obtidos no estrangeiro.
-
-### Doutrina administrativa
-
-- **Circulares da AT** sobre interpretação do RNH (ver Portal das Finanças → Doutrina Administrativa).
-- **Informações vinculativas** emitidas pela Direção de Serviços do IRS sobre casos concretos do RNH e (mais recentemente) IFICI.
-
-### Jurisprudência
-
-- **CAAD — Centro de Arbitragem Administrativa**: vasta jurisprudência arbitral sobre RNH, em particular sobre (i) interpretação do critério "pode ser tributado" no Estado da fonte, (ii) pensões públicas vs privadas, (iii) qualificação como AEVA. Pesquisa em https://caad.org.pt.
-- **STA — Supremo Tribunal Administrativo**: acórdãos pontuais sobre indeferimento de RNH e contagem do prazo dos 5 anos.
-
-### Recursos institucionais
-
-- **Autoridade Tributária e Aduaneira (AT)** — Portal das Finanças (https://www.portaldasfinancas.gov.pt).
-- **Fundação para a Ciência e a Tecnologia (FCT)** — certificação IFICI categoria 1 (https://www.fct.pt).
-- **Agência Nacional de Inovação (ANI)** — certificação IFICI categorias 2 e 4.
-- **AICEP — Agência para o Investimento e Comércio Externo de Portugal** — certificação IFICI categoria 3.
-- **IAPMEI — Agência para a Competitividade e Inovação** — certificação IFICI categorias 3 e 5.
-- **Ordem dos Contabilistas Certificados (OCC)** — boletins técnicos sobre RNH e IFICI.
-
-### Notas de versão e validação
-
-- **Versão**: 1.0
-- **Data**: 2025 (ano fiscal de referência: 2025; declarações apresentadas em 2026).
-- **Validação pendente**: requer revisão por Contabilista Certificado inscrito na OCC ou advogado fiscalista registado na Ordem dos Advogados, com prática comprovada em fiscalidade internacional e regime RNH/IFICI.
-- **TBC (To Be Confirmed)**:
-  - Prazo exato de submissão IFICI no Portal das Finanças (15 janeiro vs 31 março) — Portaria 187/2024 indica 15 janeiro mas práticas administrativas têm-se ajustado.
-  - Texto final do art.º 236.º da Lei 82/2023 com alterações posteriores em OE 2025 (Lei n.º 45-A/2024).
-  - Lista exaustiva de profissões abrangidas pela categoria 3 da Portaria 187/2024 (entidades RFAI / relevantes para a economia).
+| Resident in Portugal in any of the five prior years | Neither regime | [EBF art. 58-A(1)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/bf_rep/Pages/ebf58a.aspx) |
+| Already an NHR, now in a job that would qualify for IFICI | Cannot switch or renounce NHR | [NHR FAQ 6011](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00309.aspx) |
+| Became resident in 2025, asks for NHR for 2024 | Rejected: not resident in 2024 | NHR FAQ 5153 |
+| 2024 transitional NHR request filed in 2026 | Granted if eligible, but only from 2026 to 2033 | NHR FAQ 6010 |
+| IFICI request filed after 15 January of the year after arrival | Applies from the year of filing, for the rest of the 10 years | EBF art. 58-A(7) |
+| Contractor (services contract) to a certified startup or AICEP/IAPMEI-recognised company | Not eligible under (d) or (f): a "posto de trabalho" needs an employment contract | [IFICI FAQ 5502](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/pages/faqs-01018.aspx) |
+| University lecturer on a services contract | Eligible under (a) | IFICI FAQ 5501 |
+| Shareholder of a qualifying company | Not eligible as shareholder; a sole-shareholder manager can qualify as a board member | IFICI FAQ 5503 |
+| Qualifying job ends | Benefit continues only if a new qualifying activity starts within six months; report the change by 15 January of the next year and file a new request if the reviewing entity or company changes. The 10 years do not restart | EBF art. 58-A(4); FAQ 5515, 5516 |
+| SIFIDE project (letter e) ends | Benefit stops unless new qualifying income starts within six months | IFICI FAQ 5522 |
+| Leaves Portugal mid-period | Change the tax address to non-resident within 60 days (LGT art. 19(5)). NHR status is then suspended automatically and resumes on return for the years left; it is not extended | EBF art. 58-A(5); NHR FAQ 6006 and 6012 |
+| Several qualifying activities reviewed by different entities | One request per activity | IFICI leaflet |
+| Regressar (art. 12-A) chosen | IFICI excluded | EBF art. 58-A(10)(b) |
+| IFICI ever used (from 2025) | IRS Jovem excluded | IFICI leaflet |
+| Azores or Madeira resident | Letter (g) not yet regulated; can use letters (a) to (f) if met | IFICI FAQ 5499 |
+
+## Worked cases
+
+Amounts are hypothetical; personal deductions, social security and treaty credits are ignored.
+
+**Case 1: IFICI engineer, 2026** ([EBF art. 58-A](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/bf_rep/Pages/ebf58a.aspx); [CIRS art. 68](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs68.aspx)). A software engineer (CPP 25, master's degree, five years' experience) moves to Porto in February 2026, not resident in the previous five years, never NHR. She is employed under an employment contract by a startup certified under Lei 21/2023, in an innovation role. She qualifies under letter (f) and must file with Startup Portugal via the Portal by 15 January 2027. Assume net 2026 category A income from the job of EUR 80,000.
+- IFICI: EUR 80,000 at 20% = EUR 16,000. ([EBF art. 58-A(2)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/bf_rep/Pages/ebf58a.aspx))
+- General rules, for comparison: EUR 46,566 at the average rate of 26.472% gives EUR 12,326.95; the excess of EUR 33,434 at 44.60% gives EUR 14,911.56. Together, from unrounded parts, that is EUR 27,238.52. There is no solidarity rate, because taxable income is not over EUR 80,000. ([CIRS art. 68](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs68.aspx))
+- Difference before personal deductions: EUR 11,238.52 for 2026. ([CIRS art. 68](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs68.aspx))
+- If she gives her employer proof that the request was filed, it may withhold at 20%. ([IFICI leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/incentivos_investigacao.pdf))
+
+**Case 2: IFICI beneficiary with foreign dividends, 2026** ([CIRS art. 81](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs81.aspx); [IFICI FAQ 5500](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/pages/faqs-01018.aspx)). The engineer in Case 1 also receives EUR 5,000 of dividends from a German company and EUR 2,000 from a company in the UAE.
+- German dividends: category E obtained abroad, exempt under art. 81(4). They count only to set the rate on any other aggregated income. If she has none, that has no practical effect.
+- UAE dividends: the UAE is on the privileged-tax list, so art. 81(5) applies: EUR 2,000 at 35% = EUR 700. ([CIRS art. 81(5)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs81.aspx))
+
+**Case 3: 2024 NHR transitional pensioner, late registration** ([art. 236 Lei 82/2023, under CIRS art. 81](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs81.aspx); [NHR FAQ 6010](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/Pages/faqs-00309.aspx); [CIRS art. 72, wording to December 2023](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/ra/Pages/irs72ra_202312.aspx)). A retiree signs a Portuguese lease on 1 September 2023, moves in September 2024 and becomes resident in 2024. He had not lived in Portugal before. He files the NHR request on 1 February 2026.
+- Condition met: a lease concluded by 10 October 2023, and residence by 31 December 2024.
+- The request is after 31 March 2025, so NHR runs from 2026 to 2033: eight years, not ten. 2024 and 2025 are taxed under the general rules.
+- 2026: a foreign private pension of EUR 20,000 net, not Portuguese-source, that never created an art. 25(2) deduction. He became resident after 31 March 2020, so it is taxed at 10% = EUR 2,000 unless he chooses aggregation. ([old CIRS art. 72(12)](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/ra/Pages/irs72ra_202312.aspx))
+
+**Case 4: late IFICI registration** ([IFICI leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/incentivos_investigacao.pdf)). A person becomes resident in 2025 and meets every IFICI condition, but files on 10 January 2029. IFICI applies from 2029 to 2034: six years. Had she filed by 15 January 2026, it would have run from 2025 to 2034.
+
+**Case 5: remote worker, not a qualifying activity** ([CIRS art. 18](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs18.aspx)). A US citizen arrives in Lisbon in 2026 on a digital-nomad visa and keeps working from home for her US employer. The work is done in Portugal, so the salary is Portuguese-source under art. 18(1)(a). The foreign-income exemption does not apply to it. The employer is not an eligible IFICI entity, so she cannot use IFICI through this job, and the salary is taxed at the general rates. Treaty relief against US tax is a US question; refer.
+
+## When to refuse or refer
+
+- **Refuse** to apply NHR to anyone who became resident in 2025 or later, or to a 2024 arrival without an art. 236(3)(c) or (d) document meeting its date.
+- **Refuse** to apply the IFICI flat rate before checking the activity against a specific letter of art. 58-A(1), the entity conditions and the qualifications. Where the reviewing entity (FCT, AICEP, IAPMEI, ANI, Startup Portugal) has not yet confirmed, label the result provisional.
+- **Refuse** to treat a foreign pension as exempt under IFICI, or under NHR for a person who became resident after 31 March 2020 and did not keep the pre-2020 rules.
+- **Refuse** to claim the NHR "may be taxed" exemption for a gain or royalty without reading the treaty article that applies.
+- **Refer** when the case involves: disputed residence or dual residence under a treaty; a refused or pending registration (administrative objection and appeal deadlines are outside this Guide); trusts, foundations or blacklisted-jurisdiction structures; stock options; Regressar or IRS Jovem interaction; Azores or Madeira regional rules; US citizens (US tax applies on citizenship); penalties for late or wrong returns (not covered here, **check** the penalty rules separately).
+- **Check** points this Guide could not confirm from an AT page: the full text of Portaria 352/2024/1 annexes as later amended, and whether any 2026 Budget change touched EBF art. 58-A. The AT's art. 58-A page shows no amendment since Lei 82/2023 as of 25 September 2026.
+
+## Filing and payment ([CIRS art. 60](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs60.aspx); [NHR leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/IRS_RNH_PT.pdf))
+
+- **Annual return:** Modelo 3, filed online from 1 April to 30 June of the year after the income year, whether or not 30 June is a working day. The 2026 return is due between 1 April and 30 June 2027.
+- **Annex L** is required for both regimes. It reports flat-rate income with its activity code (NHR) or the IFICI activity, the choice between the special rate and aggregation, and the method used for foreign income. Foreign income also goes on **Annex J**. For NHR pensions, Annex L asks whether the person was resident on or before 31 March 2020 and whether they opt for the 10% rate. ([NHR leaflet](https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/Folhetos_informativos/Documents/IRS_RNH_PT.pdf))
+- **Foreign tax credit not yet known:** where the credit amount is not fixed in the source state by 30 June, the deadline moves to 31 December of that year. The taxpayer must tell the AT within the normal deadline, naming the type of income and the source state (art. 60(3) and (4)).
+- **Changes:** a return must also be filed within 30 days of any fact that changes income already declared (art. 60(2)). IFICI changes go to the Portal by 15 January of the following year.
+- **2025 returns (filed in 2026):** the normal window closed on 30 June 2026. The extension to 31 December 2026 applies only where it was notified in time. A late 2025 return should be treated as a refer case for penalties.
+- **Records:** IFICI beneficiaries keep evidence of the activity and income for every year; the employer keeps its records for 10 years (IFICI FAQ 5524). NHRs must prove the high-value activity on request.
+
+## Completion checklist
+
+- [ ] Residence year confirmed under CIRS art. 16, with the day count or the home evidence on file.
+- [ ] No residence in the five prior years confirmed.
+- [ ] No prior NHR, prior IFICI, or art. 12-A election (for IFICI).
+- [ ] Regime chosen by arrival year, with the 2024 art. 236 document and its date checked where relevant.
+- [ ] IFICI letter, entity, contract type and qualifications matched, and the reviewing entity identified.
+- [ ] Registration filed by 15 January (IFICI) or 31 March 2025 (2024 NHR); if late, start year and end year recomputed.
+- [ ] Each year: resident at some point, and qualifying income still earned (six-month gap rule).
+- [ ] Source of each item decided under CIRS art. 18 before any exemption is applied.
+- [ ] Foreign income classified by category, with blacklist and pension rules applied.
+- [ ] Aggregation versus flat-rate choice reviewed and entered on Annex L.
+- [ ] Modelo 3 with Annexes L and J filed between 1 April and 30 June; art. 60(3) extension notified if needed.
 
 <!-- openaccountants-cta-block -->
 

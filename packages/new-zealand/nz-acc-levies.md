@@ -4,375 +4,273 @@ description: Use this skill whenever asked about New Zealand ACC levies for self
 version: 2.0
 jurisdiction: NZ
 tax_year: 2026
-last_updated: 2026-09-22
+last_updated: 2026-09-27
+authored_by: OpenAccountants team
 review_status: pending_review
-drafted_by: OpenAccountants
-approved_by: pending
+trust_label: By OpenAccountants
 category: international
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# ACC levies in New Zealand for the self-employed and employers
+# ACC levies in New Zealand: employees, the self-employed and employers
 
-How the Accident Compensation Corporation (ACC) levies work for sole traders, contractors, active look-through company owners and employers in New Zealand: the Earners' levy, the Work levy by classification unit (CU), the Working Safer levy, CoverPlus and CoverPlus Extra, maximum liable earnings, and the invoice cycle. Figures are for tax year 2026. In New Zealand that is the levy year from 1 April 2026 to 31 March 2027, which Inland Revenue calls the 2027 income year. The Earners' levy figures come from Inland Revenue's rate page and its employer's guide (IR335) for the tax year ending 31 March 2027. The average Work levy comes from the ACC levy consultation report published in the New Zealand Gazette in 2025. One limit matters most. ACC publishes the Work levy rate for each classification unit, and the Working Safer levy rate, only on its own website, which this Guide cannot link or read. So this Guide prints no industry rate. Read the client's rate from ACC's levy guidebook or from the client's ACC invoice.
+How Accident Compensation Corporation (ACC) levies work in New Zealand: the Earners' levy deducted through PAYE, the Earners' levy and Work levy that ACC invoices to the self-employed, the Work levy employers pay for their staff, the Working Safer levy, classification by business industry classification (BIC) code, CoverPlus and CoverPlus Extra, and the invoice cycle.
 
-## Section 1: Quick reference
+Figures are for the levy year 1 April 2026 to 31 March 2027 (tax year 2026-27; Inland Revenue calls it the tax year ending 31 March 2027). Each rate below names its own levy year. A short section covers the 2025-26 returns being filed now.
 
-**Quick reference fields**
+What this Guide can and cannot source. Inland Revenue (IRD) collects the Earners' levy through PAYE and passes income details to ACC, so IRD publishes the Earners' levy rate, the maximum and the self-employed minimum. ACC itself publishes the Work levy rate for each classification unit, the Working Safer levy rate, and the CoverPlus and CoverPlus Extra terms. ACC's website is not a source this Guide may cite, so any point that only ACC publishes is marked **check**: confirm it on the client's ACC invoice or with ACC before relying on it. This Guide prints no Work levy rate for any industry.
 
-| Field | Value |
-| --- | --- |
-| Country | New Zealand |
-| Jurisdiction Code | NZ |
-| Primary Legislation | Accident Compensation Act 2001 (AC Act) |
-| Supporting Legislation | Injury Prevention, Rehabilitation, and Compensation Act 2001 |
-| Authority | Accident Compensation Corporation (ACC). Inland Revenue collects the employees' Earners' levy through PAYE |
-| Online account | MyACC for Business, ACC's online platform for levy accounts |
-| Levy year | 1 April 2026 to 31 March 2027 (Inland Revenue: 2027 income year) |
-| Currency | NZD only |
-| Earners' levy rate | 1.75% (includes GST). See the Inland Revenue table below |
-| Maximum liable earnings (Earners' levy) | NZD 156,641. See the Inland Revenue table below |
-| Work levy rate | Set by ACC for each classification unit. Not printed here. Read it from the ACC invoice or ACC's levy guidebook |
-| Working Safer levy rate | Collected by ACC on behalf of MBIE and shown on the ACC invoice. Not printed here |
-| Contributor | Open Accountants Community |
-| Validated By | Pending. Requires sign-off by a New Zealand chartered accountant |
-| Validation Date | Pending |
-| Confidence Coverage | Tier 1: Earners' levy rate and maximum, invoice cycle, who pays what. Tier 2: CU selection, CoverPlus Extra, experience rating. Tier 3: claims management, dispute resolution, complex multi-business structures |
+Companion Guides: income tax on the business itself is in `nz-income-tax-ir3` (and `nz-provisional-tax`); GST registration and input tax are in `new-zealand-gst`.
 
-Read this whole section before computing anything.
+## Scope
 
-**ACC Earners' levy: Inland Revenue rate page**
+In scope:
 
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates |
-| Earners' levy rate, 1 April 2026 to 31 March 2027 (this Guide's year). Flat rate on each dollar of liable earnings up to the maximum. Includes GST | 1.75% | "1 April 2026 to 31 March 2027 $1.75 per ... (1.75%)"; "These amounts include GST." |
-| Maximum liable earnings, 1 April 2026 to 31 March 2027. No Earners' levy on earnings above it (a ceiling, not a cliff). Per person, per year | NZD 156,641 | "1 April 2026 to 31 March 2027 $156,641 $2,741.22" |
-| Maximum Earners' levy payable, 1 April 2026 to 31 March 2027 | NZD 2,741.22 | "Maximum levy payable" |
-| Earners' levy rate, 1 April 2027 to 31 March 2028 (NEXT year; do not use for 2026-27) | 1.83% | "1 April 2027 to 31 March 2028 $1.83 per ... (1.83%)" |
-| Maximum liable earnings, 1 April 2027 to 31 March 2028 (NEXT year) | NZD 160,244 | "1 April 2027 to 31 March 2028 $160,244" |
-| Earners' levy rate, 1 April 2025 to 31 March 2026 (last year; history) | 1.67% | "1 April 2025 to 31 March 2026 $1.67 per ... (1.67%)" |
-| Maximum liable earnings, 1 April 2025 to 31 March 2026 (last year; history) | NZD 152,790 | "1 April 2025 to 31 March 2026 $152,790" |
-| Maximum liable earnings, 1 April 2024 to 31 March 2025 (history; the figure the old version of this Guide used) | NZD 142,283 | "1 April 2024 to 31 March 2025 $142,283" |
+- Employees: the Earners' levy that the employer deducts as part of PAYE ([IR335 Employer's guide](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf), page 18).
+- The self-employed: sole traders, contractors paid schedular payments, partners with active partnership income, and owners who play an active part in a look-through company (LTC). ACC invoices them directly for their levies ([IR3G 2026](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir1---ir99/ir3g/ir3g-2026.pdf), PDF pages 15, 26, 35 and 60; [IRD, ACC levies for a look-through company](https://www.ird.govt.nz/income-tax/income-tax-for-businesses-and-organisations/income-tax-for-companies/look-through-companies/acc-levies-for-a-look-through-company)).
+- Employers, including close companies that pay shareholder-employees without PAYE.
+- Private domestic workers and other IR56 taxpayers who deduct their own PAYE.
 
-Inland Revenue's news item of 11 March 2025 says the Earners' levies "have now been set for the 2025-26, 2026-27 and 2027-28 tax years".
+Out of scope: ACC claims, weekly compensation, rehabilitation, levy disputes and reviews. See "When to refuse or refer".
 
-**ACC Earners' levy through PAYE: employer's guide (IR335)**
+### The three levies at a glance
 
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf |
-| Earners' levy rate for the tax year ending 31 March 2027. Already included in PAYE | 1.75% | "The rate for the tax year ending 31 March 2027 is 1.75%. PAYE includes ACC earners' levy already" |
-| Maximum earnings per weekly pay | NZD 3,012 | "$3,012 per weekly pay" |
-| Maximum earnings per fortnightly pay | NZD 6,024 | "$6,024 per fortnightly pay" |
-| Maximum earnings per 4-weekly pay | NZD 12,048 | "$12,048 per 4-weekly pay" |
-| Maximum earnings per monthly pay | NZD 13,053 | "$13,053 per monthly pay" |
+| Levy | What it covers | Who pays | Where the rate comes from |
+| --- | --- | --- | --- |
+| Earners' levy | Injuries outside work (IR335 page 18: "to cover the cost of non-work-related injuries") | Employees through PAYE; the self-employed on their ACC invoice; close companies on shareholder-employee pay with no PAYE | IRD rates page (below) |
+| Work levy | Injuries at work | Employers, for their employees; the self-employed, for themselves | Set by ACC for each classification unit. **check** on the ACC invoice |
+| Working Safer levy | Collected by ACC with the other levies (IRD lists it alongside the Work levy for the self-employed) | Businesses and the self-employed | ACC invoice. **check** |
 
-IR335 says the maximum does not apply to PAYE on regular secondary income, casual agricultural employee payments, election day workers' earnings, or earnings taxed at the non-notified rate.
-
-**ACC Work levy: the national average only (Gazette)**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://gazette.govt.nz/notice/id/2025-au1361 |
-| AVERAGE Work levy for 2026/27, for each hundred dollars of liable earnings, as decided by the Government. An average across all industries. It is NOT the rate for any classification unit and must never be used to compute a client's levy | NZD 0.69 | "Work levy ... 2026/27 $0.69 $0.69" |
-
-The same report says: "the levy rate for each classification unit will be updated to reflect any changes in its claim patterns. This means that the levy rates for some businesses will decrease when the average rate is increasing". A client's own Work levy can move in the opposite direction to the average.
-
-**ACC levies explained for business: business.govt.nz**
-
-| What | Value | Note |
-| --- | --- | --- |
-| Source | all figures below | https://www.business.govt.nz/tax-and-money/guide-to-business-tax/acc-levies |
-| Weekly compensation if unable to work because of a covered injury: up to this share of income | 80% | "ACC will pay up to 80% of your income if you're unable to work because of an injury that's covered by ACC" |
-
-**ACC levy components**
-
-| Levy | Who Pays | Rate |
-| --- | --- | --- |
-| Earners' levy (non-work injury cover) | Employees through PAYE; self-employed people on their ACC invoice | 1.75% up to NZD 156,641 (includes GST) |
-| Work levy (ACC workplace cover) | Employers, for their employees; self-employed people, for themselves | Set by ACC for the classification unit (CU). Read it from the ACC invoice |
-| Working Safer levy | Businesses and self-employed people; collected by ACC for MBIE to support WorkSafe NZ | Read it from the ACC invoice |
-
-**Work levy rates by CU**
-
-The old version of this Guide printed "illustrative" Work levy and Working Safer levy rates for seven classification units. No allowed official page prints any of them, so they are removed. The rate for a given industry is set by ACC for its classification unit and must be read from ACC's levy guidebook, ACC's levy calculators, or the client's ACC invoice. Do not quote a CU rate from memory.
-
-**CoverPlus vs CoverPlus Extra**
-
-| Feature | CoverPlus (Default) | CoverPlus Extra (CPX) |
-| --- | --- | --- |
-| Who is on it | Every sole trader starts on it automatically | Chosen by the self-employed person instead of CoverPlus |
-| Compensation basis | Up to 80% of income, worked out from the last self-employed tax return | Agreed level of cover chosen by the client |
-| Levy basis | Type of work (CU) and liable earnings | Agreed level of cover |
-| Invoice timing | After the annual tax return is filed, usually in September | Shortly after the policy is approved, then every April when it renews |
-
-**Conservative defaults**
-
-| Ambiguity | Default |
-| --- | --- |
-| Unknown CU | Flag for reviewer. The CU sets the Work levy rate. Ask for the ACC invoice |
-| Unknown CoverPlus option | CoverPlus (default) |
-| Unknown GST status | Do not add GST to the Earners' levy rate: Inland Revenue prints it including GST. Read the GST lines on the ACC invoice |
-| Unknown liable earnings | Use the most recent income tax return figure, and say it is an estimate |
-
-## Section 2: Required inputs and refusal catalogue
-
-### Required inputs
-
-- **Required inputs before computing ACC levy.** Before computing any ACC levy figure, you MUST know: (1) status: sole trader, partner, contractor on schedular payments, active or passive look-through company owner, shareholder-employee, or employer; (2) the client's classification unit and its Work levy rate, from the ACC invoice; (3) liable earnings, from the income tax return; (4) CoverPlus or CoverPlus Extra; (5) whether the No Claims Discount or Experience Rating Programme changes the Work levy; (6) the levy year, because self-employed invoices are usually based on the year before.
-- **PAYE employee only.** If the client only earns salary or wages, their Earners' levy is already deducted through PAYE and they get no ACC invoice of their own. Their employer pays the Work levy for them. STOP: there is nothing to compute beyond what PAYE already took.
-- **Contractors on schedular payments.** Withholding tax is deducted from schedular payments, but not the Earners' levy (IR335). These contractors are self-employed for ACC and get an ACC invoice. business.govt.nz lists "not realising you'll get an ACC invoice" as a common mistake.
-
-### Refusal catalogue
-
-- **R-NZ-ACC-1: Claims management.** Trigger: client asks about managing an ACC claim or rehabilitation. Message: "ACC claims management and rehabilitation are outside this Guide's scope. Please contact ACC directly on 0800 101 996."
-- **R-NZ-ACC-2: Dispute resolution.** Trigger: client disputes an ACC levy or classification. Message: "ACC levy disputes and CU reclassification require direct engagement with ACC. This Guide cannot advise on dispute procedures. Please escalate to a qualified New Zealand chartered accountant."
-- **R-NZ-ACC-3: Complex multi-business structures.** Trigger: client has several business entities in different CUs. Message: "Multi-entity ACC structuring requires case-specific analysis. Please escalate to a qualified New Zealand chartered accountant."
-
-## Section 3: Payment pattern library
-
-This is the deterministic pre-classifier for bank statement entries related to ACC. Match by case-insensitive substring.
-
-### 3.1 ACC levy payments
-
-**ACC levy payments patterns**
-
-| Pattern | Treatment | Notes |
-| --- | --- | --- |
-| ACC, ACCIDENT COMPENSATION | ACC LEVY PAYMENT | Yearly levy payment, one-off or instalment |
-| ACC LEVY, ACC INVOICE | ACC LEVY PAYMENT | Same |
-| ACC COVERPLUS, COVERPLUS EXTRA | ACC LEVY PAYMENT | CoverPlus or CoverPlus Extra invoice payment |
-
-### 3.2 ACC provisional invoicing
-
-**ACC provisional invoicing patterns**
-
-| Pattern | Treatment | Notes |
-| --- | --- | --- |
-| ACC PROVISIONAL, ACC ESTIMATE | PROVISIONAL LEVY | Employers: estimate for the current year, based on the previous year's liable earnings and expected wages |
-| ACC ADJUSTMENT, ACC REFUND | LEVY ADJUSTMENT | Difference for the previous year: an extra invoice if underpaid, a credit on the account if overpaid |
-
-### 3.3 GST treatment
-
-**GST treatment pattern**
-
-| Pattern | Treatment | Notes |
-| --- | --- | --- |
-| ACC invoice with a GST line | CHECK GST | Inland Revenue prints the Earners' levy rate including GST. Whether the GST on an ACC invoice is claimable as input tax is not shown on an allowed page: confirm before claiming |
-
-### 3.4 IRD payments (income return triggers ACC)
-
-**IRD payment patterns**
-
-| Pattern | Treatment | Notes |
-| --- | --- | --- |
-| IRD, INLAND REVENUE NZ | TAX PAYMENT | Not an ACC levy. ACC gets income details from Inland Revenue |
-| IR3 FILED | ACC TRIGGER | Filing the income tax return triggers the CoverPlus invoice |
-
-## Section 4: Levy computation rules
-
-### 4.1 Levy computation steps (Tier 1)
-
-**Levy computation steps** _(Accident Compensation Act 2001; rates as set for each levy year)_
-
-| Step | Action |
-| --- | --- |
-| 4.1 | Determine liable earnings: net self-employment income from the income tax return (for CoverPlus, usually the year before) |
-| 4.2 | For the Earners' levy, cap earnings at the maximum for the levy year (NZD 156,641 for 2026-27) |
-| 4.3 | Earners' levy = capped liable earnings x 1.75%. This rate already includes GST: do not add GST again |
-| 4.4 | Work levy = liable earnings x the Work levy rate for the client's CU, taken from the ACC invoice or ACC's levy guidebook. Never use the Gazette average |
-| 4.5 | Working Safer levy = liable earnings x the Working Safer rate on the ACC invoice |
-| 4.6 | Adjust the Work levy for any No Claims Discount or Experience Rating shown on the invoice |
-| 4.7 | Total = the three levies. Label every total an estimate until the ACC invoice arrives |
-
-Whether the Work levy and Working Safer levy are also capped at the maximum liable earnings is not printed on an allowed page. Read it from the ACC invoice or guidebook.
-
-### 4.2 CoverPlus (Default) (Tier 1)
-
-- **CoverPlus compensation basis.** ACC pays up to the share of income in the business.govt.nz table if the client cannot work because of a covered injury. ACC calculates it from income in the last self-employed tax return. The levy is based on the type of work and liable earnings, and the invoice arrives after the tax return is filed, usually in September.
-
-### 4.3 CoverPlus Extra (Tier 2)
-
-- **CoverPlus Extra compensation basis.** The self-employed person agrees a level of cover with ACC, which gives more control over how much income ACC covers. The levy is invoiced against that agreed level shortly after the policy is approved, then every April when it renews. Flag for reviewer: cover can end up higher or lower than actual earnings. Advise the client to review it every year.
-
-## Section 5: Payment and invoicing
-
-### 5.1 Invoicing (Tier 1)
-
-**Invoicing details** (source: https://www.business.govt.nz/tax-and-money/guide-to-business-tax/acc-levies)
-
-| Detail | Value |
-| --- | --- |
-| Self-employed on CoverPlus | Once a year, after the income tax return is filed, usually in September. Usually based on the year before |
-| Self-employed on CoverPlus Extra | Every April, when the policy renews |
-| Employers and shareholder-employers | First invoice usually after the tax return is filed, then once a year, usually in July |
-| Payment options | Internet banking, credit card (a service fee applies), or direct debit, as a one-off payment or in instalments |
-| Due date | The due date on the invoice. Pay by it even while waiting for a reassessment |
-| Late payment | "you may face a penalty for late payment" |
-
-### 5.2 Provisional invoicing (Tier 1)
-
-- **Provisional invoicing process.** An employer's yearly invoice has two parts: a provisional levy for the current year (an estimate based on the previous year's liable earnings and the wages expected in the coming year) and an adjustment for the previous year (an extra invoice if too little was paid, a credit if too much). If circumstances change, the employer can ask ACC to reassess using form ACC4618. A self-employed person on CoverPlus is invoiced after filing, based on the earnings of the year before.
-
-## Section 6: GST and deductibility
-
-### 6.1 GST treatment (Tier 1)
-
-- **GST treatment on ACC levies.** Inland Revenue prints its table of Earners' levy rates under the words "These amounts include GST" (see the first table). The maximum levy is that rate applied to the maximum earnings. The old version of this Guide said all levies were GST-exclusive with GST added on top; for the Earners' levy that is contradicted and is removed. How GST appears on the Work levy and Working Safer levy lines, and whether a GST-registered person can claim the GST on an ACC invoice as input tax, is not printed on an allowed page. Read the invoice and confirm before claiming.
-
-### 6.2 Income tax deductibility (Tier 2)
-
-- **Deductibility of ACC levies.** Inland Revenue says this only on its page for ACC carers: "If you're self employed, you can claim vehicle expenses and ACC levies as expenses" (https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-carers). The same page adds that most carers are not treated as self employed. No allowed page states a general rule for every self-employed person or employer, or says which levies it covers. Flag for reviewer: a New Zealand chartered accountant should confirm deductibility before it is relied on.
-
-## Section 7: Edge case registry
-
-### EC1: Multiple business activities (Tier 2)
-
-Situation: Client runs a software consultancy and a construction side business.
-Resolution: ACC assigns the CU from the Business Industry Classification (BIC) code, which the client chooses for their main work activity when registering for GST or filing a tax return (business.govt.nz). How ACC treats two activities of similar size is not on an allowed page. Flag for reviewer.
-
-### EC2: First year of self-employment (Tier 1)
-
-Situation: Client started freelancing in March 2026. No earlier income tax return.
-Resolution: The first ACC invoice is triggered when the first individual income tax return is filed, which is usually in the second year of business. After that the client is invoiced yearly, usually on the earnings of the year before (business.govt.nz). Warn the client to set money aside. The old version of this Guide said ACC "will estimate levies or use the minimum"; no allowed page says so.
-
-### EC3: Self-employed AND employee (Tier 1)
-
-Situation: Client has PAYE employment and a freelance side business.
-Resolution: PAYE already includes the Earners' levy on the wages. The Work levy on the job is the employer's. The self-employment income is invoiced by ACC for the Earners' levy, Work levy and Working Safer levy. How the Earners' levy maximum is shared between the two sources is not printed on an allowed page. Flag for reviewer.
-
-### EC4: Earnings exceed maximum (Tier 1)
-
-Situation: Consultant's net self-employment income for 2026-27 is well above the maximum liable earnings.
-Resolution: The Earners' levy is charged only up to NZD 156,641 and cannot exceed NZD 2,741.22 (first table). The old version of this Guide capped at NZD 142,283 which was the 2024-25 maximum.
-
-### EC5: Client disputes CU classification (Tier 2)
-
-Situation: Client classified as building construction but mainly does office-based project management.
-Resolution: The CU follows the BIC code. business.govt.nz says to tell ACC if the business activity has changed. The CU sets the Work levy rate and can change costs a lot. Flag for reviewer.
-
-### EC6: GST on ACC levies (Tier 1)
-
-Situation: GST-registered sole trader receives an ACC invoice.
-Resolution: Do not add GST on top of the Earners' levy rate: Inland Revenue prints it including GST. Read the GST shown on the invoice. The input tax claim is not confirmed on an allowed page (Section 6.1).
-
-### EC7: Look-through company owner (Tier 2)
-
-Situation: Client owns shares in a look-through company.
-Resolution: A passive investor pays no ACC levies on look-through company income. An owner who plays an active part in generating the income is self-employed for ACC, and ACC invoices them directly (https://www.ird.govt.nz/income-tax/income-tax-for-businesses-and-organisations/income-tax-for-companies/look-through-companies/acc-levies-for-a-look-through-company). For a working owner's salary, Inland Revenue's pages differ. The look-through company page says the earners' levy "will be deducted as part of PAYE from your salary or wages". The employer's guide IR335, page 18, lists "salaries to working owners of a look-through company" among payments not to deduct the ACC earners' levy from (https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf). Flag for reviewer.
-
-### EC8: Shareholder-employee without PAYE (Tier 1)
-
-Situation: A close company pays a shareholder-employee salary with no PAYE deducted.
-Resolution: ACC invoices the close company employer for the Earners' levy on that remuneration, based on the shareholder-employee remuneration declared in the company's IR4 return (IR335, page 18).
-
-## Section 8: Reviewer escalation protocol
-
-When a Tier 2 situation is identified:
-
-~~~
-REVIEWER FLAG
-Tier: T2
-Client: [name]
-Situation: [description]
-Issue: [what is ambiguous]
-Options: [possible treatments]
-Recommended: [most likely correct treatment and why]
-Action Required: Qualified NZ chartered accountant must confirm before advising client.
-~~~
-
-When a Tier 3 situation is identified:
-
-~~~
-ESCALATION REQUIRED
-Tier: T3
-Client: [name]
-Situation: [description]
-Issue: [outside Guide scope]
-Action Required: Do not advise. Refer to qualified NZ chartered accountant. Document gap.
-~~~
-
-## Section 9: Test suite
-
-The old tests used Work levy and Working Safer rates that no allowed page prints, so their totals are removed. These tests check method, not amounts.
-
-### Test 1: Standard software consultant
-
-Input: sole trader on CoverPlus, liable earnings below the maximum, CU rate unknown.
-Expected output: Earners' levy = earnings x 1.75%, no GST added. Work levy and Working Safer levy: ask for the ACC invoice; do not use the Gazette average. Total labelled an estimate.
-
-### Test 2: High earner hitting cap
-
-Input: liable earnings for 2026-27 well above the maximum.
-Expected output: Earners' levy capped at NZD 2,741.22 on NZD 156,641. Not the 2024-25 maximum of NZD 142,283 and not the 2027-28 rate of 1.83%.
-
-### Test 3: Builder (high-risk CU)
-
-Input: builder on CoverPlus, no invoice supplied.
-Expected output: Earners' levy as in Test 1. Refuse to print a Work levy rate; explain that the builder's CU rate comes from ACC's levy guidebook or invoice and may differ a lot from the average.
-
-### Test 4: Low-income first-year freelancer
-
-Input: freelancer in the first year of business, no tax return filed yet.
-Expected output: no ACC invoice yet; the first invoice follows the first income tax return, usually in the second year. Advise setting money aside.
-
-## Section 10: Prohibitions and disclaimer
-
-### Prohibitions
-
-- NEVER assume Work levy rates are the same for all industries. They vary by classification unit
-- NEVER use the Gazette average Work levy as a client's rate
-- NEVER print a CU rate or Working Safer rate from memory or from an old version of this Guide
-- NEVER charge the Earners' levy on earnings above the maximum liable earnings
-- NEVER add GST on top of the Earners' levy rate Inland Revenue publishes: it already includes GST
-- NEVER use the 2027-28 row of Inland Revenue's table for 2026-27
-- NEVER confuse CoverPlus (default, based on earnings) with CoverPlus Extra (agreed level of cover)
-- NEVER omit the Earners' levy. It applies to employees through PAYE and to the self-employed on their invoice
-- NEVER present calculations as definitive. Label them estimates and direct the client to the ACC invoice or a qualified New Zealand chartered accountant
-
-## The method, step by step
-
-1. Place the person. Employee only: PAYE already includes the Earners' levy (IR335: https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf). Sole trader, contractor on schedular payments or active look-through company owner: self-employed for ACC and invoiced directly (https://www.ird.govt.nz/income-tax/income-tax-for-businesses-and-organisations/income-tax-for-companies/look-through-companies/acc-levies-for-a-look-through-company).
-2. Take liable earnings from the individual income tax return (IR3), because ACC gets its income details from Inland Revenue and CoverPlus invoices usually use the year before (https://www.business.govt.nz/tax-and-money/guide-to-business-tax/acc-levies).
-3. Apply the Earners' levy rate and maximum for the right levy year, read from the right row of Inland Revenue's table (https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates). Do not add GST.
-4. Read the CU, the Work levy rate, the Working Safer rate and any discount or loading from the client's ACC invoice or ACC's levy guidebook. The Gazette average (https://gazette.govt.nz/notice/id/2025-au1361) is context only.
-5. Check timing and payment: CoverPlus after the return (usually September), CoverPlus Extra in April, employers usually July; pay by the invoice due date (https://www.business.govt.nz/tax-and-money/guide-to-business-tax/acc-levies).
-6. For an employer, confirm payroll deducts the Earners' levy only from payments IR335 lists and only up to the per-pay maximum (https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf).
+Source for the self-employed list: IRD, "I am coming to work or study in New Zealand": "In addition to the Earners' levy that people getting salary or wages pay, you'll also pay the: Work levy Working Safer levy" ([IRD](https://www.ird.govt.nz/situations/work-or-study-in-new-zealand)).
 
 ## Ask the client first
 
-- Are you an employee, a sole trader, a contractor paid schedular payments, a look-through company owner (active or passive), or an employer?
-- Can you send your latest ACC invoice? It shows your classification unit, Work levy rate and Working Safer levy.
-- Are you on CoverPlus or CoverPlus Extra, and at what agreed level of cover?
-- Which income tax return has been filed most recently, and what were the net self-employment earnings in it?
-- Has your main business activity (your BIC code) changed since you registered?
+- Are you an employee, a sole trader, a contractor paid schedular payments, a partner, an LTC owner (active or passive), a shareholder-employee, an employer, or a mix of these?
+- Which levy year is the question about? A self-employed person's ACC invoice is based on the income tax return, so it usually relates to an earlier year than the one the invoice arrives in.
+- Can you send your latest ACC invoice? It shows your classification unit, the Work levy and Working Safer levy rates, and any discount or loading. Without it no Work levy figure can be given.
+- What were the liable earnings in the most recent income tax return (IR3), and is the BIC code on that return right for your main activity?
+- Are you on CoverPlus (the default) or CoverPlus Extra, and at what agreed level of cover? (**check** with ACC)
+- For employees: pay frequency, and whether any payment is a lump sum, redundancy, retiring payment or employee share scheme benefit.
+- Do you have more than one source of liable income, or shareholder-employee pay from two or more companies?
 - Are you GST-registered?
+
+## The method, step by step
+
+1. **Place the person.** Employee only: the Earners' levy is already inside PAYE and the employer pays the Work levy; there is no ACC invoice to the employee (IR335 page 18: "PAYE includes ACC earners' levy already, so no extra calculations are needed"). Self-employed, contractor on schedular payments, partner with active income, or active LTC owner: ACC invoices the person directly. Passive LTC investor: no ACC levies on that LTC income ([IRD LTC page](https://www.ird.govt.nz/income-tax/income-tax-for-businesses-and-organisations/income-tax-for-companies/look-through-companies/acc-levies-for-a-look-through-company)).
+2. **Pick the levy year and its row.** Use the row of the IRD table for the year the earnings relate to. Do not use the 2027-28 row for 2026-27, and do not use last year's row for this year ([IRD rates page](https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates)).
+3. **Find liable earnings.** For the self-employed, ACC takes income from the IR3: question 11A (gross earnings with PAYE deducted and earnings not liable for the earners' levy), 12 (schedular payments), 17 (foreign employment and foreign services income only), 18 (active partnership income), 19 (LTC active income), 20 (shareholder-employee salary with no tax deducted), 24 (self-employed income), 27 (other income) and 29 (other expenses) ([IR3G 2026](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir1---ir99/ir3g/ir3g-2026.pdf), PDF page 60). IRD passes this to ACC under an information-sharing agreement that "Enables ACC to assess levies" ([IRD, information sharing with ACC](https://www.ird.govt.nz/about-us/information-sharing/mous/acc)).
+4. **Apply the maximum and the minimum.** Liable earnings above the maximum carry no Earners' levy or Work levy. A self-employed person pays the Work and Earners' levies on at least the minimum liable earnings, even with a loss (figures below). IR3G ties this to full-time work ("If you were in full-time employment and have recorded a loss..."); whether it applies to part-time self-employment is **check** with ACC, so do not estimate a part-time sole trader on the minimum without confirming. Whether the Working Safer levy uses the same base is **check** on the ACC invoice.
+5. **Earners' levy = capped liable earnings x the rate for the year.** The rate already includes GST: never add GST on top.
+6. **Work levy and Working Safer levy: read them, do not compute them from memory.** The rate depends on the classification unit, which ACC assigns from the BIC code on the return. Take the rates, and any No Claims Discount or experience rating, from the client's ACC invoice (**check**). If the BIC code is missing, ACC picks one and "your ACC levy rate could be incorrect" (IR3G 2026, PDF page 8).
+7. **Label the total an estimate** until the ACC invoice arrives, and state which levy year each figure belongs to.
+8. **For an employer's payroll**, confirm the earners' levy is deducted only from the payments IR335 lists, only up to the per-pay maximum, and that lump sums follow the lump-sum rule (see the boundary table).
+9. **Record the deduction.** ACC levies paid for self-employment and as an employer, and any interest charged, go in the business expenses (Box 9 of the IR3B) ([IR3B July 2026](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir1---ir99/ir3b/ir3b-2026.pdf)).
+
+## Figures, with their levy years
+
+### Earners' levy rate and maximum ([IRD, ACC earners' levy rates](https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates))
+
+IRD prints this table under the words "These amounts include GST." The rate is a flat rate on each dollar of liable earnings up to the maximum. The maximum is a ceiling, not a cliff: earnings above it carry no levy, and earnings below it are not affected.
+
+| Levy year | Rate (includes GST) | Maximum liable earnings | Maximum levy payable | Use |
+| --- | --- | --- | --- | --- |
+| 1 April 2026 to 31 March 2027 | $1.75 per $100 (1.75%) | $156,641 | $2,741.22 | **This Guide's year** |
+| 1 April 2025 to 31 March 2026 | $1.67 per $100 (1.67%) | $152,790 | $2,551.59 | Returns being filed now for 2025-26 |
+| 1 April 2027 to 31 March 2028 | $1.83 per $100 (1.83%) | $160,244 | $2,932.47 | Next year only. Never for 2026-27 |
+
+IRD announced on 11 March 2025 that "The ACC earners' levies have now been set for the 2025-26, 2026-27 and 2027-28 tax years" ([IRD news](https://www.ird.govt.nz/updates/news-folder/2025/acc-earners-levies-set)).
+
+### Maximum and minimum for the self-employed, 2026-27 ([IRD Payroll calculations and business rules specification, 1 April 2026 to 31 March 2027](https://www.ird.govt.nz/-/media/project/ir/home/documents/digital-service-providers/software-providers/payroll-calculations-business-rules-specifications/payroll-calculations-and-business-rules-specification.pdf))
+
+| What | 2026-27 | Source wording |
+| --- | --- | --- |
+| Maximum liable earnings, employees and private domestic workers (Work and Earners' Accounts) | $156,641 | Row "Employees and private domestic workers ... (Work and Earners' Accounts)": 2025/26 $152,790, 2026/27 $156,641 |
+| Maximum liable earnings, self-employed people (Work and Earners' Accounts) | $156,641 | same table |
+| Minimum liable earnings on which self-employed people pay the Work and Earners' levies | $50,501 | "To increase the minimum liable earnings that self-employed people pay Work and Earners' levies on to $50,501 in 2026/27" |
+
+IR3G 2026 (PDF page 61) explains the minimum for 2025-26 returns: "If you were in full-time employment and have recorded a loss, or your earnings are below the minimum earnings threshold, you are still liable for ACC levies. These will be calculated at the minimum level." IRD does not say here who counts as working full time for this purpose, or whether part-time self-employed people are treated differently: **check** with ACC.
+
+### Earners' levy through PAYE, 2026-27 ([IR335 Employer's guide, September 2026](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf))
+
+| What | Tax year ending 31 March 2027 |
+| --- | --- |
+| Earners' levy rate, already inside PAYE | 1.75% |
+| Maximum earnings per weekly pay | $3,012 |
+| Maximum earnings per fortnightly pay | $6,024 |
+| Maximum earnings per 4-weekly pay | $12,048 |
+| Maximum earnings per monthly pay | $13,053 |
+| Non-notified rate (ND tax code), includes the earners' levy | 46.75% |
+
+IR335 page 18: the maximum does not apply to PAYE on regular secondary income, casual agricultural employee payments, election day workers' earnings, or earnings where the non-notified rate is used.
+
+### Work levy and Working Safer levy
+
+No figure. ACC sets the Work levy rate for each classification unit and publishes it, with the Working Safer levy rate, only on its own website and on the client's invoice (**check**). The earlier version of this Guide quoted a national average Work levy and illustrative industry rates; they are removed because no allowed official page prints them and an average is never a client's rate.
+
+## Boundaries and exceptions
+
+### Which payments carry the Earners' levy through PAYE ([IR335 page 18](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf))
+
+| Deduct the earners' levy from | Do not deduct the earners' levy from |
+| --- | --- |
+| Salary and wages | Schedular payments |
+| Overtime pay | Retirement payments |
+| Backpay and holiday pay | Redundancy payments |
+| Long-service leave pay | Employee share scheme benefits |
+| Bonuses or gratuities | Jury fees |
+| Taxable allowances | Witness fees |
+| Shareholder-employee salaries with PAYE deductions | Taxable and non-taxable pensions |
+| Salaries to partners in a partnership | Tax-free allowances |
+| Salaries to working owners of a look-through company | Shareholder-employee salaries with no PAYE deductions (ACC invoices the company instead) |
+
+Read the two columns separately. The PDF's flattened text runs them together, which is how an earlier version of this Guide came to say that LTC working owners' salaries are excluded. They are in the "deduct" column.
+
+Lump sums (IR335, lump sum section): no earners' levy on redundancy or retiring payments, on employee share scheme benefits, or where the annualised income plus the extra pay is more than $156,641. For those, use the PAYE rate excluding the earners' levy; use the rate including it in all other cases. Employment must actually end for a payment to be a redundancy or retiring payment; if it does not, PAYE including the earners' levy is deducted.
+
+### Who pays what, by situation ([IR3G 2026](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir1---ir99/ir3g/ir3g-2026.pdf))
+
+| Situation | Treatment | Source |
+| --- | --- | --- |
+| Employee only | Earners' levy inside PAYE. Employer pays the Work levy. No ACC invoice to the employee | IR335 page 18 |
+| Contractor on schedular payments | No earners' levy deducted by the payer ("this is the worker's responsibility, not yours"). ACC invoices the contractor for levies on schedular payments | IR335 schedular payments section; IR3G PDF page 15 |
+| Sole trader | "Income from self-employment is liable for ACC levies which ACC will invoice you for" | IR3G PDF page 35 |
+| Partner | Active partnership income is liable and invoiced by ACC; salary paid to a working partner has the earners' levy deducted through PAYE only if it is paid under a binding written contract of service signed by all the partners, the contract states the amount payable, and the partner personally and actively performs the services | IR3G PDF page 26; IR335 pages 18 and 56 |
+| LTC owner, passive investor | No ACC levies on LTC income, including LTC income received as beneficiary income through a trustee owner | IRD LTC page |
+| LTC owner, active | Self-employed for ACC; ACC invoices the owner directly | IRD LTC page |
+| LTC working owner paid salary or wages | Earners' levy deducted as part of PAYE. IR335 page 61 treats the payment as salary or wages only if the owner is employed under a written contract of employment. The LTC is invoiced by ACC for levies on salary or wages paid to employees | IRD LTC page; IR335 page 61 |
+| Close company, shareholder-employee paid with no PAYE | ACC invoices the company for the earners' levy on that remuneration, based on the shareholder-employee remuneration declared in the company's IR4 | IR335 page 18; IR3G PDF page 29 |
+| Employee and self-employed (mixed income) | "you have to pay ACC levies on both sources of income, up to the maximum. ACC will invoice you for the amount you'll have to pay" | IR3G PDF page 61 |
+| Shareholder-employee pay from two or more companies | A refund from ACC may be due if the combined total is over the maximum ($152,790 for 2025-26 returns) | IR3G PDF page 61 |
+| Private domestic worker or other IR56 taxpayer | Earners' levy paid as part of their own PAYE; ACC invoices them as an employer for the other levies on IR56 income, and makes allowance for levies paid as an employer | IR3G PDF page 61 |
+| Loss, or earnings below the minimum | Still liable; levies calculated at the minimum level | IR3G PDF page 61 |
+| BIC code missing or wrong | ACC selects a code; the levy rate may be wrong. Fix the code in myIR or on the next return | IR3G PDF page 8; [IRD, updating a client's BIC code](https://www.ird.govt.nz/roles/tax-agents/updating-client-bic-code) |
+
+### CoverPlus and CoverPlus Extra (**check**: ACC-only)
+
+These are ACC products; no allowed official page describes them, so treat the points below as questions to confirm with ACC, not as rules.
+
+| Point | What to confirm with ACC |
+| --- | --- |
+| CoverPlus | The default cover for the self-employed; levies based on liable earnings from the tax return and the classification unit |
+| CoverPlus Extra | An agreed level of cover chosen instead of CoverPlus; levies based on the agreed cover, not on actual earnings. Review the agreed level each year, because it can end up above or below actual earnings |
+| Weekly compensation | How much ACC pays if the person cannot work, and on what income it is based |
+
+### GST
+
+- The Earners' levy rates IRD prints include GST ("These amounts include GST"), and the payroll specification describes the rate as "incl. GST". Do not add GST on top.
+- How GST is shown on the Work levy and Working Safer levy lines of an ACC invoice, and whether a GST-registered person can claim that GST as input tax, is not stated on an allowed page: **check** before claiming. See `new-zealand-gst` for input tax generally.
+
+## Worked cases
+
+All cases use the 2026-27 row of the [IRD rates table](https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates) (1.75%, maximum $156,641, maximum levy $2,741.22) and the 2026-27 minimum from the [IRD payroll specification](https://www.ird.govt.nz/-/media/project/ir/home/documents/digital-service-providers/software-providers/payroll-calculations-business-rules-specifications/payroll-calculations-and-business-rules-specification.pdf). Earners' levy only: the Work levy and Working Safer levy need the client's ACC invoice. Every result is an estimate until ACC invoices.
+
+### Case 1: sole trader below the maximum ([IRD rates](https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates))
+
+A self-employed web designer has liable earnings of $90,000 for 2026-27, on CoverPlus.
+
+- Earners' levy: $90,000 x 1.75% = $1,575.00. No GST added: the rate already includes it.
+- Work levy and Working Safer levy: ask for the ACC invoice; the rate depends on the classification unit set from the BIC code.
+- Timing: ACC invoices from the IR3, and IRD says "ACC will begin invoicing self-employed levies from September" (IR3G 2026, PDF page 60).
+
+### Case 2: high earner above the maximum ([IRD rates](https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates))
+
+A consultant has liable self-employed earnings of $200,000 for 2026-27.
+
+- Liable earnings are capped at $156,641, for both the Earners' levy and the Work levy.
+- Earners' levy: $156,641 x 1.75% = $2,741.22, the maximum levy IRD prints. Not the 2027-28 figures ($160,244 and 1.83%), and not the 2025-26 figures ($152,790 and 1.67%).
+
+### Case 3: self-employed with a loss ([IRD payroll specification](https://www.ird.govt.nz/-/media/project/ir/home/documents/digital-service-providers/software-providers/payroll-calculations-business-rules-specifications/payroll-calculations-and-business-rules-specification.pdf))
+
+A sole trader working full time in the business records a loss for 2026-27.
+
+- IR3G: a loss or earnings below the minimum still attract ACC levies, "calculated at the minimum level".
+- Minimum liable earnings for 2026-27: $50,501. Earners' levy on the minimum: $50,501 x 1.75% = $883.77.
+- Whether the minimum applies if the person does not work full time in the business: **check** with ACC.
+
+### Case 4: employee paid weekly above the per-pay maximum ([IR335](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf))
+
+An employee on a main tax code earns $3,500 in a weekly pay in 2026-27.
+
+- The earners' levy is inside PAYE; it applies only up to $3,012 per weekly pay.
+- Earners' levy portion of that week's PAYE: $3,012 x 1.75% = $52.71. The employee gets no ACC invoice; the employer pays the Work levy.
+
+### Case 5: employee with a side business (mixed income) ([IR3G 2026](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir1---ir99/ir3g/ir3g-2026.pdf))
+
+A client earns $120,000 of salary with PAYE and $60,000 of self-employed income in 2026-27.
+
+- Earners' levy already inside PAYE on the salary: $120,000 x 1.75% = $2,100.00.
+- IR3G: levies apply "on both sources of income, up to the maximum", and ACC invoices the balance. Room left under the maximum: $156,641 - $120,000 = $36,641.
+- Expected Earners' levy on the ACC invoice: $36,641 x 1.75% = $641.22, so the total for the year does not exceed $2,741.22. How ACC applies the maximum to the Work levy on the self-employed income: **check** on the invoice.
+
+### Case 6: LTC working owner
+
+An LTC owner works in the business, is paid a salary under a written employment contract, and also receives an LTC active income allocation.
+
+- Salary: PAYE including the earners' levy is deducted (IR335 page 18 "deduct" column; IR335 page 61 for the written contract). ACC invoices the LTC for levies on salary or wages paid to employees.
+- Active LTC income: the owner is self-employed for ACC and ACC invoices the owner directly ([IRD LTC page](https://www.ird.govt.nz/income-tax/income-tax-for-businesses-and-organisations/income-tax-for-companies/look-through-companies/acc-levies-for-a-look-through-company)).
+- A passive co-owner pays no ACC levies on LTC income.
 
 ## When to refuse or refer
 
-- Claims, rehabilitation or weekly compensation disputes: refer to ACC (R-NZ-ACC-1).
-- Disputed levy or CU classification, or a request to reassess: refer to ACC and a New Zealand chartered accountant (R-NZ-ACC-2).
-- Several entities or activities in different CUs: refer (R-NZ-ACC-3).
-- A request for a specific industry's Work levy rate without the ACC invoice: refuse to state a rate and point to ACC's levy guidebook or the invoice.
-- Whether GST on an ACC invoice may be claimed as input tax: refer until confirmed (see the `new-zealand-gst` Guide for GST generally).
-- Income tax on the business itself: see `nz-income-tax-ir3` and `nz-provisional-tax`.
+- A request for a specific industry's Work levy or Working Safer levy rate without the client's ACC invoice: do not state a rate. Point to the invoice or ACC.
+- ACC claims, weekly compensation, rehabilitation or personal service rehabilitation payments: outside this Guide. Refer to ACC. (For how ACC personal service rehabilitation payments are taxed, see the IR3G.)
+- A disputed levy, classification unit or invoice, or a request for reassessment: refer to ACC's Business Service Centre (phone 0800 222 776, as printed in IR3G 2026) and to a New Zealand chartered accountant.
+- CoverPlus Extra: whether to take it and at what level of cover. ACC-only product; refer.
+- Several entities or activities that may fall in different classification units: refer; the choice of BIC code for the main activity decides the rate.
+- Whether GST on an ACC invoice can be claimed as input tax: not confirmed on an allowed page; refer until confirmed.
+- Shareholder-employee refunds for pay from two or more companies over the maximum: ACC process; refer to ACC.
+- Income tax on the business: see `nz-income-tax-ir3` and `nz-provisional-tax`. GST generally: see `new-zealand-gst`.
+
+## Filing and payment
+
+- **Employees and employers.** The employer deducts PAYE, including the earners' levy, from each pay and files and pays it to IRD under payday filing ([IR335](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf)). Earnings not liable for the earners' levy (for example employee share scheme benefits) go in the "earnings not liable for ACC earners' levy" field of the employment information.
+- **Self-employed.** There is no separate ACC return. The person files the IR3 with the correct BIC code; IRD passes the income and BIC code to ACC; ACC sends an invoice. IRD: "Once ACC gets your information from us, they'll send you an invoice for your levies" ([IRD](https://www.ird.govt.nz/situations/work-or-study-in-new-zealand)). ACC begins invoicing self-employed levies from September (IR3G 2026, PDF page 60).
+- **First year in business.** Because the invoice follows the income tax return, a new business usually receives its first ACC invoice only after its first IR3 is filed. Tell the client to set money aside. Any interim or first-year arrangement is **check** with ACC.
+- **Employers' invoices.** ACC invoices employers for the Work levy on staff pay. The billing month, the split between a provisional levy for the current year and an adjustment for the year before, and how to ask for a reassessment are ACC-only: **check**.
+- **Other ACC invoice details to confirm.** ACC-only, no allowed source: **check**. An earlier version of this Guide said, citing a site outside the allowed list, that CoverPlus Extra is invoiced each April when the policy renews, that employers are usually invoiced in July, that an invoice should be paid by its due date even while a reassessment is pending, and that a reassessment is asked for on ACC form ACC4618. Treat each as a question for ACC, not a rule.
+- **Payment and late payment.** Pay by the due date on the ACC invoice. Payment methods, instalment plans and late-payment penalties are set by ACC: **check** on the invoice.
+- **Deduction.** ACC levies paid for self-employment and as an employer, and any interest charged, are claimed in Box 9 of the IR3B ([IR3B July 2026](https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir1---ir99/ir3b/ir3b-2026.pdf)). The earners' levy inside an employee's PAYE is part of their tax deducted, not a business expense.
+
+## 2025-26 returns being filed now ([IRD rates table](https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates))
+
+For the year 1 April 2025 to 31 March 2026 (IR3G 2026 and the [IRD rates table](https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates)):
+
+| What | 2025-26 |
+| --- | --- |
+| Earners' levy rate (includes GST) | 1.67% |
+| Maximum liable earnings | $152,790 |
+| Maximum levy payable | $2,551.59 |
+
+An employee amending the tax deducted on an IR3 works out the earners' levy with the IR3G worksheet: liable salary and wages, capped at $152,790, multiplied by 1.67%. Self-employed invoices are worked out from IR3 income, so an invoice issued from September 2026 may use 2025-26 income. Check which levy year and which rates each invoice line uses (**check** on the invoice).
+
+## Completion checklist ([IRD rates table](https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates))
+
+- [ ] Status placed: employee, self-employed, partner, LTC owner (active or passive), shareholder-employee, employer, IR56, or mixed.
+- [ ] Levy year stated for every figure, and the matching row of the IRD table used (2026-27: 1.75%, $156,641).
+- [ ] Liable earnings taken from the right IR3 questions; maximum applied; self-employed minimum ($50,501 for 2026-27) considered, including the full-time condition (**check**).
+- [ ] No GST added on top of the Earners' levy rate.
+- [ ] Payroll: only "deduct" column payments carry the earners' levy; per-pay maximum and lump-sum rule applied.
+- [ ] BIC code checked on the return.
+- [ ] Work levy, Working Safer levy, discounts and CoverPlus or CoverPlus Extra read from the ACC invoice, not estimated from memory.
+- [ ] ACC levies paid (and interest) recorded in Box 9 of the IR3B.
+- [ ] Every ACC-only point marked **check** and confirmed with ACC or on the invoice.
+- [ ] Totals labelled estimates; referrals made where "When to refuse or refer" applies.
 
 ## Sources
 
-- Inland Revenue, ACC earners' levy rates: https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates
-- Inland Revenue, Employer's guide IR335: https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf
-- Inland Revenue, ACC levies for a look-through company: https://www.ird.govt.nz/income-tax/income-tax-for-businesses-and-organisations/income-tax-for-companies/look-through-companies/acc-levies-for-a-look-through-company
-- Inland Revenue, ACC carers: https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-carers
-- New Zealand Gazette, ACC levy consultation report for businesses: https://gazette.govt.nz/notice/id/2025-au1361
-- business.govt.nz, ACC levies: https://www.business.govt.nz/tax-and-money/guide-to-business-tax/acc-levies
+- IRD, ACC earners' levy rates: https://www.ird.govt.nz/income-tax/income-tax-for-individuals/acc-clients-and-carers/acc-earners-levy-rates
+- IRD news, ACC earners' levies set (11 March 2025): https://www.ird.govt.nz/updates/news-folder/2025/acc-earners-levies-set
+- IRD, Employer's guide IR335 (September 2026): https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir335/ir335.pdf
+- IRD, Payroll calculations and business rules specification, 1 April 2026 to 31 March 2027: https://www.ird.govt.nz/-/media/project/ir/home/documents/digital-service-providers/software-providers/payroll-calculations-business-rules-specifications/payroll-calculations-and-business-rules-specification.pdf
+- IRD, Individual income tax return guide IR3G 2026: https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir1---ir99/ir3g/ir3g-2026.pdf
+- IRD, IR3B Schedule of business income (July 2026): https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir1---ir99/ir3b/ir3b-2026.pdf
+- IRD, ACC levies for a look-through company: https://www.ird.govt.nz/income-tax/income-tax-for-businesses-and-organisations/income-tax-for-companies/look-through-companies/acc-levies-for-a-look-through-company
+- IRD, I am coming to work or study in New Zealand: https://www.ird.govt.nz/situations/work-or-study-in-new-zealand
+- IRD, Updating a client's BIC code: https://www.ird.govt.nz/roles/tax-agents/updating-client-bic-code
+- IRD, Information sharing with ACC: https://www.ird.govt.nz/about-us/information-sharing/mous/acc
 
-### Disclaimer
-
-This Guide and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this Guide. All outputs must be reviewed and signed off by a qualified professional (such as a New Zealand Chartered Accountant or equivalent licensed practitioner) before filing or acting upon.
-
-> Contributed by OpenAccountants.
+This Guide is general information, not tax advice. Confirm ACC-only points with ACC and have a New Zealand chartered accountant review the position before acting.
 
 <!-- openaccountants-cta-block -->
 

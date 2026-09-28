@@ -2,431 +2,313 @@
 name: ie-formation
 description: "Use this skill whenever asked about forming, incorporating, or registering a business in Ireland. Trigger on phrases like \"Ireland company formation\", \"CRO registration\", \"LTD Ireland\", \"DAC Ireland\", \"sole trader Ireland\", \"Form A1 Ireland\", \"PPS number business\", \"incorporate Ireland\", \"CORE portal\", \"register business Ireland\", \"RBO Ireland\", \"TR1 Ireland\", \"TR2 Ireland\", \"Companies Act 2014\", \"CLG Ireland\", \"PLC Ireland\", or any question about choosing or registering an Irish entity. Covers entity comparison (Sole Trader, Partnership, LP, LLP, LTD / CLS, DAC, CLG, PLC), CRO online portal (CORE) registration steps, Revenue TR1 / TR2 tax registration, sector-specific licensing (Central Bank, CCPC, DPC), RBO beneficial ownership filing, PPS number requirements for directors and shareholders, and tax treatment by entity type including the 12.5% trading CT rate and PRSI Class S. Out of scope: immigration / employment permits for non-EEA founders, bank account opening procedures (high-level only), full corporate governance and shareholders' agreement drafting, deep sector-specific regulatory licensing beyond signposting, listing on Euronext Dublin / ISEQ, and Irish Collective Asset-management Vehicles (ICAV). ALWAYS read this skill before advising on Irish entity formation."
 jurisdiction: IE
-tax_year: 2025
-last_updated: 2026-07-13
+tax_year: 2026
+last_updated: 2026-09-27
+authored_by: OpenAccountants team
 review_status: pending_review
+trust_label: By OpenAccountants
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
-# IE Formation
+# Forming a business in Ireland (2026): sole trader, partnership or company, CRO, RBO and Revenue registration
 
-## Section 1 — Quick Reference
+## Scope
 
-**Quick Reference**
+This Guide is for someone starting a business in the Republic of Ireland, or an adviser helping them. It covers choosing the vehicle (sole trader, partnership, limited partnership, LTD, DAC, CLG, PLC, unlimited company), forming a company under the Companies Act 2014, directors and secretary, the EEA-resident director rule, the constitution, beneficial ownership (RBO) filing, registering with Revenue (Form TR1 / TR2, eRegistration on ROS), and the first compliance dates.
 
-| Field | Value |
-| --- | --- |
-| Country | Republic of Ireland (Éire) |
-| Currency | EUR (Euro) |
-| Company registrar | Companies Registration Office (CRO) |
-| Tax authority | Office of the Revenue Commissioners |
-| Beneficial ownership register | Central Register of Beneficial Ownership of Companies and Industrial and Provident Societies (RBO) |
-| Key legislation | Companies Act 2014 (consolidated since 1 June 2015); Finance Act (annual); Taxes Consolidation Act 1997 (TCA 1997); Investment Limited Partnerships Act 1994 (as amended by ILPA 2020); Limited Partnerships Act 1907; Charities Act 2009; Data Protection Act 2018 |
-| Registration portal | CORE — Companies Online Registration Environment (core.cro.ie) |
-| Typical formation time | 5–10 working days for LTD via CORE; 1–2 days for ordinary Business Name (RBN1); 3–6 weeks for PLC; 4–8 weeks for CLG; 2–4 weeks for DAC |
-| Standard corporate tax rate (CT) | 12.5% on trading income; 25% on non-trading (passive) income; 15% top-up under Pillar Two for in-scope groups with consolidated revenue ≥ €750M |
-| VAT rate | 23% standard; 13.5% reduced; 9% second reduced (hospitality / hairdressing where applicable); 0% zero rate; 4.8% livestock |
-| CRO online incorporation fee | €50 via CORE (€100 paper) |
-| Skill version | 1.0 |
+Figures are for tax year 2026 (calendar year 2026 for income tax, USC and VAT thresholds; accounting periods in 2026 for Corporation Tax). A short dated section near the end covers returns being filed now for 2025.
 
-## Section 2 — Entity Types Comparison
+What this Guide does not cover, with where to go instead:
 
-**Entity Types Comparison**
+- VAT returns, rates and reverse charge: the Guide **ireland-vat-return**.
+- Corporation Tax computations, preliminary tax, close-company surcharges in detail, start-up relief (s.486C), R&D credit, Knowledge Development Box, Pillar Two: the Guide **ie-corporation-tax**.
+- PRSI rates (they change each October), payroll operation, benefit in kind.
+- Immigration permissions for non-EEA founders, bank account opening, shareholders' agreements, funds (ICAV, ILP), listing on Euronext Dublin, and sector licensing beyond signposting.
 
-| Feature | Sole Trader | Partnership (1890 Act) | LP / LLP | LTD (CLS) | DAC | CLG | PLC |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Legal personality | No | No | LP: No; ILP / LLP: Yes | Yes | Yes | Yes | Yes |
-| Liability | Unlimited personal | Unlimited joint and several | LP: limited partners limited / general partners unlimited; ILP / LLP: limited | Limited to share capital | Limited to share capital | Limited by guarantee (no shares) | Limited to share capital |
-| Min. founders / members | 1 | 2 | LP: 1 general + 1 limited; ILP: 1 general + 1 limited | 1 (single-member possible) | 1 | 1 | 1 (post-2014 Act; was 7) |
-| Max. members | n/a | 20 (50 for accountancy partnerships; unlimited for solicitors) | LP: 20 (limited partners); ILP / LLP: no cap | 149 | 149 | Unlimited | Unlimited |
-| Min. directors | n/a | n/a | n/a | 1 (LTD only — unique to the CLS form) | 2 | 2 | 2 |
-| Company secretary | n/a | n/a | n/a | Required (may be the sole director if there is a separate secretary, or a second director may serve as secretary) | Required | Required | Required |
-| EEA-resident director requirement | n/a | n/a | n/a | At least one director must be EEA-resident OR the company must hold a Section 137 bond | Same as LTD | Same as LTD | Same as LTD |
-| Min. share capital | n/a | n/a | n/a | None statutory (commonly €100 issued) | None statutory | n/a (limited by guarantee) | €25,000 minimum issued share capital; 25% paid up (€6,250) |
-| Audit exemption available | n/a | n/a | n/a (LLP audit rules apply separately) | Yes if small company criteria met | Yes if small company criteria met | Yes if small company criteria met (one-member CLG cannot avail) | No |
-| Annual filing with CRO | None (Business Name renewal every 3 years if RBN1 registered) | Generally none unless registered as a Business Name | LP / ILP: annual return; LLP: annual return | Annual Return (Form B1) + financial statements | Same as LTD | Same as LTD | Same as LTD; PLC accounts always audited |
-| Tax treatment | Income tax via Form 11 self-assessment | Pass-through to partners; each partner files Form 11 | LP: pass-through; ILP: pass-through (transparent); LLP: pass-through unless elects otherwise | Corporation Tax 12.5% trading / 25% non-trading | Same as LTD | CT 12.5% / 25% but typically charitable / not-for-profit exemption available | Same as LTD |
-| Suffix on name | None | None | "LP" / "ILP" / "LLP" | "Limited" / "Ltd" / "Teoranta" / "Teo" | "Designated Activity Company" / "DAC" / "Cuideachta Ghníomhaíochta Ainmnithe" / "CGA" | "Company Limited by Guarantee" / "CLG" / "Cuideachta faoi Theorainn Ráthaíochta" / "CTR" | "Public Limited Company" / "PLC" / "Cuideachta Phoiblí Theoranta" / "CPT" |
-| Admin burden | Low | Low | Medium | Medium | Medium | Medium | High |
+**Sources.** The law is the Companies Act 2014 (section links below), the Taxes Consolidation Act 1997, the VAT Consolidation Act 2010, the [Registration of Business Names Act 1963](https://www.irishstatutebook.ie/eli/1963/act/30/enacted/en/print) and the [beneficial ownership regulations (S.I. No. 110 of 2019)](https://www.irishstatutebook.ie/eli/2019/si/110/made/en/print). Statute links are to the enacted text on the Irish Statute Book; later amendments must be checked in the Law Reform Commission's Revised Acts. Revenue's guidance is on [revenue.ie](https://www.revenue.ie/en/starting-a-business/index.aspx).
 
-**Recommended defaults:**
+**What to check on the CRO and RBO sites.** The Companies Registration Office (CRO, portal "CORE") and the RBO portal are not sources this Guide could verify. CRO and RBO filing fees, processing times, the CORE screens, name-approval practice, and the identity rules for directors without a PPS number (the PPSN / VIN process) are marked **check**: confirm them on the CRO and RBO websites before quoting them to a client.
 
-- Solo founder, micro turnover, low-risk activity, comfortable with unlimited liability: **Sole Trader** with optional RBN1 business name registration.
-- Solo or small group founder, wanting limited liability and trading income at 12.5% CT: **LTD (Company Limited by Shares — CLS)**.
-- Joint venture or special-purpose vehicle where objects clause must be restricted: **DAC**.
-- Non-profit / charity / sports club / management company for residential developments: **CLG**.
-- Plans to raise public capital or list on Euronext Dublin: **PLC**.
-- Professional services partnership (solicitors, accountants): general **Partnership** under the Partnership Act 1890 or, where statute permits, an **LLP** (e.g., solicitors' LLPs under the Legal Services Regulation Act 2015).
+## Ask the client first
 
-### When to use each
+- Who are the founders? Where does each one live (inside or outside the EEA), and does each have an Irish PPS number?
+- What will the business do, and from where? Is any part of it regulated (financial services, credit, insurance, payments, crypto-assets, alcohol, food, childcare, health, transport, broadcasting, gambling)?
+- Will it trade under a name other than the owner's own name?
+- How much risk does the activity carry (liability to customers, product safety, debts to suppliers)? Does the owner need limited liability?
+- Expected turnover and profit for the first two years, and how much profit the owner needs to draw to live on.
+- Will it sell goods or services, to whom (Irish consumers, EU businesses, outside the EU), and will it buy goods from other EU countries?
+- Will it employ anyone, or pay the directors a salary?
+- Is it a non-profit, charity, club or owners' management company?
+- Will outside investors come in, or will shares be offered to the public?
+- Is there already a business (sole trader or partnership) that will be transferred into a company?
+- Who will be the company secretary, and where will the registered office be?
 
-- **LTD** — Default SME, owner-managed, single or small group
-- **DAC** — Joint venture, SPV, securitisation under s.110, regulated entity requiring objects clause
-- **CLG** — Non-profit, club, OMC for residential development, charity (with separate Charities Regulator registration)
-- **PLC** — Public capital raise, Euronext Dublin listing, large groups with public shareholding
+## The method, step by step
 
-## Section 3 — Required Inputs and Refusal Catalogue
+1. **Check whether the plan is one this Guide can handle.** Regulated activity, a charity, a fund, or a founder who needs an immigration permission all need a specialist in addition (see "When to refuse or refer").
+2. **Choose the vehicle.** Use the decision rules below. For most owner-managed businesses the choice is sole trader or LTD; the deciding facts are liability risk, how much profit will be left in the business, and whether investors are coming.
+3. **If a sole trader or partnership:** register a business name with the CRO within one month of adopting any name other than the owner's true name(s), then register with Revenue (TR1 or eRegistration) for Income Tax, and for VAT, employer PAYE and RCT if they apply.
+4. **If a company:** pick the company type; confirm at least one EEA-resident director or arrange a section 137 bond or a section 140 certificate; appoint a secretary (not the sole director); draft the constitution; file the incorporation with the CRO (Form A1 on CORE; fees and screens: **check**).
+5. **After incorporation:** keep the company's own beneficial ownership register and file with the RBO within 5 months; register with Revenue (TR2 or ROS through an agent) for Corporation Tax and, as needed, VAT, employer PAYE (compulsory if the directors are paid) and RCT.
+6. **Diary the first compliance dates:** first annual return to the CRO; first Corporation Tax return and preliminary tax (see ie-corporation-tax); VAT returns (see ireland-vat-return); Form 11 for self-employed individuals and proprietary directors.
+7. **Record the reasons.** Write down why the vehicle was chosen and the facts it depends on (profit level, drawings, risk), so the choice can be revisited when they change.
 
-### Required intake before recommending an entity
+## Choosing the vehicle
 
-- **Intake checklist** — 1. Nationality and residence of each founder (EEA vs non-EEA matters for the Section 137 bond rule). 2. Number of founders / promoters. 3. Intended business activity (objects) and NACE Rev. 2 code. 4. Expected annual turnover and profit base (drives small-company exemptions, VAT registration, and audit thresholds). 5. Whether any non-EEA director is involved (Section 137 bond €25,000 OR appoint an EEA-resident director). 6. Capital available for paid-up share capital (PLC has a €25,000 minimum issued share capital floor). 7. Whether the business will hire employees (PAYE / PRSI / USC employer registration with Revenue via ROS). 8. Whether the business handles personal data (GDPR / Data Protection Act 2018 — DPC registration where applicable). 9. Whether the business will trade in regulated areas (financial services → Central Bank of Ireland; broadcasting → Coimisiún na Meán; aviation → IAA; medicines → HPRA). 10. PPS numbers of all directors and shareholders (mandatory at incorporation since the 11 June 2023 CRO change).
-
-### Refusal catalogue
-
-- **R-IE-F1 — Nominee directors used to evade Section 137** — Appointing a 'shadow' EEA-resident nominee director purely to satisfy the Section 137 EEA-residency requirement, with no genuine governance role, is not advised. The CRO and Revenue treat this as a substance failure and the bond route is the lawful alternative. The skill will not draft or advise on sham nominee arrangements.  _(R-IE-F1)_
-- **R-IE-F2 — Tax-avoidance entity selection** — Recommending a particular entity primarily to obtain a tax-residence mismatch (e.g., Irish-incorporated but managed from a no-tax jurisdiction to fall outside Irish CT) is refused. Since the 2014–2015 Double Irish reform and the central management and control / incorporation tests under TCA 1997 s.23A, all Irish-incorporated companies are Irish tax resident unless treaty-resident elsewhere. The skill refuses to structure around this.  _(R-IE-F2; TCA 1997 s.23A)_
-- **R-IE-F3 — Regulated sectors: banking, insurance, investment firms, payment institutions, e-money, crypto-asset service providers** — These require Central Bank of Ireland authorisation under the relevant statutes (Central Bank Act 1971; Insurance Acts; IFR / IFD; PSD2 / E-Money Regulations; MiCA from 30 December 2024). Capital floors are much higher than the CRO minimums. Formation alone is insufficient — the skill refuses to provide a green-light recommendation without mapping the sectoral licence.  _(R-IE-F3)_
-- **R-IE-F4 — Immigration and employment permits** — Non-EEA founders moving to Ireland to run the business require an appropriate immigration permission (Stamp 0, Stamp 1, Stamp 4, Start-up Entrepreneur Programme — STEP, or Immigrant Investor Programme — IIP closed since 15 February 2023). The skill flags the requirement but does not handle Department of Justice or INIS / ISD filings. Engage an immigration practitioner.  _(R-IE-F4)_
-- **R-IE-F5 — Charitable status** — Registering a CLG does NOT itself confer charitable status. A separate application to the Charities Regulator under the Charities Act 2009 is required for CHY tax exemption from Revenue. The skill refuses to imply charitable tax relief follows automatically from CLG incorporation.  _(R-IE-F5; Charities Act 2009)_
-- **R-IE-F6 — Sole Trader vs LTD switching for tax arbitrage** — Switching to an LTD purely to access the 12.5% CT rate while retaining all profits personally as drawings — without genuine corporate substance, retained earnings, or a defensible commercial rationale — risks the close-company surcharge under TCA 1997 s.440 (20% surcharge on undistributed investment / professional services income) and may be challenged under the general anti-avoidance rule (TCA 1997 s.811C). The skill will document substance and apply conservative defaults.  _(R-IE-F6; TCA 1997 s.440; s.811C)_
-- **R-IE-F7 — Bank account opening for non-resident founders** — Irish pillar banks require directors to attend in person or appoint a properly notarised attorney for KYC under the Criminal Justice (Money Laundering and Terrorist Financing) Act 2010 (as amended). The skill flags the requirement but does not guarantee any specific bank's onboarding. Fintech alternatives (Revolut Business, N26 Business, Wise Business) have lighter onboarding but more limited treasury features.  _(R-IE-F7; Criminal Justice (Money Laundering and Terrorist Financing) Act 2010)_
-
-### Sole Trader
-
-- **Sole Trader** — A Sole Trader is an individual carrying on business in their own name (or under a registered business name) with no separate legal personality. Profits are taxed as Schedule D Case I (trading) or Case II (professions) income under the Taxes Consolidation Act 1997 (TCA 1997).  _(TCA 1997)_
-
-#### Key features
-
-- **Sole Trader key features** — - No CRO incorporation required. - If trading under any name other than the proprietor's own true name, the proprietor must register a Business Name with the CRO using Form RBN1 within one month of commencing business (Business Names Act 1963). Renewal every three years is not required — a Business Name registration persists until ceased — but changes must be notified within one month using Form RBN3. - PPS Number required for Revenue registration. - Income tax via the self-assessment system on Form 11 (paper) or via ROS (Revenue Online Service) for mandatory e-filers. - PRSI Class S at 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025 (rate increased from 4% to 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025 with effect from 1 October 2024 under Budget 2025) on reckonable income, minimum annual contribution €650. - USC at progressive rates (0.5% / 2% / 3% / 8% / 11% surcharge bands for 2025). - VAT registration threshold from 1 January 2025: €42,500 for services and €85,000 for goods. - No limited liability — personal assets exposed.  _(Business Names Act 1963)_
-
-#### Formation steps
-
-- **Sole Trader formation steps** — 1. Obtain a PPS Number (Department of Social Protection) if the founder does not have one. 2. Register a Business Name with the CRO via CORE using RBN1 if trading under any name other than the proprietor's real name. Fee €20 online / €40 paper. Issued within 1–2 working days. 3. Register with Revenue for Income Tax via the eRegistration module on ROS, or paper TR1 if not eligible for ROS. 4. Register for VAT (TR1) once the relevant threshold is breached or where intra-EU acquisitions or reverse-charge services trigger compulsory registration. 5. Register as an Employer (PAYE / PRSI / USC) if hiring staff. 6. Register for Relevant Contracts Tax (RCT) if operating in construction, forestry, or meat processing.
-
-#### Tax
-
-- **Sole Trader tax** — - Schedule D Case I / II profits at marginal income tax rates (20% standard / 40% higher band for 2025); standard rate cut-off €44,000 single / €53,000 single parent / €88,000 married jointly assessed (verify against Finance Act 2024 schedule). - PRSI Class S 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025 (post 1 October 2024 rate). - USC 0.5% / 2% / 3% / 8%; 11% surcharge on self-employed income above €100,000. - Preliminary tax due 31 October each year (or extended ROS deadline mid-November).  _(Finance Act 2024)_
-
-#### When to use
-
-- **When to use Sole Trader** — - Single founder with micro turnover, low risk, no employees beyond the founder. - Testing a business idea before committing to incorporation. - Side-hustle alongside PAYE employment.
-
-#### When to avoid
-
-- **When to avoid Sole Trader** — - Liability-sensitive activities (consulting with errors-and-omissions exposure, products with safety risk). - Plans to bring in equity investors. - Profits expected to materially exceed the founder's living needs (corporate retention of profits at 12.5% CT beats sole-trader marginal taxation at 40% + 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025 PRSI + 8–11% USC).
-
-### Partnership (1890 Act)
-
-- **Partnership (1890 Act)** — A general partnership of two or more persons carrying on business in common with a view to profit under the Partnership Act 1890. No separate legal personality. Each partner has joint and several unlimited liability for partnership debts. - Partnership tax: pass-through — each partner files their own Form 11 with their share of partnership profit; the partnership itself files Form 1 (Firms) annually as an information return. - A partnership trading under any name other than the partners' real surnames must register the Business Name with the CRO via RBN1A. - Maximum 20 partners (or 50 for accountancy firms; unlimited for solicitors under specific statutes). - Where a partnership wishes to limit liability, it can re-form as an LP (Limited Partnerships Act 1907) or, for solicitors, an LLP under the Legal Services Regulation Act 2015 Part 7.  _(Partnership Act 1890)_
-
-### Limited Partnership (LP) and Investment Limited Partnership (ILP)
-
-- **LP and ILP** — - LP under the 1907 Act: rarely used outside fund structuring. At least one general partner with unlimited liability and at least one limited partner whose liability is capped at their capital contribution. No separate legal personality. - ILP under the Investment Limited Partnerships Act 1994 (as amended by the ILPA 2020): a regulated investment fund vehicle authorised by the Central Bank of Ireland. Separate legal personality (post-2020 reform). Out of scope for general SME formation — see R-IE-F3 if proposed for use as a fund vehicle. - LLP for solicitors: under the Legal Services Regulation Act 2015, solicitors' practices can authorise themselves as LLPs with the Legal Services Regulatory Authority (LSRA). Limited to solicitors' practices currently.  _(Investment Limited Partnerships Act 1994; ILPA 2020; Limited Partnerships Act 1907; Legal Services Regulation Act 2015)_
-
-### Nature
-
-- **LTD nature** — The LTD (Company Limited by Shares — also called a CLS) is the dominant SME vehicle, introduced as a new model company type by the Companies Act 2014 (commenced 1 June 2015). It replaced the pre-2015 "private company limited by shares" and is now the default form for most Irish SMEs.  _(Companies Act 2014)_
-
-### Distinctive features (post-Companies Act 2014)
-
-- **LTD distinctive features** — - Single director permitted (must then have a separate company secretary — unique to the LTD form). - One-member company permitted. - No objects clause — the LTD has the full and unlimited contractual capacity of a natural person under section 38 CA 2014. This is a deliberate simplification that distinguishes the LTD from the DAC. - No authorised share capital required in the constitution (the LTD has the power to issue shares up to whatever its members authorise; the older concept of nominal / authorised share capital is gone for the LTD form). - Single-document constitution (no separate Memorandum and Articles). - May dispense with holding an AGM where all members agree in writing (s.175 CA 2014). - Maximum 149 members.  _(Companies Act 2014 s.38; s.175)_
-
-### Founders, members, and directors
-
-- **LTD founders, members, directors** — - Minimum 1 member and 1 director. - Maximum 149 members. - At least one director must be EEA-resident OR the company must hold a Section 137 bond (an insurance bond of €25,000 for two years, available from specialist providers). The EEA includes the EU 27 plus Iceland, Liechtenstein, and Norway; post-Brexit, UK-resident directors no longer satisfy this rule. - Company Secretary required. If the company has only one director, the secretary must be a different person. If the company has two or more directors, one of them may also act as secretary. - PPS Numbers for all directors mandatory at incorporation since the CRO change of 11 June 2023. A non-resident director without a PPS Number must obtain a Verified Identity Number (VIN) via the CRO's identity verification process.  _(Companies Act 2014)_
-
-### Capital
-
-- **LTD capital** — - No statutory minimum issued share capital (commonly €100 issued at €1 per share for a single-member LTD; CRO accepts any positive amount). - Stamp duty on share capital was abolished for shares issued by Irish companies under the Stamp Duty (Designation of Certain Other Bonds as Loan Capital) Order — i.e., subscription for new shares does not attract stamp duty in Ireland. - Stamp duty at 1% applies to transfers of shares in Irish companies under the Stamp Duties Consolidation Act 1999.  _(Stamp Duties Consolidation Act 1999)_
-
-### Governance
-
-- **LTD governance** — - Board of directors (one or more). - Members' meetings: an LTD may dispense with the AGM by unanimous written resolution (s.175 CA 2014) — useful for single-member LTDs. - Statutory registers: register of members, register of directors and secretaries, register of beneficial owners (RBO), register of directors' interests in shares, minute books.  _(Companies Act 2014 s.175)_
-
-### Formation steps
-
-- **LTD formation steps** — 1. Choose a name and search the CRO register via CORE. Reserved names cannot conflict with existing companies or business names; CRO can refuse names that are too similar, contain restricted words ("Bank", "Insurance", "Society", "University"), or imply state sponsorship. 2. Prepare a single-document Constitution (CRO model Constitution acceptable for most LTDs). 3. Complete Form A1 online via CORE covering: company name, type (LTD), registered office, directors, secretary, members, share allotment, NACE code, beneficial owners. 4. Provide PPS Numbers for all directors. Non-PPS directors must complete the VIF (Verification of Identity Form) process and obtain a VIN. 5. Pay CRO filing fee €50 (CORE) or €100 (paper Form A1). 6. CRO reviews; if accepted, issues the Certificate of Incorporation with the company number (CRO number) typically within 5–10 working days. 7. TIN equivalent — Tax Reference Number (TRN) is not automatic in Ireland: the company must register with Revenue via eRegistration on ROS or paper Form TR2 for Corporation Tax, VAT, Employer PAYE / PRSI, and RCT as applicable. 8. Register beneficial owners with the RBO within 5 months of incorporation (see Section 8). 9. Open a corporate bank account — pillar banks typically require in-person attendance by all directors and beneficial owners with original IDs and proof of address. 10. Sector licences where applicable (see Section 7).
-
-### Tax
-
-- **Corporation Tax (CT) rates** — 12.5% on trading income (Schedule D Case I / II); 25% on non-trading income (passive: rents, dividends from non-EEA / non-treaty sources, investment income, foreign-source income); 33% Capital Gains Tax on chargeable gains (effective 33% via s.78 CTCA mechanism); 15% Pillar Two top-up (Qualified Domestic Top-up Tax) for in-scope multinational groups with consolidated revenue ≥ €750M %  _(TCA 1997; EU Pillar Two Directive (Directive (EU) 2022/2523); Part 4A TCA 1997; Finance (No. 2) Act 2023; effective for accounting periods beginning on or after 31 December 2023)_
-- **Close-company surcharge** — Close-company surcharge (s.440 TCA 1997): a 20% surcharge on undistributed investment and rental income of a close company; a higher surcharge applies to undistributed professional services income of a close service company (s.441) — relevant for one-person LTDs providing services.  _(TCA 1997 s.440; s.441)_
-- **R&D Tax Credit** — 30% credit (rate increased from 25% with effect from accounting periods commencing on or after 1 January 2024 under Finance (No. 2) Act 2023) of qualifying R&D expenditure, payable in three instalments. The first instalment threshold was raised to €75,000 under Budget 2025. %  _(TCA 1997 s.766; Finance (No. 2) Act 2023; Budget 2025)_
-- **Knowledge Development Box (KDB)** — 6.25% effective rate on qualifying IP income — relevant for software, pharma, and biotech. The KDB sunset was extended by Finance Act 2022 to accounting periods commencing before 1 January 2027. %  _(TCA 1997 s.769G–s.769R; Finance Act 2022)_
-- **Start-up Relief for Entrepreneurs (Section 486C)** — New trading companies in their first 3 years may obtain CT relief reducing CT liability up to €40,000 per year, tapered to €60,000, where employer's PRSI payable in the year does not exceed €40,000 (extended through 2026 by Finance Act 2023).  _(TCA 1997 s.486C; Finance Act 2023)_
-- **VAT registration thresholds** — €42,500 services / €85,000 goods from 1 January 2025
-- **Employer PRSI Class A1** — 11.15% Jan-Sep 2025; 11.25% from 1 Oct 2025 on standard rate band — sub-class A1; lower employer rates for low-earnings sub-classes %
-- **Capital allowances** — Plant and machinery 12.5% straight-line over 8 years; industrial buildings 4% over 25 years; accelerated allowances for energy-efficient equipment (s.285A) and certain green vehicles.  _(TCA 1997 s.285A)_
-- **Annual filings** — - Annual Return (Form B1) to CRO with an annual return date (ARD) set on incorporation, typically 6 months after the company's first anniversary then annually. Late filing carries €100 late fee + €3/day to a maximum of €1,200 and loss of audit exemption for two years. - Statutory financial statements filed with the B1 (small company abridged accounts acceptable where small-company criteria met). - Corporation Tax return (Form CT1) to Revenue within 8 months and 23 days of the accounting period end (filed via ROS), with preliminary CT due as follows: small companies (CT liability ≤ €200,000 in prior year) pay 100% of prior-year liability OR 90% of current-year liability by the 23rd of the month before the period end; large companies pay 45% by month 6 day 23 and a top-up to 90% by month 11 day 23.
-
-### When to use
-
-- **When to use LTD** — - Most SMEs including freelance software developers, consultancies, e-commerce, light manufacturing. - Anyone wanting limited liability, the 12.5% trading CT rate, and access to R&D Tax Credit, KDB, or Start-up Relief for Entrepreneurs. - Founders planning to raise equity later (clean corporate structure, audited or unaudited accounts).
-
-### When to avoid
-
-- **When to avoid LTD** — - Pure micro / informal side-hustle activity where Sole Trader suffices. - NGO / charitable purposes — use CLG. - Joint ventures where parties want a restricted objects clause and enhanced statutory protections — consider DAC.
-
-### DAC (Designated Activity Company)
-
-- **DAC** — - A DAC is a private company that retains an objects clause in its constitution. Used where the company's legal capacity must be restricted — for example, joint ventures, special-purpose vehicles for securitisation, or where a regulatory regime requires an objects clause. - Two types: DAC limited by shares (the more common) and DAC limited by guarantee with a share capital (rare). - Minimum 2 directors (the LTD's single-director regime is not available to a DAC). - Company secretary required (may be one of the directors). - Maximum 149 members. - Two-document constitution: Memorandum (objects) + Articles. - Suffix: "Designated Activity Company" / "DAC" / Irish equivalents. - CRO filings, tax treatment, and audit exemption mirror the LTD where small-company criteria met. - Used in regulated finance (some Central Bank-authorised entities are required to be DACs), securitisation SPVs under TCA 1997 s.110, and joint ventures where parties demand an explicit objects clause.  _(TCA 1997 s.110)_
-
-### CLG (Company Limited by Guarantee, without share capital)
-
-- **CLG** — - A CLG has no share capital; members give a guarantee to contribute a nominal amount (typically €1) on winding up. - Used for non-profits, sports clubs, professional associations, owners' management companies (OMCs) for multi-unit developments under the Multi-Unit Developments Act 2011, residents' associations, charities. - Minimum 2 directors; company secretary required. - Two-document constitution. - Single-member CLG permitted but cannot avail of audit exemption. - Suffix: "Company Limited by Guarantee" / "CLG" / Irish equivalent. - Charitable status is separate from CLG incorporation: a CLG seeking charitable tax exemption must register with the Charities Regulator under the Charities Act 2009 and obtain a CHY number from Revenue (TCA 1997 s.207 / s.208 charitable tax exemption). See R-IE-F5. - CT treatment: 12.5% on any trading income (rare for a genuine non-profit) and 25% on non-trading income, unless charitable tax exemption applies, in which case income applied for charitable purposes is exempt.  _(Multi-Unit Developments Act 2011; Charities Act 2009; TCA 1997 s.207; s.208)_
-
-### PLC (Public Limited Company)
-
-- **PLC** — - A PLC may offer shares to the public and may list on Euronext Dublin (formerly ISEQ) or remain unlisted. - Minimum 1 member (changed by CA 2014 — previously 7); minimum 2 directors; company secretary required (and the secretary must have appropriate qualifications under s.129 CA 2014). - Minimum issued share capital €25,000, of which at least 25% (€6,250) paid up at incorporation. - Two-document constitution. - Audit always mandatory (PLCs cannot avail of the small-company audit exemption). - Suffix: "Public Limited Company" / "PLC" / Irish equivalent. - Listing additionally requires Euronext Dublin Listing Rules compliance, Central Bank approval of the prospectus under the Prospectus Regulation (EU) 2017/1129 as transposed by SI 380/2019, and ongoing disclosure obligations under the Transparency Regulations (SI 277/2007). - CT treatment: 12.5% trading / 25% non-trading, with Pillar Two top-up where group consolidated revenue ≥ €750M.  _(Companies Act 2014 s.129; Prospectus Regulation (EU) 2017/1129; SI 380/2019; SI 277/2007)_
-
-### When to use each
-
-**When to use each vehicle**
-
-| Vehicle | Use case |
-| --- | --- |
-| LTD | Default SME, owner-managed, single or small group |
-| DAC | Joint venture, SPV, securitisation under s.110, regulated entity requiring objects clause |
-| CLG | Non-profit, club, OMC for residential development, charity (with separate Charities Regulator registration) |
-| PLC | Public capital raise, Euronext Dublin listing, large groups with public shareholding |
-
-## Section 7 — Sector-Specific Licences (Signposting Only)
-
-CRO registration is necessary but not sufficient for regulated activities. Common sector licences:
-
-**Sector-specific licences**
-
-| Sector | Regulator | Typical authorisation |
-| --- | --- | --- |
-| Banks, credit institutions | Central Bank of Ireland (CBI) | Banking licence under Central Bank Act 1971; subject to ECB Single Supervisory Mechanism for significant institutions |
-| Insurance and reinsurance | Central Bank of Ireland | Authorisation under European Union (Insurance and Reinsurance) Regulations 2015 (Solvency II) |
-| Investment firms | Central Bank of Ireland | Authorisation under European Union (Markets in Financial Instruments) Regulations 2017 (MiFID II) |
-| Fund managers (UCITS / AIFMD) | Central Bank of Ireland | UCITS ManCo or AIFM authorisation |
-| Payment institutions and e-money | Central Bank of Ireland | Authorisation under European Union (Payment Services) Regulations 2018 (PSD2) or European Communities (Electronic Money) Regulations 2011 |
-| Crypto-asset service providers | Central Bank of Ireland | MiCA authorisation under Regulation (EU) 2023/1114 with effect from **30 December 2024**; transitional regime for VASPs registered under the Criminal Justice (Money Laundering and Terrorist Financing) (Amendment) Act 2021 |
-| Consumer credit, retail credit, credit servicing | Central Bank of Ireland | Authorisation under the Consumer Credit Act 1995 / Central Bank Act 1997 |
-| Competition / merger control | Competition and Consumer Protection Commission (CCPC) | Mandatory pre-merger notification under the Competition Act 2002 (as amended by the Competition (Amendment) Act 2022) where worldwide turnover exceeds €60M and Irish turnover of each of at least two parties exceeds €10M |
-| Data protection | Data Protection Commission (DPC) | Registration not generally required, but mandatory DPO appointment under GDPR Articles 37–39 for public authorities and certain large-scale processors; controllers and processors must comply with GDPR + Data Protection Act 2018 |
-| Telecommunications | Commission for Communications Regulation (ComReg) | General authorisation or specific licence under the European Communities (Electronic Communications Networks and Services) Regulations 2011 |
-| Broadcasting and audiovisual media services | Coimisiún na Meán (Media Commission, established by the Online Safety and Media Regulation Act 2022) | Broadcasting contract or video-on-demand service registration |
-| Pharmaceuticals and medical devices | Health Products Regulatory Authority (HPRA) | Manufacturer's authorisation, wholesale distribution authorisation, marketing authorisation |
-| Food | Food Safety Authority of Ireland (FSAI) and HSE Environmental Health Officers | Food business registration; HACCP compliance |
-| Alcohol | Revenue Commissioners (excise) and District Court (publican's / off-licence licences) | Excise licence + court licence |
-| Childcare | Tusla (Child and Family Agency) | Early Years Service registration under the Child Care Act 1991 (Early Years Services) Regulations 2016 |
-| Healthcare facilities | Health Information and Quality Authority (HIQA) | Registration of designated centres for older persons, disability services, and residential children's services |
-| Aviation | Irish Aviation Authority (IAA) | Air operator certificate, ground handling licence |
-| Maritime / shipping | Department of Transport and Marine Survey Office | Various certificates under the Mercantile Marine Act 1955 |
-| Construction (energy, water, environmental) | Various: Sustainable Energy Authority of Ireland (SEAI), Irish Water (Uisce Éireann), EPA | Sector-specific permits |
-| Gambling and gaming | Gambling Regulatory Authority of Ireland (GRAI, established under the Gambling Regulation Act 2024) | Betting / gaming licence as the GRAI's licensing regime is phased in from 2025–2026 |
-
-All Irish controllers and processors of personal data are subject to GDPR (Regulation (EU) 2016/679) as supplemented by the Data Protection Act 2018. Mandatory Data Protection Officer (DPO) appointment applies for public authorities and processors engaged in large-scale systematic monitoring or large-scale processing of special-category data (GDPR Article 37). The DPC supervises and enforces. Tech founders should treat GDPR compliance as part of formation — a documented Record of Processing Activities (Article 30), privacy notices (Article 13/14), and a data breach response procedure are baseline.
-
-### Statutory basis
-
-- **RBO statutory basis** — The Central Register of Beneficial Ownership of Companies and Industrial and Provident Societies ("RBO") is maintained by the CRO under the European Union (Anti-Money Laundering: Beneficial Ownership of Corporate Entities) Regulations 2019 (SI 110/2019), transposing the EU's Fourth Anti-Money Laundering Directive (Directive (EU) 2015/849) as amended by the Fifth AMLD.  _(SI 110/2019; Directive (EU) 2015/849)_
-
-### Scope
-
-- **RBO scope** — Applies to every Irish-incorporated company (LTD, DAC, CLG, PLC, ULC, unlimited companies) and every industrial and provident society. Does not apply to: - Listed companies subject to disclosure rules of an EEA regulated market (exemption under Regulation 4(1)). - Companies in liquidation in certain circumstances. - Branches of foreign companies (which file with CRO under a separate regime).  _(Regulation 4(1))_
-
-### Beneficial owner definition
-
-- **Beneficial owner** — A natural person who ultimately owns or controls the entity through direct or indirect ownership of more than 25% of the shares or voting rights, or through control via other means. Where no natural person meets the 25% test (e.g., widely held company), the senior managing officials (typically the directors) are recorded as beneficial owners by default.
-
-### Filing obligations
-
-- **RBO filing obligations** — - Initial filing within 5 months of incorporation via rbo.gov.ie (the dedicated RBO portal, separate from CORE). - Update within 14 days of any change in beneficial ownership or particulars. - Each beneficial owner must provide: full name, date of birth, nationality, residential address, PPS Number (used solely for identity verification — not displayed on the public extract), nature and extent of the beneficial interest, dates of acquisition and cessation. - Filings are made online only (no paper option); the beneficial owner does not personally sign — the presenter (typically the company secretary or an authorised filer) submits on behalf of the company.
-
-### Public access
-
-- **RBO public access** — The RBO is publicly accessible on a restricted basis following the CJEU judgment in Joined Cases C-37/20 and C-601/20 (Luxembourg Business Registers, 22 November 2022) which struck down general public access. Since then, access is limited to: - Competent authorities (Garda, Revenue, CBI, CAB). - Designated persons under AML legislation (when carrying out customer due diligence). - Members of the public with a demonstrable "legitimate interest" (typically journalists, NGOs, academics investigating money laundering / terrorist financing risks).  _(CJEU Joined Cases C-37/20 and C-601/20 (22 November 2022))_
-
-### Penalties
-
-- **RBO penalties** — - Failure to file: summary conviction class A fine up to €5,000; on indictment fine up to €500,000. - Failure to maintain own internal beneficial ownership register at the company's registered office: same scale. - The company and the responsible officer (typically each director) can both be prosecuted.
-
-### Operational tip
-
-For a single-member LTD where the sole shareholder is the sole director, the RBO filing is straightforward: one beneficial owner (the founder), 100% shareholding, identified by PPS Number. Allow 1–2 hours including portal account creation.
-
-## Section 9 — CRO Registration Process (CORE Portal)
-
-CRO registration is fully electronic through the CORE (Companies Online Registration Environment) portal at core.cro.ie. Paper Form A1 remains available but at higher fee and longer turnaround.
-
-### Standard LTD workflow
-
-- **Standard LTD workflow** — 1. CORE account creation. Each presenter (typically the founder, accountant, or formation agent) creates a CORE account. 2. Name availability search. Submit a proposed name via CORE's name search. Reservation valid 28 days. Restricted words ("Bank", "Insurance", "Society", "University", "Group", "Holding") require evidence of authorisation. Names too similar to existing companies / business names will be refused. 3. Constitution preparation. Draft a single-document Constitution for the LTD (CRO's model Constitution acceptable for the vast majority of LTDs). For DAC, CLG, or PLC, use the two-document Memorandum + Articles format. 4. Form A1 completion. Online form covering: company name, type (LTD / DAC / CLG / PLC / ULC), registered office address (must be a physical Irish address — PO boxes not acceptable), directors (with PPS Number or VIN), secretary, members and shareholding, share capital and allotment (LTD / DAC / PLC), NACE Rev. 2 activity code, ultimate beneficial owners (for RBO purposes), Section 137 bond reference if no EEA-resident director. 5. Document upload. Signed Constitution, statutory declaration of compliance (s.21(2) CA 2014), Section 137 bond (if applicable), VIF / VIN evidence for non-PPS directors. 6. Payment. €50 CORE filing fee (€100 paper Form A1). No stamp duty on subscription for new shares. 7. CRO review. 5–10 working days for routine LTD; longer for DAC / CLG / PLC. Expedited examination available at additional fee in some cases. 8. Certificate of Incorporation. Issued electronically with CRO number; available for download via CORE. 9. Tax Reference Number (TRN) — NOT automatic. Unlike Nigeria's CAC / FIRS integration, the Irish CRO does NOT automatically issue a TRN. The company must separately register with Revenue via eRegistration on ROS or paper Form TR2 (see Section 10). 10. RBO filing. Within 5 months of incorporation, file the company's beneficial owners via rbo.gov.ie (see Section 8).  _(Companies Act 2014 s.21(2))_
-
-### Business Name (RBN1) workflow for sole traders and partnerships
-
-- **RBN1 workflow** — 1. Determine that registration is required (trading under a name other than your real name). 2. Complete RBN1 (sole trader) / RBN1A (partnership) / RBN1B (body corporate) via CORE. 3. Fee €20 online / €40 paper. 4. Issued within 1–2 working days. 5. Display the registered name on business letterhead, premises, and invoices (s.18 Business Names Act 1963).  _(Business Names Act 1963 s.18)_
-
-### Common pitfalls
-
-- Section 137 EEA-residency: founders forget that post-Brexit a UK-resident director no longer satisfies the rule. Either appoint an EEA-resident director or arrange the €25,000 two-year bond.
-- PPS Number / VIN gap: all directors must have a PPS Number or a CRO-issued VIN since 11 June 2023. Non-resident directors without a PPS Number must allow 4–6 weeks to obtain a VIN via the CRO identity verification process.
-- Registered office vs business address confusion: the registered office must be a physical Irish address where statutory documents can be served. Many SMEs use their accountant's address — acceptable but the accountant must agree.
-- Constitution drafted with objects clause for an LTD: an LTD must NOT have an objects clause. If the founders want one, they need a DAC.
-- Company secretary same as sole director: if the company has only one director, the secretary must be a different person. Single-director / single-secretary LTDs need two distinct individuals.
-
-### Revenue Online Service (ROS)
-
-- **ROS registration forms** — After CRO incorporation (companies) or commencement of business (sole traders / partnerships), the entity must register for the applicable Irish taxes via Revenue: - Form TR1: Sole traders, partnerships, trusts, and unincorporated bodies — Income Tax / VAT / Employer PAYE-PRSI / RCT. - Form TR1 (FT): Foreign sole traders and partnerships. - Form TR2: Companies — Corporation Tax / VAT / Employer PAYE-PRSI / RCT. - Form TR2 (FT): Foreign-incorporated companies trading in Ireland. Preferred method is eRegistration via ROS rather than paper. Companies must first obtain a ROS Digital Certificate for the company once a TRN is issued.
-
-### Tax registrations
-
-- **Tax registrations** — - Corporation Tax (companies): register from incorporation; first CT1 return due 8 months 23 days after first accounting period end. - Income Tax (sole traders / partnerships): register from commencement of trade; first Form 11 due by 31 October of the year following the year of assessment (extended ROS deadline mid-November typically). - Value Added Tax: register where compulsory (turnover > €42,500 services / €85,000 goods from 1 January 2025, or any intra-EU acquisitions / reverse-charge supplies, or distance sales above the OSS / IOSS thresholds). - Employer PAYE-PRSI: register before paying any salary; payroll runs in real time under PMOD (PAYE Modernisation) with submissions on or before each payday via ROS. - Relevant Contracts Tax (RCT): register if the entity is a "principal contractor" in construction, forestry, or meat processing under TCA 1997 Part 18 Chapter 2. - Subcontractor RCT: separate registration where the entity is a subcontractor.  _(TCA 1997 Part 18 Chapter 2)_
-
-### Sundry registrations
-
-- **Sundry registrations** — - Revenue MyEnquiries / ROS Inbox: enable for digital correspondence. - CSO (Central Statistics Office): VAT-registered traders engaging in intra-EU trade above the Intrastat thresholds (arrivals €500,000 / dispatches €635,000 from 2025) must file Intrastat returns. - Department of Social Protection — Employer registration: triggered automatically by Revenue Employer PAYE-PRSI registration. - WRC (Workplace Relations Commission): not a registration per se, but employers must comply with the Employment (Miscellaneous Provisions) Act 2018, Organisation of Working Time Act 1997, and Payment of Wages Act 1991. - PPS Number for each director and beneficial owner: required by both CRO (since 11 June 2023) and RBO.  _(Employment (Miscellaneous Provisions) Act 2018; Organisation of Working Time Act 1997; Payment of Wages Act 1991)_
-
-## Section 11 — Tax Treatment Comparison
-
-**Tax Treatment Comparison**
-
-| Entity | Income tax regime | Headline rate | Key reliefs and surcharges | Annual filing |
+| Vehicle | Separate legal person? | Owner's liability | Tax on profits | Main uses |
 | --- | --- | --- | --- | --- |
-| Sole Trader | Income tax (Schedule D Case I / II) | 20% / 40% marginal + PRSI Class S 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025 + USC 0.5% / 2% / 3% / 8% (+ 11% surcharge > €100k on non-PAYE income) | Earned income tax credit €2,000 (2025); start-your-own-business relief expired 2018 | Form 11 by 31 October |
-| Partnership | Income tax pass-through to partners | Same as sole trader for each partner's share | Same as sole trader | Form 1 (Firms) for partnership + Form 11 for each partner |
-| LP | Pass-through | Same as partnership | Same as partnership | Form 1 + partner Form 11s |
-| ILP (regulated fund) | Tax-transparent vehicle | n/a — pass-through to investors | Investor-level taxation | Specific to fund regime |
-| LLP (solicitors) | Pass-through unless elected | Same as partnership | Same as partnership | Form 1 + partner Form 11s |
-| LTD / DAC | Corporation Tax | 12.5% trading / 25% non-trading / 33% CGT effective | Start-up Relief s.486C (up to €40k/yr first 3 years); R&D Tax Credit 30%; KDB 6.25%; Pillar Two QDTT if in scope | Form CT1 by 8 months 23 days after period end; Form B1 annual return to CRO |
-| CLG (non-charity) | Corporation Tax | 12.5% trading / 25% non-trading | Same as LTD | CT1 + B1 |
-| CLG (charity with CHY) | Charitable exemption on objects-related income | 0% on charitable application; 12.5% / 25% on non-objects trading | TCA 1997 s.207 / s.208 exemption; gift aid not applicable in Ireland; charitable donations scheme s.848A | CT1 (with exemption claim) + B1 + Charities Regulator annual report |
-| PLC | Corporation Tax | 12.5% trading / 25% non-trading; Pillar Two 15% top-up if in scope | Same as LTD; quoted-share CGT considerations | CT1 + B1 + audited accounts + listed-company disclosures if listed |
+| Sole trader | No | Unlimited | Income tax, USC and PRSI on profits, via Form 11 | One owner, low risk, profits mostly drawn |
+| Partnership (Partnership Act 1890) | No | Unlimited, joint and several | Each partner taxed on their share; the partnership registers on TR1 | Two or more people in business together, professional firms |
+| Limited partnership (Limited Partnerships Act 1907) | No | General partner unlimited; limited partners up to their contribution | As a partnership | Mostly investment structures (refer) |
+| LTD: private company limited by shares (Part 2, Companies Act 2014) | Yes | Limited to unpaid share capital | Corporation Tax; owners taxed when paid salary or dividends | The default company for owner-managed businesses |
+| DAC: designated activity company (Part 16) | Yes | Limited (by shares, or by guarantee with a share capital) | Corporation Tax | Where an objects clause is needed: joint ventures, special purpose vehicles, some regulated firms |
+| CLG: company limited by guarantee (Part 18) | Yes | Limited to the guarantee | Corporation Tax unless an exemption (such as charitable status) applies | Non-profits, clubs, charities, owners' management companies |
+| PLC: public limited company (Part 17) | Yes | Limited to unpaid share capital | Corporation Tax | Offering shares to the public, listing |
+| Unlimited company (Part 20) | Yes | Unlimited | Corporation Tax | Specialist uses (refer) |
 
-## Section 11 — Tax Treatment Comparison
+### Decision rules
 
-- **Notes** — - Pillar Two top-up tax (QDTT) under Part 4A TCA 1997 applies to Irish constituent entities of in-scope multinational groups (consolidated revenue ≥ €750M) with effective tax rates below 15%. Out of scope for owner-managed SMEs; flagged here for completeness. - Close-company surcharge under s.440 / s.441 TCA 1997: 20% surcharge on undistributed investment / rental / professional services income retained by an owner-managed LTD beyond 18 months after the period end. Important consideration for service-company LTDs. - CGT at 33% on disposals; Entrepreneur Relief under s.597AA TCA 1997 at 10% rate on qualifying business asset disposals up to a lifetime cap of €1M; Retirement Relief under s.598 / s.599 TCA 1997 on disposals to family or third parties for individuals aged 55+. - VAT rates: 23% standard, 13.5% reduced, 9% second reduced, 4.8% livestock, 0% zero rate. Thresholds €42,500 services / €85,000 goods from 1 January 2025. - PRSI Class S at 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025 (post 1 October 2024) for self-employed sole traders and partners; PRSI Class A for employees (employer 8.9% Jan-Sep 2025; 9.0% from 1 Oct 2025 / 11.15% Jan-Sep 2025; 11.25% from 1 Oct 2025 depending on earnings band; employee 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025) — proprietary directors who own more than 50% are Class S, not Class A.  _(Part 4A TCA 1997; TCA 1997 s.440; s.441; s.597AA; s.598; s.599)_
+- **Non-profit, club, charity or owners' management company:** CLG. Charitable tax exemption is a separate application (Charities Regulator, then Revenue); forming a CLG does not give it.
+- **Shares to be offered to the public, or a listing planned:** PLC.
+- **An objects clause is required** (by a regulator, a lender, or the joint-venture parties): DAC.
+- **One owner, low risk, profit mostly drawn for living costs, or testing an idea:** sole trader.
+- **Two or more professionals who want to share profits informally and accept unlimited liability:** partnership. Solicitors can use a limited liability partnership under the Legal Services Regulation Act 2015 (refer).
+- **Otherwise** (limited liability wanted, profit to be kept in the business, investors expected, or trading income large enough that the 12.5% company rate on trading income ([Revenue: basis of charge](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/basis-of-charge.aspx)) beats personal marginal rates on retained profit): LTD.
 
-## Section 12 — Worked Example: Solo Software Developer in Dublin
+### LTD: the rules that matter at formation (Companies Act 2014, Part 2)
 
-**Scenario.** Aoife, Irish resident, 31, freelance software developer in Dublin. Expects €120,000 gross revenue in 2025, mix of Irish and EU SME clients and one US client. No employees. Home office. Comfortable with corporate substance but cost-conscious.
+- **Members.** One or more; the number of members may not exceed 149, not counting current and former employees who are members, and joint holders count as one ([s.17](https://www.irishstatutebook.ie/eli/2014/act/38/section/17/enacted/en/html)).
+- **Capacity.** An LTD has full and unlimited capacity to carry on any business or activity, whatever its constitution says ([s.38](https://www.irishstatutebook.ie/eli/2014/act/38/section/38/enacted/en/html)). It has no objects clause; if the founders need one, use a DAC.
+- **Directors.** At least one ([s.128](https://www.irishstatutebook.ie/eli/2014/act/38/section/128/enacted/en/html)). DACs, CLGs and PLCs need at least two ([s.985](https://www.irishstatutebook.ie/eli/2014/act/38/section/985/enacted/en/html), [s.1194](https://www.irishstatutebook.ie/eli/2014/act/38/section/1194/enacted/en/html), [s.1088](https://www.irishstatutebook.ie/eli/2014/act/38/section/1088/enacted/en/html)).
+- **Secretary.** Every company must have a secretary, who may be one of the directors, but where a company has only one director that person may not also be the secretary. The directors must make sure the secretary has the skills or resources to do the job ([s.129](https://www.irishstatutebook.ie/eli/2014/act/38/section/129/enacted/en/html)). A PLC secretary must also meet one of the qualification conditions in [s.1112](https://www.irishstatutebook.ie/eli/2014/act/38/section/1112/enacted/en/html).
+- **Constitution.** One document in the form in Schedule 1 (or as near to it as possible), stating the name, that it is a private company limited by shares, that members' liability is limited, and the share capital. It may state an authorised share capital or simply state that the shares are divided into shares of a fixed amount; each subscriber takes at least one share ([s.19](https://www.irishstatutebook.ie/eli/2014/act/38/section/19/enacted/en/html)).
+- **Registration documents.** The constitution goes to the Registrar with the statement of first directors, secretary and registered office (s.22), and a declaration (s.24) that the registration requirements are met and that the company is being formed to carry on an activity in the State ([s.21](https://www.irishstatutebook.ie/eli/2014/act/38/section/21/enacted/en/html), [s.24](https://www.irishstatutebook.ie/eli/2014/act/38/section/24/enacted/en/html)). The declaration may be made by a director, the secretary or the solicitor forming the company.
+- **AGM.** A company need not hold an AGM in a year if all members entitled to attend and vote sign a written resolution before the latest date for the meeting that acknowledges receipt of the financial statements, resolves everything the AGM would have resolved, and confirms no change of auditor ([s.175](https://www.irishstatutebook.ie/eli/2014/act/38/section/175/enacted/en/html)). A PLC with two or more members cannot use this.
 
-### Option A — Sole Trader (Schedule D Case II)
+### PLC capital ([s.1000](https://www.irishstatutebook.ie/eli/2014/act/38/section/1000/enacted/en/html), [s.1026](https://www.irishstatutebook.ie/eli/2014/act/38/section/1026/enacted/en/html))
 
-- Register a Business Name with CRO ("Aoife Dev Studio") via RBN1; fee €20; 1–2 working days.
-- Register with Revenue via eRegistration / TR1 for Income Tax and VAT.
-- Profit assumption: €120,000 revenue less €25,000 expenses = €95,000 taxable Case II profit.
-- Tax 2025 (single, no children, standard rate cut-off €44,000):
-  - Income tax: €44,000 @ 20% = €8,800; €51,000 @ 40% = €20,400. Subtotal €29,200.
-  - Less personal credit €2,000 + earned income credit €2,000 = €4,000.
-  - Net income tax: €25,200.
-  - PRSI Class S: €95,000 × 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025 = €3,895.
-  - USC: €12,012 @ 0.5% = €60; €13,748 @ 2% = €275; €70,044 @ 8% (rate after €25,760 cumulative threshold; verify against Budget 2025 schedule). Cumulative ~ €6,000.
-  - 3% USC surcharge on Case II income above €100,000: not triggered at €95,000.
-  - Indicative total: ~€35,000 (≈ 37% effective on €95,000 profit).
-- VAT: €120,000 turnover above the €42,500 services threshold — VAT registration mandatory. Charge 23% to Irish / EU B2C customers; reverse charge to EU B2B; export of services to US client outside VAT scope (place of supply rules under VAT Consolidation Act 2010 s.34).
-- No corporation tax; no audit; no CRO B1.
+- The authorised minimum share capital of a PLC is €25,000 (unless increased by ministerial order).
+- A PLC may not allot a share unless it is paid up at least as to one-quarter of its nominal value and the whole of any premium.
 
-### Option B — Private Limited Company (LTD)
+### The EEA-resident director rule ([s.137](https://www.irishstatutebook.ie/eli/2014/act/38/section/137/enacted/en/html), [s.140](https://www.irishstatutebook.ie/eli/2014/act/38/section/140/enacted/en/html))
 
-- Incorporate "Aoife Dev Studio Limited" via CORE; share capital €100 issued at €1 per share; sole director (Aoife) with separate company secretary (Aoife's spouse or a corporate secretary service).
-- CRO fee €50; secretarial / accountant setup fees €400–€800; total all-in ~€500–€900.
-- Aoife is EEA-resident (Irish citizen and tax resident) so no Section 137 bond.
-- Register with Revenue via eRegistration / TR2 for CT, VAT, Employer PAYE-PRSI.
-- File RBO within 5 months — Aoife as 100% beneficial owner.
-- Profit assumption: €120,000 revenue less €25,000 business expenses less €60,000 director's salary (gross) = €35,000 corporate profit.
-- Corporation tax: €35,000 @ 12.5% = €4,375.
-- Director's salary €60,000 taxed via PMOD:
-  - Income tax: €44,000 @ 20% + €16,000 @ 40% = €8,800 + €6,400 = €15,200; less PAYE personal credit €2,000 + employee credit €2,000 = €11,200.
-  - Employee PRSI Class A: €60,000 × 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025 = €2,460 (proprietary directors >50% holding go to Class S — Aoife is 100% so she is Class S, 4.1% Jan-Sep 2025; 4.2% from 1 Oct 2025 as well; net same).
-  - USC on €60,000: cumulative ~€2,200.
-  - Personal tax burden on €60,000 salary: ~€15,900.
-- Total combined tax (Option B): CT €4,375 + personal €15,900 = €20,275, with €35,000 retained in the company (less CT already paid → €30,625 retained after tax).
-- Close-company surcharge (s.441): as a service company, undistributed "professional services" income retained beyond 18 months attracts a surcharge — the s.441 surcharge is 15% of half the undistributed estate-and-investment / professional-services income (effective ~7.5% additional on retained professional services income). Aoife should plan distributions or salary uplift to avoid the surcharge. Estimate s.441 exposure on €30,625 retained: ~€2,300/year if undistributed beyond 18 months.
-- VAT: same as Option A — mandatory registration; LTD charges VAT, recovers input VAT.
-- Annual: Form B1 + small-company abridged accounts to CRO; CT1 to Revenue.
+At least one director must be resident in an EEA state (the EU plus Iceland, Liechtenstein and Norway; the UK is not in the EEA). Alternate directors do not count. There are two ways out:
 
-### Recommendation
+- **A bond.** The company holds a bond in the prescribed form, in force, to the value of €25,000, which pays fines under the Companies Act and certain tax penalties if the company fails to pay them. The bond's term and providers: **check** with the CRO.
+- **A section 140 certificate.** The Registrar grants a certificate that the company has a real and continuous link with an economic activity carried on in the State. A written statement from Revenue, given within the 2 months before the application, that it has reasonable grounds to believe the link exists, is treated as proof. The link exists if the company is managed from a place of business in the State by people it authorises, carries on a trade in the State, or is in a group with a company that meets either test.
 
-- The LTD is more tax-efficient on cash-flow when Aoife can leave some profit in the company (e.g., to fund equipment, build a cash buffer, or eventually exploit Entrepreneur Relief s.597AA on exit at 10% CGT instead of 33%).
-- The Sole Trader is simpler and cheaper to administer if Aoife intends to spend all the profit each year on personal living costs — in which case the LTD's close-company surcharge erodes most of the saving.
-- At €120,000 revenue with material retained profits and a 5–10 year horizon, the LTD wins. At lower revenue (< €70,000) with no retained profits, Sole Trader is usually equivalent or better once you account for accounting fees (€1,500–€3,000/year for an LTD vs €500–€1,000 for a Sole Trader).
-- Operational steps for Aoife if she chooses LTD: incorporate via CORE; register with Revenue via TR2; file RBO; engage a payroll provider; set up a SEPA-enabled corporate bank account; register for VAT MOSS / OSS for EU B2C SaaS sales; document her R&D (if any) for the 30% R&D Tax Credit; consider KDB eligibility if she develops original IP.
+Breaking the rule is a category 4 offence for the company and every officer in default.
 
-## Section 13 — Decision Tree
+### Business names ([Registration of Business Names Act 1963](https://www.irishstatutebook.ie/eli/1963/act/30/enacted/en/print))
 
-```
-Q1: Is at least one founder / proposed director EEA-resident?
-  YES → go to Q2
-  NO  → can the company obtain a Section 137 bond (€25,000 two-year bond)?
-        YES → proceed (Section 137 route); go to Q2
-        NO  → defer formation OR appoint an EEA-resident director OR refuse advice (R-IE-F1 — no shams)
+- An individual, partnership or company carrying on business under a name other than its true name (for a company, its corporate name) must register the business name with the CRO. For companies the Companies Act repeats this for each company type.
+- The particulars must be furnished within one month after the business name is adopted (s.6), and any change within one month after the change (s.7).
+- The certificate of registration must be displayed at the principal place of business (s.8), and the true names must appear on business letters and similar documents (s.18).
+- Forms and fees: RBN1 (individual), RBN1A (partnership), RBN1B (company). Fees and processing time: **check** with the CRO.
 
-Q2: Is the purpose non-profit / charitable / club / OMC / professional association?
-  YES → CLG (Company Limited by Guarantee), with separate Charities Regulator registration if charitable status sought
-  NO  → go to Q3
+### Beneficial ownership: the RBO ([S.I. No. 110 of 2019](https://www.irishstatutebook.ie/eli/2019/si/110/made/en/print))
 
-Q3: Is this a regulated sector (banking, insurance, investment, payments, e-money, crypto-asset
-     under MiCA, broadcasting, telecoms, pharma, gambling)?
-  YES → Refuse green-light recommendation; map sectoral licence (R-IE-F3); typically LTD or DAC
-        depending on regulator's preferred form
-  NO  → go to Q4
+- **Who:** every company and other body corporate incorporated in the State (a "relevant entity"), including LTDs, DACs, CLGs, PLCs, unlimited companies and registered societies. The regulations do not apply to a company listed on a regulated market subject to EU-consistent disclosure requirements, or subject to equivalent international standards (reg. 4(2)).
+- **Own register:** the company must keep its own beneficial ownership register (reg. 15). "Beneficial owner" takes its meaning from Article 3(6)(a) of the Fourth Anti-Money Laundering Directive: the natural persons who ultimately own or control the entity (the ownership-percentage indicator is in the Directive: **check**). If no one is identified, or there is doubt, the company enters its senior managing officials (the directors and any chief executive) instead, stating the nature and extent of their control.
+- **Central register:** a company formed now must deliver the information to the Registrar of Beneficial Ownership within 5 months from its incorporation (reg. 20(2)). After that, whenever the company must enter, change or delete information in its own register, it must file the matching change with the RBO within 14 days from the date the entry in its own register was due (reg. 23).
+- **Penalties:** failing to keep the register or to file is an offence: on summary conviction a class A fine, on indictment a fine of up to €500,000 (regs. 15 and 28).
+- **Public access:** access to the central register was restricted after the Court of Justice judgment of 22 November 2022 and later amending regulations. **check** the current access rules on the RBO site.
+- **Filing mechanics** (online portal, PPS numbers for beneficial owners, who presents the filing): **check** on the RBO site.
 
-Q4: Plans to raise public equity or list on Euronext Dublin within 3 years?
-  YES → PLC (minimum issued share capital €25,000; 25% paid up)
-  NO  → go to Q5
+### Registering with Revenue ([Revenue: registering for tax](https://www.revenue.ie/en/starting-a-business/registering-for-tax/index.aspx))
 
-Q5: Is there a need for a restricted objects clause — e.g., joint venture SPV, securitisation
-     vehicle under TCA 1997 s.110, or a regulator requires a DAC?
-  YES → DAC (Designated Activity Company)
-  NO  → go to Q6
+A Tax Reference Number is not issued automatically on incorporation. You must register with Revenue when you become a sole trader, set up a partnership or trust, or start a new company.
 
-Q6: Solo founder, micro turnover (< €40,000 expected), accept unlimited liability,
-     simplicity prized, no plans to retain profits in a corporate vehicle?
-  YES → Sole Trader; register Business Name via RBN1 if trading under any name other than
-        the founder's real name
-  NO  → go to Q7
+| Who | How | Taxes the form covers |
+| --- | --- | --- |
+| Sole trader ([Revenue](https://www.revenue.ie/en/starting-a-business/registering-for-tax/how-to-register-for-tax-as-a-sole-trader.aspx)) | Needs a PPSN first; the PPSN becomes the TRN once registered. Register on ROS (eRegistration) or, if a PAYE employee, for Income Tax on myAccount. Non-residents who cannot register online use Form TR1 (FT) | Income Tax, employer PAYE, VAT, RCT (and CGT on TR1 (FT)) |
+| Partnership or trust ([Revenue](https://www.revenue.ie/en/starting-a-business/registering-for-tax/how-to-register-for-tax-as-a-trust-or-partnership.aspx)) | Tax agent registers online through ROS; otherwise Form TR1 (non-resident: TR1 (FT)) | Income Tax, employer PAYE, VAT, RCT |
+| New company ([Revenue](https://www.revenue.ie/en/starting-a-business/registering-for-tax/how-to-register-for-tax-as-a-new-company.aspx)) | Needs a CRO number first. A tax agent must register it online through ROS; a company without an agent submits Form TR2 (foreign company: TR2 (FT)) | Corporation Tax, employer PAYE, VAT, RCT |
 
-Q7: Two or more professional partners (solicitors, accountants) wanting pass-through tax
-     and informal structure?
-  YES → Partnership (1890 Act); consider LLP for solicitors under LSRA 2015
-  NO  → go to Q8 (default)
+- **Paper when online was required:** Revenue returns a paper application that should have been made online, unprocessed.
+- **Not eligible for eRegistration** ([Revenue: eRegistration](https://www.revenue.ie/en/starting-a-business/registering-for-tax/eregistration.aspx)) include companies that have no Irish-resident directors and unincorporated bodies and non-profits not represented by an agent. They use the paper TR forms.
+- **After registration:** companies, sole traders and partnerships must file returns and pay through ROS.
+- **Employer PAYE** ([Revenue: registration of employers](https://www.revenue.ie/en/employing-people/becoming-an-employer-and-ongoing-obligations/registration-of-employers-for-paye-purposes/index.aspx)): register before paying any employee, and report pay and deductions on or before each payday. A company must register as an employer and operate PAYE on its directors' pay even if it has no other employees; a director of an Irish-incorporated company pays PAYE on director's pay wherever resident.
+- **VAT:** see the thresholds below and the Guide ireland-vat-return.
+- **RCT:** register if the business is a principal contractor in construction, forestry or meat processing (see Revenue's RCT pages).
+- **Tax residence of the company** ([Revenue: company residency rules](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/company-residency-rules.aspx)): a company incorporated in Ireland on or after 1 January 2015 is tax resident here unless a tax treaty makes it resident in another country. A foreign-incorporated company is resident here if centrally managed and controlled here.
 
-Q8: Default: Private Company Limited by Shares (LTD / CLS) — single-director permitted,
-    no objects clause, single-document Constitution, 12.5% trading CT rate, access to
-    R&D Tax Credit, KDB, Start-up Relief s.486C, and Entrepreneur Relief on exit.
-```
+## Figures for 2026
 
-## Section 14 — Conservative Defaults
+### Corporation Tax rates ([Revenue: basis of charge](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/basis-of-charge.aspx))
 
-- **Conservative defaults** — 1. Default entity for a solo Irish-resident founder with corporate substance: Private Company Limited by Shares (LTD / CLS), because the 12.5% trading CT rate combined with Entrepreneur Relief on exit (10% CGT up to €1M lifetime) makes the LTD materially more tax-efficient than a Sole Trader for retained-earnings or exit-driven businesses. 2. Default entity for a micro Irish-resident founder with no corporate ambitions and < €40,000 turnover: Sole Trader with RBN1 if trading under a different name. 3. Default entity for 2+ founders, no foreign capital, owner-managed: Private Company Limited by Shares (LTD). 4. Default entity for any non-EEA founder/director: Private Company Limited by Shares (LTD) plus Section 137 bond OR appointment of an EEA-resident director (do not draft sham nominee arrangements — R-IE-F1). 5. Default entity for NGO / charity / club / OMC: Company Limited by Guarantee (CLG), with separate Charities Regulator registration if charitable tax exemption (CHY number) is sought. 6. Default entity for joint venture SPV or securitisation vehicle: DAC. 7. Default sectoral check: always test the proposed business activity against the sectoral matrix in Section 7 before quoting timelines, because regulated activities can add 12–52 weeks for sectoral authorisation (especially Central Bank-regulated activities). 8. Default tax classification: confirm trading vs non-trading characterisation; 12.5% only applies to trading (Schedule D Case I / II) income; investment / rental / passive income is 25%. 9. Default data protection action: assume GDPR + Data Protection Act 2018 obligations apply to any business handling personal data; budget for Record of Processing Activities, privacy notice, breach response, and DPO appointment if Article 37 thresholds met. 10. Default annual compliance reminder: CRO B1 annual return + Revenue CT1 (companies) or Form 11 (sole traders / partners) + VAT returns (bi-monthly / quarterly / annual depending on turnover) + Employer PMOD real-time payroll + RBO update within 14 days of any beneficial-ownership change. 11. Default PPS Number / VIN check: confirm every director has a PPS Number or has commenced the CRO VIN process before filing Form A1 — incorporation will be rejected since 11 June 2023 otherwise.  _(R-IE-F1)_
+| Item | 2026 | Condition |
+| --- | --- | --- |
+| Trading income | 12.5% | Profits of a trade carried on by the company |
+| Non-trading income and excepted trades | 25% | Rental and investment income; income of an "excepted trade" as defined in the Taxes Consolidation Act |
+| Accounting period | at most 12 months | A longer set of accounts is split into two CT periods |
 
-## Section 15 — Sources
+### Income tax bands and credits for 2026 ([Revenue: tax rates, bands and reliefs](https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx))
 
-**Companies Act 2014** (consolidated; commenced 1 June 2015) — Parts 1–25 governing all Irish corporate forms, single-document LTD Constitution, single-director LTD, abolition of authorised share capital for LTDs, audit exemption for small companies.
+| Item | 2026 | 2025 |
+| --- | --- | --- |
+| Standard rate band, single person without qualifying children | €44,000 @ 20%, balance @ 40% | €44,000 @ 20%, balance @ 40% |
+| Single Person tax credit | €2,000 | €2,000 |
+| Employee (PAYE) tax credit | €2,000 | €2,000 |
+| Earned Income Tax Credit (maximum) | €2,000 | €2,000 |
 
-**Companies (Statutory Audits) Act 2018** — implements Audit Directive 2014/56/EU and Audit Regulation 537/2014/EU.
+The Earned Income Credit is for self-employed earned income and for pay earned by proprietary directors, who cannot get the Employee Tax Credit on that pay. It is the lower of €2,000 or 20% of qualifying earned income, and where someone has both kinds of income the two credits together cannot exceed the Employee Tax Credit maximum ([Revenue: Earned Income Credit](https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/income-and-employment/earned-income-credit/index.aspx)).
 
-**Companies (Accounting) Act 2017** — implements Accounting Directive 2013/34/EU.
+### Universal Social Charge for 2026 ([Revenue: USC rates](https://www.revenue.ie/en/jobs-and-pensions/usc/standard-rates-thresholds.aspx))
 
-**Companies (Miscellaneous Provisions) (Covid-19) Act 2020** and subsequent extensions — temporary measures continued under permanent reform in the Companies (Corporate Enforcement Authority) Act 2021.
+| Band | 2026 rate |
+| --- | --- |
+| First €12,012 | 0.5% |
+| Next €16,688 | 2% |
+| Next €41,344 | 3% |
+| Balance | 8% |
 
-- **Taxes Consolidation Act 1997 (TCA 1997)** — as amended annually by Finance Acts; key sections: s.21 (CT rate), s.23A (incorporation residence), s.110 (securitisation), s.207 / s.208 (charitable exemption), s.440 / s.441 (close-company surcharges), s.486C (start-up relief), s.597AA (Entrepreneur Relief), s.598 / s.599 (Retirement Relief), s.766 (R&D Tax Credit), s.769G–s.769R (KDB), s.811C (general anti-avoidance), Part 4A (Pillar Two QDTT inserted by Finance (No. 2) Act 2023).  _(Taxes Consolidation Act 1997 (TCA 1997))_
+A USC surcharge of 3% applies if non-PAYE income is more than €100,000 a year, so self-employed income above that level bears 11% ([Revenue: other rates of USC](https://www.revenue.ie/en/jobs-and-pensions/usc/other-rates.aspx)). Reduced USC rates for some people are not covered here.
 
-**Finance Act 2024** and **Finance Act 2025** — most recent annual amendments; verify any monetary threshold (VAT registration €42,500/€85,000; standard rate cut-off; PRSI rates; USC bands; R&D Tax Credit instalment threshold).
+PRSI: self-employed people pay Class S PRSI and most employees Class A; the class for a director who owns the company depends on the shareholding (**check** with the Department of Social Protection). Rates have been rising each October; take the rate in force (**check**).
 
-- **Stamp duty on share transfers** — 1% %  _(Stamp Duties Consolidation Act 1999)_
-- **Business Names Act 1963** — RBN1 / RBN1A / RBN1B registration.  _(Business Names Act 1963)_
-- **Partnership Act 1890** — general partnerships.  _(Partnership Act 1890)_
-- **Limited Partnerships Act 1907** — LPs.  _(Limited Partnerships Act 1907)_
-- **Investment Limited Partnerships Act 1994 as amended** — as amended by the **Investment Limited Partnerships (Amendment) Act 2020** — ILPs (regulated funds).  _(Investment Limited Partnerships Act 1994; Investment Limited Partnerships (Amendment) Act 2020)_
-- **Legal Services Regulation Act 2015** — solicitors' LLPs.  _(Legal Services Regulation Act 2015)_
-- **Charities Act 2009** — Charities Regulator, CHY number.  _(Charities Act 2009)_
-- **Multi-Unit Developments Act 2011** — OMCs as CLGs.  _(Multi-Unit Developments Act 2011)_
-- **EU AMLD 4 / 5 as transposed by SI 110/2019** — **EU AMLD 4 / 5 (Directives (EU) 2015/849 and (EU) 2018/843)** as transposed by **SI 110/2019** — RBO regime.  _(Directives (EU) 2015/849 and (EU) 2018/843; SI 110/2019)_
-- **CJEU Joined Cases C-37/20 and C-601/20** — (Luxembourg Business Registers, 22 November 2022) — restricted public access to beneficial ownership registers.  _(CJEU Joined Cases C-37/20 and C-601/20)_
-- **GDPR and Data Protection Act 2018** — **GDPR (Regulation (EU) 2016/679)** and **Data Protection Act 2018** — data protection.  _(Regulation (EU) 2016/679; Data Protection Act 2018)_
-- **Criminal Justice (Money Laundering and Terrorist Financing) Act 2010** — as amended through 2021 — AML / KYC.  _(Criminal Justice (Money Laundering and Terrorist Financing) Act 2010)_
-- **MiCA (Regulation (EU) 2023/1114)** — crypto-asset service providers; effective 30 December 2024.  _(Regulation (EU) 2023/1114)_
-- **EU Pillar Two global minimum tax** — 15% % (transposed via Part 4A TCA 1997)  _(EU Pillar Two Directive (Directive (EU) 2022/2523))_
-- **Online Safety and Media Regulation Act 2022** — establishes Coimisiún na Meán.  _(Online Safety and Media Regulation Act 2022)_
-- **Gambling Regulation Act 2024** — establishes GRAI.  _(Gambling Regulation Act 2024)_
-- **Investments and Securities regulatory framework** — Central Bank Act 1971; Central Bank (Supervision and Enforcement) Act 2013; European Union (Markets in Financial Instruments) Regulations 2017 (MiFID II).  _(Central Bank Act 1971; Central Bank (Supervision and Enforcement) Act 2013; European Union (Markets in Financial Instruments) Regulations 2017)_
+### VAT registration thresholds ([Revenue: VAT thresholds](https://www.revenue.ie/en/vat/vat-registration/who-should-register-for-vat/vat-thresholds.aspx))
 
-Portals: **core.cro.ie** (CRO), **rbo.gov.ie** (RBO), **revenue.ie / ros.ie** (Revenue / ROS), **centralbank.ie** (Central Bank), **dataprotection.ie** (DPC), **charitiesregulator.ie** (Charities Regulator), **ccpc.ie** (CCPC), **comreg.ie** (ComReg), **cnam.ie** (Coimisiún na Meán).
+Registration is obligatory when annual turnover (calendar year, excluding VAT) exceeds the threshold. Below the threshold a business may elect to register.
 
-Where a specific monetary threshold or rate is uncertain at the time of advice, mark as **TBC** and verify against the current Finance Act, Revenue eBrief, CRO Information Leaflet, or Central Bank circular in force before relying on it.
+| Supplies | Threshold |
+| --- | --- |
+| Services only | €42,500 |
+| Goods at the reduced or standard rate that the business made from zero-rated materials | €42,500 |
+| Goods and services, where 90% or more of turnover is from goods (other than the above) | €85,000 |
+| Goods | €85,000 |
+| Distance sales of goods and cross-border telecoms, broadcasting and electronic services to other EU consumers (EU-wide total; supplier established only in Ireland) | €10,000 |
+| Acquisitions of goods from other EU Member States | €41,000 |
 
-## Disclaimer
+A business not established in Ireland that supplies taxable goods or services to taxable customers in Ireland must register whatever its turnover, unless it uses the VAT SME Scheme. Occasional disposals of business assets are left out of annual turnover. Details and returns: ireland-vat-return.
 
-This skill and its outputs are provided for informational and computational purposes only and do not constitute legal, tax, or financial advice under Irish law. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified Irish solicitor, Chartered Accountant Ireland (CAI), Association of Chartered Certified Accountants (ACCA), Chartered Institute of Management Accountants (CIMA), Certified Public Accountant (CPA Ireland), or Irish Tax Institute (ITI) Chartered Tax Adviser (CTA) before acting upon. Non-EEA founders should additionally engage Irish immigration counsel for Stamp 1 / Stamp 4 / STEP matters, which are out of scope.
+### Company law figures (Companies Act 2014)
 
-The most up-to-date version is maintained at [openaccountants.com](https://openaccountants.com).
+| Rule | Figure | Section |
+| --- | --- | --- |
+| Bond instead of an EEA-resident director | €25,000 | [s.137](https://www.irishstatutebook.ie/eli/2014/act/38/section/137/enacted/en/html) |
+| PLC authorised minimum share capital | €25,000 | [s.1000](https://www.irishstatutebook.ie/eli/2014/act/38/section/1000/enacted/en/html) |
+| PLC shares paid up at allotment | at least one-quarter of nominal value plus all premium | [s.1026](https://www.irishstatutebook.ie/eli/2014/act/38/section/1026/enacted/en/html) |
+| RBO fine on indictment | up to €500,000 | [S.I. No. 110 of 2019, reg. 28](https://www.irishstatutebook.ie/eli/2019/si/110/made/en/print) |
+| CRO incorporation, business name and late annual return fees | **check** on the CRO site | CRO fee regulations |
+
+## Boundaries and exceptions
+
+| Situation | Rule | What to do |
+| --- | --- | --- |
+| Sole director wants to be secretary too | Not allowed where the company has only one director (s.129(6)) | Appoint a second person as secretary, or a second director who can also be secretary |
+| No director lives in the EEA | [s.137](https://www.irishstatutebook.ie/eli/2014/act/38/section/137/enacted/en/html) applies unless a bond or a s.140 certificate is in force | Bond (€25,000), a s.140 certificate backed by a Revenue statement, or appoint a genuine EEA-resident director. Never a nominee with no real role |
+| UK-resident director only | The UK is not an EEA state | Same as above |
+| Wants an objects clause | An LTD has unlimited capacity (s.38) | Form a DAC |
+| DAC, CLG or PLC with one director | At least two directors required | Appoint a second director |
+| More than 149 members in an LTD or DAC | Registration above the limit is void (s.17(7)) | Leave out employee members when counting; otherwise a PLC or other form |
+| Trading under a name other than the true name | Business name must be registered within one month of adopting it | File RBN1 / RBN1A / RBN1B with the CRO |
+| Company with no Irish-resident directors | Cannot use eRegistration unless through an agent | Agent registers on ROS, or paper TR2 / TR2 (FT) |
+| Company pays only its directors | Must still register as an employer and operate PAYE | Register before the first payment |
+| Turnover exactly at a VAT threshold | Obligation arises only when turnover exceeds the threshold | Monitor the calendar-year total; may elect to register earlier |
+| Non-established business selling to Irish taxable customers | No threshold | Register for VAT from the first supply, unless in the VAT SME Scheme |
+| CLG wanting charity tax exemption | Incorporation does not give charitable status | Register with the Charities Regulator, then apply to Revenue |
+| Incorporated in Ireland but run from abroad | Resident here from incorporation (on or after 1 January 2015) unless a treaty says otherwise | Do not structure around residence; refer if a treaty tie-breaker is relied on |
+| Company formed with no activity in the State | The s.24 declaration must state that a purpose is carrying on an activity in the State | Refer |
+
+## Worked cases
+
+### Case 1: Aoife, software developer, sole trader, 2026 ([Revenue: tax rates, bands and reliefs](https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx))
+
+Aoife lives in Dublin, is single with no children, and expects revenue of €120,000 and expenses of €25,000 in 2026, so taxable profit of €95,000. She sells services to Irish and EU businesses.
+
+Income tax 2026 ([Revenue: tax rates, bands and reliefs](https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx)):
+
+- €44,000 at 20% = €8,800
+- €51,000 at 40% = €20,400
+- Gross tax €29,200, less Single Person credit €2,000 and Earned Income Credit €2,000 (credits €4,000) = **€25,200**
+
+USC 2026 ([Revenue: USC rates](https://www.revenue.ie/en/jobs-and-pensions/usc/standard-rates-thresholds.aspx)):
+
+- €12,012 at 0.5% = €60.06
+- €16,688 at 2% = €333.76
+- €41,344 at 3% = €1,240.32
+- Balance €24,956 (€95,000 less €70,044) at 8% = €1,996.48
+- Total USC **€3,630.62**. Her non-PAYE income is not more than €100,000, so no 3% surcharge.
+
+Class S PRSI is due on top at the rate in force (**check**). VAT: her services turnover will exceed €42,500, so she must register for VAT ([Revenue: VAT thresholds](https://www.revenue.ie/en/vat/vat-registration/who-should-register-for-vat/vat-thresholds.aspx)). Registration: eRegistration on ROS for Income Tax and VAT; a business name only if she trades under a name other than her own.
+
+### Case 2: Aoife through an LTD, 2026 ([Revenue: basis of charge](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/basis-of-charge.aspx))
+
+Same business through Aoife Dev Studio Limited. Aoife is the sole director and sole shareholder; her brother is the secretary (s.129(6)). She is EEA resident, so no bond is needed. The company pays her a salary of €60,000 and has profit after the salary of €35,000 (€120,000 less €25,000 less €60,000), all trading income.
+
+- Corporation Tax at 12.5% ([Revenue: basis of charge](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax/basis-of-charge.aspx)): €35,000 x 12.5% = **€4,375**, leaving €30,625 after tax in the company.
+- Income tax on the salary: €44,000 at 20% = €8,800 plus €16,000 at 40% = €6,400, so €15,200; less Single Person credit €2,000 and, as a proprietary director, the Earned Income Credit €2,000 (not the Employee Tax Credit) ([Revenue: Earned Income Credit](https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/income-and-employment/earned-income-credit/index.aspx)) = **€11,200**.
+- USC on the salary ([Revenue: USC rates](https://www.revenue.ie/en/jobs-and-pensions/usc/standard-rates-thresholds.aspx)): €60.06 + €333.76 + (€60,000 less €28,700 = €31,300 at 3% = €939) = **€1,332.82**.
+- PRSI on the salary: **check** her class and the rate in force.
+- The company must register for Corporation Tax, VAT and as an employer (PAYE on her salary is compulsory even with no other staff), file with the RBO within 5 months, and file its first annual return.
+- **Close service company surcharge.** A close company whose main income comes from a profession, such as a computer programmer, pays a surcharge of 15% on one half of its undistributed trading income if the income is not distributed within 18 months of the end of the accounting period ([Revenue: surcharge on undistributed income](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/close-companies/surcharge.aspx)). Leaving the €30,625 in the company is not free; compute the exposure with ie-corporation-tax.
+
+Comparing the two: the company route defers tax on the profit left in the company, but that profit is taxed again when paid out, the surcharge can apply, and running a company costs more (accounts, annual return, payroll). If Aoife needs to draw nearly all the profit, the saving is small or negative. Record the assumption.
+
+### Case 3: two founders in the United States
+
+Two US-resident founders want an Irish LTD to sell software into the EU. Neither is EEA resident, so s.137 bites. Options: a €25,000 bond in the prescribed form ([s.137](https://www.irishstatutebook.ie/eli/2014/act/38/section/137/enacted/en/html)); a s.140 certificate if the company will be managed from a place of business in Ireland or carry on a trade here, supported by a Revenue statement dated within 2 months of the application; or a genuine EEA-resident director. As the company has no Irish-resident directors it cannot use eRegistration itself; an agent registers it on ROS or it files a paper TR2 ([Revenue: eRegistration](https://www.revenue.ie/en/starting-a-business/registering-for-tax/eregistration.aspx)). The directors' Irish pay is subject to PAYE. Their immigration position and US tax treatment are out of scope: refer. Identity requirements for directors without a PPS number: **check** with the CRO.
+
+### Case 4: key dates for a company incorporated on 10 March 2026
+
+- RBO filing: within 5 months from incorporation, so by 10 August 2026 ([S.I. No. 110 of 2019, reg. 20(2)](https://www.irishstatutebook.ie/eli/2019/si/110/made/en/print)).
+- First annual return date: 6 months after incorporation, 10 September 2026 ([s.345](https://www.irishstatutebook.ie/eli/2014/act/38/section/345/enacted/en/html)); the return must be delivered not later than 28 days after that date, so by 8 October 2026 ([s.343](https://www.irishstatutebook.ie/eli/2014/act/38/section/343/enacted/en/html)). Financial statements need not be annexed to the first annual return ([s.349](https://www.irishstatutebook.ie/eli/2014/act/38/section/349/enacted/en/html)). Later returns fall on the anniversary of the first annual return date.
+- Corporation Tax: if the first accounting period ends on 31 December 2026, the CT1 is due, and any balance payable, by 23 September 2027 ([Revenue: payment and filing](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax-payment-and-filing/payment-and-filing.aspx)). Preliminary tax: see ie-corporation-tax.
+
+### Case 5: services business under the VAT threshold
+
+A new consultancy expects services turnover of €40,000 in 2026. Registration is not obligatory because turnover does not exceed €42,500, but it may elect to register (for example to recover VAT on start-up costs, or because its customers are VAT-registered businesses). Once turnover exceeds €42,500 it must register ([Revenue: VAT thresholds](https://www.revenue.ie/en/vat/vat-registration/who-should-register-for-vat/vat-thresholds.aspx)). The timing and mechanics are in ireland-vat-return.
+
+## When to refuse or refer
+
+- **Sham nominee directors.** Do not arrange an EEA-resident "director" who has no real role just to satisfy s.137. Use the bond, a s.140 certificate, or a genuine appointment.
+- **Residence engineering.** Do not advise incorporating in Ireland while arranging for the company to be tax resident nowhere or in a no-tax country. An Irish-incorporated company is resident here unless a treaty makes it resident elsewhere; reliance on a treaty tie-breaker goes to a specialist.
+- **Company formed only to shelter a person's income.** Moving personal service income into a company with no commercial reason, while drawing everything out, may be challenged under the general anti-avoidance rule (s.811C of the Taxes Consolidation Act) and triggers the service company surcharge. Record the commercial reasons, or refer.
+- **Regulated activity.** Banking, insurance, investment services, fund management, payments and e-money, consumer credit, crypto-asset services: Central Bank of Ireland authorisation, with capital requirements far above company law. Other sectors with their own licensing include alcohol (Revenue excise licence plus a court licence), food (food business registration), childcare (Tusla), health and social care (HIQA, HPRA), telecoms (ComReg), broadcasting and online media (Coimisiún na Meán), gambling (the Gambling Regulatory Authority), and aviation (IAA). Forming the company is not permission to trade: refer before quoting a timetable.
+- **Charities.** Charitable status and Revenue's charitable tax exemption need separate applications; refer to someone who does charity registrations.
+- **Immigration.** Non-EEA founders who will live or work in Ireland need an immigration permission: refer to an immigration adviser.
+- **Funds and investment vehicles:** ICAVs, investment limited partnerships, section 110 companies: refer.
+- **Transferring an existing business into a company:** capital gains tax, stamp duty, VAT on the transfer and the treatment of goodwill need specialist advice: refer.
+- **Data protection.** Any business handling personal data must comply with the GDPR and the Data Protection Act 2018; this Guide only flags it.
+- **Bank accounts.** Banks apply their own anti-money-laundering checks; no outcome can be promised.
+
+## Filing and payment
+
+**Company, every year**
+
+- Annual return to the CRO within 28 days after the annual return date, with the statutory financial statements annexed (except the first return) ([s.343](https://www.irishstatutebook.ie/eli/2014/act/38/section/343/enacted/en/html), [s.345](https://www.irishstatutebook.ie/eli/2014/act/38/section/345/enacted/en/html)). Late filing fees and the loss of audit exemption for late filers: **check** with the CRO.
+- Corporation Tax ([Revenue: payment and filing](https://www.revenue.ie/en/companies-and-charities/corporation-tax-for-companies/corporation-tax-payment-and-filing/payment-and-filing.aspx)): pay preliminary tax by its due date; file the CT1 and Form 46G (Company) and pay any balance by the 23rd of the ninth month after the end of the accounting period, through ROS. Filing late adds a surcharge of 5% of the tax (up to €12,695) if within two months of the deadline, or 10% (up to €63,485) after that, and restricts some reliefs. Late tax carries interest at 0.0219% a day.
+- RBO: file any change to beneficial ownership within 14 days of the date the company's own register had to be updated.
+- Payroll: report pay and deductions to Revenue on or before each payday.
+- VAT returns: see ireland-vat-return.
+
+**Sole trader or partner**
+
+- Income Tax return (Form 11) and self-assessment through ROS by 31 October of the following year, with an extended date if filing and paying on ROS ([Revenue: filing your tax return](https://www.revenue.ie/en/self-assessment-and-self-employment/filing-your-tax-return/index.aspx)). Preliminary tax for the current year is paid at the same time.
+- A partnership also files a partnership return; each partner returns their share.
+- Business name changes to the CRO within one month.
+
+**Dated: returns being filed now for 2025**
+
+- The Pay and File deadline for the 2025 Form 11 is Saturday 31 October 2026; paying and filing on ROS extends it to Wednesday 18 November 2026 ([Revenue: filing your tax return](https://www.revenue.ie/en/self-assessment-and-self-employment/filing-your-tax-return/index.aspx)). The 2025 bands and credits were the same as 2026 (€44,000 standard rate band; €2,000 credits), but the 2025 USC bands differed: first €12,012 at 0.5%, next €15,370 at 2%, next €42,662 at 3%, balance at 8% ([Revenue: USC rates](https://www.revenue.ie/en/jobs-and-pensions/usc/standard-rates-thresholds.aspx)).
+- A company with a 31 December 2025 year end had to file its CT1 and pay the balance by 23 September 2026.
+
+## Completion checklist
+
+- [ ] Founders' residence, PPS numbers and activity recorded; regulated or out-of-scope matters referred.
+- [ ] Vehicle chosen, with the reasons and the profit and drawings assumptions written down.
+- [ ] Company: type confirmed; at least one director (two for a DAC, CLG or PLC); secretary appointed and not the sole director.
+- [ ] Company: EEA-resident director, or s.137 bond, or s.140 certificate in place before filing.
+- [ ] Constitution in the right form for the company type; s.22 statement and s.24 declaration ready.
+- [ ] CRO fees, forms and identity requirements confirmed on the CRO site (**check**).
+- [ ] Business name registered if trading under another name (within one month).
+- [ ] Company's own beneficial ownership register set up; RBO filing diarised within 5 months of incorporation.
+- [ ] Revenue registration made by the right route (ROS through an agent, eRegistration, or TR1 / TR2); taxes chosen: Income Tax or Corporation Tax, VAT, employer PAYE (compulsory if directors are paid), RCT.
+- [ ] VAT threshold tested on the correct category; non-established rule considered.
+- [ ] First annual return date, CT1 date, preliminary tax, payroll and VAT dates in the diary.
+- [ ] Companion Guides consulted where needed: ie-corporation-tax and ireland-vat-return.
 
 <!-- openaccountants-cta-block -->
 

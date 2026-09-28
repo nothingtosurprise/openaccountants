@@ -3,15 +3,15 @@ name: au-amending-individual-income-tax-return-period
 description: How an Australian individual requests or receives an amendment to an income tax assessment, the time limit that applies, and how shortfall penalties and the reasonably arguable position test work — for tax agents and accountants advising individual clients.
 jurisdiction: AU
 tax_year: 2026
-last_updated: 2026-09-26
+last_updated: 2026-09-27
 review_status: pending_review
-drafted_by: OpenAccountants
-approved_by: pending
 tier: 2
 license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
 # Amending an individual income tax return in Australia
+
+## Amending an individual income tax return in Australia
 
 ## Amending an individual income tax return in Australia
 
@@ -126,6 +126,8 @@ Individuals, including sole traders, who need to correct an already-assessed inc
 - https://www.ato.gov.au/law/view/document?docid=PAC/19360027/170 (section 170 ITAA 1936: amendment periods, item 3A four-year sole trader period, subsections 170(2) to (4))
 
 Drafted by OpenAccountants. Not yet reviewed or approved by a named accountant.
+
+> Contributed by Ryan Duguid.
 
 <!-- openaccountants-cta-block -->
 

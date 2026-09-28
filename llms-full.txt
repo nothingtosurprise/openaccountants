@@ -1220,7 +1220,7 @@ https://www.openaccountants.com
 - malta-formation | MT | tier 2 | reviewed_by -
 - malta-income-tax | MT | tier 2 | reviewed_by -
 - malta-payroll | MT | tier 2 | reviewed_by -
-- malta-ssc | MT | tier 2 | reviewed_by Michael Cutajar, CPA (Malta)
+- malta-ssc | MT | tier 2 | reviewed_by -
 - malta-tax-optimization | MT | tier 2 | reviewed_by Michael Cutajar, CPA (Malta)
 - malta-transfer-pricing | MT | tier 2 | reviewed_by -
 - malta-vat-return | MT | tier 2 | reviewed_by -

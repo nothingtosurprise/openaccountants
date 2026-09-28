@@ -4,7 +4,7 @@ description: "Use this skill for any question about Australian tax residency. Tr
 version: 1.1
 jurisdiction: AU
 tax_year: 2025
-last_updated: 2026-09-26
+last_updated: 2026-09-27
 review_status: pending_review
 category: international
 tier: 2
@@ -12,6 +12,8 @@ license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 ---
 
 # AU Tax Residency
+
+## AU Tax Residency
 
 ## Section 1 — Quick Reference
 
@@ -82,6 +84,8 @@ A person is an Australian tax resident if they satisfy **any one** of these:
 - ATO: Capital gains tax (CGT) and ceasing to be an Australian resident
 
 > **Working paper only.** Residency determination is highly fact-specific. Engage an Australian tax adviser for a formal residency opinion before making decisions that rely on non-resident status.
+
+> Contributed by Ryan Duguid.
 
 <!-- openaccountants-cta-block -->
 

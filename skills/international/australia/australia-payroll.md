@@ -98,7 +98,7 @@ There is no employee-paid social insurance premium equivalent to NIC (UK) or soc
 
 ## Section 4 -- Employer contributions
 
-An under-18 employee must work more than 30 actual hours in the week to qualify for SG; exactly 30 does not qualify. Apply the hours test each week, including within a fortnightly pay cycle. Some labour contractors qualify for SG; domestic/private work and other statutory exclusions need separate assessment. Check award or agreement obligations too. See Rule 1 in [au-super-guarantee](au-super-guarantee.md) and [business.gov.au: superannuation](https://business.gov.au/finance/superannuation).
+- **SG under-18 hours test** — An under-18 employee must work more than 30 actual hours in the week to qualify for SG; exactly 30 does not qualify. Apply the hours test each week, including within a fortnightly pay cycle. Some labour contractors qualify for SG; domestic/private work and other statutory exclusions need separate assessment. Check award or agreement obligations too. See Rule 1 in [au-super-guarantee](au-super-guarantee.md) and [business.gov.au: superannuation](https://business.gov.au/finance/superannuation).
 
 **Superannuation Guarantee summary**
 
@@ -122,7 +122,7 @@ An under-18 employee must work more than 30 actual hours in the week to qualify 
 
 ### Payroll Tax (State/Territory)
 
-**Payroll Tax (State/Territory)**
+**Payroll Tax (State/Territory)**  _(Payroll Tax Australia, Rates and thresholds)_
 
 | State/Territory | Threshold (Annual) | Rate |
 | --- | --- | --- |
@@ -350,6 +350,8 @@ Employee with annual repayment income of $65,000 in 2025–26 and a HELP debt: c
 This skill and its outputs are provided for informational and computational purposes only and do not constitute tax, legal, or financial advice. Open Accountants and its contributors accept no liability for any errors, omissions, or outcomes arising from the use of this skill. All outputs must be reviewed and signed off by a qualified professional (such as a CPA, EA, tax attorney, or equivalent licensed practitioner in your jurisdiction) before filing or acting upon.
 
 The most up-to-date, verified version of this skill is maintained at [openaccountants.com](https://openaccountants.com). Log in to access the latest version, request a professional review from a licensed accountant, and track updates as tax law changes.
+
+> Contributed by Ryan Duguid.
 
 > Contributed by Ryan Duguid.
 

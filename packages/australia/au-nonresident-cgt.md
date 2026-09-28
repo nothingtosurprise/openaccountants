@@ -4,7 +4,7 @@ description: "Use this skill for any non-resident selling Australian assets. Tri
 version: 1.4
 jurisdiction: AU
 tax_year: 2025
-last_updated: 2026-09-26
+last_updated: 2026-09-27
 review_status: pending_review
 category: international
 tier: 2
@@ -109,6 +109,8 @@ Always check the saving clause and specific treaty wording.
 - ATO: Foreign resident capital gains withholding (ato.gov.au/FRCGW)
 
 > **Working paper only.** The TAP classification requires analysis of the company's asset composition by market value — not book value. Engage a qualified Australian tax adviser for transaction-specific advice.
+
+> Contributed by Ryan Duguid.
 
 > Contributed by Ryan Duguid.
 
