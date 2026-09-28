@@ -4,7 +4,7 @@ description: Use this skill whenever asked about Dutch tax deductions and specia
 version: 1.0
 jurisdiction: NL
 tax_year: 2026
-last_updated: 2026-09-27
+last_updated: 2026-09-28
 authored_by: OpenAccountants team
 review_status: pending_review
 trust_label: By OpenAccountants
@@ -18,6 +18,8 @@ license: AGPL-3.0-or-later (code) / OpenAccountants Guide License v1.0 (content)
 # Netherlands: income tax deductions for individuals (aftrekposten) 2026
 
 ## Scope
+
+Figures are for tax year 2026 unless the 2025 column or section says otherwise. Missing evidence stays unresolved; do not assume zero deductions or a completed return. 
 
 This Guide covers the main deductions a Dutch resident individual claims in the income tax return
 (aangifte inkomstenbelasting). The primary year is **2026** (calendar year 1 January to 31 December 2026).
@@ -38,8 +40,8 @@ Covered:
 Not covered here:
 
 - **Entrepreneur deductions** (zelfstandigenaftrek, startersaftrek, mkb-winstvrijstelling, the
-  hours test): use the **netherlands-formation** Guide. The investment deductions (KIA, EIA, MIA,
-  Vamil) and the R&D payroll credit (WBSO) are business reliefs: refer them out.
+  hours test): use the **nl-zzp-deductions** Guide. The investment deductions (KIA, EIA, MIA,
+  Vamil) and R&D relief are business matters: route ordinary deductions to that method and refer specialist schemes. Qualifying self-employed S&O relief can be an income-tax deduction; WBSO is not solely a payroll measure. [Income-tax R&D relief](https://www.belastingdienst.nl/wps/wcm/connect/fisin/fisin2026/ondernemersaftrek_en_investeringsaftrek)
 - **Company tax** for a BV: use **nl-corporate-tax**.
 - Non-residents, except the pointer in "When to refuse or refer".
 
@@ -54,8 +56,7 @@ Belastingdienst writes them the other way round.
 Ask these before you calculate anything. Missing answers change the result.
 
 - **Which tax year?** 2026 (current) or 2025 (return due now or late)? Figures differ by year.
-- **Resident all year?** A non-resident only gets these deductions as a qualifying foreign
-  taxpayer (kwalificerend buitenlands belastingplichtig). If not resident all year, refer.
+- **Resident all year?** Non-resident entitlement depends on the item, qualifying foreign-taxpayer status and any treaty/special rules. If not resident all year, refer the affected analysis.
 - **Fiscal partner (fiscale partner)?** For the whole year, or part of the year with the
   choice to be partners all year? Partners combine care costs, gifts and the thresholds
   ([fiscal partnership](https://www.belastingdienst.nl/wps/wcm/connect/fisin/fisin2026/fiscaal_partnerschap)),
@@ -66,7 +67,7 @@ Ask these before you calculate anything. Missing answers change the result.
   increase percentage and the credits.
 - **Home:** Is it the main residence (hoofdverblijf)? The WOZ value from the WOZ-beschikking
   for the year; the annual mortgage statement (jaaropgave); when each loan was first taken
-  out and whether it was increased after 1 January 2013; whether the loan is annuity or
+  out, any refinancing and remaining deduction/repayment term, whether it was increased after 1 January 2013; whether the loan is annuity or
   linear; whether any loan is from family, a BV, an employer or a foreign bank.
 - **Moved, sold or separated?** Old home empty and for sale, new home not yet lived in,
   divorce with an ex still living in the home, or a sale at a loss between 29 October 2012 and
@@ -80,7 +81,7 @@ Ask these before you calculate anything. Missing answers change the result.
 - **Alimony:** For the ex-partner or for children? Periodic or a lump sum? Is there a written
   arrangement?
 - **Business income?** If the client is an entrepreneur, route the business deductions to
-  netherlands-formation first, then return here.
+  nl-zzp-deductions first, then return here.
 
 ## The method, step by step
 
@@ -88,7 +89,7 @@ Work in this order. It follows how the Belastingdienst builds the assessment
 ([tax calculation 2026](https://www.belastingdienst.nl/wps/wcm/connect/fisin/fisin2026/belastingberekening)).
 
 1. **Box 1 income** from work, including profit after entrepreneur deductions (see
-   netherlands-formation).
+   nl-zzp-deductions).
 2. **Own home balance:** add the eigenwoningforfait; deduct mortgage interest and other
    deductible home costs; if the forfait is higher than the costs, apply the Hillen deduction.
 3. **Personal deductions** (persoonsgebonden aftrek): alimony, care costs above the threshold,
@@ -119,7 +120,7 @@ Who and what:
   deductible for at most 30 years; for a loan that existed before 1 January 2001 the 30 years
   started on 1 January 2001.
 - **Loan increased on or after 1 January 2013:** the original part keeps its old terms; the
-  increase must meet the annuity/linear test and gets its own 30 years.
+  increase normally needs the repayment test; preserve the remaining statutory term and check transitional exceptions rather than automatically restarting every loan term.
 - Also deductible: financing costs (advice and arrangement fees, notary costs for the mortgage
   deed, valuation for the loan, NHG application), penalty interest (boeterente) when the loan
   is part of the own-home debt, and periodic ground-lease payments (erfpacht, opstal,
@@ -128,8 +129,7 @@ Who and what:
 - **Loan from family, a BV, an employer or a foreign bank:** still deductible, but the client
   must report the loan details in the return (start date, term in months, start amount,
   repayment method, interest rate, and the lender's name, address and BSN or RSIN).
-- **Timing:** only interest that relates to the tax year. Interest paid in advance is spread
-  over the period it covers.
+- **Timing:** record payments and their contractual period. Contractually agreed 2026 prepayment for a period ending no later than 30 June 2027 can be fully deductible in 2026; voluntary payment for 2027 is treated differently. Longer prepayments require the source's allocation rules. Do not automatically spread every prepayment. Reconcile refunded interest against the current allowable deduction. Refer unusual timing or refinancing cases.
 
 Home not lived in:
 
@@ -233,7 +233,7 @@ client's care.
 
 **Conditions:** only costs for illness or disability, only in the year paid, and only the part
 that cannot be reimbursed by anyone (insurer, special assistance, parents). If a
-reimbursement **could** be obtained but was not claimed, it still reduces the deduction.
+reimbursement **could** be obtained but was not claimed, it normally reduces the deduction. Apply the official exceptions: specified general allowances are not deducted, and special assistance not received and not to be received is treated separately. Basic-package care is not deductible merely because the person chose not to take out health insurance and therefore received no reimbursement. The conscientious-objector rules are separate; refer that status instead of assuming the ordinary exclusion settles it.
 
 **Deductible categories** (2026):
 
@@ -249,15 +249,15 @@ reimbursement **could** be obtained but was not claimed, it still reduces the de
   reimbursement.
 - Diet on the prescription of a doctor or dietitian, at the fixed amounts in the diet list
   (Bijlage I); diets not on the list give nothing.
-- Extra household help because of illness or disability, with proper invoices.
+- Extra household help because of illness or disability, with proper invoices. Apply its separate household-help threshold before adding the eligible cost to the general care-cost calculation; consult the annual chapter's dedicated table. Do not apply only the final general threshold.
 - Extra clothing and bedding when the illness lasts or will last at least 1 year: a flat
-  €330, or €825 if the client proves the extra spend was at least €660 above normal.
+  €330, or €825 if the client proves the extra spend was at least €660 above normal. These are full-year amounts: prorate for the relevant period, and for another person check the shared-household condition.
 - Travel for visiting a sick household member who is nursed for more than 1 month more than
-  10 km away: €0.25 per km by car.
+  10 km away: €0.25 per km by car. Check that the shared household existed when the illness began, visits are regular, and repeated admissions satisfy the source's same-illness and interval rules.
 
 **Not deductible (main items):** health insurance premiums (basic and supplementary); costs under
 the own risk (eigen risico); statutory own contributions (CAK, Zorgverzekeringswet); glasses,
-contact lenses and eye laser treatment to replace them; wheelchairs, mobility scooters,
+ordinary vision-correcting contact lenses and eye laser treatment to replace them (separate disability aids and qualifying non-vision-supporting prism glasses require their own assessment); wheelchairs, mobility scooters,
 rollators and other walking aids; adaptations to the home; care from a non-contracted provider
 where a payment is due for basic-package care; mental-health care and dyslexia care for anyone
 under 18; costs to prevent illness (travel vaccinations are the exception).
@@ -273,8 +273,8 @@ and 3 before personal deductions ([2026 threshold](https://www.belastingdienst.n
 | Drempelinkomen 2026 (no whole-year partner) | Threshold |
 | --- | --- |
 | up to €9,680 | €166 |
-| €9,681 to €51,411 | 1.65% of drempelinkomen |
-| €51,412 and more | €848 plus 5.75% of the part above €51,411 |
+| above €9,680 through €51,411 | 1.65% of drempelinkomen |
+| above €51,411 | €848 plus 5.75% of the part above €51,411 |
 
 With a fiscal partner for the whole year, add both incomes and both sets of costs; the first band
 becomes up to €19,360 with a threshold of €332; the other bands are the same.
@@ -289,7 +289,7 @@ check the year's Belastingdienst page.
 
 - Paid to an institution registered by the Belastingdienst as an **ANBI**, or to a support
   foundation (steunstichting) for an SBBI. A gift to an SBBI itself is not deductible.
-- The client can prove the gift, for example with bank statements.
+- The client can prove the gift, for example with bank statements. Ordinary gifts in kind whose aggregate annual market value exceeds €10,000 require an independent valuation report or qualifying invoice; whole-year fiscal partners aggregate them and use €20,000 (Wet IB article 6.39). Refer missing valuation evidence rather than approve from an informal estimate.
 - There is no consideration in return (lottery tickets are not gifts).
 - The gift was **not made in cash**.
 - Total ordinary gifts exceed the **floor: 1% of drempelinkomen, at least €60**. Only the
@@ -305,19 +305,18 @@ With a whole-year fiscal partner the floor and ceiling are based on the joint dr
   established in the EU, the Caribbean parts of the Kingdom or a designated country.
 - The amounts are the same each time and are recorded in a **notarial deed or a private deed
   of gift** (onderhandse akte; Belastingdienst model forms can be used).
-- Paid for **at least 5 consecutive years** (ends early only on death).
-- No consideration in return.
+- Paid for **at least 5 consecutive years**, subject to the agreement and statutory permitted termination rules; refer an early termination rather than assume death is the only possible exception.
+- No consideration in return; cash gifts are excluded.
 - **Cap:** periodic gifts count up to **€1,500,000 per calendar year** in total for the client
-  and any fiscal partner (Wet IB art. 6.38).
+  and any fiscal partner (Wet IB art. 6.38). Older agreements can have transitional treatment; inspect the agreement date and current authority guidance before applying the cap mechanically. [Transitional gift rules](https://www.belastingdienst.nl/wps/wcm/connect/nl/aftrek-en-kortingen/content/verschil-periodieke-giften-gewone-giften)
 - A periodic gift in kind is possible. For an obligation entered after 31 December 2023 with a
-  value above €10,000 a year, an independent valuation or recent invoice is required.
+  value above €10,000 a year, an independent valuation or recent invoice is required. Under the statute, whole-year fiscal partners aggregate these gifts and use a €20,000 threshold; check the agreement and year rather than applying the individual threshold twice.
 
 **Cultural ANBI uplift:** for gifts to a cultural ANBI, increase the gift by 25% when calculating
 the deduction, capped at **€1,250** extra for ordinary and periodic gifts together. The uplift also
 raises the 10% ceiling for ordinary gifts.
 
-**Volunteers:** a volunteer allowance the client could have received from an ANBI but waived, or
-unreimbursed costs, can count as an ordinary gift. Car costs not claimed count at €0.23 per km.
+**Volunteers:** a waived ANBI allowance requires an actual arrangement, ability and intention to pay, and the volunteer's choice to waive. Qualifying unreimbursed costs have their own conditions. Prevent double counting when both allowance and costs are waived. Car costs not claimed count at €0.23 per km.
 
 **ANBI status withdrawn:** a gift made before the withdrawal decision was known remains
 deductible even if withdrawal is retroactive. Check status with the Belastingdienst "ANBI
@@ -359,10 +358,12 @@ Credits reduce the tax, not the income. Figures for someone **below AOW age for 
 - **Elderly credit (ouderenkorting):** at AOW age at year end: €2,067 if verzamelinkomen is not
   above €46,002, reduced by 15% of the excess, nil above €59,782. **Single elderly credit
   (alleenstaandeouderenkorting):** €540.
-- **Young disabled credit (jonggehandicaptenkorting):** €923 for a Wajong entitlement.
+- **Young disabled credit (jonggehandicaptenkorting):** €923 for qualifying Wajong benefit/work-support entitlement, provided the elderly credit does not apply.
 - **Green investment credit:** 0.1% of the exempt green investments in box 3.
 
-The employer or benefits agency already applies the general, labour and elderly credits through
+For IACK, also check co-parenting, the duration of fiscal partnership, and the equal-work-income tie rule; the older partner qualifies in the tie case if the remaining conditions hold. Use the annual chapter, not just this summary. The ordinary business hours test is not a universal IACK condition.
+
+The employer or benefits agency may already apply the general, labour and elderly credits through
 payroll tax; IACK and the green credit are claimed in the return.
 
 ### Step K: Box 3 points that touch deductions ([source](https://www.belastingdienst.nl/wps/wcm/connect/nl/box-3/content/heffingsvrij-vermogen))
@@ -401,7 +402,7 @@ payroll tax; IACK and the green credit are claimed in the return.
 | Situation | Rule | Result |
 | --- | --- | --- |
 | Income before deductions exactly €78,426 (2026) | Adjustment only if **more than** €78,426 | No adjustment |
-| New loan in 2013 or later, interest-only | Not annuity or linear over at most 30 years | Box 3 debt, no interest deduction |
+| New loan in 2013 or later, interest-only | Check repayment requirement and transitional/bridging exceptions | No deduction if required conditions fail; refer exceptions |
 | Pre-2013 loan increased in 2020 | Old part keeps old rules; increase needs annuity/linear | Split the loan |
 | Loan from parents | Deductible if conditions met and loan reported in the return | Report lender details |
 | Old home empty and for sale since 2024 | Own home for 2024 and the 3 years after | Deductible to 31 December 2027 unless let |
@@ -411,7 +412,7 @@ payroll tax; IACK and the green credit are claimed in the return.
 | Drempelinkomen exactly €41,123 (2026) | Increase if **not more than** €41,123 | Increase applies |
 | Cash donation to an ANBI | Ordinary gifts must not be cash | Exclude |
 | Periodic gift without a deed | Needs notarial or private deed | Treat as ordinary gift |
-| Gift to a non-registered charity | ANBI registration required | Not deductible |
+| Gift to a non-ANBI | Ordinary and periodic routes have different recipient rules | Check qualifying SBBI-support foundations or associations before refusing |
 | Child maintenance | Excluded | Not deductible |
 | Lump sum to ex before the divorce is final | Excluded | Not deductible |
 | Study course started in 2026 | Deduction abolished | Not deductible |
@@ -453,7 +454,7 @@ periodic gift to an ANBI.
 - Cash gift: excluded.
 - Cultural uplift: 25% x €400 = €100 (below the €1,250 cap).
 - Ordinary gifts counted: €600 + €400 + €100 = €1,100.
-- Floor: 1% x €60,000 = €600. Excess: €500. Ceiling 10% x €60,000 = €6,000, not reached.
+- Floor: 1% x €60,000 = €600. Excess: €500. Base ceiling 10% x €60,000 = €6,000, increased by the €100 cultural uplift to €6,100, not reached.
 - Periodic gift: €1,200 in full.
 - Total gift deduction: €1,700.
 
@@ -468,7 +469,7 @@ whole home €1,200 (Belastingdienst example, [alimony chapter](https://www.bela
 
 **Case 6: a course in 2026.** The client pays for a professional course in 2026 and has no
 pre-2015 prestatiebeurs. No study-cost deduction. If the client is self-employed and the course
-is for the business, that is a business-cost question for netherlands-formation, not this Guide.
+is for the business, that is a business-cost question for nl-zzp-deductions, not this Guide.
 
 ## When to refuse or refer
 
@@ -486,13 +487,11 @@ Refer to a Dutch tax adviser (belastingadviseur) when
 - Care-cost claims are large or unusual, or the insurer reimbursement status is unknown.
 - A periodic gift in kind above €10,000 a year ([gifts chapter](https://www.belastingdienst.nl/wps/wcm/connect/fisin/fisin2026/aftrek_giften)), or gifts to foreign institutions or associations.
 - Alimony by lump sum, pension-rights settlements, or annuity buy-outs.
-- The client is an entrepreneur: route the business deductions to netherlands-formation first;
+- The client is an entrepreneur: route the business deductions to nl-zzp-deductions first;
   refer investment deductions (KIA, EIA, MIA, Vamil) and WBSO to a specialist.
 - The client wants to use actual box 3 returns (werkelijk rendement).
 
-Refuse to claim, and explain why, when the client asks to deduct child maintenance, cash
-gifts, gifts to a non-ANBI, insurance premiums, costs under the own risk, glasses or a
-wheelchair, or a new study course.
+Refuse excluded claims such as child maintenance, cash gifts, health-insurance premiums, own-risk costs, ordinary vision-correcting glasses, wheelchairs or a new private study course. Do not automatically refuse every non-ANBI gift: qualifying support foundations and periodic gifts to qualifying associations have separate routes. Do not confuse a private study deduction with a substantiated business cost.
 
 ## Filing and payment ([source](https://www.belastingdienst.nl/wps/wcm/connect/nl/belastingaangifte/content/wat-gebeurt-er-als-ik-geen-aangifte-doe-of-te-laat-of-onvolledig))
 
@@ -503,14 +502,13 @@ wheelchair, or a new study course.
   the date in the letter, usually 1 May of the following year. With an extension, the date in the
   confirmation letter, usually 1 September.
 - **Late:** first a reminder, then a demand (aanmaning) with 10 working days to file. After that
-  a default penalty (verzuimboete) of €469, rising to €6,709 for repeat lateness. Late filing also
-  brings tax interest (belastingrente). Intentionally wrong returns can bring a higher penalty
+  a default penalty (verzuimboete) of €469, rising to €6,709 for repeat lateness. Late filing may also
+  lead to tax interest (belastingrente). Intentionally wrong returns can bring a higher penalty
   (vergrijpboete).
 
 ### Returns for 2025 being filed now ([source](https://www.belastingdienst.nl/wps/wcm/connect/nl/koopwoning/content/tariefsaanpassing-eigen-woning))
 
-On 25 September 2026 the usual 2025 deadlines (1 May 2026, or 1 September 2026 with an extension)
-have passed. A 2025 return still outstanding should be filed at once. Use **2025** figures:
+For a 2025 return, obtain the actual invitation and any extension confirmation. If the applicable deadline has passed, act promptly; the ordinary dates do not establish every taxpayer's deadline. Use **2025** figures:
 
 - Capped rate: applies when income from work and home before deductions is more than **€76,817**;
   adjustment 12.02%; relief in the top bracket at most **37.48%**.
@@ -518,7 +516,7 @@ have passed. A 2025 return still outstanding should be filed at once. Use **2025
 - Eigenwoningforfait 2025: same bands as 2026 up to €75,000; 0.35% from €75,000 to
   **€1,330,000**; above that **€4,655** plus 2.35% of the excess
   ([forfait page](https://www.belastingdienst.nl/wps/wcm/connect/nl/koopwoning/content/hoe-werkt-eigenwoningforfait)).
-- Care-cost threshold 2025, no whole-year partner: **€164** up to €9,534; 1.65% from €9,535 to
+- Care-cost threshold 2025, no whole-year partner: **€164** up to €9,534; 1.65% above €9,534 through
   €50,635; **€835** plus 5.75% above €50,635
   ([2025 threshold](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/relatie_familie_en_gezondheid/gezondheid/aftrek_zorgkosten/hoe_berekent_u_uw_aftrek/drempelbedrag_berekenen/drempelbedrag-2025)).
 - Care-cost increase 2025: drempelinkomen not more than **€40,502**
@@ -544,13 +542,11 @@ have passed. A 2025 return still outstanding should be filed at once. Use **2025
 - [ ] Gifts: ANBI status checked in "ANBI opzoeken"; no cash; floor and ceiling applied; periodic
       deed and 5-year term on file.
 - [ ] Study costs: only the prestatiebeurs remnant, otherwise nil.
-- [ ] Entrepreneur deductions routed to netherlands-formation.
+- [ ] Entrepreneur deductions routed to nl-zzp-deductions.
 - [ ] Credits and box 3 allowance taken from the same year.
 - [ ] Deadline and any extension noted; late-filing risk explained.
 - [ ] Evidence kept: bank statements, invoices, insurer statements, deeds, court or written
       alimony arrangement, diet confirmation from doctor or dietitian.
-
-This Guide was first adapted from material by John in 't Hout (MIT licence) and has since been rewritten from official sources. It is not tax advice.
 
 <!-- openaccountants-cta-block -->
 
