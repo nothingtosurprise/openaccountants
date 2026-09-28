@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-28T14:32:25+00:00",
+ "generated_at": "2026-09-28T14:35:43+00:00",
  "counts": {
   "guides": 2023,
   "jurisdictions": 245,
@@ -14319,8 +14319,8 @@
    "tier": 2,
    "verified_by": null,
    "reviewed_by": null,
-   "tax_year": null,
-   "last_updated": "2026-09-02"
+   "tax_year": "2026",
+   "last_updated": "2026-09-28"
   },
   {
    "slug": "netherlands-30-percent-ruling",
